@@ -48,7 +48,6 @@ public class warning extends ActionBarActivity {
     public void goFoward(View view)
     {
         Intent intent = new Intent(this, home.class);
-        intent.putExtra("username", "Guest" + (int) (Math.random()*10000));
         startActivity(intent);
     }
 }

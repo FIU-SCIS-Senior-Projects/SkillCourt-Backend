@@ -7,10 +7,11 @@
     <string name="title_activity_log_in">Log in</string>
     <string name="title_activity_create_account">Create Account</string>
     <string name="title_activity_create_account1">Create Account 1</string>
-    <string name="title_activity_warning">Warning</string>
-    <string name="title_activity_home">Home</string>
-    <string name="action_bar_logout">Logout</string>
-    <string name="log_in_fail_message">The Username/Password combination is incorrect.</string>
-    <string name="log_in_fail_title">Login Error:</string>
+    <string name="title_activity_warning">warning</string>
+    <string name="title_activity_home">home</string>
+    <string name="puname_exists">Username already exist</string>
+    <string name="title_activity_create_account2">createAccount2</string>
+    <string name="title_activity_create_account3">createAccount3</string>
+    <string name="title_activity_account_created">accountCreated</string>
 
 </resources>

@@ -107,7 +107,7 @@ public class createAccount3 extends ActionBarActivity {
             nameValuePairs.add(new BasicNameValuePair("position", credentials[7]));
 
             nameValuePairs.add(new BasicNameValuePair("userName", credentials[0]));
-            nameValuePairs.add(new BasicNameValuePair("pw", credentials[1]));
+            nameValuePairs.add(new BasicNameValuePair("password", credentials[1]));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             response = httpclient.execute(httppost);

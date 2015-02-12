@@ -31,7 +31,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:hint="Password"
             android:paddingTop="10dp"
             android:ems="10"
@@ -52,11 +52,9 @@
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-
+        android:onClick="performLogin"
         android:layout_alignParentBottom="false"
         android:layout_alignParentTop="false"
         android:paddingLeft="22dp"
-        android:paddingTop="15dp"
-        android:onClick="performLogin"/>
-
+        android:paddingTop="15dp" />
 </RelativeLayout>

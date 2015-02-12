@@ -4,6 +4,8 @@
 
     <uses-sdk android:minSdkVersion="11" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--
@@ -14,6 +16,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+
 
     <application
         android:allowBackup="true"
@@ -30,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".logIn"
             android:label="@string/title_activity_login"
             android:parentActivityName=".welcome"
             android:windowSoftInputMode="adjustResize|stateHidden" >
@@ -43,22 +47,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".logIn"
-            android:label="@string/title_activity_log_in"
-            android:parentActivityName=".welcome" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.welcome" />
-        </activity>
-        <activity
-            android:name=".createAccount"
-            android:label="@string/title_activity_create_account"
-            android:parentActivityName=".welcome" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.welcome" />
-        </activity>
         <activity
             android:name=".createAccount1"
             android:label="@string/title_activity_create_account1"
@@ -82,6 +70,30 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project.senior.skillcourt.warning" />
+        </activity>
+        <activity
+            android:name=".createAccount2"
+            android:label="@string/title_activity_create_account2"
+            android:parentActivityName=".createAccount1" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project.senior.skillcourt.createAccount1" />
+        </activity>
+        <activity
+            android:name=".createAccount3"
+            android:label="@string/title_activity_create_account3"
+            android:parentActivityName=".createAccount2" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project.senior.skillcourt.createAccount2" />
+        </activity>
+        <activity
+            android:name=".accountCreated"
+            android:label="@string/title_activity_account_created"
+            android:parentActivityName=".createAccount3" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project.senior.skillcourt.createAccount3" />
         </activity>
     </application>
 

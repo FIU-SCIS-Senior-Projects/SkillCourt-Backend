@@ -41,7 +41,7 @@ public class logIn extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        
+
         unTxt = (EditText) findViewById(R.id.editText);
         pwTxt = (EditText) findViewById(R.id.editText2);
         loginBtn = (Button) findViewById(R.id.button4);
@@ -97,7 +97,7 @@ public class logIn extends ActionBarActivity {
             else
                 loginFail();
         } catch (Exception e) {
-                System.out.println("ERROR!" + e.getMessage());
+            System.out.println("ERROR!" + e.getMessage());
         }
     }
 //        dbInteraction interact = new dbInteraction();
@@ -119,8 +119,8 @@ public class logIn extends ActionBarActivity {
     public void loginFail() {
         // Display dialog to user that authentication failed
         AlertDialog.Builder builder = new AlertDialog.Builder(logIn.this);
-        builder.setTitle(R.string.log_in_fail_title);
-        builder.setMessage(R.string.log_in_fail_message)
+        builder.setTitle("Login Error");
+        builder.setMessage("Username/Password combination is incorrect")
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

@@ -1,31 +1,18 @@
 package com.project.senior.skillcourt;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 
 public class home extends ActionBarActivity {
-
-    TextView username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        username = (TextView) findViewById(R.id.usernameText);
-        username.setText(getIntent().getStringExtra("username"));
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(false); // disable the button
-            actionBar.setDisplayHomeAsUpEnabled(false); // remove the left caret
-            actionBar.setDisplayShowHomeEnabled(false); // remove the icon
-        }
     }
 
 
@@ -34,7 +21,6 @@ public class home extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
-
     }
 
     @Override
@@ -52,5 +38,7 @@ public class home extends ActionBarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+
     }
 }
