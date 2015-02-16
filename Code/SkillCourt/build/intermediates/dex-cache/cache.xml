@@ -2,39 +2,32 @@
 <items version="2" >
 
     <item
-        jar="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/pre-dexed/debug/classes-a60958b5b363750e163f869a4aaadf15e4190fd9.jar" />
-    </item>
-    <item
-        jar="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
-        <dex dex="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/pre-dexed/debug/classes-a2135a14fe300e9291310516bdd26d1f8c89c50b.jar" />
-    </item>
-    <item
-        jar="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-6045867cd5548d48defd0f2d68b72c5629db84b1.jar" />
-    </item>
-    <item
-        jar="/Users/andymartinez/android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-90b13df7f01a6077dbf98d6cc73e3d8f8194a2cb.jar" />
-    </item>
-    <item
-        jar="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jar="C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/andymartinez/AndroidStudioProjects/SkillCourt/app/build/intermediates/pre-dexed/debug/classes-d52e34981e6be5eb53fe6840dc77bfac0ce36012.jar" />
+        <dex dex="C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-d309676de78f4ab6412b4d90f12e9d02c86c0873.jar" />
+    </item>
+    <item
+        jar="C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-7c22a6e8ccc705785f01a3ff2a4ccd5a7bf2234e.jar" />
+    </item>
+    <item
+        jar="C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-cb4428d3d2dacfff372250bc8a7b38569094dcd7.jar" />
+    </item>
+    <item
+        jar="C:\Users\msant080\AppData\Local\Android\sdk1\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb3329044cb1e549f846f1ace93edeb2797d0dca.jar" />
     </item>
 
 </items>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.senior.skillcourt"
+    package="com.seniorproject.skillcourt"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -10,26 +10,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- To access Google+ APIs: -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--
- To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
-     option is required to comply with the Google+ Sign-In developer policies
-    -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
- <!-- To retrieve the account name (email) as part of sign-in: -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
- <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/soccer_ball"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.project.senior.skillcourt.welcome"
+            android:name="com.seniorproject.skillcourt.Welcome"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,66 +25,68 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.project.senior.skillcourt.logIn"
-            android:label="@string/title_activity_login"
-            android:parentActivityName="com.project.senior.skillcourt.welcome"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.welcome" />
-        </activity>
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name="com.project.senior.skillcourt.createAccount1"
-            android:label="@string/title_activity_create_account1"
-            android:parentActivityName="com.project.senior.skillcourt.welcome" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.welcome" />
-        </activity>
-        <activity
-            android:name="com.project.senior.skillcourt.warning"
-            android:label="@string/title_activity_warning"
-            android:parentActivityName="com.project.senior.skillcourt.welcome" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.welcome" />
-        </activity>
-        <activity
-            android:name="com.project.senior.skillcourt.home"
+            android:name="com.seniorproject.skillcourt.Home"
             android:label="@string/title_activity_home"
-            android:parentActivityName="com.project.senior.skillcourt.warning" >
+            android:parentActivityName="com.seniorproject.skillcourt.Welcome" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.warning" />
+                android:value="com.seniorproject.skillcourt.Welcome" />
         </activity>
         <activity
-            android:name="com.project.senior.skillcourt.createAccount2"
+            android:name="com.seniorproject.skillcourt.Login"
+            android:label="@string/title_activity_login"
+            android:parentActivityName="com.seniorproject.skillcourt.Welcome" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Welcome" />
+        </activity>
+        <activity
+            android:name="com.seniorproject.skillcourt.CreateAccount1"
+            android:label="@string/title_activity_create_account1"
+            android:parentActivityName="com.seniorproject.skillcourt.Welcome" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Welcome" />
+        </activity>
+        <activity
+            android:name="com.seniorproject.skillcourt.CreateAccount2"
             android:label="@string/title_activity_create_account2"
-            android:parentActivityName="com.project.senior.skillcourt.createAccount1" >
+            android:parentActivityName="com.seniorproject.skillcourt.CreateAccount1" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.createAccount1" />
+                android:value="com.seniorproject.skillcourt.CreateAccount1" />
         </activity>
         <activity
-            android:name="com.project.senior.skillcourt.createAccount3"
+            android:name="com.seniorproject.skillcourt.CreateAccount3"
             android:label="@string/title_activity_create_account3"
-            android:parentActivityName="com.project.senior.skillcourt.createAccount2" >
+            android:parentActivityName="com.seniorproject.skillcourt.CreateAccount2" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.createAccount2" />
+                android:value="com.seniorproject.skillcourt.CreateAccount2" />
         </activity>
         <activity
-            android:name="com.project.senior.skillcourt.accountCreated"
-            android:label="@string/title_activity_account_created"
-            android:parentActivityName="com.project.senior.skillcourt.createAccount3" >
+            android:name="com.seniorproject.skillcourt.CreateAccount4"
+            android:label="@string/title_activity_create_account4"
+            android:parentActivityName="com.seniorproject.skillcourt.CreateAccount3" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project.senior.skillcourt.createAccount3" />
+                android:value="com.seniorproject.skillcourt.CreateAccount3" />
+        </activity>
+        <activity
+            android:name="com.seniorproject.skillcourt.CreateAccount5"
+            android:label="@string/title_activity_create_account5"
+            android:parentActivityName="com.seniorproject.skillcourt.CreateAccount4" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.CreateAccount4" />
+        </activity>
+        <activity
+            android:name="com.seniorproject.skillcourt.Profile"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName="com.seniorproject.skillcourt.Home" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Home" />
         </activity>
     </application>
 

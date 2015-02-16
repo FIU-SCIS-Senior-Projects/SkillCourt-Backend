@@ -3,47 +3,47 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".welcome">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Welcome">
 
-
-
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="450dp"
-    android:orientation="vertical">
-
-    <Button
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="log in"
-        android:id="@+id/button"
-        android:layout_marginTop="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="logIn"/>
+        android:layout_height="350dp"
+        android:orientation="vertical"
+        android:gravity="top"
+        android:paddingTop="20dp"
+        android:id="@+id/button_container">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Guest"
-        android:id="@+id/button2"
-        android:layout_marginTop="70dp"
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:onClick="warn"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/log_in_button"
+            android:onClick="logIn"/>
 
-    <Button
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/guess_button"
+            android:onClick="enterAsGuest"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/create_account_button"
+            android:onClick="createAccount"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="New User"
-        android:id="@+id/button3"
-        android:layout_marginTop="70dp"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
-        android:onClick="createAccount"/>
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/button_container"
+        android:layout_marginTop="20dp"
+        android:id="@+id/empty">
 
     </LinearLayout>
+
 
 </RelativeLayout>
