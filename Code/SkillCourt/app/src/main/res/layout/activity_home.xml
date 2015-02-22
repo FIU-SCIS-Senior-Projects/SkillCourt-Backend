@@ -30,10 +30,14 @@
             android:text="View Performance Statistics"/>
 
         <Button
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button6"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="Start Playing"/>
+            android:text="Start Playing"
+            android:onClick="play" />
 
 
     </LinearLayout>

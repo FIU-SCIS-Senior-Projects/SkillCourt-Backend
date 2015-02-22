@@ -1,5 +1,9 @@
-C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\classes\debug
-C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb3329044cb1e549f846f1ace93edeb2797d0dca.jar
-C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-7c22a6e8ccc705785f01a3ff2a4ccd5a7bf2234e.jar
-C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-d309676de78f4ab6412b4d90f12e9d02c86c0873.jar
-C:\Users\msant080\Desktop\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-cb4428d3d2dacfff372250bc8a7b38569094dcd7.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\classes\debug
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb3329044cb1e549f846f1ace93edeb2797d0dca.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\jsse-2.0.5-f858fbb265b42723fbade06100092f15ba781400.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\activation-5614f0d4c51b7b92ab204fea1f70872539acefb1.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\additionnal-078a3c3900c65928b7c61df32afa9d065762e0b6.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-a8d7283b956bddb4b2319062c9c47dea1f72b677.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-44fd7f71097ee765e9e0b8c568480d52f8803a50.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\mail-5f9465f293a92978a160ef635139bb2aa1e7aa02.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-60e96858e51d296726a0b41a87722360f0845d7b.jar

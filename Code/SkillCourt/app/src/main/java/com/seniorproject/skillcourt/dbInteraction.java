@@ -161,4 +161,63 @@ public class dbInteraction {
         }
     }
 
+    public int addRoutine(String rName, String rDescr)
+    {
+        HttpPost httppost;
+        HttpResponse response;
+        String resp;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+        nameValuePairs = new ArrayList<NameValuePair>(2);
+        nameValuePairs.add(new BasicNameValuePair("rName", rName));
+        nameValuePairs.add(new BasicNameValuePair("rDesc", rDescr));
+        try {
+            System.out.println("Connecting to db");
+            // Link to skillcourt-dev myPHPAdmin server
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php_query/addroutine.php");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            System.out.println("Executing post");
+            // Execute HTTP Post Request
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            resp = httpclient.execute(httppost, responseHandler);
+            System.out.println("Post executed");
+
+            // Login Response
+            System.out.println("Resp: " + resp);
+            return 'y';
+        } catch (Exception e) {
+            System.out.println(e);
+            return 'e';
+        }
+    }
+
+    public String retrieveUnPw(String email)
+    {
+        HttpPost httppost;
+        //HttpResponse response;
+        String resp;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+        nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("email", email));
+        try {
+            // Link to skillcourt-dev myPHPAdmin server
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/mat_login/get_user_pass.php");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            // Execute HTTP Post Request
+            //response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            resp = httpclient.execute(httppost, responseHandler);
+
+            // Login Response
+            System.out.println("Resp: " + resp);
+            return resp;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error";
+        }
+    }
 }

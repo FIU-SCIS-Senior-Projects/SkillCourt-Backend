@@ -1,35 +1,26 @@
 package com.seniorproject.skillcourt;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
+/**
+ * Created by msant080 on 2/17/2015.
+ */
+public class Play extends ActionBarActivity {
 
-public class Home extends ActionBarActivity {
-
-    String puname = new String("");
+    EditText routineName;
+    EditText routineDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        System.out.println("In home activity");
+        setContentView(R.layout.activity_play);
 
-        Intent intent = getIntent();
-        puname = intent.getStringExtra(Login.EXTRA_MESSAGE);
-
-        if(puname == null) {
-            puname = "Guest";
-        }
-
-        ((TextView) findViewById(R.id.home_message)).setText(puname);
     }
 
 
@@ -56,27 +47,26 @@ public class Home extends ActionBarActivity {
             Intent intent = new Intent(this, Welcome.class);
             startActivity(intent);
         }
-        else if(id == R.id.profile)
-        {
-            if(puname.equals("Guest"))
-            {
-                Intent intent = new Intent(this, CreateAccount1.class);
-                startActivity(intent);
-            }
-            else
-            {
-                Intent intent = new Intent(this, Profile.class);
-                startActivity(intent);
-            }
-        }
-
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void play(View view){
-        System.out.println("In play method");
-        Intent intent = new Intent(this, Play.class);
-        startActivity(intent);
+    public void createRoutine(View view) {
+        routineName = (EditText) findViewById(R.id.editText3);
+        routineDescription = (EditText) findViewById(R.id.editText4);
+
+        String rName = routineName.getText().toString();
+        String rDescription = routineDescription.getText().toString();
+
+        if (rName.equals("")) {
+            genericWarning w = new genericWarning();
+            w.setMessage(getString(R.string.warning_empty_field_message));
+            w.setPossitive(getString(R.string.warning_empty_field_positive));
+            w.show(getFragmentManager(),"warning_dialog");
+        }
+        else {
+            dbInteraction dbi = new dbInteraction();
+            dbi.addRoutine(rName, rDescription);
+        }
     }
 }

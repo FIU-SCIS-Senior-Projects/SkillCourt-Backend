@@ -82,8 +82,8 @@ public class Login extends ActionBarActivity {
     /*
     * Action of trouble loggin in button
     * */
-    public void logInTrouble(View view)
-    {
-
+    public void logInTrouble(View view) {
+        Intent intent = new Intent(this, AccountAccess.class);
+        startActivity(intent);
     }
 }

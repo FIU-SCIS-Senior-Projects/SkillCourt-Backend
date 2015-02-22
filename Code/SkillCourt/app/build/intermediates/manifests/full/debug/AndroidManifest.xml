@@ -26,8 +26,9 @@
         </activity>
         <activity
             android:name="com.seniorproject.skillcourt.Home"
-            android:label="@string/title_activity_home"
-            android:parentActivityName="com.seniorproject.skillcourt.Welcome" >
+            android:label="@string/title_activity_home" >
+
+            <!-- android:parentActivityName=".Welcome" > -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.seniorproject.skillcourt.Welcome" />
@@ -87,6 +88,22 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.seniorproject.skillcourt.Home" />
+        </activity>
+        <activity
+            android:name="com.seniorproject.skillcourt.Play"
+            android:label="Play"
+            android:parentActivityName="com.seniorproject.skillcourt.Home" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Home" />
+        </activity>
+        <activity
+            android:name="com.seniorproject.skillcourt.AccountAccess"
+            android:label="Account Access"
+            android:parentActivityName="com.seniorproject.skillcourt.Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Login" />
         </activity>
     </application>
 

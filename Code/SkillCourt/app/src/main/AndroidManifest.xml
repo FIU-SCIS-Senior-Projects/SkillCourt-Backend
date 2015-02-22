@@ -20,8 +20,8 @@
         </activity>
         <activity
             android:name=".Home"
-            android:label="@string/title_activity_home"
-            android:parentActivityName=".Welcome" >
+            android:label="@string/title_activity_home" >
+            <!-- android:parentActivityName=".Welcome" > -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.seniorproject.skillcourt.Welcome" />
@@ -81,6 +81,22 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.seniorproject.skillcourt.Home" />
+        </activity>
+        <activity
+            android:name=".Play"
+            android:label="Play"
+            android:parentActivityName=".Home" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Home" />
+        </activity>
+        <activity
+            android:name=".AccountAccess"
+            android:label="Account Access"
+            android:parentActivityName=".Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Login" />
         </activity>
     </application>
 
