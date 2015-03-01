@@ -370,8 +370,6 @@ int id dialog 0x7f08001b
 int id disableHome 0x7f08000c
 int id dropdown 0x7f08001c
 int id editText 0x7f08003f
-int id editText3 0x7f08004e
-int id editText4 0x7f08004f
 int id edit_query 0x7f080033
 int id email 0x7f080043
 int id empty 0x7f080051
@@ -399,6 +397,7 @@ int id progress_circular 0x7f080005
 int id progress_horizontal 0x7f080006
 int id provitional_text 0x7f080045
 int id radio 0x7f08002b
+int id routineDescription 0x7f08004f
 int id search_badge 0x7f080035
 int id search_bar 0x7f080034
 int id search_button 0x7f080036
@@ -413,6 +412,7 @@ int id shortcut 0x7f08002a
 int id showCustom 0x7f08000f
 int id showHome 0x7f080010
 int id showTitle 0x7f080011
+int id spinner 0x7f08004e
 int id split_action_bar 0x7f080007
 int id submit_area 0x7f08003c
 int id tabMode 0x7f08000b
