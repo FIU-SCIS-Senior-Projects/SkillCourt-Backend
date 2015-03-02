@@ -24,8 +24,8 @@ import java.util.Properties;
  */
 public class email extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
-    private String user = "skillcourtbackend@gmail.com";
-    private String password = "skillCourtBackend123";
+    private String user;
+    private String password;
     private Session session;
 
     static {
@@ -33,18 +33,26 @@ public class email extends javax.mail.Authenticator {
     }
 
     public email() {
+        this.user = "skillcourtbackend@gmail.com";
+        this.password = "skillCourtBackend123";
+
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.host", mailhost);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
         props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.quitwait", "false");
 
         session = Session.getDefaultInstance(props, new GMailAuthenticator(user, password));
     }
+
+//    protected PasswordAuthentication getPasswordAuthentication() {
+//        return new PasswordAuthentication(user, password);
+//    }
 
     public synchronized char sendMail(String subject, String body, String sender, String recipients) throws Exception {
         try{
@@ -70,13 +78,13 @@ public class email extends javax.mail.Authenticator {
         private String type;
 
         public ByteArrayDataSource(byte[] data, String type) {
-            //
+            super();
             this.data = data;
             this.type = type;
         }
 
         public ByteArrayDataSource(byte[] data) {
-            //
+            super();
             this.data = data;
         }
 
@@ -106,8 +114,11 @@ public class email extends javax.mail.Authenticator {
 }
 
 final class JSSEProvider extends Provider {
+
     public JSSEProvider() {
+
         super("HarmonyJSSE", 1.0, "Harmony JSSE Provider");
+
         AccessController.doPrivileged(new java.security.PrivilegedAction<Void>() {
 
             public Void run() {
@@ -121,18 +132,21 @@ final class JSSEProvider extends Provider {
                 return null;
             }
         });
+
     }
 }
 
 class GMailAuthenticator extends Authenticator {
     String user;
     String pw;
-    public GMailAuthenticator (String username, String password) {
-        //
-        user = username;
-        pw = password;
+    public GMailAuthenticator (String username, String password)
+    {
+        super();
+        this.user = username;
+        this.pw = password;
     }
-    public PasswordAuthentication getPasswordAuthentication() {
+    public PasswordAuthentication getPasswordAuthentication()
+    {
         return new PasswordAuthentication(user, pw);
     }
 }

@@ -6,36 +6,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by msant080 on 2/17/2015.
  */
 public class Play extends ActionBarActivity {
 
-    TextView descriptionText;
-    Spinner routines;
-    dbInteraction dbi;
+    EditText routineName;
+    EditText routineDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        descriptionText = (TextView) findViewById(R.id.routineDescription);
-        routines = (Spinner) findViewById(R.id.spinner);
 
-        setSpinner();
     }
 
 
@@ -66,45 +51,22 @@ public class Play extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getRoutine(View view) {
-        String rname = routines.getSelectedItem().toString();
-        dbInteraction dbi = new dbInteraction();
-        descriptionText.setText(dbi.getRoutine(rname));
-    }
+    public void createRoutine(View view) {
+        routineName = (EditText) findViewById(R.id.editText3);
+        routineDescription = (EditText) findViewById(R.id.editText4);
 
-    public void setSpinner() {
-        System.out.println("setting up routines");
-        dbi = new dbInteraction();
-        String routinesList = "," + dbi.listRoutines();
-        List<String> list = new ArrayList<>();
-        while (routinesList.lastIndexOf(",") != 0) {
-            routinesList = routinesList.substring(1);
-            list.add(routinesList.substring(0,routinesList.indexOf(",")));
-            routinesList = routinesList.substring(routinesList.indexOf(","));
+        String rName = routineName.getText().toString();
+        String rDescription = routineDescription.getText().toString();
+
+        if (rName.equals("")) {
+            genericWarning w = new genericWarning();
+            w.setMessage(getString(R.string.warning_empty_field_message));
+            w.setPossitive(getString(R.string.warning_empty_field_positive));
+            w.show(getFragmentManager(),"warning_dialog");
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        routines.setAdapter(adapter);
-        setSpinnerListener();
-    }
-
-    public void setSpinnerListener() {
-        System.out.println("setting on item selected listener");
-        routines.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String routine = routines.getItemAtPosition(position).toString().trim();
-                System.out.println(routine);
-                dbi = new dbInteraction();
-                descriptionText.setText(dbi.getRoutineDescription(routine));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                descriptionText.setText("Choose a routine from the list above to see its description.");
-            }
-        });
+        else {
+            dbInteraction dbi = new dbInteraction();
+            dbi.addRoutine(rName, rDescription);
+        }
     }
 }
-

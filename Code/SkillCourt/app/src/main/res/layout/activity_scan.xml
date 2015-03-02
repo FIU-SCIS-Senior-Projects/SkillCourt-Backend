@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.seniorproject.skillcourt.Scan">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="100">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:id="@+id/scanning_message_textview"
+        android:layout_weight="10"/>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/scanning_message_textview"
+        android:id="@+id/pads_list"
+        android:layout_weight="160">
+
+        </ListView>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/pads_list"
+        android:layout_marginTop="20dp"
+        android:text="Try Scanning Again"
+        android:onClick="scanAgain"
+        />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:text="Go Back Home"
+            android:onClick="goBackHome"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -10,10 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.Random;
+
 
 public class CreateAccount1 extends ActionBarActivity {
 
     public final static String EXTRA_MESSAGE = "Credentials";
+    int code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,16 @@ public class CreateAccount1 extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    void produceCode()
+    {
+        int max = 99999;
+        int min = 10000;
+        Random rdng = new Random();
+        code = rdng.nextInt((max - min) +1 ) + min;
+
+    }
+
 
     public void next(View view)
     {
@@ -94,10 +107,34 @@ public class CreateAccount1 extends ActionBarActivity {
             }
             else {
 
+                produceCode();
+
+                try {
+
+                    email e = new email();
+                    char sent = e.sendMail("SkillCourt Account Creation Code",
+                            puname + " use this code in order to continue your SkillCourt account creation process:\nCODE: "
+                                    + Integer.toString(code),
+                            "skillcourtbackend@gmail.com",
+                            email);
+
+
+                } catch (Exception e1) {
+                    genericWarning w = new genericWarning();
+                    w.setMessage("Unable to send email to your email address " + email + ". Make sure that you have internet connection and that the provided email address is correct");
+                    w.setPossitive("OK");
+                    w.show(getFragmentManager(),"warning_dialog");
+
+                    return;
+                }
+
+                //---------------------------------
+
                 String Credentials[] = new String[8];
                 Credentials[0] = puname;
                 Credentials[1] = password;
                 Credentials[2] = email;
+                Credentials[3] = Integer.toString(code);
                 Intent intent = new Intent(this, CreateAccount2.class);
                 intent.putExtra(EXTRA_MESSAGE, Credentials);
                 startActivity(intent);

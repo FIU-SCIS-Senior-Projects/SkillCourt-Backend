@@ -17,7 +17,7 @@ public class CreateAccount2 extends ActionBarActivity {
 
     public final static String EXTRA_MESSAGE = "Credentials";
     String[] Credentials;
-    int code;
+
 
 
     @Override
@@ -28,10 +28,10 @@ public class CreateAccount2 extends ActionBarActivity {
         Intent intent = getIntent();
         Credentials = intent.getStringArrayExtra(CreateAccount1.EXTRA_MESSAGE);
 
-        //generate global code
-        produceCode();
-        ((TextView) findViewById(R.id.provitional_text)).setText(Integer.toString(code));//delete this
-        //send email with code
+
+        ((TextView) findViewById(R.id.provitional_text)).setText(Credentials[3]);//delete this
+
+
     }
 
 
@@ -57,20 +57,9 @@ public class CreateAccount2 extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void produceCode()
-    {
-        int max = 99999;
-        int min = 10000;
-        Random rdng = new Random();
-        code = rdng.nextInt((max - min) +1 ) + min;
-
-
-
-    }
-
     public void verify(View view)
     {
-        if(((EditText) findViewById(R.id.code)).getText().toString().equals(Integer.toString(code)))
+        if(((EditText) findViewById(R.id.code)).getText().toString().equals(Credentials[3]))
         {
             Intent intent = new Intent(this, CreateAccount3.class);
             intent.putExtra(EXTRA_MESSAGE, Credentials);

@@ -75,5 +75,12 @@
     <string name="go_to_welcome">Go To Welcome Screen</string>
     <string name="account_created_message">your account has been successfully created</string>
     <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_scan">Scan</string>
+    <string name="title_activity_edit_profile_information">EditProfileInformation</string>
+    <string name="title_activity_edit_password">EditPassword</string>
+
+    <!--Profile Activity-->
+
+
 
 </resources>
