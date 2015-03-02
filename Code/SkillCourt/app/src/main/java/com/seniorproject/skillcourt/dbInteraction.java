@@ -161,35 +161,86 @@ public class dbInteraction {
         }
     }
 
-    public int addRoutine(String rName, String rDescr)
+    public String getRoutine(String rname)
     {
         HttpPost httppost;
-        HttpResponse response;
         String resp;
         HttpClient httpclient;
         List<NameValuePair> nameValuePairs;
-        nameValuePairs = new ArrayList<NameValuePair>(2);
-        nameValuePairs.add(new BasicNameValuePair("rName", rName));
-        nameValuePairs.add(new BasicNameValuePair("rDesc", rDescr));
+        nameValuePairs = new ArrayList<>(2);
+        nameValuePairs.add(new BasicNameValuePair("rname", rname));
         try {
             System.out.println("Connecting to db");
             // Link to skillcourt-dev myPHPAdmin server
             httpclient = new DefaultHttpClient();
-            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php_query/addroutine.php");
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/mat_login/get_routine.php");
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             System.out.println("Executing post");
             // Execute HTTP Post Request
-            response = httpclient.execute(httppost);
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             resp = httpclient.execute(httppost, responseHandler);
             System.out.println("Post executed");
 
             // Login Response
             System.out.println("Resp: " + resp);
-            return 'y';
+            return resp;
         } catch (Exception e) {
             System.out.println(e);
-            return 'e';
+            return "Error";
+        }
+    }
+
+    public String listRoutines()
+    {
+        HttpPost httppost;
+        String resp;
+        HttpClient httpclient;
+        try {
+            System.out.println("Connecting to db");
+            // Link to skillcourt-dev myPHPAdmin server
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/mat_login/list_routines.php");
+
+            System.out.println("Executing post");
+            // Execute HTTP Post Request
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            resp = httpclient.execute(httppost, responseHandler);
+            System.out.println("Post executed");
+
+            // Login Response
+            System.out.println("Resp: " + resp);
+            return resp;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error";
+        }
+    }
+
+    public String getRoutineDescription(String routine)
+    {
+        HttpPost httppost;
+        String resp;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("rname", routine));
+        try {
+            System.out.println("Connecting to db with routine = " + routine);
+            // Link to skillcourt-dev myPHPAdmin server
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/mat_login/get_description.php");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            System.out.println("Executing post");
+            // Execute HTTP Post Request
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            resp = httpclient.execute(httppost, responseHandler);
+            System.out.println("Post executed");
+
+            // Login Response
+            System.out.println("Resp: " + resp);
+            return resp;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error";
         }
     }
 

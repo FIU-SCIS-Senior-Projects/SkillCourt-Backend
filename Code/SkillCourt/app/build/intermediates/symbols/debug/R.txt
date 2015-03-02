@@ -377,8 +377,6 @@ int id disableHome 0x7f08000c
 int id done 0x7f08005a
 int id dropdown 0x7f08001c
 int id editText 0x7f08003f
-int id editText3 0x7f080060
-int id editText4 0x7f080061
 int id edit_info 0x7f080062
 int id edit_query 0x7f080033
 int id email 0x7f080043
@@ -418,6 +416,7 @@ int id progress_horizontal 0x7f080006
 int id provitional_text 0x7f080045
 int id radio 0x7f08002b
 int id repeat_new_password 0x7f08004d
+int id routineDescription 0x7f080061
 int id scanning_message_textview 0x7f080063
 int id search_badge 0x7f080035
 int id search_bar 0x7f080034
@@ -433,6 +432,7 @@ int id shortcut 0x7f08002a
 int id showCustom 0x7f08000f
 int id showHome 0x7f080010
 int id showTitle 0x7f080011
+int id spinner 0x7f080060
 int id split_action_bar 0x7f080007
 int id start_playing 0x7f08005d
 int id submit_area 0x7f08003c

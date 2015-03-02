@@ -81,6 +81,8 @@
 
     <!--Profile Activity-->
 
-
+    <!--Play Activity-->
+    <string name="routine_description_default">Select a routine above for its description. . .</string>
+    <string name="play_routine_button">Play!</string>
 
 </resources>
