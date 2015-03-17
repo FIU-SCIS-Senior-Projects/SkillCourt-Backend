@@ -44,6 +44,7 @@ public class Scan extends ActionBarActivity {
     private static final UUID MY_UUID = UUID.fromString("1e0ca4ea-299d-4335-93eb-27fcfe7fa848");
     private OutputStream outStream;
     private InputStream inStream;
+    BluetoothSocket btSocket;
     //Progress dialog
     ProgressDialog progressDoalog;
 
@@ -76,7 +77,13 @@ public class Scan extends ActionBarActivity {
                 String []arr = new String[2];
                 arr[0] = devices.get(adapter.getItem(position)).getName();
                 arr[1] = devices.get(adapter.getItem(position)).getAddress();
-                returnToHome(arr);
+
+                Boolean b = verifyIfPad(devices.get(adapter.getItem(position)));
+
+                if(b)
+                {
+                    returnToHome(arr);
+                }
             }
         });
 
@@ -103,6 +110,62 @@ public class Scan extends ActionBarActivity {
         }
 
 
+    }
+
+    Boolean verifyIfPad(BluetoothDevice dev)
+    {
+        try
+        {
+            btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+            btSocket.connect();
+            outStream = btSocket.getOutputStream();
+            inStream = btSocket.getInputStream();
+            outStream.write("Hello".getBytes());
+            //get reply
+            int Availablebytes = inStream.available();
+            if(Availablebytes > 0)
+            {
+                byte[] packetBytes = new byte[Availablebytes];
+                inStream.read(packetBytes);
+                String message = getMessage(Availablebytes, packetBytes);
+
+                if(message.equals("Hello from pad"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                //here
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+    }
+
+    String getMessage(int byteLength, byte[] bytes)
+    {
+        String msg = new String("");
+
+        if(bytes == null)
+        {
+            return null;
+        }
+
+        for(int i = 0; i < byteLength; i++)
+        {
+            msg = msg + bytes[i];
+        }
+
+        return msg;
     }
 
     public void returnToHome(String[] arr)
