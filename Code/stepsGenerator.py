@@ -1,6 +1,8 @@
 import sys
 import random
 
+dictionary = dict()
+
 numberSteps = 100
 minStartTime = 0
 maxStartTime = 9999
@@ -29,37 +31,63 @@ while i < numberSteps:
     wall = random.randint(0,3)
     row = random.randint(0,4)
     column = random.randint(0,2)
-    
-    strStartTime = str(startTime)
-    strEndTime = str(endTime)
-    
-    if len(strEndTime) == 1:
-        strEndTime = "0" + strEndTime
-    
-    if len(strStartTime) == 1:
-        strStartTime = "000" + strStartTime
-    elif len(strStartTime) == 2:
-        strStartTime = "00" + strStartTime
-    elif len(strStartTime) == 3:
-        strStartTime = "0" + strStartTime
-    
-    
-    strWall = str(wall)
-    strRow = str(row)
-    strColumn = str(column)
-    
-    step = strStartTime + strWall + strRow + strColumn + strEndTime
-    target.write(step)
-    
-    print "-------------------------------------"
-    print strStartTime
-    print strWall
-    print strRow
-    print strColumn
-    print strEndTime
-    print step
-    
+
+
+    temp = []
+    temp.append(wall)
+    temp.append(row)
+    temp.append(column)
+    temp.append(endTime)
+
+    if startTime in dictionary:
+        dictionary[startTime].append(temp)
+    else:
+        container = []
+        container.append(temp)
+        dictionary[startTime] = container;
+
     i = i + 1
-    
+
+#keys = sorted(keys)
+#print keys
+#print dictionary
+#print sorted(dictionary)
+#print dictionary
+for k in dictionary.keys():
+    temp = dictionary[k]
+    for val in temp:
+        strStartTime = str(k)
+        strEndTime = str(val[3])
+
+        if len(strEndTime) == 1:
+            strEndTime = "0" + strEndTime
+        if len(strStartTime) == 1:
+            strStartTime = "000" + strStartTime
+        elif len(strStartTime) == 2:
+            strStartTime = "00" + strStartTime
+        elif len(strStartTime) == 3:
+            strStartTime = "0" + strStartTime
+
+        strWall = str(val[0])
+        strRow = str(val[1])
+        strColumn = str(val[2])
+
+        step = strStartTime + strWall + strRow + strColumn + strEndTime
+        target.write(step)
+
+        print "-------------------------------------"
+        print strStartTime
+        print strWall
+        print strRow
+        print strColumn
+        print strEndTime
+        print step
+
 target.close()
+
+    
+
+
+    
+
 
