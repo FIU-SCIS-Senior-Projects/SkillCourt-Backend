@@ -1,5 +1,9 @@
 package com.seniorproject.skillcourt;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -16,8 +20,12 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by msant080 on 2/17/2015.
@@ -27,6 +35,15 @@ public class Play extends ActionBarActivity {
     TextView descriptionText;
     Spinner routines;
     dbInteraction dbi;
+    ArrayAdapter<String> adapter;
+
+    //Bluetooth
+    public final static String EXTRA_PAD = "pad";
+    BluetoothAdapter ba;
+    HashMap<String, BluetoothDevice> devices;
+    private OutputStream outStream;
+    private InputStream inStream;
+    BluetoothSocket btSocket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +54,6 @@ public class Play extends ActionBarActivity {
 
         setSpinner();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,12 +80,6 @@ public class Play extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void getRoutine(View view) {
-        String rname = routines.getSelectedItem().toString();
-        dbInteraction dbi = new dbInteraction();
-        descriptionText.setText(dbi.getRoutine(rname));
     }
 
     public void setSpinner() {
@@ -105,6 +115,28 @@ public class Play extends ActionBarActivity {
                 descriptionText.setText("Choose a routine from the list above to see its description.");
             }
         });
+    }
+
+    public void getRoutine(View view) {
+        String rname = routines.getSelectedItem().toString();
+        dbInteraction dbi = new dbInteraction();
+        String routine = dbi.getRoutine(rname);
+        descriptionText.setText(descriptionText.getText() + "\n" + routine);
+
+        sendRoutine(routine);
+    }
+
+    public void sendRoutine(String routine) {
+        Intent intent = getIntent();
+        BluetoothDevice dev = intent.getParcelableExtra(Scan.EXTRA_PAD);
+        try {
+            btSocket = dev.createRfcommSocketToServiceRecord(Scan.MY_UUID);
+            btSocket.connect();
+            outStream = btSocket.getOutputStream();
+            outStream.write(routine.getBytes());
+        } catch (Exception e) {
+            System.out.println("Error connecting to Bluetooth:\n\t" + e);
+        }
     }
 }
 
