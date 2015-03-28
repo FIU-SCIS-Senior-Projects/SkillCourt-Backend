@@ -22,7 +22,7 @@
            android:layout_width="fill_parent"
            android:layout_height="50dp"
            android:layout_marginTop="30dp"
-           android:text="Scann For Pads"
+           android:text="Scan For Pads"
            android:onClick="scan"/>
 
         <Button
@@ -39,8 +39,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:text="Start Playing"
-            android:onClick="play" />
-
+            android:onClick="play"
+            android:enabled="false" />
 
         <TextView
             android:layout_width="fill_parent"

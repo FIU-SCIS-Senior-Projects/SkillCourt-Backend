@@ -1,6 +1,7 @@
 package com.seniorproject.skillcourt;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -18,6 +19,7 @@ public class Home extends ActionBarActivity {
     String puname = new String("");
     public final static String EXTRA_MESSAGE = "Credentials";
     int REQUEST_PAD_INFO = 1;
+    boolean connected = false;
 
     Boolean bluetoothSupported = true;
 
@@ -90,12 +92,15 @@ public class Home extends ActionBarActivity {
         {
             if(data.getStringArrayExtra("result")[0].equals("Profile"))
             {
-
+                connected = false;
+                findViewById(R.id.start_playing).setEnabled(false);
             }
             else {
                 //get the name and address of device that was touched by the user in the list
                 TextView tv = (TextView) findViewById(R.id.no_bluetooth);
                 tv.setText("You are connected to " + data.getStringArrayExtra("result")[0]);
+                connected = true;
+                findViewById(R.id.start_playing).setEnabled(true);
             }
         }
         else if(data.getStringArrayExtra("result") == null)
@@ -103,7 +108,8 @@ public class Home extends ActionBarActivity {
             bluetoothSupported = false;
             TextView tv = (TextView) findViewById(R.id.no_bluetooth);
             tv.setText("Your device does not support bluetooth connection");
-
+            connected = false;
+            findViewById(R.id.start_playing).setEnabled(false);
         }
         else
         {
@@ -111,18 +117,21 @@ public class Home extends ActionBarActivity {
         }
     }
 
-    public void scan(View view)
-    {
+    public void scan(View view){
         Intent scan = new Intent(this, Scan.class);
-        scan.putExtra("puname", puname);
+        scan.putExtra(Login.EXTRA_MESSAGE, puname);
         startActivityForResult(scan, REQUEST_PAD_INFO);
         //finish();//not sure
     }
 
 
     public void play(View view){
-        System.out.println("In play method");
-        Intent intent = new Intent(this, Play.class);
+        Intent intent = getIntent();
+        BluetoothDevice dev = intent.getParcelableExtra("pad");
+
+        intent = new Intent(this, Play.class);
+        intent.putExtra(Scan.EXTRA_PAD, dev);
+        intent.putExtra(Login.EXTRA_MESSAGE, puname);
         startActivity(intent);
     }
 }
