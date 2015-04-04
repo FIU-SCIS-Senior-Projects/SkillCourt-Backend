@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class Home extends ActionBarActivity {
 
-    String puname = new String("");
+    String puname = "";
     public final static String EXTRA_MESSAGE = "Credentials";
     int REQUEST_PAD_INFO = 1;
     boolean connected = false;
@@ -93,7 +93,7 @@ public class Home extends ActionBarActivity {
             if(data.getStringArrayExtra("result")[0].equals("Profile"))
             {
                 connected = false;
-                findViewById(R.id.start_playing).setEnabled(false);
+                findViewById(R.id.start_playing).setEnabled(true);
             }
             else {
                 //get the name and address of device that was touched by the user in the list

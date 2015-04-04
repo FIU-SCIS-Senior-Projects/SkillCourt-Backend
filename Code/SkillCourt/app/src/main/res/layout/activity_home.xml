@@ -40,7 +40,7 @@
             android:layout_marginTop="30dp"
             android:text="Start Playing"
             android:onClick="play"
-            android:enabled="false" />
+            android:enabled="true" />
 
         <TextView
             android:layout_width="fill_parent"
