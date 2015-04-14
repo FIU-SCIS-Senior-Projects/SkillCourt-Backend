@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -43,15 +45,20 @@ public class Play extends ActionBarActivity {
     String puname, coach;
 
     // Bluetooth Related Vars
-    public final static String EXTRA_PAD = "pad";
+    String pad_name;
+    String pad_addr;
+
     BluetoothAdapter ba;
-    HashMap<String, BluetoothDevice> devices;
     private OutputStream outStream;
     private InputStream inStream;
     BluetoothSocket btSocket;
+    BluetoothDevice dev;
 
+    protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     // Routine Related Vars
     String rname, difficulty, rounds, timer, timebased, type, user, usertype;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +66,13 @@ public class Play extends ActionBarActivity {
 
         Intent intent = getIntent();
         puname = intent.getStringExtra(Login.EXTRA_MESSAGE);
+        pad_name = intent.getStringExtra(Home.EXTRA_PAD_NAME);
+        pad_addr = intent.getStringExtra(Home.EXTRA_PAD_ADDR);
+
+        dev = intent.getExtras().getParcelable(Home.EXTRA_PAD);
+        Log.w("DDDDDDD", dev.getName());
+
+
         coach = (new dbInteraction()).getCoach(puname);
 
         // Set Spinners
@@ -304,12 +318,40 @@ public class Play extends ActionBarActivity {
 
     }
 
-
-
     public void startRoutine(String name, String difficulty, String type, String rounds, String timer,
                              String timebased, String user, String usertype) {
         // To Do:
         //   Send routine via Bluetooth to master pad
+        Log.w("QQQQQ", name);
+        Log.w("QQQQQ", difficulty);
+        Log.w("QQQQQ", type);
+        Log.w("QQQQQ", rounds);
+        Log.w("QQQQQ", timer);
+        Log.w("QQQQQ", timebased);
+
+        String message = buildMessage(type, difficulty, rounds, timer, timebased);
+            try {
+                btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+                btSocket.connect();
+                outStream = btSocket.getOutputStream();
+                inStream = btSocket.getInputStream();
+                outStream.write(message.getBytes());
+                //btSocket.close();//delete this
+                //
+            }catch (Exception e)
+            {
+                genericWarning w = new genericWarning();
+                w.setPossitive("OK");
+                w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");
+                w.show(getFragmentManager(),"no_bluetooth");
+            }
+
+    }
+
+    String buildMessage(String type, String difficulty, String rounds, String timer, String timebased)
+    {
+        //except for type and difficulty/level all values are null we nned to handle that
+        return "Shazz6zzzzzzE\n";//need to fix this
     }
 
 //    public void sendRoutine(String routine) {
