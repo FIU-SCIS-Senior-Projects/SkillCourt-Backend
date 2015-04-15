@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.ExpandableListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -51,6 +53,7 @@ public class Play extends ActionBarActivity {
     BluetoothSocket btSocket;
 
     // Routine Related Vars
+    Switch s;
     String rname, difficulty, rounds, timer, timebased, type, user, usertype;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,17 +245,42 @@ public class Play extends ActionBarActivity {
     }
     /************************ End Tab setup methods  ************************/
 
+    /**
+     * Switch for selecting playing timer or rounds for a default routine
+     * @param view the Switch object
+     */
+    public void switchChange(View view) {
+        s = (Switch) view;
+        TextView tv = (TextView) findViewById(R.id.rtText);
+
+        if (s.isChecked()) {
+            // on for rounds
+            tv.setText("rounds");
+        } else {
+            // off for timer
+            tv.setText("minutes");
+        }
+    }
+
+    /**
+     * Player clicked on a Default routine to play
+     * @param view the button object which was clicked on
+     */
     public void playDef(View view) {
         //difficulty, rounds, timer, timebased, type, user, usertype;
         Spinner spin = (Spinner) findViewById(R.id.defRoutinesSpin);
         RadioGroup radGrp = ((RadioGroup) findViewById(R.id.difficultyRadGrp));
         RadioButton rad = (RadioButton) findViewById(radGrp.getCheckedRadioButtonId());
-
+        if (s.isChecked()) {
+            rounds = ((TextView) findViewById(R.id.rtText)).getText().toString();
+            timer = null;
+        } else {
+            timer = ((TextView) findViewById(R.id.rtText)).getText().toString();
+            rounds = null;
+        }
         difficulty = rad.getText().toString();
         type = (String) spin.getSelectedItem();
         rname = "null";
-        rounds = "null";
-        timer = "null";
         timebased = "null";
         user = "null";
         usertype = "null";
@@ -260,6 +288,10 @@ public class Play extends ActionBarActivity {
         startRoutine(rname ,difficulty, type, rounds, timer, timebased, user, usertype);
     }
 
+    /**
+     * Player clicked on a Player-made custom routine to play
+     * @param view the button object which was clicked on
+     */
     public void playPlayer(View view) {
         Spinner spin = (Spinner) findViewById(R.id.custRoutinesSpin);
         rname = (String) spin.getSelectedItem();
@@ -269,6 +301,10 @@ public class Play extends ActionBarActivity {
         playCustom(rname, user, usertype);
     }
 
+    /**
+     * Player clicked on a Coach's custom routine to play
+     * @param view the button object which was clicked on
+     */
     public void playCoach(View view) {
         Spinner spin = (Spinner) findViewById(R.id.coachRoutinesSpin);
         rname = (String) spin.getSelectedItem();
@@ -278,6 +314,12 @@ public class Play extends ActionBarActivity {
         playCustom(rname, user, usertype);
     }
 
+    /**
+     * Get vars for custom routine
+     * @param rname the name of the routine selected
+     * @param user the name of the user which the routine belongs
+     * @param usertype the usertype of the creator of the routine
+     */
     public void playCustom(String rname, String user, String usertype) {
         // get info from database
         dbInteraction dbi = new dbInteraction();
@@ -304,8 +346,17 @@ public class Play extends ActionBarActivity {
 
     }
 
-
-
+    /**
+     * Send routine vars to pad
+     * @param name The name of the Routine selected
+     * @param difficulty The difficulty of the routine selected (Novice, Intermediate, Advanced)
+     * @param type The type of routine selected (Chase me, Fly me, Drive, etc.)
+     * @param rounds The number of rounds selected to play (null if timer selected)
+     * @param timer The number of minutes to play (null if rounds selected)
+     * @param timebased The time that a light will stay lit for in seconds
+     * @param user The username of the owner of the routine
+     * @param usertype The usertype of the owner of the routine
+     */
     public void startRoutine(String name, String difficulty, String type, String rounds, String timer,
                              String timebased, String user, String usertype) {
         // To Do:

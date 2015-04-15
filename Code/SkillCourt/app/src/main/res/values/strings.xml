@@ -18,6 +18,7 @@
 
     <!-- Login Activity -->
     <string name="title_activity_login">Login</string>
+    <string name="skillCourt_header">SkillCourt</string>
     <string name="user_name">USERNAME</string>
     <string name="password">PASSWORD</string>
     <string name="login_button">LOGIN</string>
