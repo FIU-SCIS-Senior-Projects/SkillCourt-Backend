@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,23 +29,28 @@ import java.util.UUID;
 public class Scan extends ActionBarActivity {
     String puname;
 
+
+
     //List view
     ListView pads_list_view;
-    ArrayAdapter<String> adapter;
     ArrayList<String> values;
+    ArrayAdapter<String> adapter;
 
     //Bluetooth
+    public final static String RESULT = "result";
     public final static String EXTRA_PAD = "pad";
     BluetoothAdapter ba;
     SingBroadcastReceiver mReceiver;
     HashMap<String, BluetoothDevice> devices;
-    protected static final UUID MY_UUID = UUID.fromString("1e0ca4ea-299d-4335-93eb-27fcfe7fa848");
+    protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//("1e0ca4ea-299d-4335-93eb-27fcfe7fa848");
     private OutputStream outStream;
     private InputStream inStream;
     BluetoothSocket btSocket;
 
     //Progress dialog
     ProgressDialog progressDialog;
+
+    BluetoothDevice dev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +81,18 @@ public class Scan extends ActionBarActivity {
                 arr[1] = device.getAddress();
 
                 Boolean b = verifyIfPad(device);
-
-                if (b)
-                    sendPadHome(device);
+                Log.w("WWWWWW", "W2");
+                if (b) {
+                    dev = device;
+                    sendPadHome(arr);
+                }
+                else
+                {
+                    genericWarning w = new genericWarning();
+                    w.setPossitive("OK");
+                    w.setMessage("The device you selected is not a Skill-Court Pad. Try another one");
+                    w.show(getFragmentManager(),"not_a_pad");
+                }
                     //returnToHome(arr);
             }
         });
@@ -97,42 +112,73 @@ public class Scan extends ActionBarActivity {
     }
 
     Boolean verifyIfPad(BluetoothDevice dev) {
+        //Log.d("CCCCCCCCCCCCC", "CCCCCCCCCCCCCCCCCCC");
+        Log.w("WWWWWW", "W1a");
         try {
+            Log.w("WWWWWW", "W1b");
             btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+            Log.w("WWWWWW", "W1b1");
             btSocket.connect();
+            Log.w("WWWWWW", "W1b2");
             outStream = btSocket.getOutputStream();
             inStream = btSocket.getInputStream();
-            outStream.write("Hello".getBytes());
+            outStream.write("Hello\n".getBytes());
+            Log.w("WWWWWW", "W1b3");
             //get reply
-            int Availablebytes = inStream.available();
+            int Availablebytes = 0;
+
+            long startTime = System.currentTimeMillis();
+            while((System.currentTimeMillis() - startTime)/1000 < 10)
+            {
+
+                Availablebytes = inStream.available();
+                if(Availablebytes >= 14)
+                    break;
+            }
+
+
             if (Availablebytes > 0) {
+                Log.w("Inside", Integer.toString(Availablebytes));
+
                 byte[] packetBytes = new byte[Availablebytes];
                 inStream.read(packetBytes);
-                String message = getMessage(Availablebytes, packetBytes);
 
-                if (message.equals("Hello from pad"))
+
+
+                String message = getMessage(packetBytes);
+
+                if (message.equals("Hello from pad")) {
+                    btSocket.close();
                     return true;
-                else
+                }
+                else {
+                    btSocket.close();
                     return false;
+                }
                 //here
-            } else
+            } else {
+                btSocket.close();
                 return false;
+            }
         } catch (Exception e) {
+            Log.w("WWWWWW", "W1c");
             return false;
         }
 
     }
 
-    String getMessage(int byteLength, byte[] bytes) {
-        String msg = new String("");
-
-        if (bytes == null)
+    String getMessage(byte[] bytes) {
+        try{
+            String str = new String(bytes, "US-ASCII");
+            Log.w("MMMMM", str);
+            return str.split("\n")[0];
+        }
+        catch(Exception e)
+        {
             return null;
+        }
 
-        for (int i = 0; i < byteLength; i++)
-            msg = msg + bytes[i];
 
-        return msg;
     }
 
 //    public void returnToHome(String[] arr) {
@@ -154,6 +200,7 @@ public class Scan extends ActionBarActivity {
             genericWarning w = new genericWarning();
             w.setPossitive("OK");
             w.setMessage("There was a problem turning on bluetooth connection. Try to do it manually.");
+            w.show(getFragmentManager(),"error_turning_bluetooth_on");
         }
     }
 
@@ -201,8 +248,11 @@ public class Scan extends ActionBarActivity {
     }
 
     public void addValueToList(String bName) {
+        Log.d("BBBBBBBBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBBBBBBBBBBBB");
         if (!values.contains(bName)) {
+            Log.d("BBBBBBBBBBBBBBBBBBBBB11", "BBBBBBBBBBBBBBBBBBBBBBBBB111");
             values.add(bName);
+            Log.d("BBBBBBBBBBBBBBBB222", "BBBBBBBBBBBBBBBBBBB22");
             adapter.notifyDataSetChanged();
         }
     }
@@ -217,29 +267,33 @@ public class Scan extends ActionBarActivity {
             String action = intent.getAction(); //may need to chain this to a recognizing function
             if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
 
-                progressDialog = new ProgressDialog(Scan.this);
-                progressDialog.setTitle("Scanning");
-                progressDialog.setMessage("Currently looking for possible SkillCourt pads");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.show();
+                //progressDialog = new ProgressDialog(Scan.this);
+                //progressDialog.setTitle("Scanning");
+                //progressDialog.setMessage("Currently looking for possible SkillCourt pads");
+                //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                //progressDialog.show();
 
 
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                devices.put(device.getName(), device);
 
-                if (device.getName() != null)
+
+                if (device.getName() != null) {
                     addValueToList(device.getName());
-                else
+                    devices.put(device.getName(), device);
+                }
+                else {
                     addValueToList(device.getAddress());
+                    devices.put(device.getAddress(), device);
+                }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 //discovery finishes, dismis progress dialog
                 if (devices.isEmpty()) {
                     TextView tv = (TextView) findViewById(R.id.scanning_message_textview);
                     tv.setText("No bluetooth device was found");
                 }
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
                 if (ba.isDiscovering())
                     ba.cancelDiscovery();//not sure
             }
@@ -261,9 +315,18 @@ public class Scan extends ActionBarActivity {
         this.finish();
     }
 
-    public void sendPadHome(BluetoothDevice device) {
+    public void sendPadHome(String[] arr) {
         Intent intent = new Intent(this, Home.class);
-        intent.putExtra(EXTRA_PAD, device);
-        startActivity(intent);
+        //intent.putExtra("result", arr);
+        //this.setResult(this.RESULT_OK);
+        //Log.d("LLLLLLLLLL", "AAAAAAAAAAAAAAAAAAAAAAAAA");
+        //startActivity(intent);
+        //finish();
+
+        intent.putExtra("result", arr);
+        intent.putExtra(EXTRA_PAD, dev);
+       // Log.w("MMMMMMMMMMMMMMMM", dev.getName());
+        this.setResult(this.RESULT_OK, intent);
+        finish();
     }
 }
