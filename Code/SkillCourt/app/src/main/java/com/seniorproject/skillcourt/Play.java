@@ -8,11 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-<<<<<<< HEAD
 import android.text.InputType;
-=======
 import android.util.Log;
->>>>>>> origin/develop
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -363,7 +360,6 @@ public class Play extends ActionBarActivity {
 
     }
 
-<<<<<<< HEAD
     /**
      * Send routine vars to pad
      * @param name The name of the Routine selected
@@ -375,8 +371,6 @@ public class Play extends ActionBarActivity {
      * @param user The username of the owner of the routine
      * @param usertype The usertype of the owner of the routine
      */
-=======
->>>>>>> origin/develop
     public void startRoutine(String name, String difficulty, String type, String rounds, String timer,
                              String timebased, String user, String usertype) {
         // To Do:
