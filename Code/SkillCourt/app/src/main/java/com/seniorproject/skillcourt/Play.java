@@ -17,6 +17,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -29,7 +30,10 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -49,7 +53,6 @@ public class Play extends ActionBarActivity {
     // Bluetooth Related Vars
     String pad_name;
     String pad_addr;
-
     BluetoothAdapter ba;
     private OutputStream outStream;
     private InputStream inStream;
@@ -59,7 +62,7 @@ public class Play extends ActionBarActivity {
     protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     // Routine Related Vars
     Switch s;
-    String rname, difficulty, rounds, timer, timebased, type, user, usertype;
+    String rname, user, usertype;
 
 
 
@@ -69,12 +72,14 @@ public class Play extends ActionBarActivity {
 
         Intent intent = getIntent();
         puname = intent.getStringExtra(Login.EXTRA_MESSAGE);
+        /* Commented out for testing purposes only
         pad_name = intent.getStringExtra(Home.EXTRA_PAD_NAME);
         pad_addr = intent.getStringExtra(Home.EXTRA_PAD_ADDR);
 
         dev = intent.getExtras().getParcelable(Home.EXTRA_PAD);
-        Log.w("DDDDDDD", dev.getName());
 
+        Log.w("DDDDDDD", dev.getName());
+        */
 
         coach = (new dbInteraction()).getCoach(puname);
 
@@ -85,6 +90,7 @@ public class Play extends ActionBarActivity {
 
         // Set Tabs
         setTabs();
+        s = (Switch) findViewById(R.id.rtSwitch);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,11 +120,10 @@ public class Play extends ActionBarActivity {
 
     /********************** Start Spinner setup methods  **********************/
     public void setSpinnerDefault() {
-        System.out.println("setting up default routines");
-
         // Set Default routines into a list
         List<String> list = new ArrayList<>();
-        list.add("Chase");
+        list.add("Chase Me");
+        list.add("Fly Me");
 
         // Attach list to adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, list);
@@ -138,13 +143,25 @@ public class Play extends ActionBarActivity {
         defa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String routine = defa.getItemAtPosition(position).toString().trim();
-                System.out.println(routine);
-                if (routine == "Chase") {
-                    defaDesc.setText("Chase the light around the room being careful to " +
-                            "avoid hitting the inactive ones!");
+                String description = "";
+                // Get routine type
+                description = defa.getSelectedItem().toString();
+                // Check if ground pads are used
+                if (((CheckBox) findViewById(R.id.groundCheck)).isChecked())
+                    description = "Ground " + description;
+                // Set Description based on description variable
+                switch (description) {
+                    case "Chase Me":
+                        defaDesc.setText(R.string.chase_me_desc); break;
+                    case "Fly Me":
+                        defaDesc.setText(R.string.fly_me_desc); break;
+                    case "Ground Chase Me":
+                        defaDesc.setText(R.string.ground_chase_desc); break;
+                    case "Ground Fly Me":
+                        defaDesc.setText(R.string.ground_fly_desc); break;
+                    default :
+                        defaDesc.setText("defChoose a routine from the list above to see its description.");
                 }
-                else
-                    defaDesc.setText("Choose a routine from the list above to see its description.");
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -154,8 +171,6 @@ public class Play extends ActionBarActivity {
     }
 
     public void setSpinnerCustom() {
-        System.out.println("setting up custom routines");
-
         // Get Custom Routines from Database
         dbi = new dbInteraction();
         String routinesList = "," + dbi.listCustomRoutines(puname, "P");
@@ -181,11 +196,8 @@ public class Play extends ActionBarActivity {
     }
 
     public void setSpinnerCoach() {
-        System.out.println("setting up coach routines");
-
         // Get Custom Routines from Database
         dbi = new dbInteraction();
-        System.out.println("Coach for " + puname + " is " + coach);
         String routinesList = "," + dbi.listCustomRoutines(coach, "C");
         List<String> list = new ArrayList<>();
 
@@ -209,7 +221,6 @@ public class Play extends ActionBarActivity {
     }
 
     public void setSpinnerListener(final Spinner spin, final TextView desc, final String which) {
-        System.out.println("setting on item selected listener for " + which);
         final String username;
         if (which == "C")
             username = coach;
@@ -220,7 +231,6 @@ public class Play extends ActionBarActivity {
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String routine = spin.getItemAtPosition(position).toString().trim();
-                System.out.println(routine);
                 dbi = new dbInteraction();
                 desc.setText(dbi.getRoutineDescription(routine, username, which));
             }
@@ -264,7 +274,6 @@ public class Play extends ActionBarActivity {
      * @param view the Switch object
      */
     public void switchChange(View view) {
-        s = (Switch) view;
         TextView tv = (TextView) findViewById(R.id.rtText);
 
         if (s.isChecked()) {
@@ -276,6 +285,14 @@ public class Play extends ActionBarActivity {
         }
     }
 
+    public void addGround(View view) {
+        genericWarning w = new genericWarning();
+        w.setPossitive("OK");
+        w.setMessage("Ground targeting is not yet available");
+        w.show(getFragmentManager(),"Unavailable");
+        ((CheckBox) view).setChecked(false);
+    }
+
     /**
      * Player clicked on a Default routine to play
      * @param view the button object which was clicked on
@@ -285,25 +302,33 @@ public class Play extends ActionBarActivity {
         Spinner spin = (Spinner) findViewById(R.id.defRoutinesSpin);
         RadioGroup radGrp = ((RadioGroup) findViewById(R.id.difficultyRadGrp));
         RadioButton rad = (RadioButton) findViewById(radGrp.getCheckedRadioButtonId());
+        Routine r = new Routine("SkillCourtDefault");
         if (s.isChecked()) {
-            rounds = ((TextView) findViewById(R.id.rtText)).getText().toString();
-            timer = null;
+            r.setRounds(Integer.parseInt(((EditText) findViewById(R.id.rtEdit)).getText().toString()));
+            r.setTimer(0);
         } else {
-            timer = ((TextView) findViewById(R.id.rtText)).getText().toString();
-            rounds = null;
+            r.setTimer(Integer.parseInt(((EditText) findViewById(R.id.rtEdit)).getText().toString()));
+            r.setRounds(0);
         }
-        difficulty = rad.getText().toString();
-        type = (String) spin.getSelectedItem();
-        rname = "null";
-        timebased = "null";
-        user = "null";
-        usertype = "null";
+        if (((CheckBox) findViewById(R.id.groundCheck)).isChecked())
+            r.setGround(true);
+        switch ((String) spin.getSelectedItem()) {
+            case "Fly Me" :
+                r.setType('F'); break;
+            case "Chase Me" :
+                r.setType('C'); break;
+        }
 
-        startRoutine(rname ,difficulty, type, rounds, timer, timebased, user, usertype);
+        r.setDifficulty(rad.getText().toString().toUpperCase().charAt(0));
+        r.setUsername("SkillCourt");
+        r.setUsertype('A');
+
+        startRoutine(r);
     }
 
     /**
      * Player clicked on a Player-made custom routine to play
+     * Pass variables to playcustom for db-fetch
      * @param view the button object which was clicked on
      */
     public void playPlayer(View view) {
@@ -317,6 +342,7 @@ public class Play extends ActionBarActivity {
 
     /**
      * Player clicked on a Coach's custom routine to play
+     * Pass variables to playcustom for db-fetch
      * @param view the button object which was clicked on
      */
     public void playCoach(View view) {
@@ -337,60 +363,47 @@ public class Play extends ActionBarActivity {
     public void playCustom(String rname, String user, String usertype) {
         // get info from database
         dbInteraction dbi = new dbInteraction();
-        String routineInfo = dbi.getRoutine(rname, user, usertype);
+        Routine r = dbi.getRoutine(rname, user, usertype);
 
-        // Parse routine info to Vars
-        rounds = routineInfo.substring(0, routineInfo.indexOf(" "));
-        routineInfo.substring(rounds.length());
-        timer = routineInfo.substring(0, routineInfo.indexOf(" "));
-        routineInfo.substring(timer.length());
-        timebased = routineInfo.substring(0, routineInfo.indexOf(" "));
-        routineInfo.substring(timebased.length());
-        type =  routineInfo.substring(0, routineInfo.indexOf(" "));
-
-        System.out.println("Routine = " + rname);
-        System.out.println("User = " + user);
-        System.out.println("User Type = " + usertype);
-        System.out.println("Rounds = " + rounds);
-        System.out.println("Timer = " + timer);
-        System.out.println("Time Based = " + timebased);
-        System.out.println("Type = " + type);
-
-        startRoutine(rname, "null", type, rounds, timer, timebased, user, usertype);
-
+        startRoutine(r);
     }
 
     /**
      * Send routine vars to pad
-     * @param name The name of the Routine selected
-     * @param difficulty The difficulty of the routine selected (Novice, Intermediate, Advanced)
-     * @param type The type of routine selected (Chase me, Fly me, Drive, etc.)
-     * @param rounds The number of rounds selected to play (null if timer selected)
-     * @param timer The number of minutes to play (null if rounds selected)
-     * @param timebased The time that a light will stay lit for in seconds
-     * @param user The username of the owner of the routine
-     * @param usertype The usertype of the owner of the routine
+     * @param r the routine to be played
      */
-    public void startRoutine(String name, String difficulty, String type, String rounds, String timer,
-                             String timebased, String user, String usertype) {
+    public void startRoutine(Routine r) {
+        String name = r.getName();
+        String type = String.valueOf(r.getType());
+        String difficulty = String.valueOf(r.getDifficulty());
+        String rounds = String.valueOf(r.getTimer());
+        String timer = String.valueOf(r.getTimer());
+        String timebased = String.valueOf(r.getTimebased());
+        String ground; if (r.getGround()) ground = "y"; else ground = "n";
+
         // To Do:
         //   Send routine via Bluetooth to master pad
         Log.w("QQQQQ", name);
         Log.w("QQQQQ", difficulty);
         Log.w("QQQQQ", type);
+        Log.w("QQQQQ", ground);
         Log.w("QQQQQ", rounds);
         Log.w("QQQQQ", timer);
         Log.w("QQQQQ", timebased);
 
         String message = buildMessage(type, difficulty, rounds, timer, timebased);
-            try {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        //Testing stat storage
+        dbInteraction dbi = new dbInteraction();
+        dbi.addStat(puname, difficulty, dateFormat.format(date), "10", "5", "12.32", "17.22", "12", "10.12", rounds);
+         /*try {
                 btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
                 btSocket.connect();
                 outStream = btSocket.getOutputStream();
                 inStream = btSocket.getInputStream();
                 outStream.write(message.getBytes());
                 //btSocket.close();//delete this
-                //
             }catch (Exception e)
             {
                 genericWarning w = new genericWarning();
@@ -398,7 +411,7 @@ public class Play extends ActionBarActivity {
                 w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");
                 w.show(getFragmentManager(),"no_bluetooth");
             }
-
+            */
     }
 
     String buildMessage(String type, String difficulty, String rounds, String timer, String timebased)
@@ -406,18 +419,5 @@ public class Play extends ActionBarActivity {
         //except for type and difficulty/level all values are null we nned to handle that
         return "Shazz6zzzzzzE\n";//need to fix this
     }
-
-//    public void sendRoutine(String routine) {
-//        Intent intent = getIntent();
-//        BluetoothDevice dev = intent.getParcelableExtra(Scan.EXTRA_PAD);
-//        try {
-//            btSocket = dev.createRfcommSocketToServiceRecord(Scan.MY_UUID);
-//            btSocket.connect();
-//            outStream = btSocket.getOutputStream();
-//            outStream.write(routine.getBytes());
-//        } catch (Exception e) {
-//            System.out.println("Error connecting to Bluetooth:\n\t" + e);
-//        }
-//    }
 }
 

@@ -121,6 +121,13 @@
             android:name=".EditPassword"
             android:label="@string/title_activity_edit_password" >
         </activity>
+        <activity
+            android:name=".GameResults"
+            android:label="Results" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Home" />
+        </activity>
     </application>
 
 </manifest>

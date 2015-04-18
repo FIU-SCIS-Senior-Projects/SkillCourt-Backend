@@ -85,5 +85,13 @@
     <!--Play Activity-->
     <string name="routine_description_default">Select a routine above for its description. . .</string>
     <string name="play_routine_button">Play!</string>
+    <string name="chase_me_desc">Chase the green light around the room while avoiding the red ones!</string>
+    <string name="chase_me_time_desc">Chase the green light around the room as fast as you can while avoiding the red ones!</string>
+    <string name="fly_me_desc">Your targets are in the air this time!  Aim high to hit your target.</string>
+    <string name="fly_me_time_desc">Your targets are in the air this time!  Keep up the speed and aim high to hit your target.</string>
+    <string name="ground_chase_desc">Activate the floor target and then chase the green light around the room while avoiding the red ones!</string>
+    <string name="ground_chase_time_desc">Activate the floor target and then chase the green light around the room as fast as you can while avoiding the red ones!</string>
+    <string name="ground_fly_desc">Activate the floor target and then look up! Your targets are in the air this time so fly the ball high.</string>
+    <string name="ground_fly_time_desc">Activate the floor target and then look up! Your targets are in the air this time so keep up the speed and fly the ball high.</string>
 
 </resources>

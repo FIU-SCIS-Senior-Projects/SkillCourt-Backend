@@ -70,6 +70,14 @@
                             android:id="@+id/defRoutinesSpin"
                             android:layout_marginTop="5dp" />
 
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Ground Targets"
+                            android:id="@+id/groundCheck"
+                            android:checked="false"
+                            android:onClick="addGround" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -79,7 +87,7 @@
                             android:textStyle="bold"
                             android:textSize="20dp"
                             android:textColor="#ff000000"
-                            android:layout_marginTop="20dp" />
+                            android:layout_marginTop="5dp" />
 
                         <RadioGroup
                             android:layout_width="wrap_content"

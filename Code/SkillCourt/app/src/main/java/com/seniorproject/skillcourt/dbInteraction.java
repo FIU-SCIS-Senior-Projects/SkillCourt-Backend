@@ -161,7 +161,14 @@ public class dbInteraction {
         }
     }
 
-    public String getRoutine(String rname, String user, String usertype)
+    /**
+     * returns string array of vars
+     * @param rname name of routine to be fetched
+     * @param user username of the routine creator
+     * @param usertype usertype of routine creator
+     * @return String[rname, descr, rounds, timer, timebased, type, lock, username, usertype, difficulty]
+     */
+    public Routine getRoutine(String rname, String user, String usertype)
     {
         HttpPost httppost;
         String resp;
@@ -182,13 +189,36 @@ public class dbInteraction {
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             resp = httpclient.execute(httppost, responseHandler);
             System.out.println("Post executed");
-
-            // Login Response
             System.out.println("Resp: " + resp);
-            return resp;
+            String[] vars = new String[7];
+            int i = 0;
+            while (resp.contains("|")) {
+                vars[i] = resp.substring(0, resp.indexOf("|"));
+                resp = resp.substring(resp.indexOf("|") + 1);
+                System.out.println("added " + vars[i] + " to index " + i);
+                i++;
+            }
+            vars[i] = resp;
+
+            // Create new routine with vars obtained
+            Routine routine = new Routine(rname);
+            routine.setUsername(user);
+            routine.setUsertype(usertype.charAt(0));
+            routine.setDescription(vars[0]);
+            routine.setRounds(Integer.parseInt(vars[1]));
+            routine.setTimer(Integer.parseInt(vars[2]));
+            routine.setTimebased(Integer.parseInt(vars[3]));
+            routine.setType(vars[4].charAt(0));
+            if (Integer.parseInt(vars[5]) == 1)
+                routine.setLock(true);
+            else
+                routine.setLock(false);
+            routine.setDifficulty(vars[6].charAt(0));
+
+            return routine;
         } catch (Exception e) {
             System.out.println(e);
-            return "Error";
+            return null;
         }
     }
 
@@ -394,6 +424,40 @@ public class dbInteraction {
 
         } catch (Exception e) {
             return 'e';
+        }
+    }
+
+    //not working yet
+    public boolean addStat(String puname, String level, String dateTime, String points,
+                           String streak, String tbs, String tbsot, String shots,
+                           String force, String rounds) {
+        HttpPost httppost;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+        nameValuePairs = new ArrayList<>(10);
+        nameValuePairs.add(new BasicNameValuePair("puname", puname));
+        nameValuePairs.add(new BasicNameValuePair("level", level));
+        nameValuePairs.add(new BasicNameValuePair("dateTime", dateTime));
+        nameValuePairs.add(new BasicNameValuePair("points", points));
+        nameValuePairs.add(new BasicNameValuePair("streak", streak));
+        nameValuePairs.add(new BasicNameValuePair("tbs", tbs));
+        nameValuePairs.add(new BasicNameValuePair("tbsot", tbsot));
+        nameValuePairs.add(new BasicNameValuePair("shots", shots));
+        nameValuePairs.add(new BasicNameValuePair("force", force));
+        nameValuePairs.add(new BasicNameValuePair("rounds", rounds));
+        try {
+
+            // Link to skillcourt-dev myPHPAdmin server
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php_query/store_stat.php");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            httpclient.execute(httppost);
+            return true;
+
+        } catch (Exception e) {
+            return false;
         }
     }
 }
