@@ -81,7 +81,6 @@ public class Scan extends ActionBarActivity {
                 arr[1] = device.getAddress();
 
                 Boolean b = verifyIfPad(device);
-                Log.w("WWWWWW", "W2");
                 if (b) {
                     dev = device;
                     sendPadHome(arr);
@@ -93,7 +92,7 @@ public class Scan extends ActionBarActivity {
                     w.setMessage("The device you selected is not a Skill-Court Pad. Try another one");
                     w.show(getFragmentManager(),"not_a_pad");
                 }
-                    //returnToHome(arr);
+                //returnToHome(arr);
             }
         });
 
@@ -112,18 +111,12 @@ public class Scan extends ActionBarActivity {
     }
 
     Boolean verifyIfPad(BluetoothDevice dev) {
-        //Log.d("CCCCCCCCCCCCC", "CCCCCCCCCCCCCCCCCCC");
-        Log.w("WWWWWW", "W1a");
         try {
-            Log.w("WWWWWW", "W1b");
             btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
-            Log.w("WWWWWW", "W1b1");
             btSocket.connect();
-            Log.w("WWWWWW", "W1b2");
             outStream = btSocket.getOutputStream();
             inStream = btSocket.getInputStream();
             outStream.write("Hello\n".getBytes());
-            Log.w("WWWWWW", "W1b3");
             //get reply
             int Availablebytes = 0;
 
@@ -138,7 +131,6 @@ public class Scan extends ActionBarActivity {
 
 
             if (Availablebytes > 0) {
-                Log.w("Inside", Integer.toString(Availablebytes));
 
                 byte[] packetBytes = new byte[Availablebytes];
                 inStream.read(packetBytes);
@@ -161,7 +153,6 @@ public class Scan extends ActionBarActivity {
                 return false;
             }
         } catch (Exception e) {
-            Log.w("WWWWWW", "W1c");
             return false;
         }
 
@@ -170,7 +161,6 @@ public class Scan extends ActionBarActivity {
     String getMessage(byte[] bytes) {
         try{
             String str = new String(bytes, "US-ASCII");
-            Log.w("MMMMM", str);
             return str.split("\n")[0];
         }
         catch(Exception e)
@@ -248,11 +238,8 @@ public class Scan extends ActionBarActivity {
     }
 
     public void addValueToList(String bName) {
-        Log.d("BBBBBBBBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBBBBBBBBBBBB");
         if (!values.contains(bName)) {
-            Log.d("BBBBBBBBBBBBBBBBBBBBB11", "BBBBBBBBBBBBBBBBBBBBBBBBB111");
             values.add(bName);
-            Log.d("BBBBBBBBBBBBBBBB222", "BBBBBBBBBBBBBBBBBBB22");
             adapter.notifyDataSetChanged();
         }
     }
@@ -301,7 +288,7 @@ public class Scan extends ActionBarActivity {
     }
 
     public void scanAgain(View view) {
-    startSearching();
+        startSearching();
     }
 
     public void goBackHome(View view) {
@@ -318,14 +305,9 @@ public class Scan extends ActionBarActivity {
     public void sendPadHome(String[] arr) {
         Intent intent = new Intent(this, Home.class);
         //intent.putExtra("result", arr);
-        //this.setResult(this.RESULT_OK);
-        //Log.d("LLLLLLLLLL", "AAAAAAAAAAAAAAAAAAAAAAAAA");
-        //startActivity(intent);
-        //finish();
 
         intent.putExtra("result", arr);
         intent.putExtra(EXTRA_PAD, dev);
-       // Log.w("MMMMMMMMMMMMMMMM", dev.getName());
         this.setResult(this.RESULT_OK, intent);
         finish();
     }

@@ -26,8 +26,7 @@ public class Home extends ActionBarActivity {
     String puname = "";
     public final static String EXTRA_MESSAGE = "Credentials";
     int REQUEST_PAD_INFO = 1;
-    //boolean connected = false;
-    boolean connected = true; // for testing purposes only
+    boolean connected = false;
 
     Boolean bluetoothSupported = true;
     BluetoothDevice dev;
@@ -103,10 +102,9 @@ public class Home extends ActionBarActivity {
             //Log.w("IIIIIII", data.getStringArrayExtra("result")[0]);
 
 
-           if (data.getStringArrayExtra("result")[0].equals("Profile")) {
-                    //connected = false;
-                    connected = true; // for testing only
-                    findViewById(R.id.start_playing).setEnabled(true);
+            if (data.getStringArrayExtra("result")[0].equals("Profile")) {
+                connected = false;
+                findViewById(R.id.start_playing).setEnabled(true);
             }
             else {
                 //get the name and address of device that was touched by the user in the list
@@ -174,11 +172,9 @@ public class Home extends ActionBarActivity {
             //BluetoothDevice dev = intent.getParcelableExtra("pad");
 
             intent = new Intent(this, Play.class);
-            /**********Commmented out for testing***********
             intent.putExtra(EXTRA_PAD_NAME, dev_name);
             intent.putExtra(EXTRA_PAD_ADDR, dev_addr);
             intent.putExtra(EXTRA_PAD, dev);
-             */
 
             intent.putExtra(Login.EXTRA_MESSAGE, puname);
             startActivity(intent);

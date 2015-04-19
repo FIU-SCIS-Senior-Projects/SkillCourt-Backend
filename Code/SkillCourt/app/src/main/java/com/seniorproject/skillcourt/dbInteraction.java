@@ -435,25 +435,29 @@ public class dbInteraction {
         HttpClient httpclient;
         List<NameValuePair> nameValuePairs;
         nameValuePairs = new ArrayList<>(10);
-        nameValuePairs.add(new BasicNameValuePair("puname", puname));
+        nameValuePairs.add(new BasicNameValuePair("username", puname));
         nameValuePairs.add(new BasicNameValuePair("level", level));
-        nameValuePairs.add(new BasicNameValuePair("dateTime", dateTime));
+        nameValuePairs.add(new BasicNameValuePair("date", dateTime));
         nameValuePairs.add(new BasicNameValuePair("points", points));
+        nameValuePairs.add(new BasicNameValuePair("shots", shots));
         nameValuePairs.add(new BasicNameValuePair("streak", streak));
         nameValuePairs.add(new BasicNameValuePair("tbs", tbs));
         nameValuePairs.add(new BasicNameValuePair("tbsot", tbsot));
-        nameValuePairs.add(new BasicNameValuePair("shots", shots));
         nameValuePairs.add(new BasicNameValuePair("force", force));
         nameValuePairs.add(new BasicNameValuePair("rounds", rounds));
+        System.out.println("NameValuePairs Set");
         try {
 
             // Link to skillcourt-dev myPHPAdmin server
             httpclient = new DefaultHttpClient();
             httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php_query/store_stat.php");
+            System.out.println("http posted");
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP Post Request
+            System.out.println("Executing httppost");
             httpclient.execute(httppost);
+            System.out.println("Executed");
             return true;
 
         } catch (Exception e) {

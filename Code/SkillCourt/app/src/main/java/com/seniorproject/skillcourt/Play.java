@@ -53,6 +53,7 @@ public class Play extends ActionBarActivity {
     // Bluetooth Related Vars
     String pad_name;
     String pad_addr;
+
     BluetoothAdapter ba;
     private OutputStream outStream;
     private InputStream inStream;
@@ -72,14 +73,12 @@ public class Play extends ActionBarActivity {
 
         Intent intent = getIntent();
         puname = intent.getStringExtra(Login.EXTRA_MESSAGE);
-        /* Commented out for testing purposes only
-        pad_name = intent.getStringExtra(Home.EXTRA_PAD_NAME);
-        pad_addr = intent.getStringExtra(Home.EXTRA_PAD_ADDR);
+//        //Commented out for testing purposes only
+//        pad_name = intent.getStringExtra(Home.EXTRA_PAD_NAME);
+//        pad_addr = intent.getStringExtra(Home.EXTRA_PAD_ADDR);
 
         dev = intent.getExtras().getParcelable(Home.EXTRA_PAD);
 
-        Log.w("DDDDDDD", dev.getName());
-        */
 
         coach = (new dbInteraction()).getCoach(puname);
 
@@ -303,27 +302,37 @@ public class Play extends ActionBarActivity {
         RadioGroup radGrp = ((RadioGroup) findViewById(R.id.difficultyRadGrp));
         RadioButton rad = (RadioButton) findViewById(radGrp.getCheckedRadioButtonId());
         Routine r = new Routine("SkillCourtDefault");
-        if (s.isChecked()) {
-            r.setRounds(Integer.parseInt(((EditText) findViewById(R.id.rtEdit)).getText().toString()));
-            r.setTimer(0);
+        String input = ((EditText) findViewById(R.id.rtEdit)).getText().toString();
+        if (input == "") {
+            genericWarning w = new genericWarning();
+            w.setPossitive("OK");
+            w.setMessage("You must set a timer or number of rounds.");
+            w.show(getFragmentManager(), "no_bluetooth");
         } else {
-            r.setTimer(Integer.parseInt(((EditText) findViewById(R.id.rtEdit)).getText().toString()));
-            r.setRounds(0);
-        }
-        if (((CheckBox) findViewById(R.id.groundCheck)).isChecked())
-            r.setGround(true);
-        switch ((String) spin.getSelectedItem()) {
-            case "Fly Me" :
-                r.setType('F'); break;
-            case "Chase Me" :
-                r.setType('C'); break;
-        }
+            if (s.isChecked()) {
+                r.setRounds(Integer.parseInt(input));
+                r.setTimer(0);
+            } else {
+                r.setTimer(Integer.parseInt(input)*60);
+                r.setRounds(0);
+            }
+            if (((CheckBox) findViewById(R.id.groundCheck)).isChecked())
+                r.setGround(true);
+            switch ((String) spin.getSelectedItem()) {
+                case "Fly Me":
+                    r.setType('F');
+                    break;
+                case "Chase Me":
+                    r.setType('C');
+                    break;
+            }
 
-        r.setDifficulty(rad.getText().toString().toUpperCase().charAt(0));
-        r.setUsername("SkillCourt");
-        r.setUsertype('A');
+            r.setDifficulty(rad.getText().toString().toUpperCase().charAt(0));
+            r.setUsername("SkillCourt");
+            r.setUsertype('A');
 
-        startRoutine(r);
+            startRoutine(r);
+        }
     }
 
     /**
@@ -376,7 +385,7 @@ public class Play extends ActionBarActivity {
         String name = r.getName();
         String type = String.valueOf(r.getType());
         String difficulty = String.valueOf(r.getDifficulty());
-        String rounds = String.valueOf(r.getTimer());
+        String rounds = String.valueOf(r.getRounds());
         String timer = String.valueOf(r.getTimer());
         String timebased = String.valueOf(r.getTimebased());
         String ground; if (r.getGround()) ground = "y"; else ground = "n";
@@ -391,33 +400,97 @@ public class Play extends ActionBarActivity {
         Log.w("QQQQQ", timer);
         Log.w("QQQQQ", timebased);
 
-        String message = buildMessage(type, difficulty, rounds, timer, timebased);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
+        System.out.println(dateFormat.format(date));
         //Testing stat storage
         dbInteraction dbi = new dbInteraction();
         dbi.addStat(puname, difficulty, dateFormat.format(date), "10", "5", "12.32", "17.22", "12", "10.12", rounds);
-         /*try {
-                btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
-                btSocket.connect();
-                outStream = btSocket.getOutputStream();
-                inStream = btSocket.getInputStream();
-                outStream.write(message.getBytes());
-                //btSocket.close();//delete this
-            }catch (Exception e)
+        String message = buildMessage(type, difficulty, rounds, timer, timebased);
+        try {
+            btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+            btSocket.connect();
+            outStream = btSocket.getOutputStream();
+            inStream = btSocket.getInputStream();
+            outStream.write(message.getBytes());
+            //btSocket.close();//delete this
+            //
+            int Availablebytes = inStream.available();
+
+            //long startTime = System.currentTimeMillis();
+            while(Availablebytes < 40)//(System.currentTimeMillis() - startTime)/1000 <= 10)
             {
-                genericWarning w = new genericWarning();
-                w.setPossitive("OK");
-                w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");
-                w.show(getFragmentManager(),"no_bluetooth");
+                Availablebytes = inStream.available();
             }
-            */
+
+            byte[] packetBytes = new byte[Availablebytes];
+            inStream.read(packetBytes);
+
+            message = getMessage(packetBytes);
+            message = message.substring(0, message.indexOf('n'));
+            Log.w("nnnn", message);
+            //********************************************************call Mathews function
+
+            btSocket.close();
+            Intent intent = new Intent(this, GameResults.class);
+            intent.putExtra(Home.EXTRA_PAD, dev);
+            intent.putExtra("stats", message);
+            intent.putExtra(Login.EXTRA_MESSAGE, puname);
+            startActivity(intent);
+
+        }catch (Exception e)
+        {
+            genericWarning w = new genericWarning();
+            w.setPossitive("OK");
+            w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");
+            w.show(getFragmentManager(),"no_bluetooth");
+        }
+
     }
 
-    String buildMessage(String type, String difficulty, String rounds, String timer, String timebased)
-    {
-        //except for type and difficulty/level all values are null we nned to handle that
-        return "Shazz6zzzzzzE\n";//need to fix this
+    public String buildMessage(String type, String difficulty, String rounds, String timer, String timebased) {
+        type = type.toLowerCase();
+        difficulty = difficulty.toLowerCase();
+
+
+        String add = "";
+        for (int i = 0; i < 3 - rounds.length(); i++) {
+            add = add + "z";
+        }
+        rounds = add + rounds;
+
+        add = "";
+        for (int i = 0; i < 4 - timer.length(); i++) {
+            add = add + "z";
+        }
+        timer = add + timer;
+
+        String message = "S" + type + difficulty + rounds + timer + "zzE";
+        String finalmsg = "";
+        for (int i = 0; i < message.length(); i++) {
+            if (message.charAt(i) == 'f')
+                finalmsg = finalmsg + "h";
+            else if (message.charAt(i) == '0')
+                finalmsg = finalmsg + "z";
+            else
+                finalmsg = finalmsg + message.substring(i, i + 1);
+        }
+
+        return finalmsg;//need to fix this
+    }
+
+    String getMessage(byte[] bytes) {
+        try{
+            String str = new String(bytes, "US-ASCII");
+
+            return str.split("\n")[0];
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+
+
     }
 }
 

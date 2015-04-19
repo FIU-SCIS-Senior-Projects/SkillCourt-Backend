@@ -163,7 +163,8 @@
             android:textColor="#ff447767"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="playAgain" />
 
         <Button
             android:layout_width="fill_parent"
@@ -174,7 +175,8 @@
             android:textColor="#ff447767"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="goBack" />
 
     </LinearLayout>
 
