@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,24 +20,28 @@ import java.util.UUID;
  */
 public class GameResults extends ActionBarActivity {
 
-    BluetoothAdapter ba;
-    private OutputStream outStream;
-    private InputStream inStream;
     BluetoothSocket btSocket;
     BluetoothDevice dev;
-
-    String message, puname;
+    Statistic stats;
+    String puname;
 
     protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         puname = intent.getStringExtra(Login.EXTRA_MESSAGE);
-        message = intent.getStringExtra("stats");
+        stats = intent.getParcelableExtra("stats");
 
         dev = intent.getExtras().getParcelable(Home.EXTRA_PAD);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_results);
+
+        ((TextView) findViewById(R.id.textView20)).setText(stats.getPoints());
+        ((TextView) findViewById(R.id.textView26)).setText(stats.getPoints());
+        ((TextView) findViewById(R.id.textView27)).setText(stats.getPoints());
+        ((TextView) findViewById(R.id.textView28)).setText(Integer.valueOf(stats.getOnTarget())/Integer.valueOf(stats.getShots()));
+        ((TextView) findViewById(R.id.textView29)).setText(stats.getAvgTimeBtwShots());
+        ((TextView) findViewById(R.id.textView30)).setText(stats.getAvgForce());
 
     }
 
@@ -64,16 +69,13 @@ public class GameResults extends ActionBarActivity {
         try {
             btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
             btSocket.connect();
-            outStream = btSocket.getOutputStream();
-            inStream = btSocket.getInputStream();
+            OutputStream outStream = btSocket.getOutputStream();
+            InputStream inStream = btSocket.getInputStream();
             outStream.write("disc\n".getBytes());
             //btSocket.close();//delete this
             //
             long startTime = System.currentTimeMillis();
-            while((System.currentTimeMillis() - startTime)/1000 < 1)
-            {
-
-            }
+            while((System.currentTimeMillis() - startTime)/1000 < 1){}
 
             btSocket.close();
             Intent intent = new Intent(this, Home.class);

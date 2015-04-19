@@ -26,7 +26,7 @@ public class Home extends ActionBarActivity {
     String puname = "";
     public final static String EXTRA_MESSAGE = "Credentials";
     int REQUEST_PAD_INFO = 1;
-    boolean connected = false;
+    boolean connected = true;                                                           //Changed
 
     Boolean bluetoothSupported = true;
     BluetoothDevice dev;
@@ -103,7 +103,7 @@ public class Home extends ActionBarActivity {
 
 
             if (data.getStringArrayExtra("result")[0].equals("Profile")) {
-                connected = false;
+                connected = false;                                                      //Changed
                 findViewById(R.id.start_playing).setEnabled(true);
             }
             else {
@@ -122,7 +122,7 @@ public class Home extends ActionBarActivity {
                     //it will never hit here
                     tv.setText("You are connected to " + data.getStringArrayExtra("result")[1]);
                 }
-                connected = true;
+                connected = true;                                                      //Changed
                 findViewById(R.id.start_playing).setEnabled(true);
             }
         }
@@ -131,7 +131,7 @@ public class Home extends ActionBarActivity {
             bluetoothSupported = false;
             TextView tv = (TextView) findViewById(R.id.no_bluetooth);
             tv.setText("Your device does not support bluetooth connection");
-            connected = false;
+            connected = true;                                                           //Changed
             findViewById(R.id.start_playing).setEnabled(false);
         }
         else
@@ -172,9 +172,9 @@ public class Home extends ActionBarActivity {
             //BluetoothDevice dev = intent.getParcelableExtra("pad");
 
             intent = new Intent(this, Play.class);
-            intent.putExtra(EXTRA_PAD_NAME, dev_name);
-            intent.putExtra(EXTRA_PAD_ADDR, dev_addr);
-            intent.putExtra(EXTRA_PAD, dev);
+            //intent.putExtra(EXTRA_PAD_NAME, dev_name);                                                      //Changed
+            //intent.putExtra(EXTRA_PAD_ADDR, dev_addr);                                                      //Changed
+            //intent.putExtra(EXTRA_PAD, dev);                                                      //Changed
 
             intent.putExtra(Login.EXTRA_MESSAGE, puname);
             startActivity(intent);
