@@ -392,23 +392,13 @@ public class Play extends ActionBarActivity {
 
         // To Do:
         //   Send routine via Bluetooth to master pad
-        Log.w("QQQQQ", name);
-        Log.w("QQQQQ", difficulty);
-        Log.w("QQQQQ", type);
-        Log.w("QQQQQ", ground);
-        Log.w("QQQQQ", rounds);
-        Log.w("QQQQQ", timer);
-        Log.w("QQQQQ", timebased);
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         System.out.println(dateFormat.format(date));
         //Testing stat storage
-        dbInteraction dbi = new dbInteraction();
-        dbi.addStat(puname, difficulty, dateFormat.format(date), "10", "5", "12.32", "17.22", "12", "10.12", rounds);
         String message = buildMessage(type, difficulty, rounds, timer, timebased);
-        //try {
-            /*btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);                                                      //Changed
+        try {
+            btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
             btSocket.connect();
             outStream = btSocket.getOutputStream();
             inStream = btSocket.getInputStream();
@@ -426,11 +416,12 @@ public class Play extends ActionBarActivity {
             byte[] packetBytes = new byte[Availablebytes];
             inStream.read(packetBytes);
 
-            message = getMessage(packetBytes);*/
-            message = "p10s12o8l8t3.32f12.16";
+            message = getMessage(packetBytes);
             //message = message.substring(0, message.indexOf('n'));
             //********************************************************call Mathews function
             Statistic s = parseMessage(message, puname, difficulty, date);
+            dbInteraction dbi = new dbInteraction();
+            dbi.addStat(s);
             //btSocket.close();
             Intent intent = new Intent(this, GameResults.class);
             intent.putExtra(Home.EXTRA_PAD, dev);
@@ -438,13 +429,13 @@ public class Play extends ActionBarActivity {
             intent.putExtra(Login.EXTRA_MESSAGE, puname);
             startActivity(intent);
 
-        /*}catch (Exception e)
+        }catch (Exception e)
         {
             genericWarning w = new genericWarning();
             w.setPossitive("OK");
             w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");
             w.show(getFragmentManager(),"no_bluetooth");
-        }*/
+        }
 
     }
 
@@ -492,18 +483,12 @@ public class Play extends ActionBarActivity {
     }
 
     public Statistic parseMessage(String m, String username, String diff, Date date) {
-        // "p"+Integer.toString(points)+
-        // "s"+Integer.toString(tNumbShots)+
-        // "o"+Integer.toString(onTarget)+
-        // "l"+Integer.toString(lStrike)+
-        // "t"+Double.toString(avgTimeBetwShots)+
-        // "f"+Double.toString(avgForce)
-        String points = m.substring(m.indexOf("p"+1), m.indexOf("s"));
-        String shots = m.substring(m.indexOf("s"+1), m.indexOf("o"));
-        String onTarget = m.substring(m.indexOf("o"+1), m.indexOf("l"));
-        String lStrike = m.substring(m.indexOf("l"+1), m.indexOf("t"));
-        String avgTimeBtwShots = m.substring(m.indexOf("t"+1), m.indexOf("f"));
-        String avgForce = m.substring(m.indexOf("f"+1));
+        String points = m.substring(m.indexOf("p")+1, m.indexOf("s"));
+        String shots = m.substring(m.indexOf("s")+1, m.indexOf("o"));
+        String onTarget = m.substring(m.indexOf("o")+1, m.indexOf("l"));
+        String lStrike = m.substring(m.indexOf("l")+1, m.indexOf("t"));
+        String avgTimeBtwShots = m.substring(m.indexOf("t")+1, m.indexOf("f"));
+        String avgForce = m.substring(m.indexOf("f")+1);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Statistic s = new Statistic(username, diff, points, shots, onTarget, lStrike, avgTimeBtwShots, avgForce, dateFormat.format(date).toString());
 

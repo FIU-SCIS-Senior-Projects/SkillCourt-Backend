@@ -32,7 +32,7 @@ public class Statistic implements Parcelable {
 
     // Parcelling part
     public Statistic(Parcel in){
-        String[] data = new String[3];
+        String[] data = new String[8];
 
         in.readStringArray(data);
         this.username = data[0];

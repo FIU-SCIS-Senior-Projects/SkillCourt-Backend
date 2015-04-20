@@ -87,7 +87,7 @@
 
         <Button
             android:layout_width="157dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:onClick="logInTrouble"
             android:background="@drawable/bluerectbutton"
             android:layout_gravity="center_horizontal"

@@ -37,11 +37,12 @@ public class GameResults extends ActionBarActivity {
         setContentView(R.layout.activity_game_results);
 
         ((TextView) findViewById(R.id.textView20)).setText(stats.getPoints());
-        ((TextView) findViewById(R.id.textView26)).setText(stats.getPoints());
+        ((TextView) findViewById(R.id.textView26)).setText(stats.getPoints() + "s");
         ((TextView) findViewById(R.id.textView27)).setText(stats.getPoints());
-        ((TextView) findViewById(R.id.textView28)).setText(Integer.valueOf(stats.getOnTarget())/Integer.valueOf(stats.getShots()));
-        ((TextView) findViewById(R.id.textView29)).setText(stats.getAvgTimeBtwShots());
-        ((TextView) findViewById(R.id.textView30)).setText(stats.getAvgForce());
+        ((TextView) findViewById(R.id.textView28)).setText("" + ((Integer.valueOf(
+                stats.getOnTarget()))*100)/Integer.valueOf(stats.getShots()) + "%");
+        ((TextView) findViewById(R.id.textView29)).setText(stats.getAvgTimeBtwShots() + "s");
+        ((TextView) findViewById(R.id.textView30)).setText(stats.getAvgForce() + "N");
 
     }
 

@@ -122,7 +122,7 @@ public class Home extends ActionBarActivity {
                     //it will never hit here
                     tv.setText("You are connected to " + data.getStringArrayExtra("result")[1]);
                 }
-                connected = true;                                                      //Changed
+                connected = false;                                                      //Changed
                 findViewById(R.id.start_playing).setEnabled(true);
             }
         }
@@ -131,7 +131,7 @@ public class Home extends ActionBarActivity {
             bluetoothSupported = false;
             TextView tv = (TextView) findViewById(R.id.no_bluetooth);
             tv.setText("Your device does not support bluetooth connection");
-            connected = true;                                                           //Changed
+            connected = false;                                                           //Changed
             findViewById(R.id.start_playing).setEnabled(false);
         }
         else
@@ -172,9 +172,9 @@ public class Home extends ActionBarActivity {
             //BluetoothDevice dev = intent.getParcelableExtra("pad");
 
             intent = new Intent(this, Play.class);
-            //intent.putExtra(EXTRA_PAD_NAME, dev_name);                                                      //Changed
-            //intent.putExtra(EXTRA_PAD_ADDR, dev_addr);                                                      //Changed
-            //intent.putExtra(EXTRA_PAD, dev);                                                      //Changed
+            intent.putExtra(EXTRA_PAD_NAME, dev_name);                                                      //Changed
+            intent.putExtra(EXTRA_PAD_ADDR, dev_addr);                                                      //Changed
+            intent.putExtra(EXTRA_PAD, dev);                                                      //Changed
 
             intent.putExtra(Login.EXTRA_MESSAGE, puname);
             startActivity(intent);
