@@ -15,7 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.LinkedList;
 /**
  * Created by Andy on 2/15/2015.
  */
@@ -590,6 +590,49 @@ public class dbInteraction {
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             final String resp = httpclient.execute(httppost, responseHandler);
             return resp;
+        }
+        catch (Exception e)//error in connection
+        {
+            return null;
+        }
+    }
+
+    public LinkedList<LinkedList<String>> getAllStats(String puname)
+    {
+        HttpPost httppost;
+        StringBuffer buffer;
+        HttpResponse response;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+
+        try
+        {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php/getAllStats.php");
+            nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("puname", puname));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String resp = httpclient.execute(httppost, responseHandler);
+
+            Log.w("AAAAAAA", resp);
+            LinkedList<LinkedList<String>> ret = new LinkedList<>();
+
+            String []str1 = resp.split("\n");
+            for(int i = 0; i < str1.length; i++)
+            {
+                String [] str2 = str1[i].split(" ");
+                LinkedList<String> l = new LinkedList();
+                for(int j = 0; j < str2.length; j++)
+                {
+                    l.push(str2[j]);
+                }
+                Log.w("AAAAAA", l.toString());
+                ret.push(l);
+            }
+
+            return ret;
         }
         catch (Exception e)//error in connection
         {
