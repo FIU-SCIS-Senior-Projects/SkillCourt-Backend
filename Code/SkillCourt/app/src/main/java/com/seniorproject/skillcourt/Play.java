@@ -417,7 +417,7 @@ public class Play extends ActionBarActivity {
             inStream.read(packetBytes);
 
             message = getMessage(packetBytes);
-            //message = message.substring(0, message.indexOf('n'));
+            message = message.substring(0, message.indexOf('n'));
             //********************************************************call Mathews function
             Statistic s = parseMessage(message, puname, difficulty, date);
             dbInteraction dbi = new dbInteraction();
