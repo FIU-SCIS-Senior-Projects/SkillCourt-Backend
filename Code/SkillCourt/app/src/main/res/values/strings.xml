@@ -93,5 +93,6 @@
     <string name="ground_chase_time_desc">Activate the floor target and then chase the green light around the room as fast as you can while avoiding the red ones!</string>
     <string name="ground_fly_desc">Activate the floor target and then look up! Your targets are in the air this time so fly the ball high.</string>
     <string name="ground_fly_time_desc">Activate the floor target and then look up! Your targets are in the air this time so keep up the speed and fly the ball high.</string>
+    <string name="title_activity_display_stats">DisplayStats</string>
 
 </resources>

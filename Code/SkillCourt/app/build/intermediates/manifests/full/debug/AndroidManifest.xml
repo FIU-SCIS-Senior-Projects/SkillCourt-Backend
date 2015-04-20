@@ -134,6 +134,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.seniorproject.skillcourt.Home" />
         </activity>
+        <activity
+            android:name="com.seniorproject.skillcourt.DisplayStats"
+            android:label="@string/title_activity_display_stats"
+            android:parentActivityName="com.seniorproject.skillcourt.Home" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Home" />
+        </activity>
     </application>
 
 </manifest>

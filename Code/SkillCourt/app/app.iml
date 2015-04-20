@@ -89,6 +89,7 @@
     <orderEntry type="library" exported="" name="mail" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="graphview-4.0.0" level="project" />
     <orderEntry type="library" exported="" name="jsse-2.0.5" level="project" />
     <orderEntry type="library" exported="" name="activation" level="project" />
   </component>

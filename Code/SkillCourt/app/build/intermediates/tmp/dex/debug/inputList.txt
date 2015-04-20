@@ -3,6 +3,7 @@ C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\
 C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\jsse-2.0.5-f858fbb265b42723fbade06100092f15ba781400.jar
 C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\activation-5614f0d4c51b7b92ab204fea1f70872539acefb1.jar
 C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\additionnal-078a3c3900c65928b7c61df32afa9d065762e0b6.jar
+C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-9dd3b24a9bacfbf4288e61861ebbb8d701967425.jar
 C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-a8d7283b956bddb4b2319062c9c47dea1f72b677.jar
 C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-44fd7f71097ee765e9e0b8c568480d52f8803a50.jar
 C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\mail-5f9465f293a92978a160ef635139bb2aa1e7aa02.jar

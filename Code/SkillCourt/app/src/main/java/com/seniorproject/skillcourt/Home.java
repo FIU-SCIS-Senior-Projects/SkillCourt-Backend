@@ -26,7 +26,7 @@ public class Home extends ActionBarActivity {
     String puname = "";
     public final static String EXTRA_MESSAGE = "Credentials";
     int REQUEST_PAD_INFO = 1;
-    boolean connected = true;                                                           //Changed
+    boolean connected = false;
 
     Boolean bluetoothSupported = true;
     BluetoothDevice dev;
@@ -103,8 +103,12 @@ public class Home extends ActionBarActivity {
 
 
             if (data.getStringArrayExtra("result")[0].equals("Profile")) {
-                connected = false;                                                      //Changed
+                //connected = false;//error
                 findViewById(R.id.start_playing).setEnabled(true);
+            }
+            else if(data.getStringArrayExtra("result")[0].equals("Display"))
+            {
+
             }
             else {
                 //get the name and address of device that was touched by the user in the list
@@ -122,7 +126,7 @@ public class Home extends ActionBarActivity {
                     //it will never hit here
                     tv.setText("You are connected to " + data.getStringArrayExtra("result")[1]);
                 }
-                connected = false;                                                      //Changed
+                connected = true;
                 findViewById(R.id.start_playing).setEnabled(true);
             }
         }
@@ -131,7 +135,7 @@ public class Home extends ActionBarActivity {
             bluetoothSupported = false;
             TextView tv = (TextView) findViewById(R.id.no_bluetooth);
             tv.setText("Your device does not support bluetooth connection");
-            connected = false;                                                           //Changed
+            connected = false;
             findViewById(R.id.start_playing).setEnabled(false);
         }
         else
@@ -162,22 +166,48 @@ public class Home extends ActionBarActivity {
 
         if(!connected)
         {
-            genericWarning w = new genericWarning();
-            w.setPossitive("OK");
-            w.setMessage("Your cant play if you are not connected to a SkillCourt Pad");
-            w.show(getFragmentManager(),"no_pad_connection");
+            BluetoothAdapter ba =BluetoothAdapter.getDefaultAdapter();
+            if(ba == null)
+            {
+                genericWarning w = new genericWarning();
+                w.setPossitive("OK");
+                w.setMessage("Your device does not have Bluetooth capabilities");
+                w.show(getFragmentManager(),"no_bluetooth");
+            }
+            else {
+                Intent scan = new Intent(this, Scan.class);
+                scan.putExtra(Login.EXTRA_MESSAGE, puname);
+                startActivityForResult(scan, REQUEST_PAD_INFO);
+                //finish();//not sure
+            }
         }
         else {
             Intent intent = getIntent();
             //BluetoothDevice dev = intent.getParcelableExtra("pad");
 
             intent = new Intent(this, Play.class);
-            intent.putExtra(EXTRA_PAD_NAME, dev_name);                                                      //Changed
-            intent.putExtra(EXTRA_PAD_ADDR, dev_addr);                                                      //Changed
-            intent.putExtra(EXTRA_PAD, dev);                                                      //Changed
+            intent.putExtra(EXTRA_PAD_NAME, dev_name);
+            intent.putExtra(EXTRA_PAD_ADDR, dev_addr);
+            intent.putExtra(EXTRA_PAD, dev);
 
             intent.putExtra(Login.EXTRA_MESSAGE, puname);
             startActivity(intent);
+        }
+    }
+
+    public void stats(View view)
+    {
+        if(puname.equals("Guest"))
+        {
+            genericWarning w = new genericWarning();
+            w.setPossitive("OK");
+            w.setMessage("As a guest you can't access any previous performances");
+            w.show(getFragmentManager(),"no_performance_guest");
+        }
+        else {
+            Intent stats = new Intent(this, DisplayStats.class);
+            stats.putExtra(Login.EXTRA_MESSAGE, puname);
+            startActivityForResult(stats, REQUEST_PAD_INFO);
         }
     }
 }
