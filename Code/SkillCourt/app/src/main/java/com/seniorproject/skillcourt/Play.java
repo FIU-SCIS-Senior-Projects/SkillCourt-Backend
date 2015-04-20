@@ -110,8 +110,32 @@ public class Play extends ActionBarActivity {
         }
         else if(id == R.id.action_logout)
         {
-            Intent intent = new Intent(this, Welcome.class);
-            startActivity(intent);
+            try {
+                btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+                btSocket.connect();
+                outStream = btSocket.getOutputStream();
+                inStream = btSocket.getInputStream();
+                outStream.write("disc\n".getBytes());
+                //btSocket.close();//delete this
+                //
+                long startTime = System.currentTimeMillis();
+                while((System.currentTimeMillis() - startTime)/1000 < 1)
+                {
+
+                }
+
+                btSocket.close();
+                Intent intent = new Intent(this, Welcome.class);
+                startActivity(intent);
+
+            }catch (Exception e)
+            {
+                genericWarning w = new genericWarning();
+                w.setPossitive("OK");
+                w.setMessage("It looks like there is an issue in the bluetooth connection while disconecting. Make sure that your pad is on....");
+                w.show(getFragmentManager(),"no_bluetooth");
+            }
+
         }
 
         return super.onOptionsItemSelected(item);

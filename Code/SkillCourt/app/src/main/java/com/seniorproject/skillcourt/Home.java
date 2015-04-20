@@ -103,8 +103,12 @@ public class Home extends ActionBarActivity {
 
 
             if (data.getStringArrayExtra("result")[0].equals("Profile")) {
-                connected = false;
+                //connected = false;//error
                 findViewById(R.id.start_playing).setEnabled(true);
+            }
+            else if(data.getStringArrayExtra("result")[0].equals("Display"))
+            {
+
             }
             else {
                 //get the name and address of device that was touched by the user in the list
@@ -162,10 +166,20 @@ public class Home extends ActionBarActivity {
 
         if(!connected)
         {
-            genericWarning w = new genericWarning();
-            w.setPossitive("OK");
-            w.setMessage("Your cant play if you are not connected to a SkillCourt Pad");
-            w.show(getFragmentManager(),"no_pad_connection");
+            BluetoothAdapter ba =BluetoothAdapter.getDefaultAdapter();
+            if(ba == null)
+            {
+                genericWarning w = new genericWarning();
+                w.setPossitive("OK");
+                w.setMessage("Your device does not have Bluetooth capabilities");
+                w.show(getFragmentManager(),"no_bluetooth");
+            }
+            else {
+                Intent scan = new Intent(this, Scan.class);
+                scan.putExtra(Login.EXTRA_MESSAGE, puname);
+                startActivityForResult(scan, REQUEST_PAD_INFO);
+                //finish();//not sure
+            }
         }
         else {
             Intent intent = getIntent();
@@ -178,6 +192,22 @@ public class Home extends ActionBarActivity {
 
             intent.putExtra(Login.EXTRA_MESSAGE, puname);
             startActivity(intent);
+        }
+    }
+
+    public void stats(View view)
+    {
+        if(puname.equals("Guest"))
+        {
+            genericWarning w = new genericWarning();
+            w.setPossitive("OK");
+            w.setMessage("As a guest you can't access any previous performances");
+            w.show(getFragmentManager(),"no_performance_guest");
+        }
+        else {
+            Intent stats = new Intent(this, DisplayStats.class);
+            stats.putExtra(Login.EXTRA_MESSAGE, puname);
+            startActivityForResult(stats, REQUEST_PAD_INFO);
         }
     }
 }
