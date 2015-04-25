@@ -1,5 +1,6 @@
 package com.seniorproject.skillcourt;
 
+import android.app.ActionBar;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -90,6 +91,8 @@ public class Play extends ActionBarActivity {
         // Set Tabs
         setTabs();
         s = (Switch) findViewById(R.id.rtSwitch);
+
+        getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

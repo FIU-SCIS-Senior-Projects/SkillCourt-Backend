@@ -48,13 +48,13 @@ public class Statistic implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[] {this.username,
-                        this.points,
-                        this.shots,
-                        this.onTarget,
-                        this.lStrike,
-                        this.avgTimeBtwShots,
-                        this.avgForce,
-                        this.level});
+                this.points,
+                this.shots,
+                this.onTarget,
+                this.lStrike,
+                this.avgTimeBtwShots,
+                this.avgForce,
+                this.level});
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
