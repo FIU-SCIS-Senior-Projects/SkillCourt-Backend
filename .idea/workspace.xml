@@ -41,7 +41,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="PackagesPane" proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -53,7 +53,17 @@
       <sortByType />
     </navigator>
     <panes>
+<<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="AndroidView">
+=======
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+>>>>>>> temp
+=======
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+>>>>>>> temp
         <subPane />
       </pane>
       <pane id="ProjectPane">
@@ -66,8 +76,16 @@
           </PATH>
         </subPane>
       </pane>
+<<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="Scope" />
       <pane id="PackagesPane">
+=======
+      <pane id="AndroidView">
+>>>>>>> temp
+=======
+      <pane id="AndroidView">
+>>>>>>> temp
         <subPane />
       </pane>
     </panes>
@@ -79,7 +97,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Code/SkillCourt" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -179,7 +197,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+=======
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="0" />
+>>>>>>> temp
+=======
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="0" />
+>>>>>>> temp
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
