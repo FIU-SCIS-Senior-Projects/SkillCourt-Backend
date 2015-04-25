@@ -15,7 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.LinkedList;
 /**
  * Created by Andy on 2/15/2015.
  */
@@ -428,8 +428,220 @@ public class dbInteraction {
     }
 
     //not working yet
+    public boolean addStat(String puname, String level, String dateTime, String points,
+                           String streak, String tbs, String tbsot, String shots,
+                           String force, String rounds) {
+        HttpPost httppost;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+        nameValuePairs = new ArrayList<>(10);
+        nameValuePairs.add(new BasicNameValuePair("username", puname));
+        nameValuePairs.add(new BasicNameValuePair("level", level));
+        nameValuePairs.add(new BasicNameValuePair("date", dateTime));
+        nameValuePairs.add(new BasicNameValuePair("points", points));
+        nameValuePairs.add(new BasicNameValuePair("shots", shots));
+        nameValuePairs.add(new BasicNameValuePair("streak", streak));
+        nameValuePairs.add(new BasicNameValuePair("tbs", tbs));
+        nameValuePairs.add(new BasicNameValuePair("tbsot", tbsot));
+        nameValuePairs.add(new BasicNameValuePair("force", force));
+        nameValuePairs.add(new BasicNameValuePair("rounds", rounds));
+        System.out.println("NameValuePairs Set");
+        try {
+
+            // Link to skillcourt-dev myPHPAdmin server
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php_query/store_stat.php");
+            System.out.println("http posted");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            System.out.println("Executing httppost");
+            httpclient.execute(httppost);
+            System.out.println("Executed");
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    //get stats
+    public String getMaxForce(String puname)
+    {
+        HttpPost httppost;
+        StringBuffer buffer;
+        HttpResponse response;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+
+        try
+        {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php/maxForce.php");
+            nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("puname", puname));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            final String resp = httpclient.execute(httppost, responseHandler);
+            return resp;
+        }
+        catch (Exception e)//error in connection
+        {
+            return null;
+        }
+    }
+
+
+    public String getMaxStreak(String puname)
+    {
+        HttpPost httppost;
+        StringBuffer buffer;
+        HttpResponse response;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+
+        try
+        {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php/maxStrike.php");
+            nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("puname", puname));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            final String resp = httpclient.execute(httppost, responseHandler);
+            return resp;
+        }
+        catch (Exception e)//error in connection
+        {
+            return null;
+        }
+    }
+
+    public String getMaxPoints(String puname)
+    {
+        HttpPost httppost;
+        StringBuffer buffer;
+        HttpResponse response;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+
+        try
+        {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php/maxPoints.php");
+            nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("puname", puname));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            final String resp = httpclient.execute(httppost, responseHandler);
+            return resp;
+        }
+        catch (Exception e)//error in connection
+        {
+            return null;
+        }
+    }
+
+    public String getMinReaction(String puname)
+    {
+        HttpPost httppost;
+        StringBuffer buffer;
+        HttpResponse response;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+
+        try
+        {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php/minReaction.php");
+            nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("puname", puname));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            final String resp = httpclient.execute(httppost, responseHandler);
+            return resp;
+        }
+        catch (Exception e)//error in connection
+        {
+            return null;
+        }
+    }
+
+    public String getMaxAccuracy(String puname)
+    {
+        HttpPost httppost;
+        StringBuffer buffer;
+        HttpResponse response;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+
+        try
+        {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php/maxAccuracy.php");
+            nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("puname", puname));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            final String resp = httpclient.execute(httppost, responseHandler);
+            return resp;
+        }
+        catch (Exception e)//error in connection
+        {
+            return null;
+        }
+    }
+
+    public LinkedList<LinkedList<String>> getAllStats(String puname)
+    {
+        HttpPost httppost;
+        StringBuffer buffer;
+        HttpResponse response;
+        HttpClient httpclient;
+        List<NameValuePair> nameValuePairs;
+
+        try
+        {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php/getAllStats.php");
+            nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("puname", puname));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String resp = httpclient.execute(httppost, responseHandler);
+
+            Log.w("AAAAAAA", resp);
+            LinkedList<LinkedList<String>> ret = new LinkedList<>();
+
+            String []str1 = resp.split("\n");
+            for(int i = 0; i < str1.length; i++)
+            {
+                String [] str2 = str1[i].split(" ");
+                LinkedList<String> l = new LinkedList();
+                for(int j = 0; j < str2.length; j++)
+                {
+                    l.push(str2[j]);
+                }
+                Log.w("AAAAAA", l.toString());
+                ret.push(l);
+            }
+
+            return ret;
+        }
+        catch (Exception e)//error in connection
+        {
+            return null;
+        }
+    }
+
     public boolean addStat(Statistic s) {//String puname, String level, String dateTime, String points,
-                           //String streak, String tbs, String shots, String force, String shotsOT) {
+        //String streak, String tbs, String shots, String force, String shotsOT) {
         HttpPost httppost;
         HttpClient httpclient;
         List<NameValuePair> nameValuePairs;
@@ -465,4 +677,5 @@ public class dbInteraction {
             return false;
         }
     }
+
 }

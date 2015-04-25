@@ -59,7 +59,8 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="#ff447767"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="stats"/>
 
             <Button
                 android:layout_width="fill_parent"
