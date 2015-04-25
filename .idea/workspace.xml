@@ -54,7 +54,12 @@
     </navigator>
     <panes>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="AndroidView">
+=======
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+>>>>>>> temp
 =======
       <pane id="Scope" />
       <pane id="PackagesPane">
@@ -72,8 +77,12 @@
         </subPane>
       </pane>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="Scope" />
       <pane id="PackagesPane">
+=======
+      <pane id="AndroidView">
+>>>>>>> temp
 =======
       <pane id="AndroidView">
 >>>>>>> temp
@@ -189,7 +198,11 @@
   </component>
   <component name="ToolWindowManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+=======
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="0" />
+>>>>>>> temp
 =======
     <frame x="-8" y="-8" width="1382" height="754" extended-state="0" />
 >>>>>>> temp

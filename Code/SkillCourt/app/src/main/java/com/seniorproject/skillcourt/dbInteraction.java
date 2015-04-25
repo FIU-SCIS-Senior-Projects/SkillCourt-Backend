@@ -679,6 +679,7 @@ public class dbInteraction {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     //get stats
     public String getMaxForce(String puname)
     {
@@ -853,6 +854,8 @@ public class dbInteraction {
             return null;
         }
     }
+=======
+>>>>>>> temp
 =======
 >>>>>>> temp
 }

@@ -3,6 +3,7 @@
 
     <item
 <<<<<<< HEAD
+<<<<<<< HEAD
         jar="C:\Users\msant080\Documents\GitHub\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\exploded-aar\com.jjoe64\graphview\4.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -12,6 +13,11 @@
         jar="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\libs\mail.jar"
         jumboMode="false"
         revision="21.1.2"
+=======
+        jar="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\libs\mail.jar"
+        jumboMode="false"
+        revision="21.1.2"
+>>>>>>> temp
         sha1="428e267abff0d10802ccde86b915da2c20471160">
         <dex dex="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\mail-561b72b63e41195d011b40c9d9845e310061ef08.jar" />
     </item>
@@ -70,6 +76,9 @@
         revision="21.1.2"
         sha1="ae24ad61a573cd1faf8261f5ec6d8f0cb58ddaad">
         <dex dex="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-902f66570403010265e7c9612069519b7bcb355d.jar" />
+<<<<<<< HEAD
+>>>>>>> temp
+=======
 >>>>>>> temp
     </item>
 
