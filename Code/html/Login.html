@@ -1,0 +1,84 @@
+<?php
+    session_start();
+    if (isset($_SESSION["username"]) && $_SESSION["username'] !== "Login") {
+        header('Location: http://skillcourt-dev.cis.fiu.edu/Main.html', true, 303);
+    }
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- Local scripts start here -->
+        <script type="text/javascript">
+            function loginUser(user) {
+                <?php 
+                    $_SESSION["username"] = user; 
+                ?>;
+            }
+            
+            function displayUser() {
+                return (<?php 
+                            if (isset($_SESSION["username"]))
+                                echo $_SESSION["username"];
+                            else
+                                echo "Login";
+                        ?>);
+            }
+            
+            function Login() {
+                'use strict';
+                var username = document.getElementById('username').value,
+                    password = document.getElementById('password').value;
+                if (username === "" || password === "") {
+                    alert("Please fill in username and password fields");
+                    return false;
+                }
+                $.post("http://skillcourt-dev.cis.fiu.edu/mat_login/log_in.php", {username: username, password: password}, function (data) {
+                    if (data.trim() === "Valid") {
+                        loginUser(username);
+                        window.location.href = "./Main.html"; //redirect the user
+                    } else {
+                            alert("Invalid Username/Password combination.  Try again.");
+                            return false;
+                    }
+                });
+                return false;
+            }
+        </script>
+        <title>SkillCourt</title>
+        <link rel="stylesheet" type="text/css" href="Main.css">
+    </head>
+    <body>
+        <div id="MainData">
+            <div id="Header">SkillCourt</div>
+
+            <div id="User">
+                <a href="Login.html" >
+                    <p id="Username"></p>
+                    <script type="text/javascript">
+                        var user = displayUser();
+                        document.getElementById("Username").innerHTML = user;
+                    </script>
+                </a>
+            </div>
+            
+            <div id="Menu">
+                <h2><a href="Home.html">Home</a></h2>
+                <h2><a href="Statistics.html">Statistics</a></h2>
+                <h2><a href="Routines.html">Routines</a></h2>
+            </div>
+            
+            <div id="Content">
+                <form method="post" onsubmit="return Login();"> 
+                    Username: <br>
+                    <input type="text" name="username" id="username"><br>
+                    Password: <br>
+                    <input type="password" name="password" id="password"><br><br>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+                
+            <div id="Footer">Copyright 2015 SkillCourt</div>
+        </div>
+    </body>
+</html>

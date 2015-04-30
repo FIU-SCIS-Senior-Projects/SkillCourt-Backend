@@ -147,7 +147,7 @@
                                 android:textColor="#ffffffff"
                                 android:textOn="Rounds"
                                 android:textOff="Time"
-                                android:checked="false"
+                                android:checked="true"
                                 android:elegantTextHeight="false"
                                 android:onClick="switchChange"
                                 android:nestedScrollingEnabled="true" />
@@ -163,7 +163,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="minutes"
+                                android:text="rounds"
                                 android:id="@+id/rtText"
                                 android:textSize="20dp"
                                 android:layout_gravity="bottom" />
