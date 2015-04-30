@@ -427,27 +427,25 @@ public class dbInteraction {
         }
     }
 
-    //not working yet
-    public boolean addStat(String puname, String level, String dateTime, String points,
-                           String streak, String tbs, String tbsot, String shots,
-                           String force, String rounds) {
+    public boolean addStat(Statistic s) {//String puname, String level, String dateTime, String points,
+        //String streak, String tbs, String shots, String force, String shotsOT) {
         HttpPost httppost;
         HttpClient httpclient;
         List<NameValuePair> nameValuePairs;
-        nameValuePairs = new ArrayList<>(10);
-        nameValuePairs.add(new BasicNameValuePair("username", puname));
-        nameValuePairs.add(new BasicNameValuePair("level", level));
-        nameValuePairs.add(new BasicNameValuePair("date", dateTime));
-        nameValuePairs.add(new BasicNameValuePair("points", points));
-        nameValuePairs.add(new BasicNameValuePair("shots", shots));
-        nameValuePairs.add(new BasicNameValuePair("streak", streak));
-        nameValuePairs.add(new BasicNameValuePair("tbs", tbs));
-        nameValuePairs.add(new BasicNameValuePair("tbsot", tbsot));
-        nameValuePairs.add(new BasicNameValuePair("force", force));
-        nameValuePairs.add(new BasicNameValuePair("rounds", rounds));
-        System.out.println("NameValuePairs Set");
+        nameValuePairs = new ArrayList<>(9);
+        nameValuePairs.add(new BasicNameValuePair("username", s.getUsername()));
+        nameValuePairs.add(new BasicNameValuePair("level", s.getLevel()));
+        nameValuePairs.add(new BasicNameValuePair("date", s.getDateTime()));
+        nameValuePairs.add(new BasicNameValuePair("points", s.getPoints()));
+        nameValuePairs.add(new BasicNameValuePair("streak", s.getlStrike()));
+        nameValuePairs.add(new BasicNameValuePair("tbs", s.getAvgTimeBtwShots()));
+        nameValuePairs.add(new BasicNameValuePair("shots", s.getShots()));
+        nameValuePairs.add(new BasicNameValuePair("force", s.getAvgForce()));
+        nameValuePairs.add(new BasicNameValuePair("shotOT", s.getOnTarget()));
+
         try {
 
+            System.out.println("username " + s.getUsername() + " level " + s.getLevel() + " date " + s.getDateTime() + " points " + s.getPoints() + " streak " + s.getlStrike() + " tbs " + s.getAvgTimeBtwShots() + " shots " + s.getShots() + " force " + s.getAvgForce() + " shotsOT " + s.getOnTarget());
             // Link to skillcourt-dev myPHPAdmin server
             httpclient = new DefaultHttpClient();
             httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php_query/store_stat.php");
@@ -457,7 +455,9 @@ public class dbInteraction {
             // Execute HTTP Post Request
             System.out.println("Executing httppost");
             httpclient.execute(httppost);
-            System.out.println("Executed");
+            //ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            //String resp = httpclient.execute(httppost, responseHandler);
+            System.out.println("Post executed");
             return true;
 
         } catch (Exception e) {
@@ -639,43 +639,4 @@ public class dbInteraction {
             return null;
         }
     }
-
-    public boolean addStat(Statistic s) {//String puname, String level, String dateTime, String points,
-        //String streak, String tbs, String shots, String force, String shotsOT) {
-        HttpPost httppost;
-        HttpClient httpclient;
-        List<NameValuePair> nameValuePairs;
-        nameValuePairs = new ArrayList<>(9);
-        nameValuePairs.add(new BasicNameValuePair("username", s.getUsername()));
-        nameValuePairs.add(new BasicNameValuePair("level", s.getLevel()));
-        nameValuePairs.add(new BasicNameValuePair("date", s.getDateTime()));
-        nameValuePairs.add(new BasicNameValuePair("points", s.getPoints()));
-        nameValuePairs.add(new BasicNameValuePair("streak", s.getlStrike()));
-        nameValuePairs.add(new BasicNameValuePair("tbs", s.getAvgTimeBtwShots()));
-        nameValuePairs.add(new BasicNameValuePair("shots", s.getShots()));
-        nameValuePairs.add(new BasicNameValuePair("force", s.getAvgForce()));
-        nameValuePairs.add(new BasicNameValuePair("shotOT", s.getOnTarget()));
-
-        try {
-
-            System.out.println("username " + s.getUsername() + " level " + s.getLevel() + " date " + s.getDateTime() + " points " + s.getPoints() + " streak " + s.getlStrike() + " tbs " + s.getAvgTimeBtwShots() + " shots " + s.getShots() + " force " + s.getAvgForce() + " shotsOT " + s.getOnTarget());
-            // Link to skillcourt-dev myPHPAdmin server
-            httpclient = new DefaultHttpClient();
-            httppost = new HttpPost("http://skillcourt-dev.cis.fiu.edu/php_query/store_stat.php");
-            System.out.println("http posted");
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            // Execute HTTP Post Request
-            System.out.println("Executing httppost");
-            httpclient.execute(httppost);
-            //ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            //String resp = httpclient.execute(httppost, responseHandler);
-            System.out.println("Post executed");
-            return true;
-
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
 }

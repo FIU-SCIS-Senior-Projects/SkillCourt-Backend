@@ -93,24 +93,19 @@ public class Home extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //@Override ?
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if(resultCode == RESULT_OK)
         {
-            //Log.w("IIIIIIII", "1111111111111");
-            //Log.w("IIIIIII", data.getStringArrayExtra("result")[0]);
-
-
             if (data.getStringArrayExtra("result")[0].equals("Profile")) {
-                //connected = false;//error
+                // Player came from Profile
                 findViewById(R.id.start_playing).setEnabled(true);
             }
-            else if(data.getStringArrayExtra("result")[0].equals("Display"))
-            {
-
+            else if(data.getStringArrayExtra("result")[0].equals("Display")){
+                // Player came from Display Stats
             }
             else {
+                // Player came from Scan
                 //get the name and address of device that was touched by the user in the list
                 TextView tv = (TextView) findViewById(R.id.no_bluetooth);
                 if(data.getStringArrayExtra("result")[0] != null) {
@@ -119,8 +114,6 @@ public class Home extends ActionBarActivity {
                     tv.setText("You are connected to " + dev_name);
 
                     dev = data.getExtras().getParcelable(Scan.EXTRA_PAD);
-                    Log.w("SSSSSSSSS", dev.getName());
-
                 }
                 else {
                     //it will never hit here
@@ -132,6 +125,7 @@ public class Home extends ActionBarActivity {
         }
         else if(data.getStringArrayExtra("result") == null)
         {
+            // Device has no bluetooth support
             bluetoothSupported = false;
             TextView tv = (TextView) findViewById(R.id.no_bluetooth);
             tv.setText("Your device does not support bluetooth connection");
@@ -182,10 +176,7 @@ public class Home extends ActionBarActivity {
             }
         }
         else {
-            Intent intent = getIntent();
-            //BluetoothDevice dev = intent.getParcelableExtra("pad");
-
-            intent = new Intent(this, Play.class);
+            Intent intent = new Intent(this, Play.class);
             intent.putExtra(EXTRA_PAD_NAME, dev_name);
             intent.putExtra(EXTRA_PAD_ADDR, dev_addr);
             intent.putExtra(EXTRA_PAD, dev);

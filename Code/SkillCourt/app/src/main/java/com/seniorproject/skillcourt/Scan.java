@@ -171,17 +171,6 @@ public class Scan extends ActionBarActivity {
 
     }
 
-//    public void returnToHome(String[] arr) {
-//        Intent intent = new Intent(this, Home.class);
-//        intent.putExtra("result", arr);
-//        this.setResult(this.RESULT_OK, intent);
-//
-//        if (ba.isDiscovering())
-//            ba.cancelDiscovery();
-//
-//        this.finish();
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK)
@@ -243,7 +232,6 @@ public class Scan extends ActionBarActivity {
             adapter.notifyDataSetChanged();
         }
     }
-
 
     /*
     Used to scan

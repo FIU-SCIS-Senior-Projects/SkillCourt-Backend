@@ -37,18 +37,18 @@
         <dex dex="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb3329044cb1e549f846f1ace93edeb2797d0dca.jar" />
     </item>
     <item
-        jar="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-949dcc6ff1ae82f55ba81d3da27a4530f6b40d29.jar" />
-    </item>
-    <item
         jar="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
         <dex dex="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-89b9b752a290a020015d8269e9a2e7acc5f10683.jar" />
+    </item>
+    <item
+        jar="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-949dcc6ff1ae82f55ba81d3da27a4530f6b40d29.jar" />
     </item>
     <item
         jar="C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\libs\activation.jar"
