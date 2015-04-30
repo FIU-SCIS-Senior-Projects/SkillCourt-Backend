@@ -44,24 +44,18 @@ import java.util.UUID;
  * Created by msant080 on 2/17/2015.
  */
 public class Play extends ActionBarActivity {
-    TextView descriptionText;
     Spinner defa, cust, coac;
     dbInteraction dbi;
-    ArrayAdapter<String> adapter;
     TabHost tabHost;
     String puname, coach;
 
     // Bluetooth Related Vars
-    String pad_name;
-    String pad_addr;
-
-    BluetoothAdapter ba;
     private OutputStream outStream;
     private InputStream inStream;
     BluetoothSocket btSocket;
     BluetoothDevice dev;
-
     protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+
     // Routine Related Vars
     Switch s;
     String rname, user, usertype;
@@ -74,12 +68,7 @@ public class Play extends ActionBarActivity {
 
         Intent intent = getIntent();
         puname = intent.getStringExtra(Login.EXTRA_MESSAGE);
-//        //Commented out for testing purposes only
-//        pad_name = intent.getStringExtra(Home.EXTRA_PAD_NAME);
-//        pad_addr = intent.getStringExtra(Home.EXTRA_PAD_ADDR);
-
         dev = intent.getExtras().getParcelable(Home.EXTRA_PAD);
-
 
         coach = (new dbInteraction()).getCoach(puname);
 
