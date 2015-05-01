@@ -1,10 +1,10 @@
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\classes\debug
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb3329044cb1e549f846f1ace93edeb2797d0dca.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\jsse-2.0.5-641ba293ce911dd729d250aec7443d0f4b7e770e.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\activation-b3844db942993eb46dc279ca81cc17025541594a.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\additionnal-41e71a1135db6ea58574c6db907dc344f434972c.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-902f66570403010265e7c9612069519b7bcb355d.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-1d515c3b8c2cb6b4593150e2dddeca86c5f9bfb4.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-89b9b752a290a020015d8269e9a2e7acc5f10683.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\mail-561b72b63e41195d011b40c9d9845e310061ef08.jar
-C:\Users\msant080\Desktop\andys sc 4-24\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-949dcc6ff1ae82f55ba81d3da27a4530f6b40d29.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\classes\debug
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb3329044cb1e549f846f1ace93edeb2797d0dca.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\jsse-2.0.5-fc5812db0fdfdcf7393a4cd5c3a278b4419184df.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\activation-ee95c33b954d730585682e5089c5bc5282b2a0ab.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\additionnal-87cf278820649f72f47731082071364358bc4b90.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-f71d73bc9745923c9cfb9976aaa5aad4db60d7b7.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-4398033bcc3a0e5fbd4548c2781ce52d7f0ff99e.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-fe14541b5046ede5f2a05f98fd6927eeefa75990.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\mail-664ec50a13f74fbedc32bc364a6a560adf612279.jar
+C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-8d79b23129f08b71bc54317da3ff1b3bef02dd31.jar
