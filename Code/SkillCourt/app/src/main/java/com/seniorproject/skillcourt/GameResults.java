@@ -16,7 +16,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 /**
- * Created by msant080 on 4/18/2015.  This is the latest version
+ * Created by msant080 on 4/18/2015.
  */
 public class GameResults extends ActionBarActivity {
 
