@@ -169,7 +169,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Go Back"
+            android:text="Go Back and Disconnect"
             android:id="@+id/button3"
             android:background="@drawable/bluerectbutton"
             android:textColor="#ff447767"

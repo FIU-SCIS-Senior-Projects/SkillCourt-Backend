@@ -2,6 +2,7 @@ package com.seniorproject.skillcourt;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
 
 public class Home extends ActionBarActivity {
@@ -30,6 +35,9 @@ public class Home extends ActionBarActivity {
 
     Boolean bluetoothSupported = true;
     BluetoothDevice dev;
+    BluetoothSocket btSocket;
+
+    protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +79,36 @@ public class Home extends ActionBarActivity {
         }
         else if(id == R.id.action_logout)
         {
-            Intent intent = new Intent(this, Welcome.class);
-            startActivity(intent);
+            if(connected) {
+                try {
+                    btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+                    btSocket.connect();
+                    OutputStream outStream = btSocket.getOutputStream();
+                    InputStream inStream = btSocket.getInputStream();
+                    outStream.write("disc\n".getBytes());
+                    //btSocket.close();//delete this
+                    //
+                    long startTime = System.currentTimeMillis();
+                    while ((System.currentTimeMillis() - startTime) / 1000 < 1) {
+                    }
+
+                    btSocket.close();
+                    Intent intent = new Intent(this, Welcome.class);
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    genericWarning w = new genericWarning();
+                    w.setPossitive("OK");
+                    w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");
+                    w.show(getFragmentManager(), "no_bluetooth");
+                }
+            }
+            else
+            {
+                Intent intent = new Intent(this, Welcome.class);
+                startActivity(intent);
+            }
+
         }
         else if(id == R.id.profile)
         {

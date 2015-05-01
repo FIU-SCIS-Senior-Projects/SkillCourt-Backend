@@ -2,67 +2,67 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-8d79b23129f08b71bc54317da3ff1b3bef02dd31.jar" />
-    </item>
-    <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-4398033bcc3a0e5fbd4548c2781ce52d7f0ff99e.jar" />
-    </item>
-    <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\exploded-aar\com.jjoe64\graphview\4.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="ae24ad61a573cd1faf8261f5ec6d8f0cb58ddaad">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-f71d73bc9745923c9cfb9976aaa5aad4db60d7b7.jar" />
-    </item>
-    <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-fe14541b5046ede5f2a05f98fd6927eeefa75990.jar" />
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-9314627ba72f4eb6d5ee7de75c448963ad93cc96.jar" />
     </item>
     <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\libs\activation.jar"
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="d1257cbff6faa44c1f325ae0d9413522d4644383">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\activation-ee95c33b954d730585682e5089c5bc5282b2a0ab.jar" />
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-8b2d065e3154d0e8468a89834906301a4fd6e889.jar" />
     </item>
     <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\libs\additionnal.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="bd9e8dc422bb8c8405359947fe9f4282b49f57f4">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\additionnal-87cf278820649f72f47731082071364358bc4b90.jar" />
-    </item>
-    <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\libs\jsse-2.0.5.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="bb024ebdab507a00814de1a17886d88a1fb2efdf">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\jsse-2.0.5-fc5812db0fdfdcf7393a4cd5c3a278b4419184df.jar" />
-    </item>
-    <item
-        jar="C:\Users\msant080\AppData\Local\Android\sdk1\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="C:\Users\Andy\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb3329044cb1e549f846f1ace93edeb2797d0dca.jar" />
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-272c2ce99d2c909b0aaab5aa905f60ee4de175c0.jar" />
     </item>
     <item
-        jar="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\libs\mail.jar"
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\libs\jsse-2.0.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="bb024ebdab507a00814de1a17886d88a1fb2efdf">
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\jsse-2.0.5-75f8f1c5e4a70a91078171c58616628cc9de2ff6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\libs\activation.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d1257cbff6faa44c1f325ae0d9413522d4644383">
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\activation-8117bd5ca5aa704c2ac578db56d4c5016a0db9b0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\exploded-aar\com.jjoe64\graphview\4.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ae24ad61a573cd1faf8261f5ec6d8f0cb58ddaad">
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\classes-b7e7734754b79fd475e2618b8ad4cc750043626d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-c76f569afa70137eb810aabddd1c5e91e117c40a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\libs\mail.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="428e267abff0d10802ccde86b915da2c20471160">
-        <dex dex="C:\Users\msant080\Desktop\SkillCourt-Backend-develop\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\mail-664ec50a13f74fbedc32bc364a6a560adf612279.jar" />
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\mail-b3661dfc0a75e51d30ba62292429e34c335702da.jar" />
+    </item>
+    <item
+        jar="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\libs\additionnal.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="bd9e8dc422bb8c8405359947fe9f4282b49f57f4">
+        <dex dex="C:\Users\Andy\Documents\GitHub\Senior-Project\SkillCourt-Backend\Code\SkillCourt\app\build\intermediates\pre-dexed\debug\additionnal-bdb43fadfc1d605f3b1826f398daad4c99dd256c.jar" />
     </item>
 
 </items>

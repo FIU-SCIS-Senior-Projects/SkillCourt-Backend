@@ -81,7 +81,7 @@ public class Play extends ActionBarActivity {
         setTabs();
         s = (Switch) findViewById(R.id.rtSwitch);
 
-        getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
+        //getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,11 +100,7 @@ public class Play extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        else if(id == R.id.action_logout)
-        {
-            Intent intent = new Intent(this, Welcome.class);
-            startActivity(intent);
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -414,7 +410,7 @@ public class Play extends ActionBarActivity {
             Statistic s = parseMessage(message, puname, difficulty, date);
             dbInteraction dbi = new dbInteraction();
             dbi.addStat(s);
-            //btSocket.close();
+            btSocket.close();
             Intent intent = new Intent(this, GameResults.class);
             intent.putExtra(Home.EXTRA_PAD, dev);
             intent.putExtra("stats", s);
