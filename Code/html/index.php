@@ -60,6 +60,7 @@ if (login_check($mysqli) == true) {
 			<td /><td><small>(You can log in as a guest player with username "guest" and no password)</small></td>
 		    </tr>
 		</table>
+			<a class="simulator_block" href="simulator.php"> Try Simulator!</a>
             </form>
 	    <?php
             if (login_check($mysqli) == true) {
