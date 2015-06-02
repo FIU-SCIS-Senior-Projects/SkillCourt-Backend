@@ -392,8 +392,9 @@ class GroundChaseRoutine extends Routine
    private ArrayList generateRandomPadsPerRow(int wallID)
    {
       for (int i = 0 ; i < (EW_HEIGHT - 2) ; i++)
-      { 
-        randomIndex = int(random(4));
+      {
+       
+        validateRepeatingRows();
         Pad newPad = myRoom.walls[wallID].getPad(randomIndex,i);
         greenPads.add(newPad);
       } 
@@ -1617,3 +1618,4 @@ class Pad
     valid = !valid ;
   }
 }
+
