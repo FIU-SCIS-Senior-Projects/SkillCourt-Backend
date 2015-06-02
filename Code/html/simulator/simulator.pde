@@ -893,31 +893,32 @@ class ThreeWallChaseRoutine extends Routine
   {
     super.generateStep() ;
     clearLitPads() ;  
-    int wallID = 4 ;  //get WEST wall
-    boolean areRedPads = true ;        //alternate between adding pads to green and red
+    int wallID = 4 ;  //start at WEST wall ; W -> N -> E
+    int toBeGreen = int(random(3)) ;  //decides green wall
+    
     for (int i = 0; i < 3; i++)
     {
+      //gets num of pads depending on wall 
       int numPads = (wallID == NORTH) ? NS_WIDTH - 2 : EW_HEIGHT/2 - 1; 
       int r ,  c , incR , incC ;
+      //initializes start point based on row/column depending on wall
       if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
       else if(wallID == EAST){ r = 0 ; c = 1 ; }
-      else if(wallID == WEST){ r = EW_WIDTH - 1 ; c = 1 ; }
-      
+      else { r = EW_WIDTH - 1 ; c = 1 ; }
+      //initializes increments for wall/column depending on wall
       incR = (wallID == NORTH) ? 1 : 0 ;
       incC = (wallID == NORTH) ? 0 : 1 ;
-      
-      ArrayList newPads = myRoom.getBottomPads(wallID, 3, false, false) ;
-      
-      //traverses new bottom pads
-      for (int j = 0; j < ROW_PAD_NUMBER; j++)
+    
+      //gets numPads pads into appropriate color list
+      for (int j = 0; j < numPads ; j++)
       {
+        Pad newPad = myRoom.getPadRC( wallID , r + incR*j , c + incC*j );
         //if set to red pads, puts them in the red pads list
-        if (areRedPads) redPads.add((Pad)(newPads.get(j))) ;
+        if (i == toBeGreen) greenPads.add(newPad) ;
         //else put pads in green pads list
-        else greenPads.add((Pad)(newPads.get(j))) ;
+        else redPads.add(newPad) ;
+        
       }  
-      //switches so next pads are in other color pads
-      areRedPads = !areRedPads ;
       //gets next pad in sequence 1-2-3-4-1-...
       wallID = wallID % 4 + 1 ;
     }
@@ -934,7 +935,6 @@ class ThreeWallChaseRoutine extends Routine
 
     if (difficulty.equals(NOVICE))      // Lit all pads green
     {
-     //println("Novice Difficulty ");
       setRowToColor(greenPads, green);
     } else if (difficulty.equals(INTERMEDIATE)) {    // Lit one pad red
       setRowAndPadToColor(greenPads, randomPadIndex, red);
@@ -990,7 +990,7 @@ class Stats
     misses = 0 ;
     minus = 0 ;
     antRecSum = 0 ;
-    antRecDrbi = 0 ;
+    antRecDrib = 0 ;
   }
 
   void addForce(int newForce) { 
@@ -1066,14 +1066,14 @@ class Room
     return  walls[wallID].getPadColor(x, y) ;
   }
 
-  Pad getPad(int x, int y)
+  Pad getPadFromCoordinates(int x, int y)
   {
     int wallID = getWallID(x, y) ;
     if (wallID < 0)  return null ;
 
     return  walls[wallID].getPadFromCoordinates(x, y) ;
   }
-
+  
   boolean turnOffPad(int x, int y)
   {
     int wallID = getWallID(x, y) ;
@@ -1114,7 +1114,9 @@ class Room
 
   Pad getPadRC(int wallID , int r , int c)
   {
+    return walls[wallID].getPad(r,c) ;
   }
+  
   ArrayList getUpperSquarePads (int wallID, int padNum, boolean isGroundBased, boolean needNorth)
   {
 
