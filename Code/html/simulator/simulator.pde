@@ -1,9 +1,11 @@
 /* preload="images/soccerBall.png,images/tennisBall.png"; */
 
 //Global Variables
-//String routineCommand = "ga020000000" ;
-//boolean isReadyToPlay = true ;
-//String warning = "" ;
+// String for timedRounds
+//String routineCommand = "ga0110000050" ;
+String routineCommand = "ga020000000" ;
+boolean isReadyToPlay = true ;
+String warning = "" ;
 PImage soccerBall ;
 PImage tennisBall ;
 
@@ -39,6 +41,7 @@ final String THREE_WALL_CHASE = "t" ;
 final String HOME_CHASE = "g";
 final String HOME_FLY = "j";
 final String FLY = "h";
+final String GROUND_CHASE = "m";
 
 //constants difficulties chars
 final String NOVICE = "n";
@@ -197,6 +200,7 @@ class Game
       myRoutine = new HomeFlyRoutine(myRoom, difficulty);
       isRoutineGroundBased = true ;
     }
+    //else if (type.equals(GROUND_CHASE)) myRoutine = new GroundChaseRoutine(myRoom, difficulty); 
   }
 
   boolean isGameStarted() { 
@@ -230,18 +234,6 @@ void postGame() {}
 
 boolean checkStatus()
 {
-  // routineTime > 0 if game is timeRound based
-  if (routineTime > 0)
-  {
-    if ( ((millis() - startTime)/60000) > routineTime )
-    {
-      fill(0, 0, 0);
-      text("Sorry! took too long", 0, 150);
-      startTime = millis();
-      myRoutine.generateStep();
-      return false;
-    }
-  }
   // Round Based game
   // if rounds == 0 then all rounds have passed and game is over
   if (rounds == 0)
@@ -276,6 +268,22 @@ boolean checkStatus()
   {
     text("Rounds Left " + rounds, 10, 10, 160, 160);
   }
+  
+  // routineTime > 0 if game is timeRound based
+  if (routineTime > 0)
+  {
+    if ( ((millis() - startTime)/60000) > routineTime )
+    {
+      fill(0, 0, 0);
+      text("Sorry! took too long", 0, 150);
+      startTime = millis();
+      rounds--;
+      myRoutine.groundPadPressed = false;
+      myRoutine.generateStep();
+      return false;
+    }
+  }
+  
   return false;
 }
 
@@ -291,6 +299,7 @@ class Routine
 {
   Room myRoom ;
   String difficulty ;
+  boolean groundPadPressed;
 
   boolean handleInput(int x, int y, int clickNum) {
     return true;
@@ -337,7 +346,7 @@ class HomeChaseRoutine extends Routine
   int successClicks ;
   Stats myStats ;  
   int stepTime ;
-  boolean groundPadPressed;
+  //boolean groundPadPressed;
   Pad groundPad;
   boolean isGroundPadNorth ; 
 
@@ -352,6 +361,7 @@ class HomeChaseRoutine extends Routine
     myStats = new Stats() ; 
     successClicks = 0;    // keeps track on the number of succesfull clicks
     groundPadPressed = false;
+    groundPad = null;
     generateStep();
   }
   boolean isGroundPadPressed() { 
@@ -465,7 +475,12 @@ class HomeChaseRoutine extends Routine
   {
     //turns off all green pads
     setRowToColor(row1, padOffColor) ; 
-    setRowToColor(row2, padOffColor) ; 
+    setRowToColor(row2, padOffColor) ;
+
+    if (groundPad != null)
+    {
+      groundPad.setColor(padOffColor);
+    }
 
     //empties greenPad list
     while (row1.size () > 0) row1.remove(0) ;
@@ -482,8 +497,8 @@ class HomeFlyRoutine extends Routine
   int successClicks ;
   Stats myStats ;  
   int stepTime ;
-  boolean groundPadPressed;
-  Pad groundPad;
+  //boolean groundPadPressed;
+  Pad groundPad = null;
   boolean isGroundPadNorth ;
 
   HomeFlyRoutine (Room myRoom, String difficulty) 
@@ -625,6 +640,11 @@ class HomeFlyRoutine extends Routine
     //turns off all green pads
     setRowToColor(row1, padOffColor) ; 
     setRowToColor(row2, padOffColor) ; 
+    
+    if (groundPad != null)
+    {
+      groundPad.setColor(padOffColor);
+    }
 
     //empties greenPad list
     while (row1.size () > 0) row1.remove(0) ;
@@ -990,7 +1010,7 @@ class Stats
     misses = 0 ;
     minus = 0 ;
     antRecSum = 0 ;
-    antRecDrbi = 0 ;
+    //antRecDrbi = 0 ;
   }
 
   void addForce(int newForce) { 
@@ -1112,9 +1132,10 @@ class Room
         myWall.getPad(r, c).setColor(newColor) ;
   }
 
-  Pad getPadRC(int wallID , int r , int c)
+  /*Pad getPadRC(int wallID , int r , int c)
   {
-  }
+  }*/
+  
   ArrayList getUpperSquarePads (int wallID, int padNum, boolean isGroundBased, boolean needNorth)
   {
 
