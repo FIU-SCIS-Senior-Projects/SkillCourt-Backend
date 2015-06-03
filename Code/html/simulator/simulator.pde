@@ -1,5 +1,5 @@
-boolean isReadyToPlay = true ;
-String warning = "" ;
+//boolean isReadyToPlay = true ;
+//String warning = "" ;
 PImage soccerBall ;
 PImage tennisBall ;
 
@@ -49,7 +49,8 @@ final int ROW_PAD_NUMBER = 3;
 //doubleClick
 int prevX ;
 int prevY ;
-int clickNum ;
+boolean isFirstClick ;
+int firstClickTime;
 
 //for game
 Room newRoom ;
@@ -63,7 +64,7 @@ void setup()
 
   //testing
   frameRate(10) ;
-  clickNum = 1 ;
+  isFirstClick = true ;
   prevX = 0 ;
   prevY = 0 ;
   isPlaying = false ;
@@ -107,23 +108,18 @@ void mousePressed()
 { 
   if (myGame.isGameStarted())
   {
-    if (clickNum == 1)
+    if (isFirstClick || !(mouseX == prevX && mouseY == prevY))
     {
       prevX = mouseX ;
       prevY = mouseY ;
-      clickNum++ ;
+      isFirstClick = false ;
       myGame.handleSingleClick(mouseX, mouseY) ;
+      firstClickTime = millis() ;
     } else  //second click
     {
-      if (mouseX == prevX && mouseY == prevY)
-        myGame.handleDoubleClick(mouseX, mouseY) ;
-      else
-      {
-        prevX = mouseX ;
-        prevY = mouseY ;
-        myGame.handleSingleClick(mouseX, mouseY) ;
-      } 
-      clickNum = 1 ;
+      int deltaClickTime = millis() - firstClickTime ;   
+      myGame.handleDoubleClick(mouseX, mouseY , deltaClickTime) ;
+      isFirstClick = true ;
     }
   }
 }
