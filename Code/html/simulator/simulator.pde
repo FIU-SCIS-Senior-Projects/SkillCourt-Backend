@@ -398,14 +398,14 @@ class GroundChaseRoutine extends Routine
    
    private int generateRandomPadIndex(int columnCount)
    {
-     int randomIndex = int(random(4));
+     int randomIndex = int(random(NS_WIDTH - 2));
      
      if (columnCount < NS_WIDTH - 2)
        {
        while ( (rowRepetition[randomIndex]) || (randomIndex == previousPadIndex) )
        {
-          if (rowRepetition[randomIndex]) randomIndex = int(random(4));
-          if (randomIndex == previousPadIndex) randomIndex = int(random(4)); 
+          if (rowRepetition[randomIndex]) randomIndex = int(random(NS_WIDTH - 2));
+          if (randomIndex == previousPadIndex) randomIndex = int(random(NS_WIDTH - 2)); 
        }
        
        rowRepetition[randomIndex] = true;
@@ -414,10 +414,10 @@ class GroundChaseRoutine extends Routine
      else
      {
         initRowRepetitionArray();
-        randomIndex = int(random(4));
+        randomIndex = int(random(NS_WIDTH - 2));
         
         while (randomIndex == previousPadIndex)
-          if (randomIndex == previousPadIndex) randomIndex = int(random(4));
+          if (randomIndex == previousPadIndex) randomIndex = int(random(NS_WIDTH - 2));
           
         previousPadIndex = randomIndex;
      }
