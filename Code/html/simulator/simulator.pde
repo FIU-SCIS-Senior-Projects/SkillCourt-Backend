@@ -3,7 +3,7 @@
 //Global Variables
 // String for timedRounds
 //String routineCommand = "ga0110000050" ;
-String routineCommand = "ma002000000" ;
+String routineCommand = "ma017000000" ;
 boolean isReadyToPlay = true ;
 String warning = "" ;
 PImage soccerBall ;
@@ -360,7 +360,6 @@ class GroundChaseRoutine extends Routine
    boolean[] rowRepetition;
    int clickedColumn;
    int previousPadIndex;
-   int randomIndex;
   
    GroundChaseRoutine(Room myRoom, String difficulty)
    {
@@ -373,56 +372,63 @@ class GroundChaseRoutine extends Routine
      clickedColumn = 0;
      rowRepetition = new boolean[NS_WIDTH-2];
      previousPadIndex = -1;
-     // Set array values to false
-     initRowRepetitionArray();
+     initRowRepetitionArray();  // Set array values to false
      generateStep();
    }
    
    void generateStep()
    {
+     
+     if (clickedColumn == 0) greenPads = generateRandomPads(0);
+     
      if (clickedColumn < (EW_HEIGHT - 2))
      {
-       greenPads = generateRandomPadsPerRow(0);
        Pad padToLit = (Pad)(greenPads.get(clickedColumn));
        padToLit.setColor(green);
      }
    }
    
    // Generates Random Pads without repeating consecutive positions
-   private ArrayList generateRandomPadsPerRow(int wallID)
+   private ArrayList generateRandomPads(int wallID)
    {
       for (int i = 0 ; i < (EW_HEIGHT - 2) ; i++)
       { 
-        randomIndex = int(random(4));
-        Pad newPad = myRoom.walls[wallID].getPad(randomIndex,i);
+        int index = generateRandomPadIndex(i);
+        Pad newPad = myRoom.walls[wallID].getPad(index,i);
         greenPads.add(newPad);
       } 
       
       return greenPads;
    }
    
-   private boolean isRowConsecutive()
+   private int generateRandomPadIndex(int columnCount)
    {
-     if (randomIndex == previousPadIndex) return true;
-     else
-       return false;
-   }
-   
-   private void validateRepeatingRows()
-   {
+     int randomIndex = int(random(4));
      
-   }
-   
-   private Pad generateRandomPad(int wallID, int atColumn)
-   {
-      int r = int(random(4));
-      
-      if (!rowRepetition[r]) rowRepetition[r] = true;
-      
-      while (rowRepetition[r]) r = int(random(4));
-      
-      Pad newPad = myRoom.walls[wallID].getPad(r,atColumn);
-      return newPad;
+     if (columnCount < 4)
+       {
+       while ( (rowRepetition[randomIndex]) || (randomIndex == previousPadIndex) )
+       {
+          if (rowRepetition[randomIndex]) randomIndex = int(random(4));
+          if (randomIndex == previousPadIndex) randomIndex = int(random(4)); 
+       }
+       
+       rowRepetition[randomIndex] = true;
+       previousPadIndex = randomIndex;
+     }
+     else
+     {
+        initRowRepetitionArray();
+        randomIndex = int(random(4));
+        
+        while (randomIndex == previousPadIndex)
+          if (randomIndex == previousPadIndex) randomIndex = int(random(4));
+          
+        previousPadIndex = randomIndex;
+     }
+     
+     return randomIndex;
+     
    }
    
    boolean handleInput(int x, int y,int clickNum) 
