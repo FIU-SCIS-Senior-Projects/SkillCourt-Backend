@@ -1,7 +1,8 @@
-//boolean isReadyToPlay = true ;
-//String warning = "" ;
+boolean isReadyToPlay = true ;
+String warning = "" ;
 PImage soccerBall ;
 PImage tennisBall ;
+String routineCommand = "ca003000000";
 
 Game myGame; 
 Room myRoom;
@@ -54,6 +55,8 @@ int firstClickTime;
 //for game
 Room newRoom ;
 boolean isPlaying;
+
+double ballMass;
 
 void setup()
 {
@@ -207,7 +210,7 @@ class Game
     return isRoutineGroundBased ;
   }
 
-void handleDoubleClick(int x, int y) 
+void handleDoubleClick(int x, int y, int deltaClickTime) 
 { 
   if ( myRoutine.handleInput(x, y, 2) )
   { 
@@ -1058,16 +1061,19 @@ class Stats
   int forceSum ;
   int successes ;
   int misses ;
+  int forceHits;
   
   int antRecSum ;
   int antRecDrib ;
 
+  int minusPoints;
+  
   Stats() 
   {
     forceSum = 0 ;
     successes = 0 ; 
     misses = 0 ;
-    minus = 0 ;
+    minusPoints = 0 ;
     antRecSum = 0 ;
     //antRecDrbi = 0 ;
   }
@@ -1093,7 +1099,7 @@ class Stats
     return successes/(successes + misses) ;
   }
   int getMinusPoints() { 
-    return minus ;
+    return minusPoints ;
   }
   float getAvgARTime() { 
     return antRecSum/successes ;
