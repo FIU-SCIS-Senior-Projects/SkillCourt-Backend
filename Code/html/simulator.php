@@ -30,6 +30,7 @@
 								<option value="h">Fly</option>
 								<option value="g">Home Chase</option>
 								<option value="j">Home Fly</option>
+								<option value="m">Ground Chase</option>
 							</select></td>
 					<td id="gametypeMsg"></td>
 				</tr>
@@ -62,6 +63,7 @@
 				</tr>
 			</table>	
 		</div>	
+		<p id="output"></p>
 		<div id="Simulator">
 			<div>
 				<br><br><br>
@@ -169,7 +171,7 @@
 				
 				routineCommand = routineForGame + difficultyForGame + roundsForGameStr  + timeForGameStr + timePerRoundStr ; 
 				
-				//document.getElementById("output").innerHTML = routineForGame + difficultyForGame + roundsForGameStr  + timeForGameStr + timePerRoundStr ; 
+				document.getElementById("output").innerHTML = routineForGame + difficultyForGame + roundsForGameStr  + timeForGameStr + timePerRoundStr ; 
 			}
 		</script>
 	</body>
