@@ -2,7 +2,7 @@ boolean isReadyToPlay = true ;
 String warning = "" ;
 PImage soccerBall ;
 PImage tennisBall ;
-String routineCommand = "ca003000000";
+String routineCommand = "ma003000000";
 
 Game myGame; 
 Room myRoom;
@@ -400,7 +400,7 @@ class GroundChaseRoutine extends Routine
    {
      int randomIndex = int(random(4));
      
-     if (columnCount < 4)
+     if (columnCount < NS_WIDTH - 2)
        {
        while ( (rowRepetition[randomIndex]) || (randomIndex == previousPadIndex) )
        {
