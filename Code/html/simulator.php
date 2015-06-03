@@ -24,9 +24,9 @@
 			<table>
 				<tr>
 					<td>Routine</td>
-					<td><select id="routineType">
-								<option value="c" selected="true">Chase</option>
-								<option value="t">Three Wall Chase</option>
+					<td><select id="routineType" onchange="allowRounds();">
+								<option value="t"selected="true">Three Wall Chase</option>
+								<option value="c">Chase</option>
 								<option value="h">Fly</option>
 								<option value="g">Home Chase</option>
 								<option value="j">Home Fly</option>
@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<td>Time Per Round</td>
-					<td><input type="checkbox" onchange="myFunction2();">
+					<td><input id="timePerRoundCheck" type="checkbox" onchange="myFunction2();">
 						<input id="timePerRound" type="number" min="1" max="30" disabled></td>
 				</tr>
 				<tr>
@@ -52,7 +52,7 @@
 						<select id="gameType">
 							<option value="time" selected="true">Time (minutes)</option>
 							<option value="rounds">Rounds</option>
-							<input type="number" id="amount" min="1" max="30">
+							<input type="number" id="amount" min="1" max="30" value="1">
 						</select>
 				</tr>
 				<tr>
@@ -74,6 +74,21 @@
 			</div>
 		</div>
 		<script type="application/javascript">
+			function allowRounds()
+			{
+				var routineObj = document.getElementById("routineType");
+				if(routineObj.value == "c" || routineObj.value == "h")
+				{
+					document.getElementById("gameType").value = "time" ;
+					document.getElementById("gameType").disabled = true ;
+					document.getElementById("timePerRoundCheck").disabled = true ;
+				}
+				else
+				{
+					document.getElementById("gameType").disabled = false ;
+					document.getElementById("timePerRoundCheck").disabled = false ;
+				}
+			}
 			function myFunction2() {
 				var x = document.getElementById("timePerRound").disabled;
 				document.getElementById("timePerRound").disabled = !x ;
@@ -135,8 +150,8 @@
 			
 			function isTimeBased(){ return document.getElementById("gameType").value === "time"; }
 			
-			function switchOff()
-			{ isReadyToPlay = false ; }
+			//delete this at some point or make it work better
+			function switchOff(){ isReadyToPlay = false ; }
 			
 
 			function startGame()
