@@ -17,6 +17,8 @@ color orange = color(243, 194, 80);
 color yellow = color(252, 211, 7);
 final int padSideLength = 40 ;
 
+String testingTask;
+
 //constants wall enum
 final int GROUND = 0 ;
 final int NORTH  = 1 ; 
