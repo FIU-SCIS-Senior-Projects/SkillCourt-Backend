@@ -2,7 +2,7 @@ boolean isReadyToPlay = true ;
 String warning = "" ;
 PImage soccerBall ;
 PImage tennisBall ;
-String routineCommand = "ma003000000";
+String routineCommand = "ta003000000";
 
 Game myGame; 
 Room myRoom;
@@ -29,7 +29,7 @@ final int WEST = 4 ;
 //constants wall dimensions
 final int NS_WIDTH = 6;
 final int NS_HEIGHT = 3 ;
-final int EW_WIDTH = 3 ;
+final int EW_WIDTH = 3;
 final int EW_HEIGHT = 8 ;
 
 //constants routines chars
@@ -58,7 +58,7 @@ int firstClickTime;
 Room newRoom ;
 boolean isPlaying;
 
-double ballMass;
+double ballMass = 0.45;
 
 void setup()
 {
@@ -68,7 +68,7 @@ void setup()
 
   //testing
   frameRate(10) ;
-  isFirstClick = true ;
+  isFirstClick = true ; 
   prevX = 0 ;
   prevY = 0 ;
   isPlaying = false ;
@@ -121,8 +121,7 @@ void mousePressed()
       firstClickTime = millis() ;
     } else  //second click
     {
-      int deltaClickTime = millis() - firstClickTime ;   
-      myGame.handleDoubleClick(mouseX, mouseY , deltaClickTime) ;
+      myGame.handleDoubleClick(mouseX, mouseY , millis() - firstClickTime) ;
       isFirstClick = true ;
     }
   }
@@ -214,7 +213,7 @@ class Game
 
 void handleDoubleClick(int x, int y, int deltaClickTime) 
 { 
-  if ( myRoutine.handleInput(x, y, 2) )
+  if ( myRoutine.handleInput(x, y, 2, deltaClickTime) )
   { 
     fill(0, 0, 0);
     //text(rounds, 0, 150);
@@ -229,7 +228,7 @@ void handleSingleClick(int x, int y)
 {
   //if (isRoutineGroundBased) myRoutine.handleInput(x, y, 1) ;
   
-  if ( (isRoutineGroundBased) && (myRoutine.handleInput(x, y, 1)) )
+  if ( (isRoutineGroundBased) && (myRoutine.handleInput(x, y, 1, 0)) )
   { 
     fill(0, 0, 0);
     //text(rounds, 0, 150);
@@ -310,8 +309,8 @@ class Routine
   Room myRoom ;
   String difficulty ;
   boolean groundPadPressed;
-
-  boolean handleInput(int x, int y, int clickNum) {
+  Stats myStats ;
+  boolean handleInput(int x, int y, int clickNum, int deltaClickTime) {
     return true;
   }      
 
@@ -426,9 +425,9 @@ class GroundChaseRoutine extends Routine
      
    }
    
-   boolean handleInput(int x, int y,int clickNum) 
+   boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
-    super.handleInput(x, y, clickNum) ;
+    super.handleInput(x, y, clickNum, deltaClickTime) ;
     
     if (clickedColumn < (EW_HEIGHT - 2))
     {
@@ -563,9 +562,9 @@ class HomeChaseRoutine extends Routine
     }
   }
 
-  boolean handleInput(int x, int y,int clickNum) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
-    super.handleInput(x, y, clickNum) ;
+    super.handleInput(x, y, clickNum, deltaClickTime) ;
     int groundID = 0 ;
 
     if (!groundPadPressed)
@@ -727,9 +726,9 @@ class HomeFlyRoutine extends Routine
     }
   }
 
-  boolean handleInput(int x, int y,int clickNum) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
-    super.handleInput(x, y,1) ;
+    super.handleInput(x, y,1, deltaClickTime) ;
     int groundID = 0 ;
 
     if (!groundPadPressed)
@@ -810,7 +809,7 @@ class FlyRoutine extends Routine
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     wall1 = int(random(4)) + 1;
-    wall2 = wall1 % 4 + 1;
+    wall2 = (wall1 % 4) + 1;
     myStats = new Stats() ; 
     generateStep();
     generateStep();
@@ -842,7 +841,6 @@ class FlyRoutine extends Routine
     int randomPadIndex = int(random(3)); // get random pad index for difficulty
 
     if (difficulty.equals(NOVICE))      // Lit all pads green
-    
       setRowToColor(row, green);    
     else if (difficulty.equals(INTERMEDIATE))     // Lit one pad red
       setRowAndPadToColor(row, randomPadIndex, red);
@@ -862,9 +860,9 @@ class FlyRoutine extends Routine
     }
   }
 
-   boolean handleInput(int x, int y,int clickNum) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
-    super.handleInput(x, y, clickNum) ;
+    super.handleInput(x, y, clickNum, deltaClickTime) ;
 
     if (myRoom.colorOfClick(x, y) == green)
     {
@@ -945,9 +943,9 @@ class ChaseRoutine extends Routine
       setRowAndPadToColor(row, randomPadIndex, green) ;
   }
 
-  boolean handleInput(int x, int y,int clickNum) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
-    super.handleInput(x, y,1) ;
+    super.handleInput(x, y, 1, deltaClickTime) ;
 
     if (myRoom.colorOfClick(x, y) == green)
     {
@@ -963,7 +961,6 @@ class ThreeWallChaseRoutine extends Routine
 {
   ArrayList greenPads ;
   ArrayList redPads ;
-  Stats myStats ;  
 
   ThreeWallChaseRoutine(Room myRoom, String difficulty) 
   {
@@ -1028,21 +1025,23 @@ class ThreeWallChaseRoutine extends Routine
     }
   }
 
-  boolean handleInput(int x, int y,int clickNum) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
-    super.handleInput(x, y,1) ;
-    //if green
-    if (myRoom.colorOfClick(x, y) == green)
+    super.handleInput(x, y, clickNum, deltaClickTime) ;
+      
+    if(myRoom.colorOfClick(x, y) == green) //green - success
     {
       //handle game
       generateStep() ;
+      myStats.addForceDoubleClickTime(deltaClickTime) ;
+      myStats.success() ;
       return true ;  
-      // ROUNDS: return true
-      //handle stats
-    } 
-    return false ;// ROUNDS: return false;
-    //if off
-    //if red
+    }
+    
+    if(myRoom.colorOfClick(x, y) == red) myStats.minusPoint(); 
+    
+    myStats.miss() ;    
+    return false ;
   }  
 
   //turns off all lit pads and empties lists
@@ -1060,15 +1059,14 @@ class ThreeWallChaseRoutine extends Routine
 }
 class Stats
 {
-  int forceSum ;
+  double forceSum ;
   int successes ;
   int misses ;
-  int forceHits;
-  
-  int antRecSum ;
-  int antRecDrib ;
-
+  int anticipationReactionSum ;
+  int anticipationReactionDribbling ;
   int minusPoints;
+  int lastSuccessAt ;
+  boolean isFirstSuccess ;
   
   Stats() 
   {
@@ -1076,35 +1074,60 @@ class Stats
     successes = 0 ; 
     misses = 0 ;
     minusPoints = 0 ;
-    antRecSum = 0 ;
-    //antRecDrbi = 0 ;
+    anticipationReactionSum = 0 ;
+    anticipationReactionDribbling = 0 ;
+    isFirstSuccess = true ;
   }
 
   void addForceDoubleClickTime(int deltaTime) 
   { 
-    forceSum += (30 + 1/(deltaTime-105)) * ballMass;
-    forceHits++ ;
+    forceSum += (30 + 1/((double)deltaTime-105)) * ballMass;
   }
   
-  void success() { successes++ ; }
+  void success() 
+  { 
+    successes++ ; 
+    
+    if(isFirstSuccess) isFirstSuccess = false ;
+    else anticipationReactionSum += (millis() - lastSuccessAt) ;
+    
+    lastSuccessAt = millis() ;
+    printSummary();
+  }
+  
   void miss() { misses++ ; }
   void minusPoint() { minusPoints++ ; }
-  void addAntRecTime(int newTime) { antRecSum += newTime ; } 
-
-  float getForceAvg() { 
-    return forceSum/forceHits ;
+ 
+  double getForceAvg() 
+  { 
+    double result = (double)forceSum/successes ; 
+    return result ;
   }
-  int getSuccesses() { 
-    return successes ;
-  }
-  float getAccuracy() { 
-    return successes/(successes + misses) ;
+  
+  int getSuccesses() { return successes ; }
+  
+  double getAccuracy() 
+  { 
+    double result = (double)successes/(successes + misses) ;
+    return result ;
   }
   int getMinusPoints() { 
     return minusPoints ;
   }
-  float getAvgARTime() { 
-    return antRecSum/successes ;
+  double getAvgARTime() { 
+    double result = (double)anticipationReactionSum/successes ;
+    return result ;
+  }
+  
+  void printSummary()
+  {
+    println("Successes: " + getSuccesses()) ;
+    println("Misses: " + misses ) ;
+    println("Minus points: " + getMinusPoints()); 
+    println("Accuracy: " + (getAccuracy()*100) +"%") ;
+    println("Average Force: " + getForceAvg() + " Newtons") ;
+    println("Average Anticipation Reaction Time: " + (getAvgARTime()/1000) + " seconds"); 
+    println("========================================================") ;
   }
 }
 
@@ -1220,12 +1243,12 @@ class Room
       break ;
     case SOUTH:
       r = 0; 
-      c = 2; 
+      c = NS_HEIGHT-1; 
       incR++; 
       forBot = -1 ; 
       break ;
     case EAST:
-      r = 2; 
+      r = EW_WIDTH-1; 
       c = 0; 
       incC++ ; 
       forBot = -1 ; 
@@ -1246,7 +1269,7 @@ class Room
       c += incC ;
     }  
 
-    int highNum = (r==5) ? NS_WIDTH : EW_HEIGHT ;
+    int highNum = (r==NS_WIDTH-1) ? NS_WIDTH : EW_HEIGHT ;
     int lowNum = 0 ;
 
     if (isGroundBased)
@@ -1259,8 +1282,8 @@ class Room
     {
       Pad current ;
 
-      int newR = (r==5) ? rng + i : r ;
-      int newC = (r==5) ? c : rng + i ; 
+      int newR = (r==NS_WIDTH-1) ? rng + i : r ;
+      int newC = (r==NS_WIDTH-1) ? c : rng + i ; 
 
      //println(wallID + " newR,newC = " + newR + "," + newC);
       current = walls[wallID].getPad(newR, newC) ;  //NS
@@ -1268,8 +1291,8 @@ class Room
       if (current.isValid()) ret.add(current) ;  
 
 
-      newR = (r==5) ? rng + i : r+forBot ;
-      newC = (r==5) ? c+forBot : rng + i ; 
+      newR = (r==NS_WIDTH-1) ? rng + i : r+forBot ;
+      newC = (r==NS_WIDTH-1) ? c+forBot : rng + i ; 
 
      //println(wallID + " newR,newC = " + newR + "," + newC);
       current = walls[wallID].getPad(newR, newC) ;
@@ -1291,7 +1314,7 @@ class Room
     {
     case NORTH: 
       r = 0 ; 
-      c = 2 ; 
+      c = NS_HEIGHT-1 ; 
       incR++ ; 
       break ; 
     case SOUTH: 
@@ -1305,7 +1328,7 @@ class Room
       incC++ ; 
       break ;
     case WEST: 
-      r = 2 ; 
+      r = EW_WIDTH-1 ; 
       c = 0 ; 
       incC++ ; 
       break ;
@@ -1319,7 +1342,7 @@ class Room
       c += incC ;
     }  
 
-    int highNum = (r==5) ? NS_WIDTH : EW_HEIGHT ;
+    int highNum = (r==NS_WIDTH-1) ? NS_WIDTH : EW_HEIGHT ;
     int lowNum = 0 ;
 
     if (isGroundBased)
@@ -1332,8 +1355,8 @@ class Room
     {
       Pad current ;
 
-      int newR = (r==5) ? rng + i : r ;
-      int newC = (r==5) ? c : rng + i ; 
+      int newR = (r==NS_WIDTH-1) ? rng + i : r ;
+      int newC = (r==NS_WIDTH-1) ? c : rng + i ; 
 
      //println(wallID + " newR,newC = " + newR + "," + newC);
       current = walls[wallID].getPad(newR, newC) ;  //NS
