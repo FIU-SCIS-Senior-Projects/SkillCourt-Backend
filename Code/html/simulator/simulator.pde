@@ -1,8 +1,8 @@
-boolean isReadyToPlay = true ;
-String warning = "" ;
+//boolean isReadyToPlay = true ;
+//String warning = "" ;
 PImage soccerBall ;
 PImage tennisBall ;
-String routineCommand = "ta003000000";
+//String routineCommand = "ta003000000";
 
 Game myGame; 
 Room myRoom;
