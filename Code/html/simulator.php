@@ -57,15 +57,13 @@
 						</select>
 				</tr>
 				<tr>
-					<td></td>
-					<td><button onclick="startGame();">Start</button></td>
-					<td><button onclick="switchOff();">Off</button></td>
+					<td colspan="2"><button onclick="startGame();">Start</button></td>
+					<!--<td><button onclick="switchOff();">Off</button></td>-->
 				</tr>
 			</table>	
 		</div>	
-		<p id="output"></p>
+		<!--<p id="output"></p>-->
 		<div id="Simulator">
-			<div>
 				<br><br><br>
 				<canvas id="sketch" data-processing-sources="simulator/simulator.pde" width="600" height="600">
 					<p>Your browser does not support the canvas tag.</p>
@@ -73,7 +71,6 @@
 				<noscript>
 					<p>JavaScript is required to view the contents of this page.</p>
 				</noscript>
-			</div>
 		</div>
 		<script type="application/javascript">
 			function allowRounds()
