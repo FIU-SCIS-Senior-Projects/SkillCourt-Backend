@@ -1,8 +1,5 @@
-boolean isReadyToPlay = true ;
-String warning = "" ;
 PImage soccerBall ;
 PImage tennisBall ;
-String routineCommand = "ma003000000";
 
 Game myGame; 
 Room myRoom;
@@ -44,6 +41,9 @@ final String GROUND_CHASE = "m";
 final String NOVICE = "n";
 final String INTERMEDIATE = "i";
 final String ADVANCED = "a";
+
+//constansts groundChase
+//final int GC_NOVICE_DIFFICULTY = 
 
 final int SQUARE_PAD_NUMBER = 4;
 final int ROW_PAD_NUMBER = 3;
@@ -352,9 +352,11 @@ class GroundChaseRoutine extends Routine
    ArrayList greenPads;
    ArrayList bluePads;
    ArrayList redPads;
+   Pad[] redPadArray;
    boolean[] rowRepetition;
    int clickedColumn;
    int previousPadIndex;
+   int [] greenPadCoordinateArray;
   
    GroundChaseRoutine(Room myRoom, String difficulty)
    {
@@ -366,6 +368,8 @@ class GroundChaseRoutine extends Routine
      bluePads = new ArrayList();
      clickedColumn = 0;
      rowRepetition = new boolean[NS_WIDTH-2];
+     greenPadCoordinateArray = new int[(EW_HEIGHT-2)];
+     redPadArray = new Pad[(EW_HEIGHT-2)];
      previousPadIndex = -1;
      initRowRepetitionArray();  // Set array values to false
      generateStep();
@@ -374,7 +378,17 @@ class GroundChaseRoutine extends Routine
    void generateStep()
    {
      
-     if (clickedColumn == 0) greenPads = generateRandomPads(0);
+     if (clickedColumn == 0)
+    { 
+      generateRandomPads(0);
+      getRedPadsForDifficultyLevel(difficulty);
+      if (clickedColumn == 0)
+      {
+         Pad redPad = redPadArray[clickedColumn];
+         if (redPad != null)   redPad.setColor(red);
+      }
+    }
+     // initialize the greenPadCoordinateArray with the row value of each green pad y greenPads
      
      if (clickedColumn < (EW_HEIGHT - 2))
      {
@@ -384,16 +398,16 @@ class GroundChaseRoutine extends Routine
    }
    
    // Generates Random Pads without repeating consecutive positions
-   private ArrayList generateRandomPads(int wallID)
+   private void generateRandomPads(int wallID)
    {
       for (int i = 0 ; i < (EW_HEIGHT - 2) ; i++)
       { 
         int index = generateRandomPadIndex(i);
-        Pad newPad = myRoom.walls[wallID].getPad(index,i);
+        //println("index: "+ index);
+        greenPadCoordinateArray[i] = index;
+        Pad newPad = myRoom.walls[wallID].getPad(index,i);      
         greenPads.add(newPad);
       } 
-      
-      return greenPads;
    }
    
    private int generateRandomPadIndex(int columnCount)
@@ -438,8 +452,17 @@ class GroundChaseRoutine extends Routine
          bluePads.add(pressedPad);
          pressedPad.setColor(blue);
          
+         Pad redPad = redPadArray[clickedColumn];
+         if (redPad != null)   redPad.setColor(padOffColor);
+         
          // Keeps track of the columns
          clickedColumn++;
+         
+         if (clickedColumn < (EW_HEIGHT - 2))
+         {
+           redPad = redPadArray[clickedColumn];
+           if (redPad != null)   redPad.setColor(red);
+         }
          
          generateStep();
          
@@ -451,7 +474,6 @@ class GroundChaseRoutine extends Routine
            generateStep();
            return true; // Round ended
          }
-         
        }
     }
     
@@ -464,18 +486,54 @@ class GroundChaseRoutine extends Routine
     //turns off all green pads
     setRowToColor(greenPads, padOffColor) ; 
     setRowToColor(bluePads, padOffColor) ;
+    setRowToColor(redPads, padOffColor);
+    setArrayRowToColor(redPadArray,padOffColor);
     
-    //empties greenPad list
+    //empties all structures
     while (greenPads.size () > 0) greenPads.remove(0) ;
     while (bluePads.size () > 0) bluePads.remove(0) ;
+    while (redPads.size () > 0) redPads.remove(0) ;
+    redPadArray = new Pad[EW_HEIGHT-2];
+  }
+  
+  // Set All pads in a row to a given color
+  void setArrayRowToColor (Pad[] row, color myColor)
+  {
+    for (int i = 0; i < row.length ; i++)
+    { 
+      Pad nPad = (Pad)row[i] ;
+      if (nPad != null) nPad.setColor(myColor);
+    }
   }
   
   private void initRowRepetitionArray()
   {
-    for (int i = 0 ; i < NS_WIDTH - 2 ; i++)
-   {
-      rowRepetition[i] = false;
-   } 
+    for (int i = 0 ; i < NS_WIDTH - 2 ; i++) rowRepetition[i] = false;
+  }
+  
+  private void getRedPadsForDifficultyLevel(String difficulty)
+  {
+    int groundHeight = EW_HEIGHT - 2;
+    int randomColumn = int(random(groundHeight));
+    int redPadNumber = 0;
+    
+    if (difficulty.equals(INTERMEDIATE))   redPadNumber = groundHeight/3;
+    else if (difficulty.equals(ADVANCED))  redPadNumber = groundHeight/2 ;
+    
+    for (int i = 0; i < redPadNumber ; i ++)
+    {
+       // find a random red pad that is not equal to a greenPad
+       int aux = greenPadCoordinateArray[randomColumn];
+       while (greenPadCoordinateArray[randomColumn] == aux)  
+         aux = int(random(NS_WIDTH-2));
+       
+       Pad redPad = myRoom.getPadRC(GROUND,aux,randomColumn);
+       if (redPad == null) println("redPad in GroundChase is null");
+       redPadArray[randomColumn] = redPad;
+       //redPad.setColor(red);
+       
+       randomColumn = (randomColumn + (groundHeight/redPadNumber)) % (groundHeight);
+    }
   }
    
 }
