@@ -1,9 +1,3 @@
-PImage soccerBall ;
-PImage tennisBall ;
-
-Game myGame; 
-Room myRoom;
-
 //pad attributes
 color lineColor = color(0, 0, 0);
 color padOffColor = color(255, 255, 255);
@@ -13,8 +7,6 @@ color blue = color(91, 134, 214) ;
 color orange = color(243, 194, 80);
 color yellow = color(252, 211, 7);
 final int padSideLength = 40 ;
-
-String testingTask;
 
 //constants wall enum
 final int GROUND = 0 ;
@@ -57,6 +49,9 @@ int firstClickTime;
 //for game
 Room newRoom ;
 boolean isPlaying;
+PImage soccerBall ;
+PImage tennisBall ;
+Game myGame; 
 
 double ballMass = 0.45;
 
@@ -1182,14 +1177,13 @@ class Stats
     println("Successes: " + getSuccesses()) ;
     println("Misses: " + misses ) ;
     println("Minus points: " + getMinusPoints()); 
-    println("Accuracy: " + (getAccuracy()*100) +"%") ;
-    println("Average Force: " + getForceAvg() + " Newtons") ;
-    println("Average Anticipation Reaction Time: " + (getAvgARTime()/1000) + " seconds"); 
+    println("Accuracy: " + nfc((getAccuracy()*100),2) +"%") ;
+    println("Average Force: " + nfc(getForceAvg(),2) + " Newtons") ;
+    println("Average Anticipation Reaction Time: " + nfc((getAvgARTime()/1000),2) + " seconds"); 
     println("========================================================") ;
   }
 }
 
-//--------------------------MY STUFF--------------------------------
 class Room
 {
   Wall [] walls ;
