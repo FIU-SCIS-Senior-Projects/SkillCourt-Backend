@@ -1,3 +1,8 @@
+*
+{
+    background-color: #65B098;
+}
+
 #Menu a {
     color: White;
 }
@@ -85,29 +90,34 @@ body
 #SimSettings
 {
 	text-align: left ;
-	background: white ;
+	background-image: url("screen.png");
+	background-size: cover ;
+	display: inline-block ;
+	width: 309px ;
+	height: 600px ;	
+	float:left;
+	clear: right;
 }
 
 #SimSettings table
 {
-	margin-left: auto ; 
-	margin-right: auto ;
+	margin-left: 50px ; 
+	margin-right: 50px ;
+	margin-top: 150px;
+	margin-bottom: 150px ;
+	background-color:#cccccc;
+	text-align: center ;
+	
 }
 
-#Simulator
+#Simulator 
 {
 	background-color:  #65B098 ;
-}
-
-#Simulator div
-{
 	padding-left: 0 ;
 	padding-right: 0 ;
-	margin-right: auto ;
-	margin-left: auto ;
 	width: 600px ;
-	display: block ; 
-	clear: both ;
+	display: inline-block; 
+	float: left ;
 }
 
 .simulator_block 
