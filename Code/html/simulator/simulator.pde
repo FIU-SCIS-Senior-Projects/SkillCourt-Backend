@@ -1,3 +1,7 @@
+//String routineCommand = "gn010000000";
+//String warning ="" ;
+//boolean isReadyToPlay = true ;
+
 //pad attributes
 color lineColor = color(0, 0, 0);
 color padOffColor = color(255, 255, 255);
@@ -539,9 +543,7 @@ class HomeChaseRoutine extends Routine
   int wall1 ;
   int wall2 ;
   int successClicks ;
-  Stats myStats ;  
   int stepTime ;
-  //boolean groundPadPressed;
   Pad groundPad;
   boolean isGroundPadNorth ; 
 
@@ -632,9 +634,13 @@ class HomeChaseRoutine extends Routine
           return false;
         }
       }
-    } else if(clickNum == 2){
+    } 
+    else if(clickNum == 2)
+    {  //only checking double clicks
       if (myRoom.colorOfClick(x, y) == green)
       {
+        myStats.addForceDoubleClickTime(deltaClickTime);
+        myStats.success() ;
         if (successClicks == 1) 
         {
           groundPadPressed = false;
@@ -645,7 +651,7 @@ class HomeChaseRoutine extends Routine
 
           // Setting of ground pad when second row is pressed
           groundPad.setColor(padOffColor) ;
-
+          
           generateStep() ;
           return true ;// ROUNDS: return true. step is finished ;
         } else 
@@ -661,6 +667,8 @@ class HomeChaseRoutine extends Routine
         }
         return false; // ROUNDS: return false;
       }
+      if (myRoom.colorOfClick(x, y) == red) myStats.minusPoint() ;
+      myStats.miss() ;
     }
     return false;
   }  
@@ -690,9 +698,7 @@ class HomeFlyRoutine extends Routine
   int wall1 ;
   int wall2 ;
   int successClicks ;
-  Stats myStats ;  
   int stepTime ;
-  //boolean groundPadPressed;
   Pad groundPad = null;
   boolean isGroundPadNorth ;
 
@@ -784,21 +790,19 @@ class HomeFlyRoutine extends Routine
     super.handleInput(x, y,1, deltaClickTime) ;
     int groundID = 0 ;
 
-    if (!groundPadPressed)
+    if ( (!groundPadPressed) && (myRoom.getWallID(x, y) == groundID) && (myRoom.colorOfClick(x, y) == orange) )
     {
-      if (myRoom.getWallID(x, y) == groundID)
-      {
-        if (myRoom.colorOfClick(x, y) == orange)
-        {
-          groundPadPressed = true;
-          isGroundPadNorth = y < height/2 ;
-          generateStep();
-          return false;
-        }
-      }
-    } else if( clickNum == 2) {
+      groundPadPressed = true;
+      isGroundPadNorth = y < height/2 ;
+      generateStep();
+      return false;
+    } 
+    else if( clickNum == 2) 
+    {
       if (myRoom.colorOfClick(x, y) == green)
       {
+        myStats.addForceDoubleClickTime(deltaClickTime) ;
+        myStats.success() ;
         if (successClicks == 1) 
         {
           groundPadPressed = false;
@@ -812,19 +816,23 @@ class HomeFlyRoutine extends Routine
 
           generateStep() ;
           return true ;// ROUNDS: return true. step is finished ;
-        } else 
+        } 
+        else if (myRoom.getWallID(x, y) == wall1) 
         {
-          if (myRoom.getWallID(x, y) == wall1) 
-          {
-            setRowToColor(row1, blue) ;
-            successClicks++;
-          } else {
-            setRowToColor(row2, blue) ;
-            successClicks++;
-          }
+          setRowToColor(row1, blue) ;
+          successClicks++;
+        } 
+        else 
+        {
+          setRowToColor(row2, blue) ;
+          successClicks++;
         }
+        
         return false; // ROUNDS: return false;
       }
+      
+      if (myRoom.colorOfClick(x, y) == red) myStats.minusPoint() ;
+      myStats.miss() ;
     }
     return false;
   }  
@@ -852,7 +860,6 @@ class FlyRoutine extends Routine
   ArrayList row2 ;
   int wall1 ;
   int wall2 ;
-  Stats myStats ;  
 
   FlyRoutine (Room myRoom, String difficulty) 
   {
@@ -919,11 +926,15 @@ class FlyRoutine extends Routine
 
     if (myRoom.colorOfClick(x, y) == green)
     {
+      myStats.addForceDoubleClickTime(deltaClickTime) ;
+      myStats.success() ;
       ArrayList rowHit = (myRoom.getWallID(x, y) == wall1)  ? row1 : row2 ;
       setRowToColor(rowHit, padOffColor) ;
       while( rowHit.size() > 0 ) rowHit.remove(0) ;   
       generateStep() ;  
     }
+    else if (myRoom.colorOfClick(x, y) == padOffColor) myStats.miss() ;
+    
     return false;
   }   
 
@@ -945,9 +956,6 @@ class ChaseRoutine extends Routine
   ArrayList row2 ;
   int wall1 ;
   int wall2 ;
-  int successClicks ;
-  Stats myStats ;  
-  int stepTime ;
 
   ChaseRoutine (Room myRoom, String difficulty) 
   {
@@ -1002,14 +1010,19 @@ class ChaseRoutine extends Routine
 
     if (myRoom.colorOfClick(x, y) == green)
     {
+      myStats.addForceDoubleClickTime(deltaClickTime) ;
+      myStats.success() ;
       ArrayList rowHit = (myRoom.getWallID(x, y) == wall1)  ? row1 : row2 ;
       setRowToColor(rowHit, padOffColor) ;
       while( rowHit.size() > 0 ) rowHit.remove(0) ;   
       generateStep() ;  
     }
+    else if(myRoom.colorOfClick(x, y) == padOffColor) myStats.miss() ;
+    
     return false;
   }  
 }
+
 class ThreeWallChaseRoutine extends Routine 
 {
   ArrayList greenPads ;
@@ -1084,10 +1097,9 @@ class ThreeWallChaseRoutine extends Routine
       
     if(myRoom.colorOfClick(x, y) == green) //green - success
     {
-      //handle game
-      generateStep() ;
       myStats.addForceDoubleClickTime(deltaClickTime) ;
       myStats.success() ;
+      generateStep() ;
       return true ;  
     }
     
@@ -1134,7 +1146,8 @@ class Stats
 
   void addForceDoubleClickTime(int deltaTime) 
   { 
-    forceSum += (30 + 1/((double)deltaTime-105)) * ballMass;
+    //forceSum += (30 + (double)1/(deltaTime-105)) * ballMass;
+    forceSum += deltaTime;   
   }
   
   void success() 
@@ -1148,12 +1161,12 @@ class Stats
     printSummary();
   }
   
-  void miss() { misses++ ; }
-  void minusPoint() { minusPoints++ ; }
+  void miss() { misses++ ; printSummary() ;}
+  void minusPoint() { minusPoints++ ; printSummary() ;}
  
   double getForceAvg() 
   { 
-    double result = (double)forceSum/successes ; 
+    double result = forceSum/successes ; 
     return result ;
   }
   
@@ -1174,13 +1187,18 @@ class Stats
   
   void printSummary()
   {
+    /*
     println("Successes: " + getSuccesses()) ;
     println("Misses: " + misses ) ;
     println("Minus points: " + getMinusPoints()); 
     println("Accuracy: " + nfc((getAccuracy()*100),2) +"%") ;
     println("Average Force: " + nfc(getForceAvg(),2) + " Newtons") ;
     println("Average Anticipation Reaction Time: " + nfc((getAvgARTime()/1000),2) + " seconds"); 
-    println("========================================================") ;
+    */
+    if(javascript != null) 
+    {
+      javascript.postFeedback(successes, misses, minusPoints, getAccuracy(), getForceAvg(), getAvgARTime()) ;  
+    }
   }
 }
 
@@ -1614,3 +1632,13 @@ class Pad
     valid = !valid ;
   }
 }
+
+interface JavaScript
+{
+  void postFeedback(int successesNum, int missesNum, int minusNum, double accuracyNum, double forceNum, double arTimeNum);
+} 
+
+JavaScript javascript = null ;
+void setJavaScript(JavaScript js) { javascript = js ; }
+
+
