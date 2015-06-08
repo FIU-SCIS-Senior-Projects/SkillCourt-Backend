@@ -166,6 +166,17 @@
 				
 				document.getElementById("SettingsList").style.display = "none" ;
 				document.getElementById("FeedbackList").style.display = "block" ;
+				
+				if(routineForGame == "m") 
+				{
+					document.getElementById("missesNum").parentNode.style.display = "none" ;
+					document.getElementById("forceNum").parentNode.style.display = "none" ;
+				}
+				
+				if(routineForGame != "t" && difficultyForGame == "n")
+				{
+					document.getElementById("minusNum").parentNode.style.display = "none" ;
+				}
 			}
 			
 			function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, arTimeNum)
