@@ -1,4 +1,4 @@
-//String routineCommand = "gn010000000";
+//String routineCommand = "mn010000000";
 //String warning ="" ;
 //boolean isReadyToPlay = true ;
 
@@ -294,7 +294,6 @@ boolean checkStatus()
 
 void startGame() 
 {
-  //println("Game Starting...");
   isThisGameStarted = true;
   isThisGameOver = false;
 }
@@ -356,6 +355,7 @@ class GroundChaseRoutine extends Routine
      super.startRoutine();
      this.myRoom = myRoom;
      this.difficulty = difficulty;
+     myStats = new Stats() ;
      greenPads = new ArrayList();
      redPads = new ArrayList();
      bluePads = new ArrayList();
@@ -421,7 +421,7 @@ class GroundChaseRoutine extends Routine
      
    }
    
-   boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
     super.handleInput(x, y, clickNum, deltaClickTime) ;
     
@@ -429,6 +429,7 @@ class GroundChaseRoutine extends Routine
     {
        if (myRoom.colorOfClick(x,y) == green)
        {
+         myStats.success() ; 
          Pad pressedPad = myRoom.getPad(x,y);
          bluePads.add(pressedPad);
          pressedPad.setColor(blue);
@@ -448,6 +449,7 @@ class GroundChaseRoutine extends Routine
          }
          
        }
+       if (myRoom.colorOfClick(x,y) == red) myStats.minusPoint() ;
     }
     
     return false;
@@ -468,9 +470,9 @@ class GroundChaseRoutine extends Routine
   private void initRowRepetitionArray()
   {
     for (int i = 0 ; i < NS_WIDTH - 2 ; i++)
-   {
-      rowRepetition[i] = false;
-   } 
+    {
+       rowRepetition[i] = false;
+    } 
   }
    
 }
@@ -544,7 +546,6 @@ class HomeChaseRoutine extends Routine
 
     if (difficulty.equals(NOVICE))      // Lit all pads green
     {
-    //  println("Novice Difficulty ");
       setRowToColor(row1, green);    
       setRowToColor(row2, green);
     } else if (difficulty.equals(INTERMEDIATE)) {    // Lit one pad red
@@ -697,7 +698,6 @@ class HomeFlyRoutine extends Routine
 
     if (difficulty.equals(NOVICE))      // Lit all pads green
     {
-     //println("Novice Difficulty ");
       setRowToColor(row1, green);    
       setRowToColor(row2, green);
     } else if (difficulty.equals(INTERMEDIATE)) {    // Lit one pad red
@@ -824,14 +824,12 @@ class FlyRoutine extends Routine
       wall1 += ( wall1 > 2 ) ? -2 : 2; 
       row1 = myRoom.getUpperSquarePads(wall1, SQUARE_PAD_NUMBER/2, false, false);
       handleDifficulty(difficulty, row1);
-      println("wall1(" + wall1 + ") - size of row1 " + row1.size() );
     }
     else 
     {
       wall2 += ( wall2 > 2 ) ? -2 : 2;
       row2 = myRoom.getUpperSquarePads(wall2, SQUARE_PAD_NUMBER/2, false, false);
       handleDifficulty(difficulty, row2);
-      println("wall2(" + wall2 + ") - size of row2 " + row2.size() );
     }  
   }
   
@@ -920,14 +918,12 @@ class ChaseRoutine extends Routine
       wall1 += ( wall1 > 2 ) ? -2 : 2; 
       row1 = myRoom.getBottomPads(wall1, ROW_PAD_NUMBER, false, false) ;
       handleDifficulty(difficulty, row1);
-      println("wall1(" + wall1 + ") - size of row1 " + row1.size() );
     }
     else 
     {
       wall2 += ( wall2 > 2 ) ? -2 : 2;
       row2 = myRoom.getBottomPads(wall2, ROW_PAD_NUMBER, false, false) ;
       handleDifficulty(difficulty, row2);
-      println("wall2(" + wall2 + ") - size of row2 " + row2.size() );
     } 
   }
 
@@ -1067,7 +1063,7 @@ class Stats
   int successes ;
   int misses ;
   int anticipationReactionSum ;
-  int anticipationReactionDribbling ;
+  int anticipationReactionDribbling ; 
   int minusPoints;
   int lastSuccessAt ;
   boolean isFirstSuccess ;
@@ -1126,14 +1122,6 @@ class Stats
   
   void printSummary()
   {
-    /*
-    println("Successes: " + getSuccesses()) ;
-    println("Misses: " + misses ) ;
-    println("Minus points: " + getMinusPoints()); 
-    println("Accuracy: " + nfc((getAccuracy()*100),2) +"%") ;
-    println("Average Force: " + nfc(getForceAvg(),2) + " Newtons") ;
-    println("Average Anticipation Reaction Time: " + nfc((getAvgARTime()/1000),2) + " seconds"); 
-    */
     if(javascript != null) 
     {
       javascript.postFeedback(successes, misses, minusPoints, getAccuracy(), getForceAvg(), getAvgARTime()) ;  
@@ -1293,18 +1281,14 @@ class Room
 
       int newR = (r==NS_WIDTH-1) ? rng + i : r ;
       int newC = (r==NS_WIDTH-1) ? c : rng + i ; 
-
-     //println(wallID + " newR,newC = " + newR + "," + newC);
-      current = walls[wallID].getPad(newR, newC) ;  //NS
+      current = walls[wallID].getPad(newR, newC) ; 
 
       if (current.isValid()) ret.add(current) ;  
 
-
       newR = (r==NS_WIDTH-1) ? rng + i : r+forBot ;
       newC = (r==NS_WIDTH-1) ? c+forBot : rng + i ; 
-
-     //println(wallID + " newR,newC = " + newR + "," + newC);
       current = walls[wallID].getPad(newR, newC) ;
+      
       if (current.isValid()) ret.add(current)   ;
     }
 
@@ -1366,8 +1350,6 @@ class Room
 
       int newR = (r==NS_WIDTH-1) ? rng + i : r ;
       int newC = (r==NS_WIDTH-1) ? c : rng + i ; 
-
-     //println(wallID + " newR,newC = " + newR + "," + newC);
       current = walls[wallID].getPad(newR, newC) ;  //NS
 
       if (current.isValid()) ret.add(current) ;
