@@ -3,66 +3,59 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>SkillCourt Simulator</title>
 		<meta name="Generator" content="Processing" />
-        <link rel="stylesheet" type="text/css" href="style/Main.css">
+        <link rel="stylesheet" type="text/css" href="style/Simulator.css">
 	<script src="processing.js" type="text/javascript">
-		
-	</script>
-	<script type="text/javascript">
-		// convenience function to get the id attribute of generated sketch html element
-		routineCommand = "" ;
-		warning=""; 
-		var isReadyToPlay =false ; 
-		function getProcessingSketchId () { return 'sketch'; }
 	</script>
 	</head>
 	<body>
 		<div id="Header"> 
             SkillCourt Simulator 
         </div>
-		
 		<div id="SimSettings">
-			<table>
-				<tr>
-					<td>Routine</td>
-					<td><select id="routineType" onchange="allowRounds();">
+			<div id="SettingsList">
+				<p>SkillCourt Routines</p>
+				<ul>
+					<li>Choose a Routine:</li>
+					<li><select id="routineType" onchange="allowRounds();">
 								<option value="t"selected="true">Three Wall Chase</option>
 								<option value="c">Chase</option>
 								<option value="h">Fly</option>
 								<option value="g">Home Chase</option>
 								<option value="j">Home Fly</option>
 								<option value="m">Ground Chase</option>
-							</select></td>
-					<td id="gametypeMsg"></td>
-				</tr>
-				<tr>
-					<td>Difficulty</td>
-					<td>
+								<option value="x">X-Cue</option>
+							</select></li>
+					<li>Choose the Difficulty:</li>
+					<li>
 						<input  type="radio" name="difficulty" value="n" checked="true">Novice<br>
 						<input type="radio" name="difficulty" value="i">Intermediate<br>
-						<input type="radio" name="difficulty" value="a">Advanced</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Time Per Round</td>
-					<td><input id="timePerRoundCheck" type="checkbox" onchange="myFunction2();">
-						<input id="timePerRound" type="number" min="1" max="30" disabled></td>
-				</tr>
-				<tr>
-					<td>Play By</td>
-					<td>
+						<input type="radio" name="difficulty" value="a">Advanced</li>
+					<li>Time Per Round</li>
+					<li><input id="timePerRoundCheck" type="checkbox" onchange="myFunction2();">
+						<input id="timePerRound" type="number" min="1" max="30" disabled></li>
+					<li>Play By</li>
+					<li>
 						<select id="gameType">
 							<option value="time" selected="true">Time (minutes)</option>
 							<option value="rounds">Rounds</option>
 							<input type="number" id="amount" min="1" max="30" value="1">
-						</select>
-				</tr>
-				<tr>
-					<td colspan="2"><button onclick="startGame();">Start</button></td>
-					<!--<td><button onclick="switchOff();">Off</button></td>-->
-				</tr>
-			</table>	
+						</select></li>
+					<li ><button onclick="startGame();">Play!</button></li>
+					</ul>
+			</div>	
+			<div id="FeedbackList">
+				<p>SkillCourt Performance</p>
+				<ul>	
+					<li>Successes: <span id="successesNum"><span></li>
+					<li>Minus Points: <span id="minusNum"></span></li>
+					<li>Misses: <span id="missesNum"></span></li>
+					<li>Accuracy: <span id="accuracyNum"></span></li>
+					<li>Average Force: <span id="forceNum"></span></li>
+					<li>Anticipation Reaction Time: <span id="arTimeNum"></span></li>
+					<li><button>PAUSE</button></li>
+				</ul> 
+			</div>
 		</div>	
-		<!--<p id="output"></p>-->
 		<div id="Simulator">
 				<br><br><br>
 				<canvas id="sketch" data-processing-sources="simulator/simulator.pde" width="600" height="600">
@@ -72,7 +65,17 @@
 					<p>JavaScript is required to view the contents of this page.</p>
 				</noscript>
 		</div>
-		<script type="application/javascript">
+		<script type="text/javascript">
+			var routineCommand = "" ;
+			var warning=""; 
+			var isReadyToPlay =false ;
+			var routineForGame ;
+			var difficultyForGame ;
+			var timePerRound ;
+			var timeForGame ;
+			var roundsForGame ;
+			var processingInstance ;
+			
 			function allowRounds()
 			{
 				var routineObj = document.getElementById("routineType");
@@ -93,12 +96,6 @@
 				document.getElementById("timePerRound").disabled = !x ;
 				document.getElementById("timePerRound").value = NaN ;
 			}
-			
-			var routineForGame ;
-			var difficultyForGame ;
-			var timePerRound ;
-			var timeForGame ;
-			var roundsForGame ;
 			
 			function getRoutine()
 			{
@@ -148,13 +145,12 @@
 			}
 			
 			function isTimeBased(){ return document.getElementById("gameType").value === "time"; }
-			
-			//delete this at some point or make it work better
-			function switchOff(){ isReadyToPlay = false ; }
-			
 
 			function startGame()
 			{
+				processingInstance = Processing.getInstanceById('sketch');
+				processingInstance.setJavaScript(this);
+				
 				isReadyToPlay=true ;
 				
 				difficultyForGame = getDifficulty() ;
@@ -168,7 +164,18 @@
 				
 				routineCommand = routineForGame + difficultyForGame + roundsForGameStr  + timeForGameStr + timePerRoundStr ; 
 				
-				document.getElementById("output").innerHTML = routineForGame + difficultyForGame + roundsForGameStr  + timeForGameStr + timePerRoundStr ; 
+				document.getElementById("SettingsList").style.display = "none" ;
+				document.getElementById("FeedbackList").style.display = "block" ;
+			}
+			
+			function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, arTimeNum)
+			{
+				document.getElementById("successesNum").innerHTML = successesNum ;	
+				document.getElementById("missesNum").innerHTML = missesNum ;	
+				document.getElementById("minusNum").innerHTML = minusNum ;	
+				document.getElementById("accuracyNum").innerHTML = (accuracyNum.toFixed(2) + "%") ;	
+				document.getElementById("forceNum").innerHTML = (forceNum.toFixed(2) + " N") ; 	
+				document.getElementById("arTimeNum").innerHTML = ((arTimeNum/1000).toFixed(2) + " seconds") ;	
 			}
 		</script>
 	</body>
