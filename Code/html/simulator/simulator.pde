@@ -1,4 +1,4 @@
-//String routineCommand = "mn010000000";
+//String routineCommand = "gn010000000";
 //String warning ="" ;
 //boolean isReadyToPlay = true ;
 
@@ -38,6 +38,9 @@ final String NOVICE = "n";
 final String INTERMEDIATE = "i";
 final String ADVANCED = "a";
 
+//constansts groundChase
+//final int GC_NOVICE_DIFFICULTY = 
+
 final int SQUARE_PAD_NUMBER = 4;
 final int ROW_PAD_NUMBER = 3;
 
@@ -56,6 +59,9 @@ Game myGame;
 
 double ballMass = 0.45;
 
+//countdown
+int startCountdownTime ;
+
 void setup()
 {
   size(600, 600) ;  //window size
@@ -68,39 +74,98 @@ void setup()
   prevX = 0 ;
   prevY = 0 ;
   isPlaying = false ;
+  startCountdownTime = 0 ;
+}
+
+boolean countdown()
+{
+  if(startCountdownTime == 0) startCountdownTime = millis() ;
+  background(101, 176, 152); 
+  int deltaTime = millis()-startCountdownTime ;
+  
+  if(deltaTime > 3000)
+  {
+    newRoom.lightWall(GROUND, padOffColor);
+    return true ;
+  }
+  else if(deltaTime > 2000) printOnGround(1) ;
+  else if(deltaTime > 1000) printOnGround(2) ;
+  else if(deltaTime > 0) printOnGround(3) ;  
+  
+  newRoom.drawRoom() ;
+  return false ;
+}
+
+void printOnGround(int n)
+{
+  int groundWidth = NS_WIDTH - 2;
+  int groundHeight = EW_HEIGHT - 2;
+  newRoom.lightWall(GROUND,padOffColor) ;
+  if(n==1)
+  {
+    int nWidth = groundWidth / 2;
+    
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = groundWidth/4 ; r < groundWidth/4 + nWidth ; r++)
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;   
+  }
+  else if(n==2)
+  {
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = 0 ; r < groundWidth ; r++)
+      {
+        if(c==2) r=groundWidth-1 ;
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
+        if(c==4) r=groundWidth ;
+      }
+  }
+  else if(n==3)
+  {
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = 0 ; r < groundWidth ; r++)
+      {
+        if(c==2||c==4) r=groundWidth-1 ;
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
+      }
+  }
 }
 
 void draw()
 {
   if (isReadyToPlay)                                                        
+  {  
     if (routineCommand.length() != 11)
     { 
       background(101, 176, 152); 
       textSize(32) ;
       fill(255) ;
       text("Make sure all options are filled out", 30, 30, 540, 540);
-    } else if (!isPlaying)
+    }
+    else if (countdown() && !isPlaying)
     {
       myGame = new Game(newRoom, routineCommand) ;
       isPlaying = true ;
-    } else
-  {  
-    setupDisplay() ;
-    if (!myGame.isGameOver()) newRoom.drawRoom();
-    else 
-    {
-      isReadyToPlay = false ;
-      isPlaying = false ;
-      newRoom = new Room() ;
-      routineCommand = "" ; 
-      warning ="" ;
+    } 
+    else if(isPlaying)
+    {  
+      setupDisplay() ;
+      if (!myGame.isGameOver()) newRoom.drawRoom();
+      else 
+      {
+        isReadyToPlay = false ;
+        isPlaying = false ;
+        newRoom = new Room() ;
+        routineCommand = "" ; 
+        warning ="" ;
+      }
     }
-  } else
+  } 
+  else
   {
     background(101, 176, 152); 
     fill(255) ;
     textSize(32) ;
-    text("Click start to play the current routine: " + warning, 30, 30, 540, 540) ;
+    text("Click start to play the current routine: " + warning, 30, 200, 540, 540) ;
   }
 }
 
@@ -346,9 +411,11 @@ class GroundChaseRoutine extends Routine
    ArrayList greenPads;
    ArrayList bluePads;
    ArrayList redPads;
+   Pad[] redPadArray;
    boolean[] rowRepetition;
    int clickedColumn;
    int previousPadIndex;
+   int [] greenPadCoordinateArray;
   
    GroundChaseRoutine(Room myRoom, String difficulty)
    {
@@ -361,6 +428,8 @@ class GroundChaseRoutine extends Routine
      bluePads = new ArrayList();
      clickedColumn = 0;
      rowRepetition = new boolean[NS_WIDTH-2];
+     greenPadCoordinateArray = new int[(EW_HEIGHT-2)];
+     redPadArray = new Pad[(EW_HEIGHT-2)];
      previousPadIndex = -1;
      initRowRepetitionArray();  // Set array values to false
      generateStep();
@@ -369,7 +438,17 @@ class GroundChaseRoutine extends Routine
    void generateStep()
    {
      
-     if (clickedColumn == 0) greenPads = generateRandomPads(0);
+     if (clickedColumn == 0)
+    { 
+      generateRandomPads(0);
+      getRedPadsForDifficultyLevel(difficulty);
+      if (clickedColumn == 0)
+      {
+         Pad redPad = redPadArray[clickedColumn];
+         if (redPad != null)   redPad.setColor(red);
+      }
+    }
+     // initialize the greenPadCoordinateArray with the row value of each green pad y greenPads
      
      if (clickedColumn < (EW_HEIGHT - 2))
      {
@@ -379,16 +458,16 @@ class GroundChaseRoutine extends Routine
    }
    
    // Generates Random Pads without repeating consecutive positions
-   private ArrayList generateRandomPads(int wallID)
+   private void generateRandomPads(int wallID)
    {
       for (int i = 0 ; i < (EW_HEIGHT - 2) ; i++)
       { 
         int index = generateRandomPadIndex(i);
-        Pad newPad = myRoom.walls[wallID].getPad(index,i);
+        //println("index: "+ index);
+        greenPadCoordinateArray[i] = index;
+        Pad newPad = myRoom.walls[wallID].getPad(index,i);      
         greenPads.add(newPad);
       } 
-      
-      return greenPads;
    }
    
    private int generateRandomPadIndex(int columnCount)
@@ -434,8 +513,17 @@ class GroundChaseRoutine extends Routine
          bluePads.add(pressedPad);
          pressedPad.setColor(blue);
          
+         Pad redPad = redPadArray[clickedColumn];
+         if (redPad != null)   redPad.setColor(padOffColor);
+         
          // Keeps track of the columns
          clickedColumn++;
+         
+         if (clickedColumn < (EW_HEIGHT - 2))
+         {
+           redPad = redPadArray[clickedColumn];
+           if (redPad != null)   redPad.setColor(red);
+         }
          
          generateStep();
          
@@ -447,7 +535,6 @@ class GroundChaseRoutine extends Routine
            generateStep();
            return true; // Round ended
          }
-         
        }
        if (myRoom.colorOfClick(x,y) == red) myStats.minusPoint() ;
     }
@@ -461,10 +548,24 @@ class GroundChaseRoutine extends Routine
     //turns off all green pads
     setRowToColor(greenPads, padOffColor) ; 
     setRowToColor(bluePads, padOffColor) ;
+    setRowToColor(redPads, padOffColor);
+    setArrayRowToColor(redPadArray,padOffColor);
     
-    //empties greenPad list
+    //empties all structures
     while (greenPads.size () > 0) greenPads.remove(0) ;
     while (bluePads.size () > 0) bluePads.remove(0) ;
+    while (redPads.size () > 0) redPads.remove(0) ;
+    redPadArray = new Pad[EW_HEIGHT-2];
+  }
+  
+  // Set All pads in a row to a given color
+  void setArrayRowToColor (Pad[] row, color myColor)
+  {
+    for (int i = 0; i < row.length ; i++)
+    { 
+      Pad nPad = (Pad)row[i] ;
+      if (nPad != null) nPad.setColor(myColor);
+    }
   }
   
   private void initRowRepetitionArray()
@@ -1194,15 +1295,6 @@ class Room
     int rX = int(random(4));
     int rY = int(random(6)) ;
     return walls[0].getPad(rX, rY) ;
-  }
-
-  void gameCountdown()
-  {
-    for (int i = 4; i >= 0; i--)
-    {
-      drawRoom();
-      lightWall(i, blue);
-    }
   }
 
   void lightWall(int wallID, color newColor)
