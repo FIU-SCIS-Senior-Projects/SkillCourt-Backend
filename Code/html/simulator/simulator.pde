@@ -1,6 +1,6 @@
-String routineCommand = "xn010000000";
-String warning ="" ;
-boolean isReadyToPlay = true ;
+//String routineCommand = "xa010000000";
+//String warning ="" ;
+//boolean isReadyToPlay = true ;
 
 //pad attributes
 color lineColor = color(0, 0, 0);
@@ -61,6 +61,9 @@ Game myGame;
 
 double ballMass = 0.45;
 
+//countdown
+int startCountdownTime ;
+
 void setup()
 {
   size(600, 600) ;  //window size
@@ -73,39 +76,99 @@ void setup()
   prevX = 0 ;
   prevY = 0 ;
   isPlaying = false ;
+  startCountdownTime = 0 ;
+}
+
+boolean countdown()
+{
+  if(startCountdownTime == 0) startCountdownTime = millis() ;
+  background(101, 176, 152); 
+  int deltaTime = millis()-startCountdownTime ;
+  
+  if(deltaTime > 3000)
+  {
+    //newRoom.lightWall(GROUND, padOffColor);
+    return true ;
+  }
+  else if(deltaTime > 2000) printOnGround(1) ;
+  else if(deltaTime > 1000) printOnGround(2) ;
+  else if(deltaTime > 0) printOnGround(3) ;  
+  
+  newRoom.drawRoom() ;
+  return false ;
+}
+
+void printOnGround(int n)
+{
+  int groundWidth = NS_WIDTH - 2;
+  int groundHeight = EW_HEIGHT - 2;
+  newRoom.lightWall(GROUND,padOffColor) ;
+  if(n==1)
+  {
+    int nWidth = groundWidth / 2;
+    
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = groundWidth/4 ; r < groundWidth/4 + nWidth ; r++)
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;   
+  }
+  else if(n==2)
+  {
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = 0 ; r < groundWidth ; r++)
+      {
+        if(c==2) r=groundWidth-1 ;
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
+        if(c==4) r=groundWidth ;
+      }
+  }
+  else if(n==3)
+  {
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = 0 ; r < groundWidth ; r++)
+      {
+        if(c==2||c==4) r=groundWidth-1 ;
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
+      }
+  }
 }
 
 void draw()
 {
   if (isReadyToPlay)                                                        
+  {  
     if (routineCommand.length() != 11)
     { 
       background(101, 176, 152); 
       textSize(32) ;
       fill(255) ;
       text("Make sure all options are filled out", 30, 30, 540, 540);
-    } else if (!isPlaying)
+    }
+    else if (countdown() && !isPlaying)
     {
+      newRoom = new Room() ;
       myGame = new Game(newRoom, routineCommand) ;
       isPlaying = true ;
-    } else
-  {  
-    setupDisplay() ;
-    if (!myGame.isGameOver()) newRoom.drawRoom();
-    else 
-    {
-      isReadyToPlay = false ;
-      isPlaying = false ;
-      newRoom = new Room() ;
-      routineCommand = "" ; 
-      warning ="" ;
+    } 
+    else if(isPlaying)
+    {  
+      setupDisplay() ;
+      if (!myGame.isGameOver()) newRoom.drawRoom();
+      else 
+      {
+        isReadyToPlay = false ;
+        isPlaying = false ;
+        newRoom = new Room() ;
+        routineCommand = "" ; 
+        warning ="" ;
+      }
     }
-  } else
+  } 
+  else
   {
     background(101, 176, 152); 
     fill(255) ;
     textSize(32) ;
-    text("Click start to play the current routine: " + warning, 30, 30, 540, 540) ;
+    text("Click start to play the current routine: " + warning, 30, 200, 540, 540) ;
   }
 }
 
@@ -122,12 +185,11 @@ void mousePressed()
       firstClickTime = millis() ;
     } else  //second click
     {
-      myGame.handleDoubleClick(mouseX, mouseY, millis() - firstClickTime) ;
+      myGame.handleDoubleClick(mouseX, mouseY , millis() - firstClickTime) ;
       isFirstClick = true ;
     }
   }
 }
-
 
 void setupImages() 
 {
@@ -142,7 +204,7 @@ void setupDisplay()
 {
   background(101, 176, 152);   //window bg color
   fill(0, 0, 0) ;  //next will be filled with black
-  textSize(32) ;
+  textSize(32) ;  
 }
 
 class Game
@@ -194,11 +256,12 @@ class Game
     {
       myRoutine = new HomeFlyRoutine(myRoom, difficulty);
       isRoutineGroundBased = true ;
-    } else if (type.equals(GROUND_CHASE))
+    }
+    else if (type.equals(GROUND_CHASE))
     {
       myRoutine = new GroundChaseRoutine(myRoom, difficulty); 
-      isRoutineGroundBased = true ;
-    } else if (type.equals(X_CUE))
+      isRoutineGroundBased = true ; 
+    }else if (type.equals(X_CUE))
     {
       myRoutine = new xCueRoutine(myRoom, difficulty) ; 
       isRoutineGroundBased = true ;
@@ -215,96 +278,96 @@ class Game
     return isRoutineGroundBased ;
   }
 
-  void handleDoubleClick(int x, int y, int deltaClickTime) 
+void handleDoubleClick(int x, int y, int deltaClickTime) 
+{ 
+  if ( myRoutine.handleInput(x, y, 2, deltaClickTime) )
   { 
-    if ( myRoutine.handleInput(x, y, 2, deltaClickTime) )
-    { 
-      fill(0, 0, 0);
-      //text(rounds, 0, 150);
-      rounds--;
+    fill(0, 0, 0);
+    //text(rounds, 0, 150);
+    rounds--;
 
-      // If you succesfully generatedStep then startTime = millis()
-      if (routineTime > 0) startTime = millis();
-    }
+    // If you succesfully generatedStep then startTime = millis()
+    if (routineTime > 0) startTime = millis();
+  }
+}
+
+void handleSingleClick(int x, int y)
+{
+  //if (isRoutineGroundBased) myRoutine.handleInput(x, y, 1) ;
+  
+  if ( (isRoutineGroundBased) && (myRoutine.handleInput(x, y, 1, 0)) )
+  { 
+    fill(0, 0, 0);
+    //text(rounds, 0, 150);
+    rounds--;
+
+    // If you succesfully generatedStep then startTime = millis()
+    if (routineTime > 0) startTime = millis();
+  }
+  
+}
+void postGame() {}
+
+boolean checkStatus()
+{
+  // Round Based game
+  // if rounds == 0 then all rounds have passed and game is over
+  if (rounds == 0)
+  { 
+    fill(0, 0, 0);
+    isThisGameOver = true ;
+    text("Round Game is Over", 0, 150);
+    return true;
   }
 
-  void handleSingleClick(int x, int y)
+  // gameTime > 0 if the game is timeBased
+  if (gameTime > 0)
   {
-    //if (isRoutineGroundBased) myRoutine.handleInput(x, y, 1) ;
+  fill(0, 0, 0);
+    int timer = int((startTime+gameTime - millis())/1000) ;
+    int sec = int(timer % 60)  ;
+    int min = int(timer / 60) ;
+    String timerOutput = (sec < 10) ? min + ":0" + sec :  min + ":" + sec ;
+    text("Time Left " + timerOutput, 10, 10, 160, 160);
+   
 
-    if ( (isRoutineGroundBased) && (myRoutine.handleInput(x, y, 1, 0)) )
-    { 
-      fill(0, 0, 0);
-      //text(rounds, 0, 150);
-      rounds--;
-
-      // If you succesfully generatedStep then startTime = millis()
-      if (routineTime > 0) startTime = millis();
-    }
-  }
-  void postGame() {
-  }
-
-  boolean checkStatus()
-  {
-    // Round Based game
-    // if rounds == 0 then all rounds have passed and game is over
-    if (rounds == 0)
+   // Calculating game time in minutes
+    if ((millis() - startTime) > gameTime) 
     { 
       fill(0, 0, 0);
       isThisGameOver = true ;
-      text("Round Game is Over", 0, 150);
+      text("Time Game is Over", 0, 150);
       return true;
     }
-
-    // gameTime > 0 if the game is timeBased
-    if (gameTime > 0)
+  }
+   else
+  {
+    text("Rounds Left " + rounds, 10, 10, 160, 160);
+  }
+  
+  // routineTime > 0 if game is timeRound based
+  if (routineTime > 0)
+  {
+    if ( ((millis() - startTime)/60000) > routineTime )
     {
       fill(0, 0, 0);
-      int timer = int((startTime+gameTime - millis())/1000) ;
-      int sec = int(timer % 60)  ;
-      int min = int(timer / 60) ;
-      String timerOutput = (sec < 10) ? min + ":0" + sec :  min + ":" + sec ;
-      text("Time Left " + timerOutput, 10, 10, 160, 160);
-
-
-      // Calculating game time in minutes
-      if ((millis() - startTime) > gameTime) 
-      { 
-        fill(0, 0, 0);
-        isThisGameOver = true ;
-        text("Time Game is Over", 0, 150);
-        return true;
-      }
-    } else
-    {
-      text("Rounds Left " + rounds, 10, 10, 160, 160);
+      text("Sorry! took too long", 0, 150);
+      startTime = millis();
+      rounds--;
+      myRoutine.groundPadPressed = false;
+      myRoutine.generateStep();
+      return false;
     }
-
-    // routineTime > 0 if game is timeRound based
-    if (routineTime > 0)
-    {
-      if ( ((millis() - startTime)/60000) > routineTime )
-      {
-        fill(0, 0, 0);
-        text("Sorry! took too long", 0, 150);
-        startTime = millis();
-        rounds--;
-        myRoutine.groundPadPressed = false;
-        myRoutine.generateStep();
-        return false;
-      }
-    }
-
-    return false;
   }
+  
+  return false;
+}
 
-  void startGame() 
-  {
-    //println("Game Starting...");
-    isThisGameStarted = true;
-    isThisGameOver = false;
-  }
+void startGame() 
+{
+  isThisGameStarted = true;
+  isThisGameOver = false;
+}
 }
 
 class Routine 
@@ -313,7 +376,6 @@ class Routine
   String difficulty ;
   boolean groundPadPressed;
   Stats myStats ;
-  
   boolean handleInput(int x, int y, int clickNum, int deltaClickTime) {
     return true;
   }      
@@ -695,134 +757,140 @@ class xCueRoutine extends Routine
 
 class GroundChaseRoutine extends Routine
 {
-  ArrayList greenPads;
-  ArrayList bluePads;
-  ArrayList redPads;
-  Pad[] redPadArray;
-  boolean[] rowRepetition;
-  int clickedColumn;
-  int previousPadIndex;
-  int [] greenPadCoordinateArray;
-
-  GroundChaseRoutine(Room myRoom, String difficulty)
-  {
-    super.startRoutine();
-    this.myRoom = myRoom;
-    this.difficulty = difficulty;
-    greenPads = new ArrayList();
-    redPads = new ArrayList();
-    bluePads = new ArrayList();
-    clickedColumn = 0;
-    rowRepetition = new boolean[NS_WIDTH-2];
-    greenPadCoordinateArray = new int[(EW_HEIGHT-2)];
-    redPadArray = new Pad[(EW_HEIGHT-2)];
-    previousPadIndex = -1;
-    initRowRepetitionArray();  // Set array values to false
-    generateStep();
-  }
-
-  void generateStep()
-  {
-    if (clickedColumn == 0)
+   ArrayList greenPads;
+   ArrayList bluePads;
+   ArrayList redPads;
+   Pad[] redPadArray;
+   boolean[] rowRepetition;
+   int clickedColumn;
+   int previousPadIndex;
+   int [] greenPadCoordinateArray;
+  
+   GroundChaseRoutine(Room myRoom, String difficulty)
+   {
+     super.startRoutine();
+     this.myRoom = myRoom;
+     this.difficulty = difficulty;
+     myStats = new Stats() ;
+     greenPads = new ArrayList();
+     redPads = new ArrayList();
+     bluePads = new ArrayList();
+     clickedColumn = 0;
+     rowRepetition = new boolean[NS_WIDTH-2];
+     greenPadCoordinateArray = new int[(EW_HEIGHT-2)];
+     redPadArray = new Pad[(EW_HEIGHT-2)];
+     previousPadIndex = -1;
+     initRowRepetitionArray();  // Set array values to false
+     generateStep();
+   }
+   
+   void generateStep()
+   {
+     
+     if (clickedColumn == 0)
     { 
       generateRandomPads(0);
       getRedPadsForDifficultyLevel(difficulty);
       if (clickedColumn == 0)
       {
-        Pad redPad = redPadArray[clickedColumn];
-        if (redPad != null)   redPad.setColor(red);
+         Pad redPad = redPadArray[clickedColumn];
+         if (redPad != null)   redPad.setColor(red);
       }
     }
-    // initialize the greenPadCoordinateArray with the row value of each green pad y greenPads
-
-    if (clickedColumn < (EW_HEIGHT - 2))
-    {
-      Pad padToLit = (Pad)(greenPads.get(clickedColumn));
-      padToLit.setColor(green);
-    }
-  }
-
-  // Generates Random Pads without repeating consecutive positions
-  private void generateRandomPads(int wallID)
-  {
-    for (int i = 0; i < (EW_HEIGHT - 2); i++)
-    { 
-      int index = generateRandomPadIndex(i);
-      //println("index: "+ index);
-      greenPadCoordinateArray[i] = index;
-      Pad newPad = myRoom.walls[wallID].getPad(index, i);      
-      greenPads.add(newPad);
-    }
-  }
-
-  private int generateRandomPadIndex(int columnCount)
-  {
-    int randomIndex = int(random(NS_WIDTH - 2));
-
-    if (columnCount < NS_WIDTH - 2)
-    {
-      while ( (rowRepetition[randomIndex]) || (randomIndex == previousPadIndex) )
-      {
-        if (rowRepetition[randomIndex]) randomIndex = int(random(NS_WIDTH - 2));
-        if (randomIndex == previousPadIndex) randomIndex = int(random(NS_WIDTH - 2));
-      }
-
-      rowRepetition[randomIndex] = true;
-      previousPadIndex = randomIndex;
-    } else
-    {
-      initRowRepetitionArray();
-      randomIndex = int(random(NS_WIDTH - 2));
-
-      while (randomIndex == previousPadIndex)
-        if (randomIndex == previousPadIndex) randomIndex = int(random(NS_WIDTH - 2));
-
-      previousPadIndex = randomIndex;
-    }
-
-    return randomIndex;
-  }
-
-  boolean handleInput(int x, int y, int clickNum, int deltaClickTime) 
+     // initialize the greenPadCoordinateArray with the row value of each green pad y greenPads
+     
+     if (clickedColumn < (EW_HEIGHT - 2))
+     {
+       Pad padToLit = (Pad)(greenPads.get(clickedColumn));
+       padToLit.setColor(green);
+     }
+   }
+   
+   // Generates Random Pads without repeating consecutive positions
+   private void generateRandomPads(int wallID)
+   {
+      for (int i = 0 ; i < (EW_HEIGHT - 2) ; i++)
+      { 
+        int index = generateRandomPadIndex(i);
+        //println("index: "+ index);
+        greenPadCoordinateArray[i] = index;
+        Pad newPad = myRoom.walls[wallID].getPad(index,i);      
+        greenPads.add(newPad);
+      } 
+   }
+   
+   private int generateRandomPadIndex(int columnCount)
+   {
+     int randomIndex = int(random(NS_WIDTH - 2));
+     
+     if (columnCount < NS_WIDTH - 2)
+       {
+       while ( (rowRepetition[randomIndex]) || (randomIndex == previousPadIndex) )
+       {
+          if (rowRepetition[randomIndex]) randomIndex = int(random(NS_WIDTH - 2));
+          if (randomIndex == previousPadIndex) randomIndex = int(random(NS_WIDTH - 2)); 
+       }
+       
+       rowRepetition[randomIndex] = true;
+       previousPadIndex = randomIndex;
+     }
+     else
+     {
+        initRowRepetitionArray();
+        randomIndex = int(random(NS_WIDTH - 2));
+        
+        while (randomIndex == previousPadIndex)
+          if (randomIndex == previousPadIndex) randomIndex = int(random(NS_WIDTH - 2));
+          
+        previousPadIndex = randomIndex;
+     }
+     
+     return randomIndex;
+     
+   }
+   
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
     super.handleInput(x, y, clickNum, deltaClickTime) ;
-
+    
     if (clickedColumn < (EW_HEIGHT - 2))
     {
-      if (myRoom.colorOfClick(x, y) == green)
-      {
-        Pad pressedPad = myRoom.getPad(x, y);
-        bluePads.add(pressedPad);
-        pressedPad.setColor(blue);
-
-        Pad redPad = redPadArray[clickedColumn];
-        if (redPad != null)   redPad.setColor(padOffColor);
-
-        // Keeps track of the columns
-        clickedColumn++;
-
-        if (clickedColumn < (EW_HEIGHT - 2))
-        {
-          redPad = redPadArray[clickedColumn];
-          if (redPad != null)   redPad.setColor(red);
-        }
-
-        generateStep();
-
-        // Routine Finished if all the columns are hit
-        if (clickedColumn >= (EW_HEIGHT - 2))
-        { 
-          clickedColumn = 0;
-          clearLitPads();
-          generateStep();
-          return true; // Round ended
-        }
-      }
+       if (myRoom.colorOfClick(x,y) == green)
+       {
+         myStats.success() ; 
+         Pad pressedPad = myRoom.getPad(x,y);
+         bluePads.add(pressedPad);
+         pressedPad.setColor(blue);
+         
+         Pad redPad = redPadArray[clickedColumn];
+         if (redPad != null)   redPad.setColor(padOffColor);
+         
+         // Keeps track of the columns
+         clickedColumn++;
+         
+         if (clickedColumn < (EW_HEIGHT - 2))
+         {
+           redPad = redPadArray[clickedColumn];
+           if (redPad != null)   redPad.setColor(red);
+         }
+         
+         generateStep();
+         
+         // Routine Finished if all the columns are hit
+         if (clickedColumn >= (EW_HEIGHT - 2))
+         { 
+           clickedColumn = 0;
+           clearLitPads();
+           generateStep();
+           return true; // Round ended
+         }
+       }
+       if (myRoom.colorOfClick(x,y) == red) myStats.minusPoint() ;
     }
-
+    
     return false;
   }  
-
+  
   //turns off all lit pads and empties lists
   private void clearLitPads()
   {
@@ -830,30 +898,33 @@ class GroundChaseRoutine extends Routine
     setRowToColor(greenPads, padOffColor) ; 
     setRowToColor(bluePads, padOffColor) ;
     setRowToColor(redPads, padOffColor);
-    setArrayRowToColor(redPadArray, padOffColor);
-
+    setArrayRowToColor(redPadArray,padOffColor);
+    
     //empties all structures
     while (greenPads.size () > 0) greenPads.remove(0) ;
     while (bluePads.size () > 0) bluePads.remove(0) ;
     while (redPads.size () > 0) redPads.remove(0) ;
     redPadArray = new Pad[EW_HEIGHT-2];
   }
-
+  
   // Set All pads in a row to a given color
   void setArrayRowToColor (Pad[] row, color myColor)
   {
-    for (int i = 0; i < row.length; i++)
+    for (int i = 0; i < row.length ; i++)
     { 
       Pad nPad = (Pad)row[i] ;
       if (nPad != null) nPad.setColor(myColor);
     }
   }
-
+  
   private void initRowRepetitionArray()
   {
-    for (int i = 0; i < NS_WIDTH - 2; i++) rowRepetition[i] = false;
+    for (int i = 0 ; i < NS_WIDTH - 2 ; i++)
+    {
+       rowRepetition[i] = false;
+    } 
   }
-
+  
   private void getRedPadsForDifficultyLevel(String difficulty)
   {
     int groundHeight = EW_HEIGHT - 2;
@@ -877,7 +948,7 @@ class GroundChaseRoutine extends Routine
 
       randomColumn = (randomColumn + (groundHeight/redPadNumber)) % (groundHeight);
     }
-  }
+  } 
 }
 
 class HomeChaseRoutine extends Routine 
@@ -887,9 +958,7 @@ class HomeChaseRoutine extends Routine
   int wall1 ;
   int wall2 ;
   int successClicks ;
-  Stats myStats ;  
   int stepTime ;
-  //boolean groundPadPressed;
   Pad groundPad;
   boolean isGroundPadNorth ; 
 
@@ -951,7 +1020,6 @@ class HomeChaseRoutine extends Routine
 
     if (difficulty.equals(NOVICE))      // Lit all pads green
     {
-      //  println("Novice Difficulty ");
       setRowToColor(row1, green);    
       setRowToColor(row2, green);
     } else if (difficulty.equals(INTERMEDIATE)) {    // Lit one pad red
@@ -963,7 +1031,7 @@ class HomeChaseRoutine extends Routine
     }
   }
 
-  boolean handleInput(int x, int y, int clickNum, int deltaClickTime) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
     super.handleInput(x, y, clickNum, deltaClickTime) ;
     int groundID = 0 ;
@@ -980,9 +1048,13 @@ class HomeChaseRoutine extends Routine
           return false;
         }
       }
-    } else if (clickNum == 2) {
+    } 
+    else if(clickNum == 2)
+    {  //only checking double clicks
       if (myRoom.colorOfClick(x, y) == green)
       {
+        myStats.addForceDoubleClickTime(deltaClickTime);
+        myStats.success() ;
         if (successClicks == 1) 
         {
           groundPadPressed = false;
@@ -993,7 +1065,7 @@ class HomeChaseRoutine extends Routine
 
           // Setting of ground pad when second row is pressed
           groundPad.setColor(padOffColor) ;
-
+          
           generateStep() ;
           return true ;// ROUNDS: return true. step is finished ;
         } else 
@@ -1009,6 +1081,8 @@ class HomeChaseRoutine extends Routine
         }
         return false; // ROUNDS: return false;
       }
+      if (myRoom.colorOfClick(x, y) == red) myStats.minusPoint() ;
+      myStats.miss() ;
     }
     return false;
   }  
@@ -1038,9 +1112,7 @@ class HomeFlyRoutine extends Routine
   int wall1 ;
   int wall2 ;
   int successClicks ;
-  Stats myStats ;  
   int stepTime ;
-  //boolean groundPadPressed;
   Pad groundPad = null;
   boolean isGroundPadNorth ;
 
@@ -1100,7 +1172,6 @@ class HomeFlyRoutine extends Routine
 
     if (difficulty.equals(NOVICE))      // Lit all pads green
     {
-      //println("Novice Difficulty ");
       setRowToColor(row1, green);    
       setRowToColor(row2, green);
     } else if (difficulty.equals(INTERMEDIATE)) {    // Lit one pad red
@@ -1127,26 +1198,24 @@ class HomeFlyRoutine extends Routine
     }
   }
 
-  boolean handleInput(int x, int y, int clickNum, int deltaClickTime) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
-    super.handleInput(x, y, 1, deltaClickTime) ;
+    super.handleInput(x, y,1, deltaClickTime) ;
     int groundID = 0 ;
 
-    if (!groundPadPressed)
+    if ( (!groundPadPressed) && (myRoom.getWallID(x, y) == groundID) && (myRoom.colorOfClick(x, y) == orange) )
     {
-      if (myRoom.getWallID(x, y) == groundID)
-      {
-        if (myRoom.colorOfClick(x, y) == orange)
-        {
-          groundPadPressed = true;
-          isGroundPadNorth = y < height/2 ;
-          generateStep();
-          return false;
-        }
-      }
-    } else if ( clickNum == 2) {
+      groundPadPressed = true;
+      isGroundPadNorth = y < height/2 ;
+      generateStep();
+      return false;
+    } 
+    else if( clickNum == 2) 
+    {
       if (myRoom.colorOfClick(x, y) == green)
       {
+        myStats.addForceDoubleClickTime(deltaClickTime) ;
+        myStats.success() ;
         if (successClicks == 1) 
         {
           groundPadPressed = false;
@@ -1160,19 +1229,23 @@ class HomeFlyRoutine extends Routine
 
           generateStep() ;
           return true ;// ROUNDS: return true. step is finished ;
-        } else 
+        } 
+        else if (myRoom.getWallID(x, y) == wall1) 
         {
-          if (myRoom.getWallID(x, y) == wall1) 
-          {
-            setRowToColor(row1, blue) ;
-            successClicks++;
-          } else {
-            setRowToColor(row2, blue) ;
-            successClicks++;
-          }
+          setRowToColor(row1, blue) ;
+          successClicks++;
+        } 
+        else 
+        {
+          setRowToColor(row2, blue) ;
+          successClicks++;
         }
+        
         return false; // ROUNDS: return false;
       }
+      
+      if (myRoom.colorOfClick(x, y) == red) myStats.minusPoint() ;
+      myStats.miss() ;
     }
     return false;
   }  
@@ -1183,7 +1256,7 @@ class HomeFlyRoutine extends Routine
     //turns off all green pads
     setRowToColor(row1, padOffColor) ; 
     setRowToColor(row2, padOffColor) ; 
-
+    
     if (groundPad != null)
     {
       groundPad.setColor(padOffColor);
@@ -1200,7 +1273,6 @@ class FlyRoutine extends Routine
   ArrayList row2 ;
   int wall1 ;
   int wall2 ;
-  Stats myStats ;  
 
   FlyRoutine (Room myRoom, String difficulty) 
   {
@@ -1220,22 +1292,21 @@ class FlyRoutine extends Routine
   {
     super.generateStep() ;
     boolean workingOnRow1 = ( row1.size() == 0 ) ;
-
-    if (workingOnRow1) 
+   
+    if(workingOnRow1) 
     {
       wall1 += ( wall1 > 2 ) ? -2 : 2; 
       row1 = myRoom.getUpperSquarePads(wall1, SQUARE_PAD_NUMBER/2, false, false);
       handleDifficulty(difficulty, row1);
-      println("wall1(" + wall1 + ") - size of row1 " + row1.size() );
-    } else 
+    }
+    else 
     {
       wall2 += ( wall2 > 2 ) ? -2 : 2;
       row2 = myRoom.getUpperSquarePads(wall2, SQUARE_PAD_NUMBER/2, false, false);
       handleDifficulty(difficulty, row2);
-      println("wall2(" + wall2 + ") - size of row2 " + row2.size() );
-    }
+    }  
   }
-
+  
   void handleDifficulty(String difficulty, ArrayList row)
   {
     int randomPadIndex = int(random(3)); // get random pad index for difficulty
@@ -1252,25 +1323,29 @@ class FlyRoutine extends Routine
         {
           // Set two green pads for each row
           setPadInRowToColor(row, randomPadIndex, green);
-          setPadInRowToColor(row, ((randomPadIndex+1)%4), green);
+          setPadInRowToColor(row, ((randomPadIndex+1)%4), green); 
         } else 
           // Set two red pads for each row
-        setPadInRowToColor(row, i, red);
+          setPadInRowToColor(row, i, red);
       }
     }
   }
 
-  boolean handleInput(int x, int y, int clickNum, int deltaClickTime) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
     super.handleInput(x, y, clickNum, deltaClickTime) ;
 
     if (myRoom.colorOfClick(x, y) == green)
     {
+      myStats.addForceDoubleClickTime(deltaClickTime) ;
+      myStats.success() ;
       ArrayList rowHit = (myRoom.getWallID(x, y) == wall1)  ? row1 : row2 ;
       setRowToColor(rowHit, padOffColor) ;
-      while ( rowHit.size () > 0 ) rowHit.remove(0) ;   
-      generateStep() ;
+      while( rowHit.size() > 0 ) rowHit.remove(0) ;   
+      generateStep() ;  
     }
+    else if (myRoom.colorOfClick(x, y) == padOffColor) myStats.miss() ;
+    
     return false;
   }   
 
@@ -1292,9 +1367,6 @@ class ChaseRoutine extends Routine
   ArrayList row2 ;
   int wall1 ;
   int wall2 ;
-  int successClicks ;
-  Stats myStats ;  
-  int stepTime ;
 
   ChaseRoutine (Room myRoom, String difficulty) 
   {
@@ -1314,20 +1386,19 @@ class ChaseRoutine extends Routine
   {
     super.generateStep() ;
     boolean workingOnRow1 = ( row1.size() == 0 ) ;
-
-    if (workingOnRow1)
+   
+    if(workingOnRow1)
     {
       wall1 += ( wall1 > 2 ) ? -2 : 2; 
       row1 = myRoom.getBottomPads(wall1, ROW_PAD_NUMBER, false, false) ;
       handleDifficulty(difficulty, row1);
-      println("wall1(" + wall1 + ") - size of row1 " + row1.size() );
-    } else 
+    }
+    else 
     {
       wall2 += ( wall2 > 2 ) ? -2 : 2;
       row2 = myRoom.getBottomPads(wall2, ROW_PAD_NUMBER, false, false) ;
       handleDifficulty(difficulty, row2);
-      println("wall2(" + wall2 + ") - size of row2 " + row2.size() );
-    }
+    } 
   }
 
   void handleDifficulty(String difficulty, ArrayList row)
@@ -1342,20 +1413,25 @@ class ChaseRoutine extends Routine
       setRowAndPadToColor(row, randomPadIndex, green) ;
   }
 
-  boolean handleInput(int x, int y, int clickNum, int deltaClickTime) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
     super.handleInput(x, y, 1, deltaClickTime) ;
 
     if (myRoom.colorOfClick(x, y) == green)
     {
+      myStats.addForceDoubleClickTime(deltaClickTime) ;
+      myStats.success() ;
       ArrayList rowHit = (myRoom.getWallID(x, y) == wall1)  ? row1 : row2 ;
       setRowToColor(rowHit, padOffColor) ;
-      while ( rowHit.size () > 0 ) rowHit.remove(0) ;   
-      generateStep() ;
+      while( rowHit.size() > 0 ) rowHit.remove(0) ;   
+      generateStep() ;  
     }
+    else if(myRoom.colorOfClick(x, y) == padOffColor) myStats.miss() ;
+    
     return false;
-  }
+  }  
 }
+
 class ThreeWallChaseRoutine extends Routine 
 {
   ArrayList greenPads ;
@@ -1378,35 +1454,29 @@ class ThreeWallChaseRoutine extends Routine
     clearLitPads() ;  
     int wallID = 4 ;  //start at WEST wall ; W -> N -> E
     int toBeGreen = int(random(3)) ;  //decides green wall
-
+    
     for (int i = 0; i < 3; i++)
     {
       //gets num of pads depending on wall 
       int numPads = (wallID == NORTH) ? NS_WIDTH - 2 : EW_HEIGHT/2 - 1; 
-      int r, c, incR, incC ;
+      int r ,  c , incR , incC ;
       //initializes start point based on row/column depending on wall
-      if (wallID == NORTH) { 
-        r = 1 ; 
-        c = NS_HEIGHT - 1 ;
-      } else if (wallID == EAST) { 
-        r = 0 ; 
-        c = 1 ;
-      } else { 
-        r = EW_WIDTH - 1 ; 
-        c = 1 ;
-      }
+      if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
+      else if(wallID == EAST){ r = 0 ; c = 1 ; }
+      else { r = EW_WIDTH - 1 ; c = 1 ; }
       //initializes increments for wall/column depending on wall
       incR = (wallID == NORTH) ? 1 : 0 ;
       incC = (wallID == NORTH) ? 0 : 1 ;
-
+    
       //gets numPads pads into appropriate color list
-      for (int j = 0; j < numPads; j++)
+      for (int j = 0; j < numPads ; j++)
       {
-        Pad newPad = myRoom.getPadRC( wallID, r + incR*j, c + incC*j );
+        Pad newPad = myRoom.getPadRC( wallID , r + incR*j , c + incC*j );
         //if set to red pads, puts them in the red pads list
         if (i == toBeGreen) greenPads.add(newPad) ;
         //else put pads in green pads list
         else redPads.add(newPad) ;
+        
       }  
       //gets next pad in sequence 1-2-3-4-1-...
       wallID = wallID % 4 + 1 ;
@@ -1430,21 +1500,20 @@ class ThreeWallChaseRoutine extends Routine
     }
   }
 
-  boolean handleInput(int x, int y, int clickNum, int deltaClickTime) 
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
     super.handleInput(x, y, clickNum, deltaClickTime) ;
-
-    if (myRoom.colorOfClick(x, y) == green) //green - success
+      
+    if(myRoom.colorOfClick(x, y) == green) //green - success
     {
-      //handle game
-      generateStep() ;
       myStats.addForceDoubleClickTime(deltaClickTime) ;
       myStats.success() ;
-      return true ;
+      generateStep() ;
+      return true ;  
     }
-
-    if (myRoom.colorOfClick(x, y) == red) myStats.minusPoint(); 
-
+    
+    if(myRoom.colorOfClick(x, y) == red) myStats.minusPoint(); 
+    
     myStats.miss() ;    
     return false ;
   }  
@@ -1468,11 +1537,11 @@ class Stats
   int successes ;
   int misses ;
   int anticipationReactionSum ;
-  int anticipationReactionDribbling ;
+  int anticipationReactionDribbling ; 
   int minusPoints;
   int lastSuccessAt ;
   boolean isFirstSuccess ;
-
+  
   Stats() 
   {
     forceSum = 0 ;
@@ -1486,37 +1555,32 @@ class Stats
 
   void addForceDoubleClickTime(int deltaTime) 
   { 
-    forceSum += (30 + 1/((double)deltaTime-105)) * ballMass;
+    //forceSum += (30 + (double)1/(deltaTime-105)) * ballMass;
+    forceSum += deltaTime;   
   }
-
+  
   void success() 
   { 
     successes++ ; 
-
-    if (isFirstSuccess) isFirstSuccess = false ;
+    
+    if(isFirstSuccess) isFirstSuccess = false ;
     else anticipationReactionSum += (millis() - lastSuccessAt) ;
-
+    
     lastSuccessAt = millis() ;
     printSummary();
   }
-
-  void miss() { 
-    misses++ ;
-  }
-  void minusPoint() { 
-    minusPoints++ ;
-  }
-
+  
+  void miss() { misses++ ; printSummary() ;}
+  void minusPoint() { minusPoints++ ; printSummary() ;}
+ 
   double getForceAvg() 
   { 
-    double result = (double)forceSum/successes ; 
+    double result = forceSum/successes ; 
     return result ;
   }
-
-  int getSuccesses() { 
-    return successes ;
-  }
-
+  
+  int getSuccesses() { return successes ; }
+  
   double getAccuracy() 
   { 
     double result = (double)successes/(successes + misses) ;
@@ -1529,16 +1593,13 @@ class Stats
     double result = (double)anticipationReactionSum/successes ;
     return result ;
   }
-
+  
   void printSummary()
   {
-    /*println("Successes: " + getSuccesses()) ;
-     println("Misses: " + misses ) ;
-     println("Minus points: " + getMinusPoints()); 
-     println("Accuracy: " + nfc((getAccuracy()*100),2) +"%") ;
-     println("Average Force: " + nfc(getForceAvg(),2) + " Newtons") ;
-     println("Average Anticipation Reaction Time: " + nfc((getAvgARTime()/1000),2) + " seconds"); 
-     println("========================================================") ;*/
+    if(javascript != null) 
+    {
+      javascript.postFeedback(successes, misses, minusPoints, getAccuracy(), getForceAvg(), getAvgARTime()) ;  
+    }
   }
 }
 
@@ -1609,15 +1670,6 @@ class Room
     return walls[0].getPad(rX, rY) ;
   }
 
-  void gameCountdown()
-  {
-    for (int i = 4; i >= 0; i--)
-    {
-      drawRoom();
-      lightWall(i, blue);
-    }
-  }
-
   void lightWall(int wallID, color newColor)
   {
     Wall myWall = walls[wallID] ;
@@ -1627,11 +1679,12 @@ class Room
         myWall.getPad(r, c).setColor(newColor) ;
   }
 
-  Pad getPadRC(int wallID, int r, int c)
+  Pad getPadRC(int wallID , int r , int c)
   {
-    return walls[wallID].getPad(r, c) ;
+    return walls[wallID].getPad(r,c) ;
+  
   }
-
+  
   ArrayList getUpperSquarePads (int wallID, int padNum, boolean isGroundBased, boolean needNorth)
   {
 
@@ -1693,18 +1746,14 @@ class Room
 
       int newR = (r==NS_WIDTH-1) ? rng + i : r ;
       int newC = (r==NS_WIDTH-1) ? c : rng + i ; 
-
-      //println(wallID + " newR,newC = " + newR + "," + newC);
-      current = walls[wallID].getPad(newR, newC) ;  //NS
+      current = walls[wallID].getPad(newR, newC) ; 
 
       if (current.isValid()) ret.add(current) ;  
 
-
       newR = (r==NS_WIDTH-1) ? rng + i : r+forBot ;
       newC = (r==NS_WIDTH-1) ? c+forBot : rng + i ; 
-
-      //println(wallID + " newR,newC = " + newR + "," + newC);
       current = walls[wallID].getPad(newR, newC) ;
+      
       if (current.isValid()) ret.add(current)   ;
     }
 
@@ -1766,8 +1815,6 @@ class Room
 
       int newR = (r==NS_WIDTH-1) ? rng + i : r ;
       int newC = (r==NS_WIDTH-1) ? c : rng + i ; 
-
-      //println(wallID + " newR,newC = " + newR + "," + newC);
       current = walls[wallID].getPad(newR, newC) ;  //NS
 
       if (current.isValid()) ret.add(current) ;
@@ -1971,4 +2018,13 @@ class Pad
     valid = !valid ;
   }
 }
+
+interface JavaScript
+{
+  void postFeedback(int successesNum, int missesNum, int minusNum, double accuracyNum, double forceNum, double arTimeNum);
+} 
+
+JavaScript javascript = null ;
+void setJavaScript(JavaScript js) { javascript = js ; }
+
 
