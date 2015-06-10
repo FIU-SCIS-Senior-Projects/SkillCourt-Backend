@@ -1,6 +1,6 @@
-//String routineCommand = "xa010000000";
-//String warning ="" ;
-//boolean isReadyToPlay = true ;
+String routineCommand = "xa010000000";
+String warning ="" ;
+boolean isReadyToPlay = true ;
 
 //pad attributes
 color lineColor = color(0, 0, 0);
@@ -467,13 +467,11 @@ class xCueRoutine extends Routine
   {
     clearLitPads() ;  
     successClicks = 0 ;
-    int groundColumnIndex = EW_HEIGHT-2;
-    int groundRowIndex = NS_WIDTH-2;
     println("Generating Step for xCue routine");
     int randomRowGround, randomColumnGround;
     
-    randomColumnGround = int(random(groundColumnIndex));
-    randomRowGround = int(random(groundRowIndex));
+    randomColumnGround = int(random(((EW_HEIGHT-2)- ((EW_HEIGHT/2)+1))) + ((EW_HEIGHT/2)+1));
+    randomRowGround = int(random(NS_WIDTH-2));
     
     if ((!groundPadPressed) && (!secondGroundPadPressed)){
        //println("No pads are pressed"); 
@@ -482,7 +480,7 @@ class xCueRoutine extends Routine
        firstGroundPad.setColor(secondYellow);
     } else if ((groundPadPressed) && (!secondGroundPadPressed)){
       //println("First pad is pressed but not second"); 
-      secondGroundPad = myRoom.walls[GROUND].getPad((randomRowGround+4)%groundRowIndex, (randomColumnGround+4)%groundColumnIndex) ;
+      secondGroundPad = myRoom.walls[GROUND].getPad(int(random(NS_WIDTH-2)),randomColumnGround-((EW_HEIGHT/2)+1)) ;
       secondGroundPad.setColor(yellow);
       setAllRowsToColor(yellow);
     } else if ( (groundPadPressed) && (secondGroundPadPressed) ) {
