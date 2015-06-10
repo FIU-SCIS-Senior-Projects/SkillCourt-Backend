@@ -1,6 +1,6 @@
-//String routineCommand = "gn010000000";
-//String warning ="" ;
-//boolean isReadyToPlay = true ;
+String routineCommand = "xn010000000";
+String warning ="" ;
+boolean isReadyToPlay = true ;
 
 //pad attributes
 color lineColor = color(0, 0, 0);
