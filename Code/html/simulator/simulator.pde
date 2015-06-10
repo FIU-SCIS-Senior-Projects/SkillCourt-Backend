@@ -98,6 +98,20 @@ boolean countdown()
   return false ;
 }
 
+
+
+boolean xCueCountdown()
+{
+  if(startCountdownTime == 0) startCountdownTime = millis() ;
+  int deltaTime = millis()-startCountdownTime ;
+  if(deltaTime > 3000)
+  {
+    //newRoom.lightWall(GROUND, padOffColor);
+    return true ;
+  }
+  return false;
+}
+
 void printOnGround(int n)
 {
   int groundWidth = NS_WIDTH - 2;
@@ -423,6 +437,7 @@ class xCueRoutine extends Routine
   Pad firstGroundPad = null;
   Pad secondGroundPad = null;
   int timer;
+  boolean xCueCountdown;
 
   xCueRoutine(Room myRoom, String difficulty)
   {
@@ -436,6 +451,7 @@ class xCueRoutine extends Routine
     southWallPads = new ArrayList();
     eastWallPads = new ArrayList();
     successClicks = 0;
+    xCueCountdown = false;
     generateStep();
   }
   
@@ -459,17 +475,19 @@ class xCueRoutine extends Routine
     randomColumnGround = int(random(groundColumnIndex));
     randomRowGround = int(random(groundRowIndex));
     
-    if (!groundPadPressed){
-      firstGroundPad = myRoom.walls[GROUND].getPad(randomRowGround, randomColumnGround) ;
-      firstGroundPad.setColor(secondYellow);
-    } else if (!secondGroundPadPressed){
+    if ((!groundPadPressed) && (!secondGroundPadPressed)){
+       //println("No pads are pressed"); 
+       generateCueWalls();
+       firstGroundPad = myRoom.walls[GROUND].getPad(randomRowGround, randomColumnGround) ;
+       firstGroundPad.setColor(secondYellow);
+    } else if ((groundPadPressed) && (!secondGroundPadPressed)){
+      //println("First pad is pressed but not second"); 
       secondGroundPad = myRoom.walls[GROUND].getPad((randomRowGround+4)%groundRowIndex, (randomColumnGround+4)%groundColumnIndex) ;
       secondGroundPad.setColor(yellow);
-    } else {
-        generateCueWalls();
-        setAllRowsToColor(yellow);
-        // MISSING: Set timer of 3 sec before activating pads
-        handleDifficulty(difficulty); 
+      setAllRowsToColor(yellow);
+    } else if ( (groundPadPressed) && (secondGroundPadPressed) ) {
+      //println("Both pads are pressed");
+      handleDifficulty(difficulty);
     }
     
   }
@@ -482,10 +500,13 @@ class xCueRoutine extends Routine
     
     if (secondGroundPad != null) secondGroundPad.setColor(padOffColor);
     
-     while (northWallPads.size () > 0) northWallPads.remove(0) ;
-     while (southWallPads.size () > 0) southWallPads.remove(0) ;
-     while (eastWallPads.size () > 0) eastWallPads.remove(0) ;
-     while (westWallPads.size () > 0) westWallPads.remove(0) ;
+    if (successClicks == 4){
+       while (northWallPads.size () > 0) northWallPads.remove(0) ;
+       while (southWallPads.size () > 0) southWallPads.remove(0) ;
+       while (eastWallPads.size () > 0) eastWallPads.remove(0) ;
+       while (westWallPads.size () > 0) westWallPads.remove(0) ;
+    }
+    
   }
   
   void setGreenPadsToColor(ArrayList row, color myColor)
@@ -577,7 +598,19 @@ class xCueRoutine extends Routine
   
   void handleDifficulty(String difficulty)
   {
+    /*if (!xCueCountdown) 
+    {
+      println("Countdown is false");
+      int startCountdown = millis();
+      while((millis()-startCountdown) < 3000)
+      {
+        //println("Testing countdown");
+      }
+      xCueCountdown = true;
+    }*/
+    
     setAllRowsToColor(padOffColor);
+    
     if (difficulty.equals(NOVICE))
     {
       setNumberOfPadsInRowToColor(northWallPads,4,0);  // Lit only 4 green pads
@@ -595,10 +628,12 @@ class xCueRoutine extends Routine
       setNumberOfPadsInRowToColor(eastWallPads,2,2);
       setNumberOfPadsInRowToColor(westWallPads,2,2);
     }
+    
   }
   
   void generateCueWalls()
   {
+    println("Generating cue walls");
     generateSouthOrWestPads(SOUTH);
     generateSouthOrWestPads(WEST);
     generateNorthPads();
