@@ -1,4 +1,4 @@
-//String routineCommand = "gn010000000";
+//String routineCommand = "xa010000000";
 //String warning ="" ;
 //boolean isReadyToPlay = true ;
 
@@ -10,6 +10,7 @@ color red = color(240, 19, 19) ;
 color blue = color(91, 134, 214) ;
 color orange = color(243, 194, 80);
 color yellow = color(252, 211, 7);
+color secondYellow = color(242,236,153);
 final int padSideLength = 40 ;
 
 //constants wall enum
@@ -86,7 +87,7 @@ boolean countdown()
   
   if(deltaTime > 3000)
   {
-    newRoom.lightWall(GROUND, padOffColor);
+    //newRoom.lightWall(GROUND, padOffColor);
     return true ;
   }
   else if(deltaTime > 2000) printOnGround(1) ;
@@ -144,6 +145,7 @@ void draw()
     }
     else if (countdown() && !isPlaying)
     {
+      newRoom = new Room() ;
       myGame = new Game(newRoom, routineCommand) ;
       isPlaying = true ;
     } 
@@ -259,6 +261,10 @@ class Game
     {
       myRoutine = new GroundChaseRoutine(myRoom, difficulty); 
       isRoutineGroundBased = true ; 
+    }else if (type.equals(X_CUE))
+    {
+      myRoutine = new xCueRoutine(myRoom, difficulty) ; 
+      isRoutineGroundBased = true ;
     }
   }
 
@@ -918,7 +924,31 @@ class GroundChaseRoutine extends Routine
        rowRepetition[i] = false;
     } 
   }
-   
+  
+  private void getRedPadsForDifficultyLevel(String difficulty)
+  {
+    int groundHeight = EW_HEIGHT - 2;
+    int randomColumn = int(random(groundHeight));
+    int redPadNumber = 0;
+
+    if (difficulty.equals(INTERMEDIATE))   redPadNumber = groundHeight/3;
+    else if (difficulty.equals(ADVANCED))  redPadNumber = groundHeight/2 ;
+
+    for (int i = 0; i < redPadNumber; i ++)
+    {
+      // find a random red pad that is not equal to a greenPad
+      int aux = greenPadCoordinateArray[randomColumn];
+      while (greenPadCoordinateArray[randomColumn] == aux)  
+        aux = int(random(NS_WIDTH-2));
+
+      Pad redPad = myRoom.getPadRC(GROUND, aux, randomColumn);
+      if (redPad == null) println("redPad in GroundChase is null");
+      redPadArray[randomColumn] = redPad;
+      //redPad.setColor(red);
+
+      randomColumn = (randomColumn + (groundHeight/redPadNumber)) % (groundHeight);
+    }
+  } 
 }
 
 class HomeChaseRoutine extends Routine 
