@@ -19,14 +19,17 @@ function allowRounds()
 		document.getElementById("gameType").value = "time" ;
 		document.getElementById("gameType").disabled = true ;
 		document.getElementById("timePerRoundCheck").disabled = true ;
-		document.getElementById("timePerRound").disabled = true;
+		document.getElementById("timePerRoundCheck").checked = false ;
 		document.getElementById("timePerRound").value = NaN ;
+		document.getElementById("timePerRound").disabled = true;
 	}
 	else
 	{
-		document.getElementById("gameType").disabled = false ;
-		document.getElementById("timePerRoundCheck").disabled = false ;
-		document.getElementById("timePerRound").disabled = false;
+		if(document.getElementById("timePerRoundCheck").disabled)
+		{
+			document.getElementById("gameType").disabled = false ;
+			document.getElementById("timePerRoundCheck").disabled = false ;
+		}
 	}
 }
 
@@ -134,6 +137,11 @@ function startGame()
 	
 	routineCommand = routineForGame + difficultyForGame + roundsForGameStr  + timeForGameStr + timePerRoundStr ; 
 	
+	if(isReadyToPlay) changeScreen() ;
+}
+
+function changeScreen()
+{	
 	document.getElementById("SettingsList").style.display = "none" ;
 	document.getElementById("FeedbackList").style.display = "block" ;
 	
@@ -144,7 +152,7 @@ function startGame()
 		document.getElementById("forceNum").parentNode.style.display = "none" ;
 	}
 	
-	if(routineForGame != "t" && difficultyForGame == "n")
+	if(routineForGame != "t" && difficultyForGame == "n" && timePerRound == 0)
 	{
 		document.getElementById("minusNum").parentNode.style.display = "none" ;
 	}
