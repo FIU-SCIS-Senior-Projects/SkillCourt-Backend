@@ -37,7 +37,7 @@
 						<input type="radio" name="difficulty" value="i">Intermediate<br>
 						<input type="radio" name="difficulty" value="a">Advanced</li>
 					<li>Time Per Round</li>
-					<li><input id="timePerRoundCheck" type="checkbox" onchange="myFunction2();">
+					<li><input id="timePerRoundCheck" type="checkbox" onclick="myFunction2();">
 						<input id="timePerRound" type="number" min="1" max="30" disabled></li>
 					<li>Play By</li>
 					<li>
