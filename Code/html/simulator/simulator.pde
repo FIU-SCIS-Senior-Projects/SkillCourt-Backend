@@ -1,6 +1,6 @@
-String routineCommand = "xa010000000";
-String warning ="" ;
-boolean isReadyToPlay = true ;
+//String routineCommand = "xa000000100";
+//String warning ="" ;
+//boolean isReadyToPlay = true ;
 
 //pad attributes
 color lineColor = color(0, 0, 0);
@@ -229,6 +229,7 @@ class Game
   int startTime ;
   int routineTime ;
   int rounds ;
+  int roundsPlayed;
   Routine myRoutine ;
   Room myRoom;
   boolean isRoutineGroundBased ;
@@ -239,6 +240,7 @@ class Game
     isThisGameStarted = true;
     myRoom = r;
     rounds = -1; 
+    roundsPlayed = 0;
     gameTime = 0;
     routineTime = 0;
     createRoutine(command);
@@ -255,7 +257,8 @@ class Game
     int timeBased = int(command.substring(9, 11));
     // Check if the game is timeBased or roundBased  
     if (rounds == 0) rounds = -1;
-    else text(rounds, 100, 100);
+    //else text(rounds-roundsPlayed, 100, 100);
+    text(rounds-roundsPlayed, 100, 100);
 
     startTime = millis() ;
     isRoutineGroundBased = false; 
@@ -298,7 +301,8 @@ void handleDoubleClick(int x, int y, int deltaClickTime)
   { 
     fill(0, 0, 0);
     //text(rounds, 0, 150);
-    rounds--;
+    //rounds--;
+    roundsPlayed++;
 
     // If you succesfully generatedStep then startTime = millis()
     if (routineTime > 0) startTime = millis();
@@ -313,7 +317,8 @@ void handleSingleClick(int x, int y)
   { 
     fill(0, 0, 0);
     //text(rounds, 0, 150);
-    rounds--;
+    //rounds--;
+    roundsPlayed++;
 
     // If you succesfully generatedStep then startTime = millis()
     if (routineTime > 0) startTime = millis();
@@ -324,9 +329,17 @@ void postGame() {}
 
 boolean checkStatus()
 {
+ 
+   // If round game is half way
+  /*if (roundsPlayed == (rounds/2))
+  {
+     //println("You are half WAY!!!"); 
+     text("You are half WAY!!!", 0, 400);
+  } */
   // Round Based game
   // if rounds == 0 then all rounds have passed and game is over
-  if (rounds == 0)
+  //if (rounds == 0)
+  if (roundsPlayed == rounds)
   { 
     fill(0, 0, 0);
     isThisGameOver = true ;
@@ -344,6 +357,11 @@ boolean checkStatus()
     String timerOutput = (sec < 10) ? min + ":0" + sec :  min + ":" + sec ;
     text("Time Left " + timerOutput, 10, 10, 160, 160);
    
+    if ((millis()-startTime) == (gameTime/2))
+    {
+      println("You are half WAY!!!"); 
+      text("You are half WAY!!!", 0, 400);
+    }
 
    // Calculating game time in minutes
     if ((millis() - startTime) > gameTime) 
@@ -356,7 +374,7 @@ boolean checkStatus()
   }
    else
   {
-    text("Rounds Left " + rounds, 10, 10, 160, 160);
+    text("Rounds Left " + (rounds-roundsPlayed), 10, 10, 160, 160);
   }
   
   // routineTime > 0 if game is timeRound based
@@ -367,7 +385,8 @@ boolean checkStatus()
       fill(0, 0, 0);
       text("Sorry! took too long", 0, 150);
       startTime = millis();
-      rounds--;
+      roundsPlayed++;
+      //rounds--;
       myRoutine.groundPadPressed = false;
       myRoutine.generateStep();
       return false;
