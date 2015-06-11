@@ -10,6 +10,8 @@ var processingInstance ;
 var missingWall ;
 var s0 = new buzz.sound( "s0", { formats: [ "ogg", "mp3"] });
 var s1 = new buzz.sound( "s1", { formats: [ "ogg", "mp3"] });
+var s2 = new buzz.sound( "s2", { formats: [ "ogg", "mp3"] });
+var s3 = new buzz.sound( "s3", { formats: [ "mp3"] });
 var bound = false;
 
 document.getElementById("removedWall").style.display = "none" ;
@@ -191,6 +193,11 @@ function stopGame()
 }
 
 bindJavascript();*/
+
+function playTest() {
+	s3.load();
+	s3.play();
+}
 
 function playMissSound() {
 	s1.load();

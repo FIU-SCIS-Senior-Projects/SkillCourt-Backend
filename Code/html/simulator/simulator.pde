@@ -212,12 +212,14 @@ class Game
 {
   boolean isThisGameOver ;
   boolean isThisGameStarted ;
+  boolean coachFeedback;
   int gameTime;
   int startTime ;
   int routineTimeStart;
   int routineTime ;
   int rounds ;
   int roundsPlayed;
+  
   Routine myRoutine ;
   Room myRoom;
   boolean isRoutineGroundBased ;
@@ -233,6 +235,8 @@ class Game
     routineTime = 0;
     routineTimeStart = 0;
     createRoutine(command);
+    coachFeedback = false;
+    //playTest();
   }
 
   // Method that breaks the command and creates a routine
@@ -320,16 +324,6 @@ void postGame() {}
 
 boolean checkStatus()
 {
-  // Round Based game
-  // if rounds == 0 then all rounds have passed and game is over
-  //if (rounds == 0)
-  
-  /*if  ( (rounds >0) & ((rounds-roundsPlayed) >= (rounds/2)))
-  {
-    println("You are half WAY!!!"); 
-    text("You are half WAY!!!", 0, 400);
-  }*/
-  
   
   if (roundsPlayed == rounds)
   { 
@@ -349,10 +343,18 @@ boolean checkStatus()
     String timerOutput = (sec < 10) ? min + ":0" + sec :  min + ":" + sec ;
     text("Time Left " + timerOutput, 10, 10, 160, 160);
    
-    if ((millis()-startTime) == (gameTime/2))
+    //println("startTime: " + (millis() - startTime));
+    
+    if ( (millis()-startTime) >= (gameTime/2) ) 
     {
-      println("You are half WAY!!!"); 
-      text("You are half WAY!!!", 0, 400);
+      if (!coachFeedback)
+      {
+        if (javascript != null) playTest();
+        else println("Javascript is null"); 
+        coachFeedback = true;
+      }
+      println("You are half WAY!!!");      
+      //text("You are half WAY!!!", 0, 400);
     }
 
    // Calculating game time in minutes
@@ -2128,6 +2130,7 @@ interface JavaScript
   void postFeedback(int successesNum, int missesNum, int minusNum, double accuracyNum, double forceNum, double arTimeNum);
   void playMissSound();
   void playSuccessSound();
+  void playTest();
 } 
 
 JavaScript javascript = null ;
