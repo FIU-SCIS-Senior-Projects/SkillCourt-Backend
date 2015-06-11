@@ -332,6 +332,15 @@ boolean checkStatus()
     text("Round Game is Over", 0, 150);
     return true;
   }
+  
+  if (roundsPlayed == (rounds/2))
+  {
+    if (!coachFeedback){
+       if (javascript != null) playTest();
+       else println("Javascript is null"); 
+       coachFeedback = true;
+    } 
+  }
 
   // gameTime > 0 if the game is timeBased
   if (gameTime > 0)
