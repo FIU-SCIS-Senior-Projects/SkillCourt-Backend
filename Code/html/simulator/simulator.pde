@@ -40,9 +40,6 @@ final String NOVICE = "n";
 final String INTERMEDIATE = "i";
 final String ADVANCED = "a";
 
-//constansts groundChase
-//final int GC_NOVICE_DIFFICULTY = 
-
 final int SQUARE_PAD_NUMBER = 4;
 final int ROW_PAD_NUMBER = 3;
 
@@ -64,6 +61,9 @@ double ballMass = 0.45;
 //countdown
 int startCountdownTime ;
 
+//custom room
+//int missingWall = 2;
+
 void setup()
 {
   size(600, 600) ;  //window size
@@ -77,73 +77,6 @@ void setup()
   prevY = 0 ;
   isPlaying = false ;
   startCountdownTime = 0 ;
-}
-
-boolean countdown()
-{
-  if(startCountdownTime == 0) startCountdownTime = millis() ;
-  background(101, 176, 152); 
-  int deltaTime = millis()-startCountdownTime ;
-  
-  if(deltaTime > 3000)
-  {
-    //newRoom.lightWall(GROUND, padOffColor);
-    return true ;
-  }
-  else if(deltaTime > 2000) printOnGround(1) ;
-  else if(deltaTime > 1000) printOnGround(2) ;
-  else if(deltaTime > 0) printOnGround(3) ;  
-  
-  newRoom.drawRoom() ;
-  return false ;
-}
-
-
-
-boolean xCueCountdown()
-{
-  if(startCountdownTime == 0) startCountdownTime = millis() ;
-  int deltaTime = millis()-startCountdownTime ;
-  if(deltaTime > 3000)
-  {
-    //newRoom.lightWall(GROUND, padOffColor);
-    return true ;
-  }
-  return false;
-}
-
-void printOnGround(int n)
-{
-  int groundWidth = NS_WIDTH - 2;
-  int groundHeight = EW_HEIGHT - 2;
-  newRoom.lightWall(GROUND,padOffColor) ;
-  if(n==1)
-  {
-    int nWidth = groundWidth / 2;
-    
-    for(int c = 1 ; c < groundHeight ; c++)
-      for(int r = groundWidth/4 ; r < groundWidth/4 + nWidth ; r++)
-        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;   
-  }
-  else if(n==2)
-  {
-    for(int c = 1 ; c < groundHeight ; c++)
-      for(int r = 0 ; r < groundWidth ; r++)
-      {
-        if(c==2) r=groundWidth-1 ;
-        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
-        if(c==4) r=groundWidth ;
-      }
-  }
-  else if(n==3)
-  {
-    for(int c = 1 ; c < groundHeight ; c++)
-      for(int r = 0 ; r < groundWidth ; r++)
-      {
-        if(c==2||c==4) r=groundWidth-1 ;
-        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
-      }
-  }
 }
 
 void draw()
@@ -182,8 +115,16 @@ void draw()
     background(101, 176, 152); 
     fill(255) ;
     textSize(32) ;
-    text("Click start to play the current routine: " + warning, 30, 200, 540, 540) ;
+    text("Click start to play the chosen routine: " + warning, 30, 200, 540, 540) ;
   }
+}
+
+void reset()
+{
+  isReadyToPlay = false; 
+  newRoom = new Room() ;
+  isPlaying = false ;
+  startCountdownTime = 0 ;
 }
 
 void mousePressed()
@@ -219,6 +160,55 @@ void setupDisplay()
   background(101, 176, 152);   //window bg color
   fill(0, 0, 0) ;  //next will be filled with black
   textSize(32) ;  
+}
+
+boolean countdown()
+{
+  if(startCountdownTime == 0) startCountdownTime = millis() ;
+  background(101, 176, 152); 
+  int deltaTime = millis()-startCountdownTime ;
+  
+  if(deltaTime > 3000)  return true ;
+  else if(deltaTime > 2000) printOnGround(1) ;
+  else if(deltaTime > 1000) printOnGround(2) ;
+  else if(deltaTime > 0) printOnGround(3) ;  
+  
+  newRoom.drawRoom() ;
+  return false ;
+}
+
+void printOnGround(int n)
+{
+  int groundWidth = NS_WIDTH - 2;
+  int groundHeight = EW_HEIGHT - 2;
+  newRoom.lightWall(GROUND,padOffColor) ;
+  if(n==1)
+  {
+    int nWidth = groundWidth / 2;
+    
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = groundWidth/4 ; r < groundWidth/4 + nWidth ; r++)
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;   
+  }
+  else if(n==2)
+  {
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = 0 ; r < groundWidth ; r++)
+      {
+        if(c==2) r=groundWidth-1 ;
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
+        if(c==4) r=groundWidth ;
+      }
+  }
+  else if(n==3)
+  {
+    for(int c = 1 ; c < groundHeight ; c++)
+      for(int r = 0 ; r < groundWidth ; r++)
+      {
+        if(c==2||c==4) r=groundWidth-1 ;
+        newRoom.getPadRC(GROUND, r , c).setColor(blue) ;
+      }
+  }
 }
 
 class Game
@@ -394,10 +384,8 @@ class Routine
     return true;
   }      
 
-  void generateStep() {
-  }
-  void startRoutine() {
-  }    
+  void generateStep() {}
+  void startRoutine() {}    
 
   // Set All pads in a row to a given color
   void setRowToColor (ArrayList row, color myColor)
@@ -1014,6 +1002,7 @@ class HomeChaseRoutine extends Routine
   } 
   void generateStep()
   {
+    super.generateStep() ;
     clearLitPads() ;  
     successClicks = 0 ;
 
@@ -1021,31 +1010,36 @@ class HomeChaseRoutine extends Routine
     {
       groundPad = myRoom.getRandomGroundPad();
       groundPad.setColor(orange);
-    } else
+    } 
+    else
     {
       wall1 = (isGroundPadNorth) ? SOUTH : NORTH ;
       wall2 = (int(random(2)) == 0) ? EAST : WEST ;  //east or west
-
-      for (int i = 0; i < 2; i++)
-      {
-        //gets new list of bottom pads 
-        ArrayList newPads = (i==0) ? myRoom.getBottomPads(wall1, 3, false, false) : myRoom.getBottomPads(wall2, 3, true, !isGroundPadNorth)  ;
-
-        //Iterate through new bottom pads
-        for (int j = 0; j < ROW_PAD_NUMBER; j++)
-        {
-          if (i == 0) row1.add((Pad)(newPads.get(j)));
-          else row2.add((Pad)(newPads.get(j)));
-        }
-      }
-
+      
+      if(wall1 == missingWall)
+        wall1 = (wall2 == EAST) ? WEST : EAST ;
+      else if(wall2 == missingWall)
+        wall2 = (wall2 == EAST) ? WEST : EAST ;
+      
+      assignRow(wall1 , row1) ;
+      assignRow(wall2 , row2) ;  
       // Method that handles difficulty
       handleDifficulty(difficulty);
 
       stepTime = millis() ;
     }
   }
-
+  void assignRow(int wallID , ArrayList row)
+  {  
+    ArrayList newPads;
+    if(wallID == EAST || wallID == WEST) 
+      newPads = myRoom.getBottomPads(wallID, 3, true, !isGroundPadNorth)  ;
+    else 
+      newPads = myRoom.getBottomPads(wallID, 3, false, false) ;
+  
+    for (int j = 0; j < ROW_PAD_NUMBER; j++) row.add((Pad)(newPads.get(j)));
+  }
+  
   void handleDifficulty(String difficulty)
   {
 
@@ -1175,30 +1169,32 @@ class HomeFlyRoutine extends Routine
     {  
       wall1 = (isGroundPadNorth) ? SOUTH : NORTH ;
       wall2 = (int(random(2)) == 0) ? EAST : WEST ;  //east or west
-
-      for (int i = 0; i < 2; i++)
-      {
-        // Locate ground pad position
-        // Generate bottom pads until both are on the other side of the ground pad
-        //gets new list of bottom pads 
-        ArrayList newPads = (i==0) ? myRoom.getUpperSquarePads(wall1, 2, false, false) : myRoom.getUpperSquarePads(wall2, 2, true, !isGroundPadNorth);
-
-        //Iterate through new bottom pads
-        for (int j = 0; j < SQUARE_PAD_NUMBER; j++)
-        {
-
-          if (i == 0) row1.add((Pad)(newPads.get(j)));
-          else row2.add((Pad)(newPads.get(j)));
-        }
-      }
+      
+      if(wall1 == missingWall)
+        wall1 = (wall2 == EAST) ? WEST : EAST ;
+      else if(wall2 == missingWall)
+        wall2 = (wall2 == EAST) ? WEST : EAST ;  
+      
+      assignRow(wall1 , row1) ;
+      assignRow(wall2 , row2) ;
 
       // Method that handles difficulty
       handleDifficulty(difficulty);
-
       stepTime = millis() ;
     }
   }
-
+  
+  void assignRow(int wallID , ArrayList row)
+  {  
+    ArrayList newPads;
+    if(wallID == EAST || wallID == WEST) 
+      newPads = myRoom.getUpperSquarePads(wallID, SQUARE_PAD_NUMBER/2, true, !isGroundPadNorth)  ;
+    else 
+      newPads = myRoom.getUpperSquarePads(wallID, SQUARE_PAD_NUMBER/2, false, false) ;
+  
+    for (int j = 0; j < SQUARE_PAD_NUMBER; j++) row.add((Pad)(newPads.get(j)));
+  }
+  
   void handleDifficulty(String difficulty)
   {
     int randomPadIndex = int(random(3)); // get random pad index for difficulty
@@ -1325,16 +1321,18 @@ class FlyRoutine extends Routine
   {
     super.generateStep() ;
     boolean workingOnRow1 = ( row1.size() == 0 ) ;
-   
+    int next ;
     if(workingOnRow1) 
     {
-      wall1 += ( wall1 > 2 ) ? -2 : 2; 
+      next = wall1 + (( wall1 > 2 ) ? -2 : 2); 
+      wall1 = (next == missingWall) ? wall1 : next ;
       row1 = myRoom.getUpperSquarePads(wall1, SQUARE_PAD_NUMBER/2, false, false);
       handleDifficulty(difficulty, row1);
     }
     else 
     {
-      wall2 += ( wall2 > 2 ) ? -2 : 2;
+      next = wall2 + (( wall2 > 2 ) ? -2 : 2); 
+      wall2 = (next == missingWall) ? wall2 : next ;
       row2 = myRoom.getUpperSquarePads(wall2, SQUARE_PAD_NUMBER/2, false, false);
       handleDifficulty(difficulty, row2);
     }  
@@ -1394,6 +1392,7 @@ class FlyRoutine extends Routine
     while (row2.size () > 0) row2.remove(0) ;
   }
 }
+
 class ChaseRoutine extends Routine 
 {
   ArrayList row1 ;
@@ -1419,16 +1418,19 @@ class ChaseRoutine extends Routine
   {
     super.generateStep() ;
     boolean workingOnRow1 = ( row1.size() == 0 ) ;
-   
+    int next ;
+    
     if(workingOnRow1)
     {
-      wall1 += ( wall1 > 2 ) ? -2 : 2; 
+      next = wall1 + (( wall1 > 2 ) ? -2 : 2 ) ; 
+      wall1 = ( next == missingWall ) ? wall1 : next; 
       row1 = myRoom.getBottomPads(wall1, ROW_PAD_NUMBER, false, false) ;
       handleDifficulty(difficulty, row1);
     }
     else 
     {
-      wall2 += ( wall2 > 2 ) ? -2 : 2;
+      next = wall2 + (( wall2 > 2 ) ? -2 : 2); 
+      wall2 = ( next == missingWall ) ? wall2 : next; 
       row2 = myRoom.getBottomPads(wall2, ROW_PAD_NUMBER, false, false) ;
       handleDifficulty(difficulty, row2);
     } 
@@ -1485,21 +1487,38 @@ class ThreeWallChaseRoutine extends Routine
   {
     super.generateStep() ;
     clearLitPads() ;  
-    int wallID = 4 ;  //start at WEST wall ; W -> N -> E
+    boolean isMissingWall = missingWall > 0 ;
+    int wallID = (isMissingWall) ? wallID = missingWall % 4 + 1 : 4 ;  //start at WEST wall ; W -> N -> E
     int toBeGreen = int(random(3)) ;  //decides green wall
     
     for (int i = 0; i < 3; i++)
     {
       //gets num of pads depending on wall 
-      int numPads = (wallID == NORTH) ? NS_WIDTH - 2 : EW_HEIGHT/2 - 1; 
+      int numPads = (wallID == NORTH || wallID == SOUTH) ? NS_WIDTH - 2 : EW_HEIGHT/2 - 1; 
       int r ,  c , incR , incC ;
       //initializes start point based on row/column depending on wall
-      if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
-      else if(wallID == EAST){ r = 0 ; c = 1 ; }
-      else { r = EW_WIDTH - 1 ; c = 1 ; }
+      if(missingWall == SOUTH || !isMissingWall)
+      {
+        if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
+        else if(wallID == EAST){ r = 0 ; c = 1 ; }
+        else { r = EW_WIDTH - 1 ; c = 1 ; }
+      }
+      else if(missingWall == NORTH)
+      {
+        if(wallID == SOUTH){ r = 1 ; c = 0 ; }
+        else if(wallID == EAST){ r = 0 ; c = EW_HEIGHT/2 - 1 ; }
+        else { r = EW_WIDTH - 1 ; c = EW_HEIGHT/2 - 1 ; }
+      }
+      else 
+      {  
+        if(wallID == SOUTH){ r = 1 ; c = 0 ; }
+        else if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
+        else if(wallID == EAST){ r = 0 ; c = 2 ; }
+        else { r = EW_WIDTH - 1 ; c = 2 ; }
+      }
       //initializes increments for wall/column depending on wall
-      incR = (wallID == NORTH) ? 1 : 0 ;
-      incC = (wallID == NORTH) ? 0 : 1 ;
+      incR = (wallID == NORTH || wallID == SOUTH) ? 1 : 0 ;
+      incC = (wallID == NORTH || wallID == SOUTH) ? 0 : 1 ;
     
       //gets numPads pads into appropriate color list
       for (int j = 0; j < numPads ; j++)
@@ -1655,7 +1674,7 @@ class Room
   void drawRoom()
   { 
     for (int i = 0; i < 5; i++ ) 
-      if (walls[i].isValid())
+      if (i != missingWall && walls[i].isValid())
         walls[i].drawWall() ;
   }
 
