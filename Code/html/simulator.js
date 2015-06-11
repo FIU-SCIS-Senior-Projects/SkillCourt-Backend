@@ -8,6 +8,9 @@ var timeForGame ;
 var roundsForGame ;
 var processingInstance ;
 var missingWall ;
+var s0 = new buzz.sound( "s0", { formats: [ "ogg", "mp3"] });
+var s1 = new buzz.sound( "s1", { formats: [ "ogg", "mp3"] });
+var bound = false;
 
 document.getElementById("removedWall").style.display = "none" ;
 	
@@ -156,6 +159,7 @@ function changeScreen()
 	{
 		document.getElementById("minusNum").parentNode.style.display = "none" ;
 	}
+	
 }
 
 function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, arTimeNum)
@@ -175,4 +179,25 @@ function stopGame()
 	document.getElementById("routineType").firstChild.selected = "true" ;
 	document.getElementById("SettingsList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;
+}
+
+/*function bindJavascript() {
+	var pjs = Processing.getInstanceById("@@id@@");
+    if(pjs != null) {
+	pjs.bindJavascript(this);
+	bound = true;
+	}
+	if(!bound) setTimeout(bindJavascript, 250);
+}
+
+bindJavascript();*/
+
+function playMissSound() {
+	s1.load();
+	s1.play();
+}
+
+function playSuccessSound() {
+	s0.load();
+	s0.play();
 }
