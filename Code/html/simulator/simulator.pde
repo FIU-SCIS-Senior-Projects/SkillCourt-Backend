@@ -1,6 +1,6 @@
-String routineCommand = "xa010000000";
-String warning ="" ;
-boolean isReadyToPlay = true ;
+//String routineCommand = "xa010000000";
+//String warning ="" ;
+//boolean isReadyToPlay = true ;
 
 //pad attributes
 color lineColor = color(0, 0, 0);
@@ -1506,15 +1506,15 @@ class ThreeWallChaseRoutine extends Routine
       else if(missingWall == NORTH)
       {
         if(wallID == SOUTH){ r = 1 ; c = 0 ; }
-        else if(wallID == EAST){ r = 0 ; c = EW_HEIGHT/2 - 1 ; }
+        else if(wallID == EAST){ r = 0 ; c = EW_HEIGHT/2 - 1; }
         else { r = EW_WIDTH - 1 ; c = EW_HEIGHT/2 - 1 ; }
       }
       else 
       {  
         if(wallID == SOUTH){ r = 1 ; c = 0 ; }
         else if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
-        else if(wallID == EAST){ r = 0 ; c = 2 ; }
-        else { r = EW_WIDTH - 1 ; c = 2 ; }
+        else if(wallID == EAST){ r = 0 ; c = 2 ; numPads = EW_HEIGHT/2 ; }
+        else { r = EW_WIDTH - 1 ; c = 2 ; numPads = EW_HEIGHT/2 ; }
       }
       //initializes increments for wall/column depending on wall
       incR = (wallID == NORTH || wallID == SOUTH) ? 1 : 0 ;
