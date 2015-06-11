@@ -71,6 +71,7 @@
 					<p>JavaScript is required to view the contents of this page.</p>
 				</noscript>
 		</div>
+		<script src="buzz.min.js"></script>
 		<script src="simulator.js"></script>
 	</body>
 </html>

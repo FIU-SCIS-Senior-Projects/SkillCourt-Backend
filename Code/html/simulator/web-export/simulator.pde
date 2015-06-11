@@ -1,4 +1,4 @@
-//String routineCommand = "xa003000002";
+//String routineCommand = "ta002000100";
 //String warning ="" ;
 //boolean isReadyToPlay = true ;
 
@@ -378,9 +378,9 @@ boolean checkStatus()
       fill(0, 0, 0);
       text("Sorry! took too long", 0, 150);
       routineTimeStart = millis();
-      println("Before Timeout");
       myRoutine.timeout();
       roundsPlayed++;
+      //rounds--;
       myRoutine.groundPadPressed = false;
       myRoutine.generateStep();
       return false;
@@ -436,11 +436,7 @@ class Routine
     }
   }
   
-  void timeout(){ 
-    println("Before my Stats");
-    myStats.minusPoint() ; 
-    println("After my stats");
-  }
+  void timeout(){ myStats.minusPoint() ; }
 }
 
 class xCueRoutine extends Routine
@@ -454,6 +450,7 @@ class xCueRoutine extends Routine
   Pad firstGroundPad = null;
   Pad secondGroundPad = null;
   int timer;
+  boolean xCueCountdown;
 
   xCueRoutine(Room myRoom, String difficulty)
   {
@@ -467,7 +464,7 @@ class xCueRoutine extends Routine
     southWallPads = new ArrayList();
     eastWallPads = new ArrayList();
     successClicks = 0;
-    myStats = new Stats();
+    xCueCountdown = false;
     generateStep();
   }
   
@@ -479,13 +476,7 @@ class xCueRoutine extends Routine
     return secondGroundPadPressed; 
   }
   
-  void timeout() 
-  { 
-    super.timeout() ;
-   println("xCue time out"); 
-    groundPadPressed = false;
-    secondGroundPadPressed = false;
-  }
+  void timeout() { super.timeout() ; }
 
   void generateStep()
   {
@@ -620,6 +611,17 @@ class xCueRoutine extends Routine
   
   void handleDifficulty(String difficulty)
   {
+    /*if (!xCueCountdown) 
+    {
+      println("Countdown is false");
+      int startCountdown = millis();
+      while((millis()-startCountdown) < 3000)
+      {
+        //println("Testing countdown");
+      }
+      xCueCountdown = true;
+    }*/
+    
     setAllRowsToColor(padOffColor);
     
     if (difficulty.equals(NOVICE))
@@ -2132,5 +2134,6 @@ interface JavaScript
 
 JavaScript javascript = null ;
 void setJavaScript(JavaScript js) { javascript = js ; }
+
 
 
