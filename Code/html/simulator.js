@@ -205,7 +205,7 @@ function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, 
 function stopGame()
 {
 	processingInstance.reset();
-	postFeedback(0,0,0,0,0,0,0);
+	postFeedback(0,0,0,0,0,0,0,0);
 	document.getElementById("routineType").firstChild.selected = "true" ;
 	document.getElementById("SettingsList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;
