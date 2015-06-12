@@ -1,4 +1,4 @@
-//String routineCommand = "xa003000002";
+//String routineCommand = "ma003000000";
 //String warning ="" ;
 //boolean isReadyToPlay = true ;
 
@@ -29,16 +29,16 @@ final int EW_HEIGHT = 8 ;
 //constants routines chars
 final String CHASE_ME = "c" ;
 final String THREE_WALL_CHASE = "t" ;
-final String HOME_CHASE = "g";
-final String HOME_FLY = "j";
-final String FLY = "h";
-final String GROUND_CHASE = "m";
-final String X_CUE = "x";
+final String HOME_CHASE = "g" ;
+final String HOME_FLY = "j" ;
+final String FLY = "h" ;
+final String GROUND_CHASE = "m" ;
+final String X_CUE = "x" ;
 
 //constants difficulties chars
-final String NOVICE = "n";
-final String INTERMEDIATE = "i";
-final String ADVANCED = "a";
+final String NOVICE = "n" ;
+final String INTERMEDIATE = "i" ;
+final String ADVANCED = "a" ;
 
 final int SQUARE_PAD_NUMBER = 4;
 final int ROW_PAD_NUMBER = 3;
@@ -53,16 +53,12 @@ int firstClickTime;
 Room newRoom ;
 boolean isPlaying;
 PImage soccerBall ;
-PImage tennisBall ;
 Game myGame; 
 
 double ballMass = 0.45;
 
 //countdown
 int startCountdownTime ;
-
-//custom room
-//int missingWall = 2;
 
 void setup()
 {
@@ -479,6 +475,7 @@ class xCueRoutine extends Routine
     eastWallPads = new ArrayList();
     successClicks = 0;
     myStats = new Stats();
+    myStats.setXTime(3);
     generateStep();
   }
   
@@ -493,7 +490,7 @@ class xCueRoutine extends Routine
   void timeout() 
   { 
     super.timeout() ;
-   println("xCue time out"); 
+    println("xCue time out"); 
     groundPadPressed = false;
     secondGroundPadPressed = false;
   }
@@ -560,17 +557,23 @@ class xCueRoutine extends Routine
     {
       groundPadPressed = true;
       generateStep();
+      myStats.firstDribble() ;
+      myStats.startXprsTime() ;
       return false;
     } 
     else if ((groundPadPressed) && (!secondGroundPadPressed) && (myRoom.getWallID(x,y) == groundID) && ((myRoom.colorOfClick(x,y) == yellow) ) )
     {
       secondGroundPadPressed = true;
       generateStep();
+      myStats.successDribble() ;
       return false;
-    } else if (clickNum == 2)
+    } 
+    else if (clickNum == 2)
     {
-      if (myRoom.colorOfClick(x,y) == green){
-         
+      if (myRoom.colorOfClick(x,y) == green)
+      {
+        myStats.addForceDoubleClickTime(deltaClickTime) ;
+        myStats.success() ;
         int wallID = myRoom.getWallID(x,y);
          
         switch (wallID)
@@ -595,14 +598,15 @@ class xCueRoutine extends Routine
         }
         
         if (successClicks == 4){
+           myStats.endXprs() ;
            groundPadPressed = false;
            secondGroundPadPressed = false;
            generateStep(); 
            return true;
         }
-        
-        return false;
       }
+      if (myRoom.colorOfClick(x,y) == red) myStats.minusPoint() ;
+      myStats.miss() ;
     }
     
     return false;
@@ -915,12 +919,14 @@ class GroundChaseRoutine extends Routine
   boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
   {
     super.handleInput(x, y, clickNum, deltaClickTime) ;
-    
     if (clickedColumn < (EW_HEIGHT - 2))
     {
        if (myRoom.colorOfClick(x,y) == green)
        {
-         myStats.success() ; 
+         //myStats.success() ;
+         if(clickedColumn > 0) myStats.successDribble() ;
+         if(clickedColumn < EW_HEIGHT - 2) myStats.firstDribble() ;
+        
          Pad pressedPad = myRoom.getPad(x,y);
          bluePads.add(pressedPad);
          pressedPad.setColor(blue);
@@ -934,7 +940,7 @@ class GroundChaseRoutine extends Routine
          if (clickedColumn < (EW_HEIGHT - 2))
          {
            redPad = redPadArray[clickedColumn];
-           if (redPad != null)   redPad.setColor(red);
+           if (redPad != null) redPad.setColor(red);
          }
          
          generateStep();
@@ -1634,16 +1640,23 @@ class ThreeWallChaseRoutine extends Routine
     while (redPads.size () > 0) redPads.remove(0) ;
   }
 }
+
 class Stats
 {
   double forceSum ;
   int successes ;
   int misses ;
   int anticipationReactionSum ;
-  int anticipationReactionDribbling ; 
   int minusPoints;
   int lastSuccessAt ;
   boolean isFirstSuccess ;
+  int startDribble ;
+  int dribbleSuccesses ;
+  int dribbleARSum ; 
+  int xTime ;
+  int startXPRS ;
+  int sumXPRS ;
+  int roundsXPRS ;
   
   Stats() 
   {
@@ -1652,14 +1665,18 @@ class Stats
     misses = 0 ;
     minusPoints = 0 ;
     anticipationReactionSum = 0 ;
-    anticipationReactionDribbling = 0 ;
+    dribbleARSum = 0 ;
     isFirstSuccess = true ;
+    dribbleSuccesses = 0 ; 
+    startDribble = 0 ;
+    xTime = 0 ;
+    roundsXPRS = 0 ;
   }
 
   void addForceDoubleClickTime(int deltaTime) 
   { 
-    //forceSum += (30 + (double)1/(deltaTime-105)) * ballMass;
-    forceSum += deltaTime;   
+    forceSum += (30 + (double)1/(deltaTime-105)) * ballMass;
+    //forceSum += deltaTime;   
   }
   
   void success() 
@@ -1704,16 +1721,53 @@ class Stats
   int getMinusPoints() { 
     return minusPoints ;
   }
-  double getAvgARTime() { 
+  double getAvgARTime() 
+  {
+    if(successes == 0) return 0 ;  
     double result = (double)anticipationReactionSum/successes ;
     return result ;
+  }
+  
+  double getAvgDribbleARTime()
+  {
+    if(dribbleSuccesses == 0) return 0 ;
+    double result = (double)dribbleARSum/dribbleSuccesses ; 
+    return result ;   
+  }
+  
+  void firstDribble()
+  { 
+    startDribble = millis() ;
+  }
+  
+  void successDribble()
+  {
+    dribbleARSum += (millis() - startDribble) ; 
+    dribbleSuccesses++ ;
+    printSummary() ;
+  }
+  
+  void setXTime(int xSec){ xTime = xSec ; }
+  void startXprsTime(){ startXPRS = millis() ; }
+  void endXprs()
+  { 
+    sumXPRS += (millis() - startXPRS - xTime);
+    roundsXPRS++ ; 
+  }
+  
+  void getXprs()
+  { 
+    double result ;
+    if(roundsXPRS == 0) return 0 ;  
+    else result = (double)sumXPRS/roundsXPRS ; 
+    return result ;  
   }
   
   void printSummary()
   {
     if(javascript != null) 
     {
-      javascript.postFeedback(successes, misses, minusPoints, getAccuracy(), getForceAvg(), getAvgARTime()) ;  
+      javascript.postFeedback(successes, misses, minusPoints, getAccuracy(), getForceAvg(), getAvgARTime(), getAvgDribbleARTime(), getXprs()) ;  
     }
   }
 }
@@ -2136,7 +2190,7 @@ class Pad
 
 interface JavaScript
 {
-  void postFeedback(int successesNum, int missesNum, int minusNum, double accuracyNum, double forceNum, double arTimeNum);
+  void postFeedback(int successesNum, int missesNum, int minusNum, double accuracyNum, double forceNum, double arTimeNum, double dribbleTimeNum);
   void playMissSound();
   void playSuccessSound();
   void playTest();

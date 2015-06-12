@@ -150,34 +150,62 @@ function changeScreen()
 	document.getElementById("SettingsList").style.display = "none" ;
 	document.getElementById("FeedbackList").style.display = "block" ;
 	
-	postFeedback(0,0,0,0,0,0);
+	postFeedback(0,0,0,0,0,0,0);
+	
 	if(routineForGame == "m") 
 	{
 		document.getElementById("missesNum").parentNode.style.display = "none" ;
+		document.getElementById("accuracyNum").parentNode.style.display = "none" ;
 		document.getElementById("forceNum").parentNode.style.display = "none" ;
+		document.getElementById("arTimeNum").parentNode.style.display = "none" ;
+		document.getElementById("dribbleTimeNum").parentNode.style.display = "block" ;
+	}
+	else
+	{
+		document.getElementById("missesNum").parentNode.style.display = "block" ;
+		document.getElementById("accuracyNum").parentNode.style.display = "block" ;
+		document.getElementById("forceNum").parentNode.style.display = "block" ;
+		document.getElementById("arTimeNum").parentNode.style.display = "block" ;
+		document.getElementById("dribbleTimeNum").parentNode.style.display = "none" ;
 	}
 	
 	if(routineForGame != "t" && difficultyForGame == "n" && timePerRound == 0)
 	{
 		document.getElementById("minusNum").parentNode.style.display = "none" ;
 	}
+	else
+	{
+		document.getElementById("minusNum").parentNode.style.display = "block" ;
+	}
 	
+	if(routineForGame == "x" || routineForGame == "m")
+	{
+		document.getElementById("dribbleTimeNum").parentNode.style.display = "block" ;
+		document.getElementById("xprs").parentNode.style.display = "block" ;
+	}
+	else
+	{
+		document.getElementById("dribbleTimeNum").parentNode.style.display = "none" ;
+		document.getElementById("xprs").parentNode.style.display = "none" ;
+	}
 }
 
-function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, arTimeNum)
+function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, arTimeNum, dribbleTimeNum, xprs)
 {
 	document.getElementById("successesNum").innerHTML = successesNum ;	
 	document.getElementById("missesNum").innerHTML = missesNum ;	
 	document.getElementById("minusNum").innerHTML = minusNum ;	
 	document.getElementById("accuracyNum").innerHTML = (accuracyNum.toFixed(2) + "%") ;	
 	document.getElementById("forceNum").innerHTML = (forceNum.toFixed(2) + " N") ; 	
-	document.getElementById("arTimeNum").innerHTML = ((arTimeNum/1000).toFixed(2) + " seconds") ;	
+	document.getElementById("arTimeNum").innerHTML = ((arTimeNum/1000).toFixed(2) + " s") ;
+	document.getElementById("dribbleTimeNum").innerHTML = ((dribbleTimeNum/1000).toFixed(2) + " s") ;	
+	document.getElementById("xprs").innerHTML = ((xprs/1000).toFixed(2) + " s") ;	
 }
 
 function stopGame()
 {
 	processingInstance.reset();
-	postFeedback(0,0,0,0,0,0);
+	postFeedback(0,0,0,0,0,0,0);
 	document.getElementById("routineType").firstChild.selected = "true" ;
 	document.getElementById("SettingsList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;
