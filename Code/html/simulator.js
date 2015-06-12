@@ -49,7 +49,8 @@ function switchCustom()
 	if(document.getElementById("removedWall").style.display == "none")
 	{
 		document.getElementById("removedWall").style.display = "block";
-		xCue.style.display = "none"; 
+		xCue.style.display = "none";
+		document.getElementById("routineType").value = "m" ;	
 	}
 	else 
 	{
@@ -158,7 +159,6 @@ function changeScreen()
 		document.getElementById("accuracyNum").parentNode.style.display = "none" ;
 		document.getElementById("forceNum").parentNode.style.display = "none" ;
 		document.getElementById("arTimeNum").parentNode.style.display = "none" ;
-		document.getElementById("dribbleTimeNum").parentNode.style.display = "block" ;
 	}
 	else
 	{
@@ -166,7 +166,6 @@ function changeScreen()
 		document.getElementById("accuracyNum").parentNode.style.display = "block" ;
 		document.getElementById("forceNum").parentNode.style.display = "block" ;
 		document.getElementById("arTimeNum").parentNode.style.display = "block" ;
-		document.getElementById("dribbleTimeNum").parentNode.style.display = "none" ;
 	}
 	
 	if(routineForGame != "t" && difficultyForGame == "n" && timePerRound == 0)
@@ -178,15 +177,22 @@ function changeScreen()
 		document.getElementById("minusNum").parentNode.style.display = "block" ;
 	}
 	
-	if(routineForGame == "x" || routineForGame == "m")
+	if(routineForGame == "x")
 	{
-		document.getElementById("dribbleTimeNum").parentNode.style.display = "block" ;
 		document.getElementById("xprs").parentNode.style.display = "block" ;
 	}
 	else
 	{
-		document.getElementById("dribbleTimeNum").parentNode.style.display = "none" ;
 		document.getElementById("xprs").parentNode.style.display = "none" ;
+	}
+	
+	if((routineForGame == "x") || (routineForGame == "m"))
+	{
+		document.getElementById("dribbleTimeNum").parentNode.style.display = "block" ;
+	}
+	else
+	{
+		document.getElementById("dribbleTimeNum").parentNode.style.display = "none" ;
 	}
 }
 
