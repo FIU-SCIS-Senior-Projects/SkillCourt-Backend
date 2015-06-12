@@ -325,7 +325,7 @@ boolean checkStatus()
   { 
     fill(0, 0, 0);
     isThisGameOver = true ;
-    text("Round Game is Over", 0, 150);
+    //text("Round Game is Over", 0, 150);
     return true;
   }
   
@@ -367,7 +367,7 @@ boolean checkStatus()
     { 
       fill(0, 0, 0);
       isThisGameOver = true ;
-      text("Time Game is Over", 0, 150);
+      //text("Time Game is Over", 0, 150);
       return true;
     }
   }
@@ -381,9 +381,9 @@ boolean checkStatus()
   {
     if ( ((millis() - routineTimeStart)) > routineTime )
     {
-      println("Sorry! took too long");
+      //println("Sorry! took too long");
       fill(0, 0, 0);
-      text("Sorry! took too long", 0, 150);
+      //text("Sorry! took too long", 0, 150);
       routineTimeStart = millis();
       println("Before Timeout");
       myRoutine.timeout();
