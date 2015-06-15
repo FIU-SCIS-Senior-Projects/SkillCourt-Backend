@@ -249,7 +249,7 @@ class Game
     //else text(rounds-roundsPlayed, 100, 100);
     text(rounds-roundsPlayed, 100, 100);
     routineTime = timeBased*1000;
-    println("timeBased: " + timeBased);
+    //println("timeBased: " + timeBased);
     
     if (routineTime > 0) routineTimeStart = millis();
    
@@ -358,7 +358,7 @@ boolean checkStatus()
         else println("Javascript is null"); 
         coachFeedback = true;
       }
-      println("You are half WAY!!!");      
+      //println("You are half WAY!!!");      
       //text("You are half WAY!!!", 0, 400);
     }
 
@@ -385,7 +385,7 @@ boolean checkStatus()
       fill(0, 0, 0);
       //text("Sorry! took too long", 0, 150);
       routineTimeStart = millis();
-      println("Before Timeout");
+      //println("Before Timeout");
       myRoutine.timeout();
       roundsPlayed++;
       myRoutine.groundPadPressed = false;
@@ -444,9 +444,9 @@ class Routine
   }
   
   void timeout(){ 
-    println("Before my Stats");
+    //println("Before my Stats");
     myStats.minusPoint() ; 
-    println("After my stats");
+    //println("After my stats");
   }
 }
 
@@ -490,7 +490,7 @@ class xCueRoutine extends Routine
   void timeout() 
   { 
     super.timeout() ;
-    println("xCue time out"); 
+    //println("xCue time out"); 
     groundPadPressed = false;
     secondGroundPadPressed = false;
   }
@@ -499,7 +499,7 @@ class xCueRoutine extends Routine
   {
     clearLitPads() ;  
     successClicks = 0 ;
-    println("Generating Step for xCue routine");
+    //println("Generating Step for xCue routine");
     int randomRowGround, randomColumnGround;
     
     randomColumnGround = int(random(((EW_HEIGHT-2)- ((EW_HEIGHT/2)+1))) + ((EW_HEIGHT/2)+1));
@@ -659,7 +659,7 @@ class xCueRoutine extends Routine
   
   void generateCueWalls()
   {
-    println("Generating cue walls");
+    //println("Generating cue walls");
     generateSouthOrWestPads(SOUTH);
     generateSouthOrWestPads(WEST);
     generateNorthPads();
@@ -738,7 +738,7 @@ class xCueRoutine extends Routine
     //println("Vertical Pads");
     for (int i = 0; i < 3; i++)
     {
-      println(rowNumber+", "+i);
+      //println(rowNumber+", "+i);
       Pad currentPad = myRoom.walls[NORTH].getPad(rowNumber, i) ;
       if (currentPad.isValid())
       {
