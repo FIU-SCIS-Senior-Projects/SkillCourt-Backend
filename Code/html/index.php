@@ -61,6 +61,8 @@ if (login_check($mysqli) == true) {
 		    </tr>
 		</table>
 			<a class="simulator_block" href="simulator.php"> Try Simulator!</a>
+            <a class="simulator_block" href="routineWizard.php"> Try Routine Wizard!</a>
+            
             </form>
 	    <?php
             if (login_check($mysqli) == true) {

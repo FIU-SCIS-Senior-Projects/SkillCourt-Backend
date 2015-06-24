@@ -213,3 +213,8 @@ body
 	font-style: bold ;	
 	font-size: 20px   ;
 }
+
+#wizardWalls
+{
+	display: none;
+}
