@@ -427,11 +427,8 @@ class Routine
   String difficulty ;
   boolean groundPadPressed;
   Stats myStats ;
-<<<<<<< HEAD
   int missingWall ;
-=======
   
->>>>>>> Task-CreateCustomCoachRoutines
   boolean handleInput(int x, int y, int clickNum, int deltaClickTime) {
     return true;
   }      
