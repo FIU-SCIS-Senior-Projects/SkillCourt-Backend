@@ -54,7 +54,6 @@ Room newRoom ;
 boolean isPlaying;
 PImage soccerBall ;
 Game myGame; 
-CustomGame myCustomGame;
 
 double ballMass = 0.45;
 
@@ -2205,5 +2204,6 @@ interface JavaScript
 
 JavaScript javascript = null ;
 void setJavaScript(JavaScript js) { javascript = js ; }
+
 
 

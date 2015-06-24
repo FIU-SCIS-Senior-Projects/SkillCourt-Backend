@@ -225,7 +225,6 @@ function stopGame()
 	}
 	if(!bound) setTimeout(bindJavascript, 250);
 }
-
 bindJavascript();*/
 
 function playTest() {
