@@ -1,27 +1,18 @@
 package com.seniorproject.skillcourt;
 
-import android.app.ActionBar;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -35,9 +26,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -45,9 +34,11 @@ import java.util.UUID;
  */
 public class Play extends ActionBarActivity {
     Spinner defa, cust, coac;
+    Spinner wallRemove ;
     dbInteraction dbi;
     TabHost tabHost;
     String puname, coach;
+    TextView tv ;
 
     // Bluetooth Related Vars
     private OutputStream outStream;
@@ -57,13 +48,17 @@ public class Play extends ActionBarActivity {
     protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     // Routine Related Vars
-    Switch s;
+    Switch playBySwitch;
     String rname, user, usertype;
-
-
+    int missingWall = 1 ;
+    boolean isRoundTimeBased = false ;
+    boolean isWallRemoved = false ;
+    boolean roundsAreDisabled = false ;
+    boolean isCustomRoomDisabled = false ;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_play_2);
 
         Intent intent = getIntent();
@@ -74,12 +69,12 @@ public class Play extends ActionBarActivity {
 
         // Set Spinners
         setSpinnerDefault();
+        wallRemove.setVisibility(View.GONE);
         setSpinnerCustom();
         setSpinnerCoach();
 
         // Set Tabs
         setTabs();
-        s = (Switch) findViewById(R.id.rtSwitch);
 
         //getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
     }
@@ -97,64 +92,119 @@ public class Play extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
+        if (id == R.id.action_settings) return true;
 
         return super.onOptionsItemSelected(item);
     }
 
     /********************** Start Spinner setup methods  **********************/
     public void setSpinnerDefault() {
-        // Set Default routines into a list
-        List<String> list = new ArrayList<>();
-        list.add("Chase Me");
-        list.add("Fly Me");
-
-        // Attach list to adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Set Spinner
+        // Set Spinners
+        wallRemove = (Spinner) findViewById(R.id.removeWallSpin) ;
         defa = (Spinner) findViewById(R.id.defRoutinesSpin);
+        // Attach arrays to adapters
+        ArrayAdapter<CharSequence> adapter =  ArrayAdapter.createFromResource(this, R.array.routine_array, android.R.layout.simple_spinner_item) ;
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> wallAdapter =  ArrayAdapter.createFromResource(this, R.array.wall_to_remove_array, android.R.layout.simple_spinner_item) ;
+        wallAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set adapters for spinner
+        defa.setAdapter(adapter);
+        wallRemove.setAdapter(wallAdapter);
 
         // Set Description
         final TextView defaDesc = (TextView) findViewById(R.id.defDesc);
 
-        // Set adapter for spinner
-        defa.setAdapter(adapter);
 
         // Set listener for spinner
-        //setSpinnerListener(defa, (TextView) findViewById(R.id.defDesc), "Default");
         defa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String routine = defa.getItemAtPosition(position).toString().trim();
-                String description = "";
-                // Get routine type
-                description = defa.getSelectedItem().toString();
-                // Check if ground pads are used
-                if (((CheckBox) findViewById(R.id.groundCheck)).isChecked())
-                    description = "Ground " + description;
+                String[] routines = getResources().getStringArray(R.array.routine_array) ;
                 // Set Description based on description variable
-                switch (description) {
-                    case "Chase Me":
-                        defaDesc.setText(R.string.chase_me_desc); break;
-                    case "Fly Me":
-                        defaDesc.setText(R.string.fly_me_desc); break;
-                    case "Ground Chase Me":
-                        defaDesc.setText(R.string.ground_chase_desc); break;
-                    case "Ground Fly Me":
-                        defaDesc.setText(R.string.ground_fly_desc); break;
-                    default :
-                        defaDesc.setText("defChoose a routine from the list above to see its description.");
+
+                if(routine.equals(routines[0])) //three wall chase
+                {
+                    defaDesc.setText(R.string.three_wall_desc) ;
+                    disableRounds(false);
+                    disableCustomRoom(false);
+                }
+                else if(routine.equals(routines[1])) //chase
+                {
+                    defaDesc.setText(R.string.chase_desc);
+                    disableRounds(true);
+                    disableCustomRoom(false);
+                }
+                else if(routine.equals(routines[2])) //fly
+                {
+                    defaDesc.setText(R.string.fly_desc);
+                    disableRounds(true);
+                    disableCustomRoom(false);
+                }
+                else if(routine.equals(routines[3])) //home chase
+                {
+                    defaDesc.setText(R.string.home_chase_desc);
+                    disableRounds(false);
+                    disableCustomRoom(false);
+                }
+                else if(routine.equals(routines[4])) //home fly
+                {
+                    defaDesc.setText(R.string.home_fly_desc);
+                    disableRounds(false);
+                    disableCustomRoom(false);
+                }
+                else if(routine.equals(routines[5])) //ground chase
+                {
+                    defaDesc.setText(R.string.ground_chase_desc);
+                    disableRounds(false);
+                    disableCustomRoom(false);
+                }
+                else if(routine.equals(routines[6])) //xcue
+                {
+                    defaDesc.setText(R.string.xcue_desc) ;
+                    disableRounds(false) ;
+                    disableCustomRoom(true);
                 }
             }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-                defaDesc.setText("Choose a routine from the list above to see its description.");
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
+
+        wallRemove.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                missingWall = position + 1;
+                isWallRemoved = true ;
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+    private void disableCustomRoom(boolean disable)
+    {
+        if(disable ^ !isCustomRoomDisabled)
+        {
+            findViewById(R.id.removeWallCheck).setVisibility((disable) ? View.GONE : View.VISIBLE);
+            findViewById(R.id.removeWallSpin).setVisibility((disable) ? View.GONE : View.VISIBLE);
+            if(!disable) defa.setSelection(0);
+            missingWall = (disable) ? -1 : 1 ;
+            isWallRemoved = !disable ;
+            isCustomRoomDisabled = !isCustomRoomDisabled ;
+        }
+    }
+
+    private void disableRounds(boolean disable)
+    {
+        if(disable ^ !roundsAreDisabled)
+        {
+            findViewById(R.id.timedRoundsGroup).setVisibility((disable) ? View.GONE : View.VISIBLE) ;
+            findViewById(R.id.rtSwitch).setPressed(!disable) ;
+            tv = (TextView) findViewById(R.id.rtText) ;
+            tv.setText((disable) ? R.string.minutes : R.string.rounds) ;
+            findViewById(R.id.timePerRoundTitle).setVisibility((disable) ? View.GONE : View.VISIBLE) ;
+            findViewById(R.id.rtSwitch).setEnabled(!disable);
+            isRoundTimeBased = !disable ;
+            roundsAreDisabled = !roundsAreDisabled ;
+        }
     }
 
     public void setSpinnerCustom() {
@@ -256,63 +306,111 @@ public class Play extends ActionBarActivity {
     }
     /************************ End Tab setup methods  ************************/
 
+    public void wallCheckboxClicked(View view)
+    {
+        findViewById(R.id.removeWallSpin).setVisibility((((CheckBox) view).isChecked()) ? View.VISIBLE : View.GONE);
+    }
+
+    public void roundsCheckboxClicked(View view)
+    {
+        findViewById(R.id.timePerRoundInput).setEnabled(((CheckBox)view).isChecked());
+    }
+
     /**
      * Switch for selecting playing timer or rounds for a default routine
      * @param view the Switch object
      */
-    public void switchChange(View view) {
-        TextView tv = (TextView) findViewById(R.id.rtText);
+    public void switchChange(View view)
+    {
+        tv = (TextView) findViewById(R.id.rtText);
+        if (((Switch)view).isChecked()) tv.setText(R.string.rounds); // on for rounds
+        else tv.setText(R.string.minutes);// off for timer
+    }
 
-        if (s.isChecked()) {
-            // on for rounds
-            tv.setText("rounds");
-        } else {
-            // off for timer
-            tv.setText("minutes");
+    public void playDef1(View view)
+    {
+        if(isInputProper())
+        {
+            char [] command = new char[11] ;
+
+            //Routine type - 1 char - Index in command: 0
+            int routineIndex = defa.getSelectedItemPosition() ;
+            String [] codes = getResources().getStringArray(R.array.routine_codes) ;
+            command[0] = codes[routineIndex].charAt(0) ;
+
+            //Diffculty - 1 char - Index in command: 1
+            RadioGroup rg = (RadioGroup)findViewById(R.id.difficultyRadGrp) ;
+            String difficulty = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString() ;
+            command[1] = Character.toLowerCase(difficulty.charAt(0)) ;
+
+            //Rounds - 2 chars - Indices in command: 2-3
+            //Minutes - 3 chars - Indices in command: 6-8
+            boolean isPlayByRounds = ((Switch)findViewById(R.id.rtSwitch)).isChecked() ;
+            String playByInput = ((EditText)findViewById(R.id.rtEdit)).getText().toString() ;
+            int inputValue = Integer.parseInt(playByInput) ;
+            if(isPlayByRounds) //set rounds properly and time to "000"
+            {
+                command[2] = (inputValue > 9) ? playByInput.charAt(0) : '0' ;
+                command[3] = playByInput.charAt(1) ;
+                command[6] = command[7] = command[8] = 0 ;
+            }
+            else //set minutes properly and rounds to "00"
+            {
+                command[2] = command[3] = 0 ;
+                command[7] = (inputValue > 99) ? playByInput.charAt(0) : '0' ;
+                command[7] = (inputValue > 9) ? playByInput.charAt(1) : '0' ;
+                command[8] = playByInput.charAt(2) ;
+            }
+
+            //Missing Wall - 2 chars - Indices in command 4-5
+            
+
         }
     }
 
-    public void addGround(View view) {
-        genericWarning w = new genericWarning();
-        w.setPossitive("OK");
-        w.setMessage("Ground targeting is not yet available");
-        w.show(getFragmentManager(),"Unavailable");
-        ((CheckBox) view).setChecked(false);
+    private boolean isInputProper()
+    {
+        return true ;
     }
-
     /**
      * Player clicked on a Default routine to play
      * @param view the button object which was clicked on
      */
     public void playDef(View view) {
         //difficulty, rounds, timer, timebased, type, user, usertype;
-        Spinner spin = (Spinner) findViewById(R.id.defRoutinesSpin);
+        String routineType = (String)defa.getSelectedItem() ;
         RadioGroup radGrp = ((RadioGroup) findViewById(R.id.difficultyRadGrp));
         RadioButton rad = (RadioButton) findViewById(radGrp.getCheckedRadioButtonId());
         Routine r = new Routine("SkillCourtDefault");
         String input = ((EditText) findViewById(R.id.rtEdit)).getText().toString();
-        if (input == "") {
+        if (input.equals(""))
+        {
             genericWarning w = new genericWarning();
             w.setPossitive("OK");
             w.setMessage("You must set a timer or number of rounds.");
             w.show(getFragmentManager(), "no_bluetooth");
-        } else {
-            if (s.isChecked()) {
+        }
+        else
+        {
+            if (playBySwitch.isChecked())
+            {
                 r.setRounds(Integer.parseInt(input));
                 r.setTimer(0);
-            } else {
-                r.setTimer(Integer.parseInt(input)*60);
+            }
+            else
+            {
+                r.setTimer(Integer.parseInt(input));
                 r.setRounds(0);
             }
-            if (((CheckBox) findViewById(R.id.groundCheck)).isChecked())
-                r.setGround(true);
-            switch ((String) spin.getSelectedItem()) {
-                case "Fly Me":
-                    r.setType('F');
-                    break;
-                case "Chase Me":
-                    r.setType('C');
-                    break;
+            switch (routineType)
+            {
+                case "Three Wall Chase": r.setType('t'); break;
+                case "Chase": r.setType('c'); break;
+                case "Fly": r.setType('h'); break;
+                case "Home Chase": r.setType('g'); break;
+                case "Home Fly": r.setType('j'); break;
+                case "Ground Chase": r.setType('m'); break;
+                case "xCue": r.setType('x'); break;
             }
 
             r.setDifficulty(rad.getText().toString().toUpperCase().charAt(0));
@@ -376,7 +474,6 @@ public class Play extends ActionBarActivity {
         String rounds = String.valueOf(r.getRounds());
         String timer = String.valueOf(r.getTimer());
         String timebased = String.valueOf(r.getTimebased());
-        String ground; if (r.getGround()) ground = "y"; else ground = "n";
 
         // To Do:
         //   Send routine via Bluetooth to master pad
@@ -433,15 +530,13 @@ public class Play extends ActionBarActivity {
 
 
         String add = "";
-        for (int i = 0; i < 3 - rounds.length(); i++) {
-            add = add + "z";
-        }
+        for (int i = 0; i < 3 - rounds.length(); i++) add = add + "z";
+
         rounds = add + rounds;
 
         add = "";
-        for (int i = 0; i < 4 - timer.length(); i++) {
-            add = add + "z";
-        }
+        for (int i = 0; i < 4 - timer.length(); i++) add = add + "z";
+
         timer = add + timer;
 
         String message = "S" + type + difficulty + rounds + timer + "zzE";
@@ -459,7 +554,8 @@ public class Play extends ActionBarActivity {
     }
 
     String getMessage(byte[] bytes) {
-        try{
+        try
+        {
             String str = new String(bytes, "US-ASCII");
 
             return str.split("\n")[0];

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FF65B098">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/teal">
 
     <TabHost
         android:layout_width="match_parent"
@@ -12,11 +13,11 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TabWidget
-                android:id="@+id/"
+                android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"></TabWidget>
 
@@ -28,7 +29,7 @@
                 <LinearLayout
                     android:id="@+id/defaultRoutinesTab"
                     android:layout_width="fill_parent"
-                    android:layout_height="482dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:weightSum="1">
 
@@ -36,11 +37,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold|italic"
-                        android:textSize="35dp"
-                        android:text="SkillCourt Routines"
+                        android:textSize="35sp"
+                        android:text="@string/sk_routines"
                         android:id="@+id/textView2"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="#ffffffff"
+                        android:textColor="@android:color/white"
                         android:layout_marginTop="5dp" />
 
                     <ScrollView
@@ -49,48 +50,67 @@
                         android:id="@+id/scrollView" >
 
                         <LinearLayout
-                            android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
                             android:background="@drawable/innergrayborder"
                             android:weightSum="1"
                             android:padding="20dp"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp">
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
+
+                            <CheckBox
+                                android:layout_width="215dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/remove_wall"
+                                android:id="@+id/removeWallCheck"
+                                android:checked="false"
+                                android:clickable="true"
+                                android:textStyle="bold"
+                                android:textSize="20sp"
+                                android:onClick="wallCheckboxClicked"/>
+
+                            <Spinner
+                                android:id="@+id/removeWallSpin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:visibility="gone"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Choose a Routine:"
+                                android:text="@string/choose_a_routine"
                                 android:id="@+id/textView4"
                                 android:textStyle="bold"
-                                android:textSize="20dp"
+                                android:textSize="20sp"
                                 android:textColor="#ff000000" />
 
                             <Spinner
+                                android:id="@+id/defRoutinesSpin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/defRoutinesSpin"
                                 android:layout_marginTop="5dp" />
 
-                            <CheckBox
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Add Ground Targets"
-                                android:id="@+id/groundCheck"
-                                android:checked="false"
-                                android:onClick="addGround" />
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/empty"
+                                android:id="@+id/defDesc"
+                                android:background="#ffffffff"
+                                android:layout_marginTop="10dp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Choose the Difficulty:"
+                                android:text="@string/choose_the_difficulty"
                                 android:id="@+id/textView3"
                                 android:textStyle="bold"
-                                android:textSize="20dp"
+                                android:textSize="20sp"
                                 android:textColor="#ff000000"
                                 android:layout_marginTop="5dp" />
 
@@ -103,59 +123,105 @@
                                 <RadioButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Novice"
+                                    android:text="@string/novice"
                                     android:id="@+id/radioButton"
                                     android:checked="true"
                                     android:textColor="#ff000000"
-                                    android:textSize="17dp" />
+                                    android:textSize="17sp"
 
                                 <RadioButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Intermediate"
+                                    android:text="@string/intermediate"
                                     android:id="@+id/radioButton2"
                                     android:checked="false"
                                     android:textColor="#ff000000"
-                                    android:textSize="17dp" />
+                                    android:textSize="17sp"
 
                                 <RadioButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Advanced"
+                                    android:text="@string/advanced"
                                     android:id="@+id/radioButton3"
                                     android:checked="false"
                                     android:textColor="#ff000000"
-                                    android:textSize="17dp" />
+                                    android:textSize="17sp"
                             </RadioGroup>
 
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Default"
-                                android:id="@+id/defDesc"
-                                android:background="#ffffffff"
+                                android:text="@string/time_per_rounds"
+                                android:id="@+id/timePerRoundTitle"
+                                android:textStyle="bold"
+                                android:textSize="20sp"
+                                android:textColor="#ff000000"
                                 android:layout_marginTop="10dp" />
 
                             <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:weightSum="1">
+                                android:layout_marginTop="5dp"
+                                android:weightSum="1"
+                                android:id="@+id/timedRoundsGroup">
+
+                                <CheckBox
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/timePerRoundCheck"
+                                    android:checked="false"
+                                    android:clickable="true"
+                                    android:textStyle="bold"
+                                    android:onClick="roundsCheckboxClicked"/>
+
+                                <EditText
+                                    android:layout_width="121dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number"
+                                    android:ems="10"
+                                    android:id="@+id/timePerRoundInput"
+                                    android:enabled="false"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/rtGroup">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="@string/play_by"
+                                    android:id="@+id/textView32"
+                                    android:textStyle="bold"
+                                    android:textSize="20sp"
+                                    android:textColor="#ff000000"/>
 
                                 <Switch
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rtSwitch"
-                                    android:layout_gravity="center_vertical"
                                     android:textColor="#ffffffff"
-                                    android:textOn="Rounds"
-                                    android:textOff="Time"
                                     android:checked="false"
-                                    android:elegantTextHeight="false"
                                     android:onClick="switchChange"
-                                    android:nestedScrollingEnabled="true" />
+                                    android:textOff="@string/time"
+                                    android:textOn="@string/cap_rounds"
+                                    android:textAllCaps="false"
+                                    android:layout_gravity="start" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:weightSum="1">
 
                                 <EditText
                                     android:layout_width="50dp"
@@ -163,25 +229,26 @@
                                     android:inputType="number"
                                     android:ems="10"
                                     android:id="@+id/rtEdit"
-                                    android:layout_weight="0.01" />
+                                    android:layout_gravity="start" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="minutes"
+                                    android:text="@string/minutes"
                                     android:id="@+id/rtText"
-                                    android:textSize="20dp"
-                                    android:layout_gravity="bottom" />
+                                    android:textSize="20sp"
+                                    android:layout_gravity="bottom"
+                                    android:inputType="none" />
                             </LinearLayout>
 
                             <Button
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Play!"
+                                android:text="@string/play_routine_button"
                                 android:id="@+id/playDef"
                                 android:background="@drawable/bluerectbutton"
                                 android:onClick="playDef"
-                                android:textSize="20dp"
+                                android:textSize="20sp"
                                 android:textColor="#ff447767"
                                 android:layout_gravity="center_horizontal"
                                 android:textStyle="bold"
@@ -202,7 +269,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold|italic"
-                        android:textSize="35dp"
+                        android:textSize="35sp"
                         android:layout_gravity="center_horizontal"
                         android:textColor="#FFFFFFFF"
                         android:textAppearance="?android:attr/textAppearanceLarge"

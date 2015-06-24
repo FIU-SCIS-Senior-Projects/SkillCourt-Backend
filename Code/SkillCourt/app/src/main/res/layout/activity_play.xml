@@ -16,7 +16,7 @@
         android:weightSum="1">
 
         <TabWidget
-            android:id="@+id/tabs"
+            android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.44"></TabWidget>

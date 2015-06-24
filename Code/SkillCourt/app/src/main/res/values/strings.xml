@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="teal">#FF65B098</color>
     <string name="app_name">SkillCourt</string>
     <string name="action_settings">Settings</string>
 
@@ -83,16 +83,77 @@
     <!--Profile Activity-->
 
     <!--Play Activity-->
-    <string name="routine_description_default">Select a routine above for its description. . .</string>
-    <string name="play_routine_button">Play!</string>
-    <string name="chase_me_desc">Chase the green light around the room while avoiding the red ones!</string>
-    <string name="chase_me_time_desc">Chase the green light around the room as fast as you can while avoiding the red ones!</string>
-    <string name="fly_me_desc">Your targets are in the air this time!  Aim high to hit your target.</string>
-    <string name="fly_me_time_desc">Your targets are in the air this time!  Keep up the speed and aim high to hit your target.</string>
-    <string name="ground_chase_desc">Activate the floor target and then chase the green light around the room while avoiding the red ones!</string>
-    <string name="ground_chase_time_desc">Activate the floor target and then chase the green light around the room as fast as you can while avoiding the red ones!</string>
-    <string name="ground_fly_desc">Activate the floor target and then look up! Your targets are in the air this time so fly the ball high.</string>
-    <string name="ground_fly_time_desc">Activate the floor target and then look up! Your targets are in the air this time so keep up the speed and fly the ball high.</string>
+    <string name="remove_wall">Remove Wall</string>
+    <string name="play_by">Play by:</string>
+    <string name="rounds">rounds</string>
+    <string name="minutes">minutes</string>
+    <string name="time">Time</string>
+    <string name="cap_rounds">Rounds</string>
+    <string name="sk_routines">SkillCourt Routines</string>
+    <string name="time_per_rounds">Time Per Round:</string>
+
+    <string name="empty"></string>
+
+    <string name="choose_the_difficulty">Choose the Difficulty:</string>
+    <string name="advanced">Advanced</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="novice">Novice</string>
+
+    <string name="routine_description_default">
+        Select a routine above for its description...
+    </string>
+    <string name="play_routine_button">
+        Play!
+    </string>
+    <string name="three_wall_desc">
+        Your target is one of three walls! Try to keep up!
+    </string>
+    <string name="chase_desc">
+        Chase the green light around the room while avoiding the red ones!
+    </string>
+    <string name="fly_desc">
+        Your targets are in the air this time!  Aim high to hit your target.
+    </string>
+    <string name="ground_chase_desc">
+        Dribble towards the green light for the next one to appear! Stay off red lights!
+    </string>
+    <string name="home_chase_desc">
+        Activate the floor target and then chase the green light around the room while avoiding the red ones!
+    </string>
+    <string name="home_fly_desc">
+        Activate the floor target and then look up! Your targets are in the air this time so fly the ball high.
+    </string>
+    <string name="xcue_desc">
+        Activate the two floor targets and andticipate the wall targets using the yellow lights. When they become green, fly the ball high!
+    </string>
+
     <string name="title_activity_display_stats">DisplayStats</string>
 
+    <string name="choose_a_routine">Choose a Routine:</string>
+    <string-array name="routine_array">
+        <item>Three Wall Chase</item>
+        <item>Chase</item>
+        <item>Fly</item>
+        <item>Home Chase</item>
+        <item>Home Fly</item>
+        <item>Ground Chase</item>
+        <item>xCue</item>
+    </string-array>
+
+    <string-array name="routine_codes">
+        <item>t</item>
+        <item>c</item>
+        <item>h</item>
+        <item>g</item>
+        <item>h</item>
+        <item>m</item>
+        <item>x</item>
+    </string-array>
+
+    <string-array name="wall_to_remove_array">
+        <item>North</item>
+        <item>East</item>
+        <item>South</item>
+        <item>West</item>
+    </string-array>
 </resources>

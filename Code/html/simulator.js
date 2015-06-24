@@ -4,20 +4,15 @@ var isReadyToPlay =false ;
 var routineForGame ;
 var difficultyForGame ;
 var timePerRound ;
-var timeForGame ;
-var roundsForGame ;
 var processingInstance ;
-var missingWall ;
 var s0 = new buzz.sound( "s0", { formats: [ "ogg", "mp3"] });
 var s1 = new buzz.sound( "s1", { formats: [ "ogg", "mp3"] });
 var s2 = new buzz.sound( "s2", { formats: [ "ogg", "mp3"] });
 var s3 = new buzz.sound( "s3", { formats: [ "mp3"] });
-var bound = false;
-
-document.getElementById("removedWall").style.display = "none" ;
 	
 function allowRounds()
 {
+	console.log("allowRounds()") ;
 	var routineObj = document.getElementById("routineType");
 	if(routineObj.value == "c" || routineObj.value == "h")
 	{
@@ -46,7 +41,7 @@ function switchCustom()
 		if(routines[i].value =="x")
 			xCue = routines[i] ;
 			
-	if(document.getElementById("removedWall").style.display == "none")
+	if(document.getElementById("customRoomCheck").checked)
 	{
 		document.getElementById("removedWall").style.display = "block";
 		xCue.style.display = "none";
@@ -115,13 +110,6 @@ function getTimePerRound()
 
 function isTimeBased(){ return document.getElementById("gameType").value === "time"; }
 
-function checkMissingWall()
-{
-	if(document.getElementById("customRoomCheck").checked)
-		missingWall = document.getElementById("removedWall").value ;
-	else 
-		missingWall = -1 ;
-}
 
 function startGame()
 {
@@ -129,19 +117,19 @@ function startGame()
 	processingInstance.setJavaScript(this);
 	
 	isReadyToPlay=true ;
-		
-	checkMissingWall();	
 	
-	difficultyForGame = getDifficulty() ;
-	routineForGame = getRoutine() ;
-	roundsForGame = getRounds() ;
-	roundsForGameStr = (roundsForGame > 9) ? ("0" + roundsForGame.toString() ) : "00"+roundsForGame.toString() ;
-	timeForGame = getMinutes() ;
-	timeForGameStr = (timeForGame > 9 ) ? ("00" + timeForGame.toString()) : "000"+ timeForGame.toString();
+	routineForGame = getRoutine() ;																				//routine 		1 character
+	difficultyForGame = getDifficulty() ;																		//difficulty 	1 character 
+	var roundsForGame = getRounds() ;
+	var roundsForGameStr = (roundsForGame > 9) ? (roundsForGame.toString() ) : "0"+roundsForGame.toString() ;	//rounds		2 characters
+	var missingWallStr = (document.getElementById("customRoomCheck").checked) ? "1" : "0" ;
+	missingWallStr = missingWallStr + (document.getElementById("removedWall").value).toString() ;				//missingWall	2 characters
+	var timeForGame = getMinutes() ;	
+	var timeForGameStr = (timeForGame > 9 ) ? ("0" + timeForGame.toString()) : "00"+ timeForGame.toString();	//minutes		3 characters
 	timePerRound = getTimePerRound() ;
-	timePerRoundStr = (timePerRound > 9 ) ? (timePerRound.toString()) : "0"+ timePerRound.toString(); 
+	var timePerRoundStr = (timePerRound > 9 ) ? (timePerRound.toString()) : "0"+ timePerRound.toString(); 		//seconds		2 characters		
 	
-	routineCommand = routineForGame + difficultyForGame + roundsForGameStr  + timeForGameStr + timePerRoundStr ; 
+	routineCommand = routineForGame + difficultyForGame + roundsForGameStr  + missingWallStr + timeForGameStr + timePerRoundStr ; 
 	
 	if(isReadyToPlay) changeScreen() ;
 }
@@ -216,17 +204,6 @@ function stopGame()
 	document.getElementById("SettingsList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;
 }
-
-/*function bindJavascript() {
-	var pjs = Processing.getInstanceById("@@id@@");
-    if(pjs != null) {
-	pjs.bindJavascript(this);
-	bound = true;
-	}
-	if(!bound) setTimeout(bindJavascript, 250);
-}
-
-bindJavascript();*/
 
 function playTest() {
 	s3.load();

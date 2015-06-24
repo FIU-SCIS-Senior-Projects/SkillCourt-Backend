@@ -1,7 +1,11 @@
-//String routineCommand = "ma003000000";
-//String warning ="" ;
-//boolean isReadyToPlay = true ;
-
+//to run in java
+/*String routineCommand = "ca031100000";
+String warning ="" ;
+boolean isReadyToPlay = true ;
+void playTest(){}
+void playSuccessSound(){}
+void playMissSound(){}
+*/
 //pad attributes
 color lineColor = color(0, 0, 0);
 color padOffColor = color(255, 255, 255);
@@ -240,9 +244,14 @@ class Game
   {  
     String type = str(command.charAt(0));
     String difficulty = str(command.charAt(1));
+    
+    rounds = int(command.substring(2, 4));
+    
+    int missingWall = ( (command.substring(4,5).equals("1")) ? 1 : -1 ) * int(command.substring(5,6)) ;
 
-    rounds = int(command.substring(2, 5));
-    gameTime = int(command.substring(5, 9)) *60000;
+    if(missingWall >= 0) myRoom.removeWall(missingWall) ;
+    
+    gameTime = int(command.substring(6, 9)) *60000;
     int timeBased = int(command.substring(9, 11));
     // Check if the game is timeBased or roundBased  
     if (rounds == 0) rounds = -1;
@@ -255,25 +264,25 @@ class Game
    
     startTime = millis() ;
     isRoutineGroundBased = false; 
-    if (type.equals(CHASE_ME)) myRoutine = new ChaseRoutine(myRoom, difficulty);
-    else if (type.equals(THREE_WALL_CHASE)) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty);
+    if (type.equals(CHASE_ME)) myRoutine = new ChaseRoutine(myRoom, difficulty, missingWall);
+    else if (type.equals(THREE_WALL_CHASE)) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
     else if (type.equals(HOME_CHASE))
     {
-      myRoutine = new HomeChaseRoutine(myRoom, difficulty);
+      myRoutine = new HomeChaseRoutine(myRoom, difficulty, missingWall);
       isRoutineGroundBased = true;
-    } else if (type.equals(FLY))  myRoutine = new FlyRoutine(myRoom, difficulty); 
+    } else if (type.equals(FLY))  myRoutine = new FlyRoutine(myRoom, difficulty, missingWall); 
     else if (type.equals(HOME_FLY)) 
     {
-      myRoutine = new HomeFlyRoutine(myRoom, difficulty);
+      myRoutine = new HomeFlyRoutine(myRoom, difficulty, missingWall);
       isRoutineGroundBased = true ;
     }
     else if (type.equals(GROUND_CHASE))
     {
-      myRoutine = new GroundChaseRoutine(myRoom, difficulty); 
+      myRoutine = new GroundChaseRoutine(myRoom, difficulty, missingWall); 
       isRoutineGroundBased = true ; 
     }else if (type.equals(X_CUE))
     {
-      myRoutine = new xCueRoutine(myRoom, difficulty) ; 
+      myRoutine = new xCueRoutine(myRoom, difficulty, missingWall);  
       isRoutineGroundBased = true ;
     }
   }
@@ -410,6 +419,7 @@ class Routine
   String difficulty ;
   boolean groundPadPressed;
   Stats myStats ;
+  int missingWall ;
   boolean handleInput(int x, int y, int clickNum, int deltaClickTime) {
     return true;
   }      
@@ -462,9 +472,10 @@ class xCueRoutine extends Routine
   Pad secondGroundPad = null;
   int timer;
 
-  xCueRoutine(Room myRoom, String difficulty)
+  xCueRoutine(Room myRoom, String difficulty, int  missingWall)
   {
     super.startRoutine();
+    this.missingWall = missingWall ;
     this.myRoom = myRoom;
     this.difficulty = difficulty; 
     groundPadPressed = false;
@@ -827,11 +838,12 @@ class GroundChaseRoutine extends Routine
    int previousPadIndex;
    int [] greenPadCoordinateArray;
   
-   GroundChaseRoutine(Room myRoom, String difficulty)
+   GroundChaseRoutine(Room myRoom, String difficulty, int  missingWall)
    {
      super.startRoutine();
      this.myRoom = myRoom;
      this.difficulty = difficulty;
+     this.missingWall = missingWall ;
      myStats = new Stats() ;
      greenPads = new ArrayList();
      redPads = new ArrayList();
@@ -1032,11 +1044,12 @@ class HomeChaseRoutine extends Routine
   boolean isGroundPadNorth ; 
 
 
-  HomeChaseRoutine (Room myRoom, String difficulty) 
+  HomeChaseRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+     this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     myStats = new Stats() ; 
@@ -1194,11 +1207,12 @@ class HomeFlyRoutine extends Routine
   Pad groundPad = null;
   boolean isGroundPadNorth ;
 
-  HomeFlyRoutine (Room myRoom, String difficulty) 
+  HomeFlyRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+     this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     myStats = new Stats() ; 
@@ -1356,11 +1370,12 @@ class FlyRoutine extends Routine
   int wall1 ;
   int wall2 ;
 
-  FlyRoutine (Room myRoom, String difficulty) 
+  FlyRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+    this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     wall1 = int(random(4)) + 1;
@@ -1455,11 +1470,12 @@ class ChaseRoutine extends Routine
   int wall1 ;
   int wall2 ;
 
-  ChaseRoutine (Room myRoom, String difficulty) 
+  ChaseRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+    this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     wall1 = int(random(4)) + 1;
@@ -1527,11 +1543,12 @@ class ThreeWallChaseRoutine extends Routine
   ArrayList greenPads ;
   ArrayList redPads ;
 
-  ThreeWallChaseRoutine(Room myRoom, String difficulty) 
+  ThreeWallChaseRoutine(Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+    this.missingWall = missingWall ;
     greenPads = new ArrayList() ;
     redPads = new ArrayList() ;
     myStats = new Stats() ;
@@ -1755,7 +1772,7 @@ class Stats
     roundsXPRS++ ; 
   }
   
-  void getXprs()
+  double getXprs()
   { 
     double result ;
     if(roundsXPRS == 0) return 0 ;  
@@ -1775,14 +1792,21 @@ class Stats
 class Room
 {
   Wall [] walls ;
-
+  int missingWall ;
+  
   Room()
   {
+    missingWall = -1 ;
     walls = new Wall[5] ;
     for (int i = 0; i < 5; i++ )
       setupWall( i ) ;
   }
-
+  
+  void removeWall(int wallID)
+  {
+    missingWall = wallID ;
+  }
+  
   void switchValid(int wallID)
   {
     walls[wallID].switchValid() ;
@@ -2198,5 +2222,6 @@ interface JavaScript
 
 JavaScript javascript = null ;
 void setJavaScript(JavaScript js) { javascript = js ; }
+
 
 

@@ -29,8 +29,6 @@ import java.util.UUID;
 public class Scan extends ActionBarActivity {
     String puname;
 
-
-
     //List view
     ListView pads_list_view;
     ArrayList<String> values;
@@ -118,24 +116,22 @@ public class Scan extends ActionBarActivity {
             inStream = btSocket.getInputStream();
             outStream.write("Hello\n".getBytes());
             //get reply
-            int Availablebytes = 0;
+            int availableBytes = 0;
 
             long startTime = System.currentTimeMillis();
             while((System.currentTimeMillis() - startTime)/1000 < 10)
             {
 
-                Availablebytes = inStream.available();
-                if(Availablebytes >= 14)
+                availableBytes = inStream.available();
+                if(availableBytes >= 14)
                     break;
             }
 
 
-            if (Availablebytes > 0) {
+            if (availableBytes > 0) {
 
-                byte[] packetBytes = new byte[Availablebytes];
+                byte[] packetBytes = new byte[availableBytes];
                 inStream.read(packetBytes);
-
-
 
                 String message = getMessage(packetBytes);
 
