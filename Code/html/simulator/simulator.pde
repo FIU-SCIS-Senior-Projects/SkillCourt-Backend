@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //to run in java
 /*String routineCommand = "ca031100000";
 String warning ="" ;
@@ -7,12 +7,7 @@ void playTest(){}
 void playSuccessSound(){}
 void playMissSound(){}
 */
-=======
-//String routineCommand = "pa003000000";
-//String warning ="" ;
-//boolean isReadyToPlay = true ;
 
->>>>>>> Task-CreateCustomCoachRoutines
 //pad attributes
 color lineColor = color(0, 0, 0);
 color padOffColor = color(255, 255, 255);
