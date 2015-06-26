@@ -1,3 +1,6 @@
+<?php
+    $isCustom = isset($_GET['rc']);
+?>
 <!DOCTYPE html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -64,6 +67,12 @@
 					<li><button onclick="stopGame();">STOP</button></li>
 				</ul> 
 			</div>
+            <div id="CustomPlay">
+                <p>Play Custom Routine</p>
+                <ul>
+                    <li><button onclick="quickStartGame();">Play!</button></li>
+                </ul>
+            </div>
 		</div>	
 		<div id="Simulator">
 				<br><br><br>
@@ -75,6 +84,15 @@
 				</noscript>
 		</div>
 		<script src="buzz.min.js"></script>
-		<script src="simulator.js"></script>
+        <script src="simulator.js"></script>
+        <script>
+                <?php if($isCustom): ?>
+                    document.getElementById("SettingsList").style.display = "none" ;
+                    document.getElementById("CustomPlay").style.display = "block" ;
+                    customRoutineCommand = <?php echo "\"".$_GET['rc']."\"" ?>;
+                    customCoachRoutine = true;
+                <? endif ; ?>
+            console.log(customRoutineCommand) ;
+        </script>
 	</body>
 </html>

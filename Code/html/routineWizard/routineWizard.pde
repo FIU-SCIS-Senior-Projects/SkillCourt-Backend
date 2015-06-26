@@ -326,6 +326,19 @@ class Game
       //return false;
     }
     
+    /*if (roundsForWizard == 0){
+      isReadyToPlay = false;
+      isPlaying = false;
+      return true;
+    }*/
+    
+    if (northRoundsForWizard == 0 && eastRoundsForWizard == 0){
+      isReadyToPlay = false;
+      isPlaying = false;
+      return true;
+    }
+      
+    
     if ((roundsForWizard == 0) && (timeForWizard == 0)){
       fill(0, 0, 0);
       isThisGameOver = true ;
@@ -483,7 +496,6 @@ class CustomRoutineFlyWizard extends Wizard
       difficulty = d;
       padArrayList = new ArrayList();
       //println("custom Fly");
-      
     }
     
     void generatePlay(int wallID, int row, int column){
@@ -617,12 +629,10 @@ class CustomRoutineChaseWizard extends Wizard
               if (northRoundsForWizard > 0){
                  if (validateBottomWall(wallID,row,column)){ // Validate if the clicked pad is at the bottom of the wall
                     padArray = generatePadLine(wallID,row,column);  // Generate the pad line
-                    
-                      myRoom.lightWall(wallID,padOffColor);
-                      handleDifficulty(difficulty,padArray);
-                      //lightOppositeWall(wallID);
-                      //northRoundsForWizard--;
-                    
+                    myRoom.lightWall(wallID,padOffColor);
+                    handleDifficulty(difficulty,padArray);
+                    lightOppositeWall(wallID);
+                    northRoundsForWizard--;
                  }
               }
             } else if (!identifyNorthSouthWall(wallID)) { // East - West Walls
@@ -649,8 +659,6 @@ class CustomRoutineChaseWizard extends Wizard
       if (singleClick == 1) {
         //println("first Click");
         generatePlay(wallID,row,column);
-      } else if (singleClick == 2) {
-        
       }
       
     }
@@ -741,6 +749,7 @@ class CustomRoutineThreeWallChaseWizard extends Wizard
     int wall1;
     int wall2;
     int wall3;
+    int roundsPlayedForTime;
   
     CustomRoutineThreeWallChaseWizard(Room r, String d){
       super.startWizard();
@@ -782,6 +791,7 @@ class CustomRoutineThreeWallChaseWizard extends Wizard
         
       if (myRoom.colorOfClick(x,y) == red)
       {
+        if (timeForWizard>0) roundsPlayedForTime++;
         generatePlay(wallID);
       }
     }
@@ -826,7 +836,19 @@ class CustomRoutineThreeWallChaseWizard extends Wizard
     // padArrayList i = 4 -> minutes
     // padArrayList i = 5 -> timedRounds (seconds)
     
-    for (int i = 0; i<padArrayList.size(); i++){
+    result+=(String)(padArrayList.get(0));
+    result+=(String)(padArrayList.get(1));
+    
+    if (timeForWizard>0){
+      println("roundsPlayedForTime: "+roundsPlayedForTime);
+      // Missing comparing of roundsPlayedForTime < 9
+      result+=""+((roundsPlayedForTime < 10) ? ("0" + roundsPlayedForTime ) : roundsPlayedForTime );
+      
+    }else {
+      result+=(String)(padArrayList.get(2));
+    }
+    
+    for (int i = 3; i<padArrayList.size(); i++){
       
       if (i<6) result += (String)(padArrayList.get(i)); //println("difficulty: "+(String)(padArrayList.get(0)));
       else{
@@ -835,10 +857,14 @@ class CustomRoutineThreeWallChaseWizard extends Wizard
           //println("wallID: "+(int)(row.get(j))+" -> "+(int)(row.get(j+1))+", "+(int)(row.get(j+2)));
           result += (int)(row.get(j));
         }
-      } 
+      }
     }
     
-    println("result: "+ result); 
+    customCommand = result;
+    
+    println(result);
+    
+    switchButtonToPlay();
   }
   
   void handleDifficulty(String difficulty, ArrayList row, int wallID)
@@ -1380,6 +1406,7 @@ interface JavaScript
   void playMissSound();
   void playSuccessSound();
   void playTest();
+  void switchButtonToPlay();
 } 
 
 JavaScript javascript = null ;
