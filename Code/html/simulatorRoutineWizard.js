@@ -18,6 +18,7 @@ var eastRoundsForWizard;
 var timeForWizard;
 var roundsForWizard;
 var routineType;
+var customCommand;
 
 document.getElementById("removedWall").style.display = "none" ;
 	
@@ -208,15 +209,6 @@ function startWizard()
     checkMissingWall();
     
     difficultyForGame = getDifficulty() ;
-    //routineForGame = getRoutine() ;
-    //roundsForGame = getRounds() ;
-    //roundsForGameStr = (roundsForGame > 9) ? ("0" + roundsForGame.toString() ) : "00"+roundsForGame.toString() ;
-    /*timeForGame = getMinutes() ;
-    //console.log(timeForGame);
-    //console.log(isReadyToPlay);
-    timeForGameStr = (timeForGame > 9 ) ? ("00" + timeForGame.toString()) : "000"+ timeForGame.toString();
-    timePerRound = getTimePerRound() ;
-    timePerRoundStr = (timePerRound > 9 ) ? (timePerRound.toString()) : "0"+ timePerRound.toString();*/
     
     routineCommand = routineType + difficultyForGame;
 }
@@ -235,6 +227,18 @@ function stopGame()
 	document.getElementById("routineType").firstChild.selected = "true" ;
 	document.getElementById("SettingsList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;
+}
+
+function switchButtonToPlay(){
+    
+    document.getElementById("startWizard").style.display = "none";
+    document.getElementById("playCustomRoutine").style.display = "block";
+    
+}
+
+function playCustomRoutine()
+{
+    window.location.assign("simulator.php?rc="+customCommand);
 }
 
 function playTest() {

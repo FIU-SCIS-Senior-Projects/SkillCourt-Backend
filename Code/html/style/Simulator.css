@@ -218,3 +218,56 @@ body
 {
 	display: none;
 }
+
+#playCustomRoutine
+{
+	display: none;
+}
+
+#CustomPlay
+{
+	margin-left: 50px ;
+	margin-right: 50px ;
+	margin-top: 150px ;
+	display: none ;
+}
+
+#CustomPlay p
+{
+	background-color: #65B098;
+	font-size: 24px ;
+	font-style: italic ;
+	color:white ;
+	text-align: center ;
+	margin-top: 0px ;
+	margin-bottom: 0px ;
+}
+
+#CustomPlay ul
+{
+	list-style: none ;	
+	padding: 5px;
+	background: #CCCCCC;
+	margin-top: 2px; 
+	font-size: 18px ;
+}
+	
+#CustomPlay ul li
+{
+	background: #CCCCCC; 
+}
+
+#CustomPlay ul li button
+{
+	margin-top: 10px ;	
+	margin-left: 10px ;	
+	background: white ;
+	color: #65B098 ;
+	font-weight: bold ;
+	height: 40px ;
+	width: 180px ;
+	border-radius: 1px ;
+	text-align: center;
+	border: 2px solid #65B098 ;
+}
+

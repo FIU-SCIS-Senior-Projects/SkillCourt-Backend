@@ -4,11 +4,13 @@ var isReadyToPlay =false ;
 var routineForGame ;
 var difficultyForGame ;
 var timePerRound ;
+var customRoutineCommand = "bfdx";
 var processingInstance ;
 var s0 = new buzz.sound( "s0", { formats: [ "ogg", "mp3"] });
 var s1 = new buzz.sound( "s1", { formats: [ "ogg", "mp3"] });
 var s2 = new buzz.sound( "s2", { formats: [ "ogg", "mp3"] });
 var s3 = new buzz.sound( "s3", { formats: [ "mp3"] });
+var customCoachRoutine = false;
 	
 function allowRounds()
 {
@@ -134,8 +136,18 @@ function startGame()
 	if(isReadyToPlay) changeScreen() ;
 }
 
+function quickStartGame()
+{
+    
+    processingInstance = Processing.getInstanceById('sketch');
+    processingInstance.setJavaScript(this);
+    isReadyToPlay = true ;
+    changeScreen() ;
+}
+
 function changeScreen()
-{	
+{
+    document.getElementById("CustomPlay").style.display = "none" ;
 	document.getElementById("SettingsList").style.display = "none" ;
 	document.getElementById("FeedbackList").style.display = "block" ;
 	

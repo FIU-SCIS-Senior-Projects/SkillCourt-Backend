@@ -1,4 +1,3 @@
-
 //to run in java
 /*String routineCommand = "ca031100000";
 String warning ="" ;
@@ -86,7 +85,7 @@ void draw()
 {
   if (isReadyToPlay)                                                        
   {  
-    if (routineCommand.length() != 11)
+    if (!customCoachRoutine && routineCommand.length() != 11)
     { 
       background(101, 176, 152); 
       textSize(32) ;
@@ -96,7 +95,8 @@ void draw()
     else if (countdown() && !isPlaying)
     {
       newRoom = new Room() ;
-      myGame = new Game(newRoom, routineCommand) ;
+      if (!customCoachRoutine) myGame = new Game(newRoom, routineCommand) ;
+      else myGame = new Game(newRoom, customRoutineCommand) ;
       isPlaying = true ;
     } 
     else if(isPlaying)
@@ -270,7 +270,10 @@ class Game
     startTime = millis() ;
     isRoutineGroundBased = false; 
     if (type.equals(CHASE_ME)) myRoutine = new ChaseRoutine(myRoom, difficulty, missingWall);
-    else if (type.equals(THREE_WALL_CHASE)) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
+    else if (type.equals(THREE_WALL_CHASE)){
+      if (!customCoachRoutine) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
+      else myRoutine = new ThreeWallChaseCustomRoutine(myRoom,difficulty,missingWall,command);
+    }
     else if (type.equals(HOME_CHASE))
     {
       myRoutine = new HomeChaseRoutine(myRoom, difficulty, missingWall);
@@ -312,8 +315,9 @@ void handleDoubleClick(int x, int y, int deltaClickTime)
     //text(rounds, 0, 150);
     //rounds--;
     roundsPlayed++;
-
+    println("Rounds Played: " +roundsPlayed);  
   }
+  
 }
 
 void handleSingleClick(int x, int y)
@@ -326,7 +330,6 @@ void handleSingleClick(int x, int y)
     //text(rounds, 0, 150);
     //rounds--;
     roundsPlayed++;
-
     // If you succesfully generatedStep then startTime = millis()
     if (routineTime > 0) startTime = millis();
   }
@@ -387,7 +390,7 @@ boolean checkStatus()
       return true;
     }
   }
-   else
+  else
   {
     if (rounds != -1)
       text("Rounds Left " + (rounds-roundsPlayed), 10, 10, 160, 160);
@@ -414,11 +417,179 @@ boolean checkStatus()
   return false;
 }
 
-void startGame() 
-{
-  isThisGameStarted = true;
-  isThisGameOver = false;
+  void startGame() 
+  {
+    isThisGameStarted = true;
+    isThisGameOver = false;
+  }
 }
+
+class ThreeWallChaseCustomRoutine extends Routine
+{
+  String command;
+  String padCommand;
+  int currentPosition;
+  int currentWallID;
+  int prevWallID;
+  ArrayList firstWall;
+  ArrayList secondWall;
+  ArrayList thirdWall;
+  ArrayList padsToLight;
+
+  ThreeWallChaseCustomRoutine(Room r, String d, int m, String c)
+  {
+    myRoom = r;
+    difficulty = d;
+    missingWall = m;
+    command = c;
+    padCommand = command.substring(11,command.length());
+    println(padCommand);
+    currentPosition = 0;
+    firstWall = new ArrayList() ;
+    secondWall = new ArrayList() ;
+    thirdWall = new ArrayList() ;
+    padsToLight = new ArrayList() ; 
+    myStats = new Stats() ;
+    generateStep();
+  }
+  
+  void generateStep()
+  {
+    super.generateStep();
+    clearLitPads();
+    initializeRedPads();
+    println("Generate step"); 
+    println("CurrentPosition: " + currentPosition + " -> "+ padCommand.length());
+    if (currentPosition < padCommand.length()){
+      
+      currentWallID = int(padCommand.charAt(currentPosition));
+      prevWallID = currentWallID;
+      
+      while (currentWallID == prevWallID){
+        int wallID = int(padCommand.charAt(currentPosition));
+        int row = int(padCommand.charAt(currentPosition+1));
+        int column = int(padCommand.charAt(currentPosition+2));
+        //println("wallID: " + wallID + ": " + row + " ,"+column);
+        currentPosition += 3;
+        currentWallID = int(padCommand.charAt(currentPosition));
+        Pad newPad = myRoom.getPadRC(wallID,row,column);
+        padsToLight.add(newPad);
+      }
+      
+      handleDifficulty(difficulty);
+    }
+    
+  }
+  
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
+  {
+    super.handleInput(x, y, clickNum, deltaClickTime) ;
+      
+    if(myRoom.colorOfClick(x, y) == green) //green - success
+    {
+      myStats.addForceDoubleClickTime(deltaClickTime) ;
+      myStats.success() ;
+      generateStep() ;
+      
+      return true ;  
+    }
+    
+    if(myRoom.colorOfClick(x, y) == red) myStats.minusPoint(); 
+    
+    myStats.miss() ;    
+    return false ;
+  } 
+  
+  void handleDifficulty(String difficulty)
+  {
+    int randomPadIndex = int(random(3)); // get random pad index for difficulty
+
+    if (difficulty.equals(NOVICE))      // Lit all pads green
+    {
+      setRowToColor(padsToLight, green);
+    } else if (difficulty.equals(INTERMEDIATE)) {    // Lit one pad red
+      setRowAndPadToColor(padsToLight, randomPadIndex, red);
+    } else if (difficulty.equals(ADVANCED)) {
+      setRowAndPadToColor(padsToLight, randomPadIndex, green);  // Lit one pad green
+    }
+  }
+  
+  void initializeRedPads(){
+    
+    boolean isMissingWall = missingWall > 0 ;
+    int wallID = (isMissingWall) ? wallID = missingWall % 4 + 1 : 4 ;  //start at WEST wall ; W -> N -> E
+    
+    for (int i = 0; i < 3; i++)
+    {
+      //gets num of pads depending on wall 
+      int numPads = (wallID == NORTH || wallID == SOUTH) ? NS_WIDTH - 2 : EW_HEIGHT/2 - 1; 
+      int r ,  c , incR , incC ;
+      //initializes start point based on row/column depending on wall
+      if(missingWall == SOUTH || !isMissingWall)
+      {
+        if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
+        else if(wallID == EAST){ r = 0 ; c = 1 ; }
+        else { r = EW_WIDTH - 1 ; c = 1 ; }
+      }
+      else if(missingWall == NORTH)
+      {
+        if(wallID == SOUTH){ r = 1 ; c = 0 ; }
+        else if(wallID == EAST){ r = 0 ; c = EW_HEIGHT/2 - 1; }
+        else { r = EW_WIDTH - 1 ; c = EW_HEIGHT/2 - 1 ; }
+      }
+      else 
+      {  
+        if(wallID == SOUTH){ r = 1 ; c = 0 ; }
+        else if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
+        else if(wallID == EAST){ r = 0 ; c = 2 ; numPads = EW_HEIGHT/2 ; }
+        else { r = EW_WIDTH - 1 ; c = 2 ; numPads = EW_HEIGHT/2 ; }
+      }
+      //initializes increments for wall/column depending on wall
+      incR = (wallID == NORTH || wallID == SOUTH) ? 1 : 0 ;
+      incC = (wallID == NORTH || wallID == SOUTH) ? 0 : 1 ;
+    
+      //println("numPads : "+numPads);
+      //gets numPads pads into appropriate color list
+      
+      //(i == 0) ? wall1 = wallID : ((i == 1) ? wall2 = wallID : wall3 = wallID );
+      
+      for (int j = 0; j < numPads ; j++)
+      {
+        Pad newPad = myRoom.getPadRC( wallID , r + incR*j , c + incC*j );
+        addCoordinatesToArray(i,newPad,wallID,r + incR*j,c + incC*j);
+        
+      }  
+      //gets next pad in sequence 1-2-3-4-1-...
+      wallID = wallID % 4 + 1 ;
+    } 
+    
+    setRowToColor(firstWall,red);
+    setRowToColor(secondWall,red);
+    setRowToColor(thirdWall,red);
+  }
+  
+  void addCoordinatesToArray(int i, Pad newPad, int wallID, int row, int column){
+    if (i == 0) {
+      //wall1 = wallID;
+      firstWall.add(newPad);
+    } else if (i == 1)  {
+      //wall2 = wallID;
+      secondWall.add(newPad);
+    } else if (i == 2) {
+      //wall3 = wallID;
+      thirdWall.add(newPad);
+    }
+  }
+  
+  //turns off all lit pads and empties lists
+  private void clearLitPads()
+  {
+    //turns off pads
+    for (int i = 0; i < padsToLight.size (); i++) ((Pad)padsToLight.get(i)).setColor(padOffColor) ;
+    //Remove all pads
+    while (padsToLight.size() > 0) padsToLight.remove(0) ;
+  }
+  
 }
 
 class Routine 

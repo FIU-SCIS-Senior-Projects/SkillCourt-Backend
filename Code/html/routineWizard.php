@@ -50,7 +50,8 @@
                             <option value="roundsForGameType">Rounds</option>
                             <input type="number" id="amount" min="1" max="30" value="1">
                         </select></li>
-                    <li><button onclick="startWizard();">Start Wizard!</button></li>
+                    <li><button id="startWizard" onclick="startWizard();">Start Wizard!</button></li>
+                    <li><button id="playCustomRoutine" onclick="playCustomRoutine();">Play New Routine!</button></li>
 					</ul>
 			</div>	
 			<div id="FeedbackList">
