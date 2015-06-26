@@ -2262,11 +2262,19 @@
         <item>Home Fly</item>
         <item>Ground Chase</item>
         <item>xCue</item>
-    </string-array><string name="log_in_button">LOG IN</string><string name="warning_empty_field_message">None of the fields in this screen can be left empty.</string><string name="remove_wall">Remove Wall</string><string name="warning_uname_passw_combination_message">Username/Password combination is incorrect</string><string name="title_activity_create_account3">CreateAccount3</string><string name="title_activity_create_account4">CreateAccount4</string><string name="title_activity_create_account1">CreateAccount1</string><string name="home_chase_desc">
+    </string-array><string name="log_in_button">LOG IN</string><string name="warning_empty_field_message">None of the fields in this screen can be left empty.</string><string name="remove_wall">Remove Wall</string><string name="warning_uname_passw_combination_message">Username/Password combination is incorrect</string><string name="title_activity_create_account3">CreateAccount3</string><string-array name="routine_codes">
+        <item>t</item>
+        <item>c</item>
+        <item>h</item>
+        <item>g</item>
+        <item>h</item>
+        <item>m</item>
+        <item>x</item>
+    </string-array><string name="title_activity_create_account4">CreateAccount4</string><string name="title_activity_create_account1">CreateAccount1</string><string name="time_per_rounds">Time Per Round:</string><string name="empty"/><string name="home_chase_desc">
         Activate the floor target and then chase the green light around the room while avoiding the red ones!
-    </string><string name="time_per_rounds">Time Per Round:</string><string name="empty"/><string name="title_activity_create_account2">CreateAccount2</string><string name="warning_invalid_code_message">Invalid Code</string><string name="first_name">FIRST NAME</string><string name="intermediate">Intermediate</string><string name="home_fly_desc">
+    </string><string name="title_activity_create_account2">CreateAccount2</string><string name="warning_invalid_code_message">Invalid Code</string><string name="first_name">FIRST NAME</string><string name="intermediate">Intermediate</string><string name="novice">Novice</string><string name="home_fly_desc">
         Activate the floor target and then look up! Your targets are in the air this time so fly the ball high.
-    </string><string name="novice">Novice</string><string name="warning_empty_field_positive">OK</string><string name="title_activity_edit_password">EditPassword</string><string name="last_name">LAST NAME</string><string name="play_routine_button">
+    </string><string name="warning_empty_field_positive">OK</string><string name="title_activity_edit_password">EditPassword</string><string name="last_name">LAST NAME</string><string name="play_routine_button">
         Play!
     </string><string name="warning_guest_message">If you enter as a guest your performance data will not be stored. Do you want to continue as a guest?</string><string name="warning_username_exists_possitive">OK</string><string name="warning_guest_negative">CANCEL</string><string name="create_account_button">NEW USER</string><string name="warning_connection_error_message">Skillcourt is experiencing a connection error. Check your internet connection and try again.</string><string name="time">Time</string><string name="hello_world">Hello world!</string><string name="next">NEXT</string><string name="title_activity_scan">Scan</string><string name="action_settings">Settings</string><string name="skillCourt_header">SkillCourt</string><string name="app_name">SkillCourt</string><string name="password">PASSWORD</string><string name="skip">SKIP</string><string name="coach_username">Coach Username</string><string name="change_email_button">Change Email</string><string name="login_trouble">TROUBLE LOGGING IN?</string><string name="warning_connection_error_possitive">OK</string><string name="title_activity_display_stats">DisplayStats</string><string name="xcue_desc">
         Activate the two floor targets and andticipate the wall targets using the yellow lights. When they become green, fly the ball high!

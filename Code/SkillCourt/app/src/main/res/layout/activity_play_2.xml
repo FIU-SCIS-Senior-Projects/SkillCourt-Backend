@@ -75,7 +75,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
                                     android:id="@+id/radioButton"
                                     android:checked="true"
                                     android:textColor="#ff000000"
-                                    android:textSize="17sp"
+                                    android:textSize="17sp"/>
 
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                                     android:id="@+id/radioButton2"
                                     android:checked="false"
                                     android:textColor="#ff000000"
-                                    android:textSize="17sp"
+                                    android:textSize="17sp"/>
 
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                                     android:id="@+id/radioButton3"
                                     android:checked="false"
                                     android:textColor="#ff000000"
-                                    android:textSize="17sp"
+                                    android:textSize="17sp"/>
                             </RadioGroup>
 
                             <TextView
@@ -207,11 +207,9 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rtSwitch"
                                     android:textColor="#ffffffff"
-                                    android:checked="false"
                                     android:onClick="switchChange"
                                     android:textOff="@string/time"
                                     android:textOn="@string/cap_rounds"
-                                    android:textAllCaps="false"
                                     android:layout_gravity="start" />
 
                             </LinearLayout>
@@ -237,8 +235,7 @@
                                     android:text="@string/minutes"
                                     android:id="@+id/rtText"
                                     android:textSize="20sp"
-                                    android:layout_gravity="bottom"
-                                    android:inputType="none" />
+                                    android:layout_gravity="bottom"/>
                             </LinearLayout>
 
                             <Button
@@ -247,7 +244,7 @@
                                 android:text="@string/play_routine_button"
                                 android:id="@+id/playDef"
                                 android:background="@drawable/bluerectbutton"
-                                android:onClick="playDef"
+                                android:onClick="playDef1"
                                 android:textSize="20sp"
                                 android:textColor="#ff447767"
                                 android:layout_gravity="center_horizontal"

@@ -48,9 +48,10 @@ public class Play extends ActionBarActivity {
     protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     // Routine Related Vars
+    CheckBox timePerRoundCheck ;
     Switch playBySwitch;
     String rname, user, usertype;
-    int missingWall = 1 ;
+    int missingWall = -1 ;
     boolean isRoundTimeBased = false ;
     boolean isWallRemoved = false ;
     boolean roundsAreDisabled = false ;
@@ -68,15 +69,15 @@ public class Play extends ActionBarActivity {
         coach = (new dbInteraction()).getCoach(puname);
 
         // Set Spinners
+        setWallSpinner();
         setSpinnerDefault();
-        wallRemove.setVisibility(View.GONE);
         setSpinnerCustom();
         setSpinnerCoach();
 
         // Set Tabs
         setTabs();
 
-        //getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
+        timePerRoundCheck = (CheckBox)findViewById(R.id.timePerRoundCheck) ;
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,24 +98,37 @@ public class Play extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setWallSpinner()
+    {
+        wallRemove = (Spinner) findViewById(R.id.removeWallSpin) ;
+        ArrayAdapter<CharSequence> wallAdapter =  ArrayAdapter.createFromResource(this, R.array.wall_to_remove_array, android.R.layout.simple_spinner_item) ;
+        wallAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        wallRemove.setAdapter(wallAdapter);
+
+        wallRemove.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                missingWall = position + 1;
+                isWallRemoved = true;
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
     /********************** Start Spinner setup methods  **********************/
     public void setSpinnerDefault() {
         // Set Spinners
-        wallRemove = (Spinner) findViewById(R.id.removeWallSpin) ;
         defa = (Spinner) findViewById(R.id.defRoutinesSpin);
         // Attach arrays to adapters
-        ArrayAdapter<CharSequence> adapter =  ArrayAdapter.createFromResource(this, R.array.routine_array, android.R.layout.simple_spinner_item) ;
+        ArrayAdapter<CharSequence> adapter =  ArrayAdapter.createFromResource(this, R.array.routine_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> wallAdapter =  ArrayAdapter.createFromResource(this, R.array.wall_to_remove_array, android.R.layout.simple_spinner_item) ;
-        wallAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Set adapters for spinner
         defa.setAdapter(adapter);
-        wallRemove.setAdapter(wallAdapter);
 
         // Set Description
         final TextView defaDesc = (TextView) findViewById(R.id.defDesc);
-
 
         // Set listener for spinner
         defa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -170,15 +184,8 @@ public class Play extends ActionBarActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        wallRemove.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                missingWall = position + 1;
-                isWallRemoved = true ;
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
     }
+
     private void disableCustomRoom(boolean disable)
     {
         if(disable ^ !isCustomRoomDisabled)
@@ -186,7 +193,7 @@ public class Play extends ActionBarActivity {
             findViewById(R.id.removeWallCheck).setVisibility((disable) ? View.GONE : View.VISIBLE);
             findViewById(R.id.removeWallSpin).setVisibility((disable) ? View.GONE : View.VISIBLE);
             if(!disable) defa.setSelection(0);
-            missingWall = (disable) ? -1 : 1 ;
+            missingWall *= -1 ;
             isWallRemoved = !disable ;
             isCustomRoomDisabled = !isCustomRoomDisabled ;
         }
@@ -309,6 +316,7 @@ public class Play extends ActionBarActivity {
     public void wallCheckboxClicked(View view)
     {
         findViewById(R.id.removeWallSpin).setVisibility((((CheckBox) view).isChecked()) ? View.VISIBLE : View.GONE);
+        missingWall *= -1 ;
     }
 
     public void roundsCheckboxClicked(View view)
@@ -343,34 +351,74 @@ public class Play extends ActionBarActivity {
             String difficulty = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString() ;
             command[1] = Character.toLowerCase(difficulty.charAt(0)) ;
 
-            //Rounds - 2 chars - Indices in command: 2-3
-            //Minutes - 3 chars - Indices in command: 6-8
+            //Game Rounds - 2 chars - Indices in command: 2-3
+            //Gametime Minutes - 3 chars - Indices in command: 6-8
             boolean isPlayByRounds = ((Switch)findViewById(R.id.rtSwitch)).isChecked() ;
             String playByInput = ((EditText)findViewById(R.id.rtEdit)).getText().toString() ;
             int inputValue = Integer.parseInt(playByInput) ;
+            System.out.println(playByInput);
             if(isPlayByRounds) //set rounds properly and time to "000"
             {
                 command[2] = (inputValue > 9) ? playByInput.charAt(0) : '0' ;
-                command[3] = playByInput.charAt(1) ;
-                command[6] = command[7] = command[8] = 0 ;
+                command[3] = playByInput.charAt((inputValue > 9) ? 1 : 0) ;
+                command[6] = command[7] = command[8] = '0' ;
             }
             else //set minutes properly and rounds to "00"
             {
-                command[2] = command[3] = 0 ;
-                command[7] = (inputValue > 99) ? playByInput.charAt(0) : '0' ;
-                command[7] = (inputValue > 9) ? playByInput.charAt(1) : '0' ;
-                command[8] = playByInput.charAt(2) ;
+                command[2] = command[3] = '0' ;
+
+                int start = 6 ; //where minutes start
+                int len = 3 ;   //chars/digits alloted for minutes in command
+                int inputLen = playByInput.length();
+                int inputIndex ;
+                for(int i = start ; i < start + len ; i++) {
+                    inputIndex = -len + (i - start) + inputLen;
+                    command[i] = (inputIndex >= 0) ? playByInput.charAt(inputIndex) : '0';
+                }
             }
 
             //Missing Wall - 2 chars - Indices in command 4-5
-            
+            command[4] = (missingWall > 0) ? '1' : '0' ;
+            command[5] = (missingWall > 0) ? Character.forDigit(missingWall,10): '0' ;
 
+            //Time per Rounds in seconds - 2 chars - Indices in command: 9-10
+            if(timePerRoundCheck.isChecked())
+            {
+                String timePerRoundInput = ((EditText)findViewById(R.id.timePerRoundInput)).getText().toString() ;
+                int tprValue = Integer.parseInt(timePerRoundInput) ;
+                command[9] = (tprValue > 9) ? timePerRoundInput.charAt(0) : '0' ;
+                command[10] = timePerRoundInput.charAt((tprValue > 9) ? 1 : 0 );
+            }
+            else
+            {
+                command[9] = command[10] = '0' ;
+            }
+            System.out.println(new String(command));
+            startRoutine1(command) ;
+        }
+        else
+        {
+            genericWarning w = new genericWarning();
+            w.setPossitive("OK");
+            w.setMessage("You must set a timer or number of rounds.");
+            w.show(getFragmentManager(), "no_bluetooth");
         }
     }
 
     private boolean isInputProper()
     {
-        return true ;
+        if(timePerRoundCheck.isChecked())
+        {
+            String valString = ((EditText) findViewById(R.id.timePerRoundInput)).getText().toString() ;
+            if(valString.equals("")) return false ;
+            int val = Integer.parseInt(valString) ;
+            if(val < 1 || val > 99) return false;
+        }
+        String valString = ((EditText)findViewById(R.id.rtEdit)).getText().toString() ;
+        boolean isByRounds = ((Switch)findViewById(R.id.rtSwitch)).isChecked() ;
+        if(valString.equals("")) return false ;
+        int val = Integer.parseInt(valString) ;
+        return (val > 0 && val <= ((isByRounds) ? 99 : 999)) ;
     }
     /**
      * Player clicked on a Default routine to play
@@ -524,6 +572,57 @@ public class Play extends ActionBarActivity {
 
     }
 
+    public void startRoutine1(char [] command) {
+
+        // To Do:
+        //   Send routine via Bluetooth to master pad
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        //Testing stat storage
+        for(int i = 0 ; i < command.length ; i++) if(command[i] == '0') command[i] = 'z' ;
+        String message = "S" + new String(command) + "E" ;
+        try {
+            btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+            btSocket.connect();
+            outStream = btSocket.getOutputStream();
+            inStream = btSocket.getInputStream();
+            outStream.write(message.getBytes());
+            //btSocket.close();//delete this
+            //
+            /*int availableBytes = inStream.available();
+
+            //long startTime = System.currentTimeMillis();
+            while(availableBytes < 40)//(System.currentTimeMillis() - startTime)/1000 <= 10)
+                availableBytes = inStream.available();
+
+
+            byte[] packetBytes = new byte[availableBytes];
+            inStream.read(packetBytes);
+
+            message = getMessage(packetBytes);
+            message = message.substring(0, message.indexOf('n'));
+            //********************************************************call Mathews function
+            Statistic s = parseMessage(message, puname, difficulty, date);
+            dbInteraction dbi = new dbInteraction();
+            dbi.addStat(s);
+            btSocket.close();
+            Intent intent = new Intent(this, GameResults.class);
+            intent.putExtra(Home.EXTRA_PAD, dev);
+            intent.putExtra("stats", s);
+            intent.putExtra(Login.EXTRA_MESSAGE, puname);
+            startActivity(intent);*/
+
+        }catch (Exception e)
+        {
+            genericWarning w = new genericWarning();
+            w.setPossitive("OK");
+            w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");
+            w.show(getFragmentManager(),"no_bluetooth");
+        }
+
+    }
+
+
     public String buildMessage(String type, String difficulty, String rounds, String timer, String timebased) {
         type = type.toLowerCase();
         difficulty = difficulty.toLowerCase();
@@ -541,7 +640,8 @@ public class Play extends ActionBarActivity {
 
         String message = "S" + type + difficulty + rounds + timer + "zzE";
         String finalmsg = "";
-        for (int i = 0; i < message.length(); i++) {
+        for (int i = 0; i < message.length(); i++)
+        {
             if (message.charAt(i) == 'f')
                 finalmsg = finalmsg + "h";
             else if (message.charAt(i) == '0')
