@@ -254,16 +254,14 @@ class Game
     
     int missingWall = ( (command.substring(4,5).equals("1")) ? 1 : -1 ) * int(command.substring(5,6)) ;
 
-    if(missingWall >= 0) myRoom.removeWall(missingWall) ;
+    if(missingWall > 0) myRoom.removeWall(missingWall) ;
     
     gameTime = int(command.substring(6, 9)) *60000;
     int timeBased = int(command.substring(9, 11));
     // Check if the game is timeBased or roundBased  
     if (rounds == 0) rounds = -1;
-    //else text(rounds-roundsPlayed, 100, 100);
     text(rounds-roundsPlayed, 100, 100);
     routineTime = timeBased*1000;
-    //println("timeBased: " + timeBased);
     
     if (routineTime > 0) routineTimeStart = millis();
    

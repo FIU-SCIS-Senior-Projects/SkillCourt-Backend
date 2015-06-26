@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="teal">#FF65B098</color>
+    <color name="green">#2ecc71</color>
     <string name="app_name">SkillCourt</string>
     <string name="action_settings">Settings</string>
 
@@ -156,4 +157,16 @@
         <item>South</item>
         <item>West</item>
     </string-array>
+
+    <!-- activity_feedback -->
+    <string name="skillcourt_statistics">SkillCourt Statistics</string>
+    <string name="successes">Successes: </string>
+    <string name="minus_points">Minus Points: </string>
+    <string name="misses">Misses: </string>
+    <string name="accuracy">Accuracy: </string>
+    <string name="average_force">Average Force: </string>
+    <string name="ar_shot_time">AR Shot Time: </string>
+    <string name="ar_dribbling_time">AR Dribbling Time: </string>
+    <string name="xprs_speed">xPRS Speed: </string>
+    <string name="stop">Stop!</string>
 </resources>

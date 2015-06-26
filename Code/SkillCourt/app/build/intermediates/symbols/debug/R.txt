@@ -5,7 +5,8 @@ int anim abc_slide_in_top 0x7f040003
 int anim abc_slide_out_bottom 0x7f040004
 int anim abc_slide_out_top 0x7f040005
 int array routine_array 0x7f050000
-int array wall_to_remove_array 0x7f050001
+int array routine_codes 0x7f050001
+int array wall_to_remove_array 0x7f050002
 int attr actionBarDivider 0x7f01005e
 int attr actionBarItemBackground 0x7f01005f
 int attr actionBarPopupTheme 0x7f010058
