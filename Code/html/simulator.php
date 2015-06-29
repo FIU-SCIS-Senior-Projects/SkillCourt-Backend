@@ -91,7 +91,7 @@
                     document.getElementById("CustomPlay").style.display = "block" ;
                     customRoutineCommand = <?php echo "\"".$_GET['rc']."\"" ?>;
                     customCoachRoutine = true;
-                <? endif ; ?>
+                <?php endif ; ?>
             console.log(customRoutineCommand) ;
         </script>
 	</body>

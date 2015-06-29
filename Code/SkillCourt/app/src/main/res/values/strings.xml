@@ -2,6 +2,7 @@
 <resources>
     <color name="teal">#FF65B098</color>
     <color name="green">#2ecc71</color>
+    <color name="red">#e74c3c</color>
     <string name="app_name">SkillCourt</string>
     <string name="action_settings">Settings</string>
 
@@ -169,4 +170,6 @@
     <string name="ar_dribbling_time">AR Dribbling Time: </string>
     <string name="xprs_speed">xPRS Speed: </string>
     <string name="stop">Stop!</string>
+    <string name="percent"> %</string>
+    <string name="newtons"> N</string>
 </resources>

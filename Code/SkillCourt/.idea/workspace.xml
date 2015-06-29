@@ -49,7 +49,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="557c5774-403d-49db-a11c-9c31455483c3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
@@ -58,13 +57,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Feedback.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Feedback.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Home.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Home.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Play.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Play.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_play_2.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_play_2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Simulator/Simulator.pde" afterPath="$PROJECT_DIR$/../Simulator/Simulator.pde" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeResources/debug/merger.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeResources/debug/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../html/simulator/simulator.pde" afterPath="$PROJECT_DIR$/../html/simulator/simulator.pde" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -86,7 +83,7 @@
     <favorites_list name="SkillCourt" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6315789">
+    <splitter split-orientation="horizontal" split-proportion="0.47125566">
       <split-first>
         <leaf>
           <file leaf-file-name="Play.java" pinned="false" current-in-tab="false">
@@ -95,23 +92,12 @@
                 <state vertical-scroll-proportion="0.0">
                   <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
                   <folding>
-                    <element signature="imports" expanded="true" />
+                    <element signature="imports" expanded="false" />
                     <element signature="method#setSpinnerDefault#0;class#Play#0" expanded="false" />
                     <element signature="class#4612:6826" expanded="false" />
-                    <element signature="e#5113#5137#0" expanded="true" />
-                    <element signature="e#5363#5382#0" expanded="true" />
-                    <element signature="e#5604#5621#0" expanded="true" />
-                    <element signature="e#5850#5874#0" expanded="true" />
-                    <element signature="e#6102#6124#0" expanded="true" />
-                    <element signature="e#6356#6382#0" expanded="true" />
-                    <element signature="e#6606#6624#0" expanded="true" />
-                    <element signature="e#7703#7719#0" expanded="true" />
-                    <element signature="e#7722#7737#0" expanded="true" />
                     <element signature="method#setSpinnerCustom#0;class#Play#0" expanded="false" />
                     <element signature="method#setSpinnerCoach#0;class#Play#0" expanded="false" />
                     <element signature="method#setSpinnerListener#0;class#Play#0" expanded="false" />
-                    <element signature="e#12682#12697#0" expanded="true" />
-                    <element signature="e#12741#12757#0" expanded="true" />
                     <element signature="docComment;method#playPlayer#0;class#Play#0" expanded="false" />
                     <element signature="method#playPlayer#0;class#Play#0" expanded="false" />
                     <element signature="docComment;method#playCoach#0;class#Play#0" expanded="false" />
@@ -128,7 +114,7 @@
                 <state vertical-scroll-proportion="0.0">
                   <caret line="27" column="49" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
                   <folding>
-                    <element signature="imports" expanded="true" />
+                    <element signature="imports" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -136,16 +122,13 @@
           </file>
           <file leaf-file-name="activity_feedback.xml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml">
-              <provider editor-type-id="android-designer">
+              <provider selected="true" editor-type-id="android-designer">
                 <state />
               </provider>
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="1.2297298">
-                  <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#463#494#0" expanded="true" />
-                    <element signature="e#1393#1412#0" expanded="true" />
-                  </folding>
+              <provider editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="145" column="41" selection-start-line="145" selection-start-column="41" selection-end-line="145" selection-end-column="41" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -157,8 +140,8 @@
           <file leaf-file-name="strings.xml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.09090909">
-                  <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+                <state vertical-scroll-proportion="0.8917379">
+                  <caret line="168" column="26" selection-start-line="168" selection-start-column="26" selection-end-line="168" selection-end-column="26" />
                   <folding />
                 </state>
               </provider>
@@ -170,8 +153,8 @@
                 <state />
               </provider>
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-5.137931">
-                  <caret line="189" column="61" selection-start-line="189" selection-start-column="53" selection-end-line="189" selection-end-column="61" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="172" column="61" selection-start-line="172" selection-start-column="61" selection-end-line="172" selection-end-column="61" />
                   <folding>
                     <element signature="n#LinearLayout#1;n#FrameLayout#0;n#LinearLayout#0;n#TabHost#0;n#LinearLayout#0;n#!!top" expanded="false" />
                     <element signature="n#LinearLayout#2;n#FrameLayout#0;n#LinearLayout#0;n#TabHost#0;n#LinearLayout#0;n#!!top" expanded="false" />
@@ -1334,8 +1317,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
@@ -1461,7 +1442,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1670,8 +1653,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49694657" order="13" side_tool="false" content_ui="tabs" />
@@ -1680,15 +1663,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5030534" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290469" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49694657" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2725724" sideWeight="0.49694657" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31175467" sideWeight="0.49694657" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18986385" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18986385" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -1699,6 +1681,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290469" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1747,23 +1730,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="method#setSpinnerDefault#0;class#Play#0" expanded="false" />
             <element signature="class#4612:6826" expanded="false" />
-            <element signature="e#5113#5137#0" expanded="true" />
-            <element signature="e#5363#5382#0" expanded="true" />
-            <element signature="e#5604#5621#0" expanded="true" />
-            <element signature="e#5850#5874#0" expanded="true" />
-            <element signature="e#6102#6124#0" expanded="true" />
-            <element signature="e#6356#6382#0" expanded="true" />
-            <element signature="e#6606#6624#0" expanded="true" />
-            <element signature="e#7703#7719#0" expanded="true" />
-            <element signature="e#7722#7737#0" expanded="true" />
             <element signature="method#setSpinnerCustom#0;class#Play#0" expanded="false" />
             <element signature="method#setSpinnerCoach#0;class#Play#0" expanded="false" />
             <element signature="method#setSpinnerListener#0;class#Play#0" expanded="false" />
-            <element signature="e#12682#12697#0" expanded="true" />
-            <element signature="e#12741#12757#0" expanded="true" />
             <element signature="docComment;method#playPlayer#0;class#Play#0" expanded="false" />
             <element signature="method#playPlayer#0;class#Play#0" expanded="false" />
             <element signature="docComment;method#playCoach#0;class#Play#0" expanded="false" />
@@ -1855,23 +1827,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="method#setSpinnerDefault#0;class#Play#0" expanded="false" />
             <element signature="class#4612:6826" expanded="false" />
-            <element signature="e#5113#5137#0" expanded="true" />
-            <element signature="e#5363#5382#0" expanded="true" />
-            <element signature="e#5604#5621#0" expanded="true" />
-            <element signature="e#5850#5874#0" expanded="true" />
-            <element signature="e#6102#6124#0" expanded="true" />
-            <element signature="e#6356#6382#0" expanded="true" />
-            <element signature="e#6606#6624#0" expanded="true" />
-            <element signature="e#7703#7719#0" expanded="true" />
-            <element signature="e#7722#7737#0" expanded="true" />
             <element signature="method#setSpinnerCustom#0;class#Play#0" expanded="false" />
             <element signature="method#setSpinnerCoach#0;class#Play#0" expanded="false" />
             <element signature="method#setSpinnerListener#0;class#Play#0" expanded="false" />
-            <element signature="e#12682#12697#0" expanded="true" />
-            <element signature="e#12741#12757#0" expanded="true" />
             <element signature="docComment;method#playPlayer#0;class#Play#0" expanded="false" />
             <element signature="method#playPlayer#0;class#Play#0" expanded="false" />
             <element signature="docComment;method#playCoach#0;class#Play#0" expanded="false" />
@@ -2154,52 +2115,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
-          <folding>
-            <element signature="e#434#435#0" expanded="false" />
-            <element signature="e#466#467#0" expanded="false" />
-            <element signature="e#501#502#0" expanded="false" />
-            <element signature="e#534#535#0" expanded="false" />
-            <element signature="e#584#585#0" expanded="false" />
-            <element signature="e#628#629#0" expanded="false" />
-            <element signature="e#658#659#0" expanded="false" />
-            <element signature="e#687#688#0" expanded="false" />
-            <element signature="e#728#729#0" expanded="false" />
-            <element signature="e#764#765#0" expanded="false" />
-            <element signature="e#793#794#0" expanded="false" />
-            <element signature="e#821#822#0" expanded="false" />
-            <element signature="e#860#861#0" expanded="false" />
-            <element signature="e#894#895#0" expanded="false" />
-            <element signature="e#927#928#0" expanded="false" />
-            <element signature="e#959#960#0" expanded="false" />
-            <element signature="e#1006#1007#0" expanded="false" />
-            <element signature="e#1048#1049#0" expanded="false" />
-            <element signature="e#1077#1078#0" expanded="false" />
-            <element signature="e#1104#1105#0" expanded="false" />
-            <element signature="e#1142#1143#0" expanded="false" />
-            <element signature="e#1174#1175#0" expanded="false" />
-            <element signature="e#1205#1206#0" expanded="false" />
-            <element signature="e#1232#1233#0" expanded="false" />
-            <element signature="e#1273#1274#0" expanded="false" />
-            <element signature="e#1305#1306#0" expanded="false" />
-            <element signature="e#1340#1341#0" expanded="false" />
-            <element signature="e#1371#1372#0" expanded="false" />
-            <element signature="e#1419#1420#0" expanded="false" />
-            <element signature="e#1459#1460#0" expanded="false" />
-            <element signature="e#1492#1493#0" expanded="false" />
-            <element signature="e#1523#1524#0" expanded="false" />
-            <element signature="e#1569#1570#0" expanded="false" />
-            <element signature="e#1609#1610#0" expanded="false" />
-            <element signature="e#1640#1641#0" expanded="false" />
-            <element signature="e#1667#1668#0" expanded="false" />
-            <element signature="e#1701#1702#0" expanded="false" />
-            <element signature="e#1730#1731#0" expanded="false" />
-            <element signature="e#1775#1776#0" expanded="false" />
-            <element signature="e#1811#1812#0" expanded="false" />
-            <element signature="e#1922#1923#0" expanded="false" />
-            <element signature="e#1956#1957#0" expanded="false" />
-            <element signature="e#2010#2011#0" expanded="false" />
-            <element signature="e#2056#2057#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2223,7 +2138,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2231,7 +2145,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="19" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Feedback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="49" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2240,23 +2163,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="method#setSpinnerDefault#0;class#Play#0" expanded="false" />
             <element signature="class#4612:6826" expanded="false" />
-            <element signature="e#5113#5137#0" expanded="true" />
-            <element signature="e#5363#5382#0" expanded="true" />
-            <element signature="e#5604#5621#0" expanded="true" />
-            <element signature="e#5850#5874#0" expanded="true" />
-            <element signature="e#6102#6124#0" expanded="true" />
-            <element signature="e#6356#6382#0" expanded="true" />
-            <element signature="e#6606#6624#0" expanded="true" />
-            <element signature="e#7703#7719#0" expanded="true" />
-            <element signature="e#7722#7737#0" expanded="true" />
             <element signature="method#setSpinnerCustom#0;class#Play#0" expanded="false" />
             <element signature="method#setSpinnerCoach#0;class#Play#0" expanded="false" />
             <element signature="method#setSpinnerListener#0;class#Play#0" expanded="false" />
-            <element signature="e#12682#12697#0" expanded="true" />
-            <element signature="e#12741#12757#0" expanded="true" />
             <element signature="docComment;method#playPlayer#0;class#Play#0" expanded="false" />
             <element signature="method#playPlayer#0;class#Play#0" expanded="false" />
             <element signature="docComment;method#playCoach#0;class#Play#0" expanded="false" />
@@ -2266,23 +2178,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seniorproject/skillcourt/Feedback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="49" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play_2.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.137931">
-          <caret line="189" column="61" selection-start-line="189" selection-start-column="53" selection-end-line="189" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="172" column="61" selection-start-line="172" selection-start-column="61" selection-end-line="172" selection-end-column="61" />
           <folding>
             <element signature="n#LinearLayout#1;n#FrameLayout#0;n#LinearLayout#0;n#TabHost#0;n#LinearLayout#0;n#!!top" expanded="false" />
             <element signature="n#LinearLayout#2;n#FrameLayout#0;n#LinearLayout#0;n#TabHost#0;n#LinearLayout#0;n#!!top" expanded="false" />
@@ -2290,25 +2192,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09090909">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="145" column="41" selection-start-line="145" selection-start-column="41" selection-end-line="145" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2297298">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding>
-            <element signature="e#463#494#0" expanded="true" />
-            <element signature="e#1393#1412#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.8917379">
+          <caret line="168" column="26" selection-start-line="168" selection-start-column="26" selection-end-line="168" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>

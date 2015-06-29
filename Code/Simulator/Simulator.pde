@@ -347,7 +347,7 @@ class Game
     int timeBased = int(command.substring(9, 11));
     // Check if the game is timeBased or roundBased  
     if (rounds == 0) rounds = -1;
-    text(rounds-roundsPlayed, 100, 100);
+    //text(rounds-roundsPlayed, 100, 100);
     routineTime = timeBased*1000;
     
     if (routineTime > 0) routineTimeStart = millis();
@@ -428,7 +428,7 @@ boolean checkStatus()
     return true;
   }
   
-  if (roundsPlayed == (rounds/2))
+  if (rounds != -1 && roundsPlayed == (rounds/2))
   {
     if (!coachFeedback){
       feedbackSound = minim.loadFile("feedback.mp3") ;
