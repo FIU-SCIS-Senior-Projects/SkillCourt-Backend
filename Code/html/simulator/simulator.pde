@@ -32,7 +32,7 @@ final int EW_WIDTH = 3;
 final int EW_HEIGHT = 8 ;
 
 //constants routines chars
-final String CHASE_ME = "c" ;
+final String CHASE = "c" ;
 final String THREE_WALL_CHASE = "t" ;
 final String HOME_CHASE = "g" ;
 final String HOME_FLY = "j" ;
@@ -59,7 +59,7 @@ Room newRoom ;
 boolean isPlaying;
 PImage soccerBall ;
 Game myGame; 
-CustomGame myCustomGame;
+MasterGame myMasterGame;
 
 double ballMass = 0.45;
 
@@ -83,43 +83,53 @@ void setup()
 
 void draw()
 {
-  if (isReadyToPlay)                                                        
-  {  
-    if (!customCoachRoutine && routineCommand.length() != 11)
+    if (isReadyToPlay)                                                        
     { 
-      background(101, 176, 152); 
-      textSize(32) ;
-      fill(255) ;
-      text("Make sure all options are filled out", 30, 30, 540, 540);
-    }
-    else if (countdown() && !isPlaying)
-    {
-      newRoom = new Room() ;
-      if (!customCoachRoutine) myGame = new Game(newRoom, routineCommand) ;
-      else myGame = new Game(newRoom, customRoutineCommand) ;
-      isPlaying = true ;
-    } 
-    else if(isPlaying)
-    {  
-      setupDisplay() ;
-      if (!myGame.isGameOver()) newRoom.drawRoom();
-      else 
+      //if (countdown() && !isPlaying)
+      if (!isPlaying)
       {
-        isReadyToPlay = false ;
-        isPlaying = false ;
         newRoom = new Room() ;
-        routineCommand = "" ; 
-        warning ="" ;
+        
+        if (!customCoachRoutine)
+        {
+          if (routineCommand.length() != 11)
+          { 
+            background(101, 176, 152); 
+            textSize(32) ;
+            fill(255) ;
+            text("Make sure all options are filled out", 30, 30, 540, 540);
+          } else {
+            myMasterGame = new MasterGame(newRoom,routineCommand);
+            isPlaying = true ;
+          }
+        } else {
+            myMasterGame = new MasterGame(newRoom,customRoutineCommand);
+            isPlaying = true ;
+        }
+      } 
+      else if(isPlaying)
+      {  
+        setupDisplay() ;   
+        //newRoom.drawRoom();  
+        if (!myMasterGame.areGamesOver()) newRoom.drawRoom();
+        else 
+        {
+          isReadyToPlay = false ;
+          isPlaying = false ;
+          newRoom = new Room() ;
+          routineCommand = "" ; 
+          warning ="" ;
+        }
       }
+    } 
+    else
+    {
+      background(101, 176, 152); 
+      fill(255) ;
+      textSize(32) ;
+      text("Click start to play the chosen routine: " + warning, 30, 200, 540, 540) ;
     }
-  } 
-  else
-  {
-    background(101, 176, 152); 
-    fill(255) ;
-    textSize(32) ;
-    text("Click start to play the chosen routine: " + warning, 30, 200, 540, 540) ;
-  }
+  
 }
 
 void reset()
@@ -132,7 +142,25 @@ void reset()
 
 void mousePressed()
 { 
-  if (myGame.isGameStarted())
+  if (myMasterGame.didGamesStarted())
+  {
+     if (isFirstClick || !(mouseX == prevX && mouseY == prevY))
+    {
+      prevX = mouseX ;
+      prevY = mouseY ;
+      isFirstClick = false ;
+      //println("mouse Pressed: Calling handleSingleClick");
+      myMasterGame.handleSingleClick(mouseX, mouseY) ;
+      firstClickTime = millis() ;
+    } else  //second click
+    {
+      //sprintln("mouse Pressed: Calling handleDoubleClick");
+      myMasterGame.handleDoubleClick(mouseX, mouseY , millis() - firstClickTime) ;
+      isFirstClick = true ;
+    }
+  }
+  
+  /*if (myGame.isGameStarted())
   {
     if (isFirstClick || !(mouseX == prevX && mouseY == prevY))
     {
@@ -148,7 +176,7 @@ void mousePressed()
       myGame.handleDoubleClick(mouseX, mouseY , millis() - firstClickTime) ;
       isFirstClick = true ;
     }
-  }
+  }*/
 }
 
 void setupImages() 
@@ -213,7 +241,592 @@ void printOnGround(int n)
   }
 }
 
-class Game
+// MISSING ABILITY TO PLAY ONE GAME OVER THE OTHER
+
+class MasterGame
+{
+    ArrayList games;
+    boolean didTheGamesStarted;
+    String command;
+    GameInterface currentGame;
+    int currentGameNumber;
+    Room myRoom;
+    
+    MasterGame(Room r, String c)
+    {
+      //println("Master Game Constructor");
+      currentGameNumber = 0;
+      didTheGamesStarted = true;
+      myRoom = r; 
+      games = new ArrayList();
+      command = c;
+      parseString(command);
+      startGames();
+    }
+    
+    void startGames()
+    {
+      currentGame = games.get(currentGameNumber);
+      currentGame.createRoutine();
+      currentGame.startRoutine();
+    }
+    
+    void handleSingleClick(int x, int y)
+    {
+      if (currentGame != null) currentGame.handleSingleClick(x,y);
+      else 
+        println("Current game is null");
+    }
+    
+    void handleDoubleClick(int x, int y)
+    {
+      if (currentGame != null) currentGame.handleDoubleClick(x,y);
+      else 
+        println("Current game is null");
+    }
+    
+    boolean didGamesStarted(){
+      return  didTheGamesStarted;
+    }
+    
+    void areGamesOver(){
+      
+      if (games.size() == 0) return true;
+      else
+      {
+        if (currentGame.checkStatus())
+        {
+          println("areGamesOver called: Check Status returned true");
+          //println(games.size());
+          //games.remove(0);
+          currentGameNumber++;
+          startGames();
+        }
+      }
+      
+      return false;
+    }
+    
+    int findNextRoutineIndex(String comm, int i)
+    {
+      for (int j = i; j< comm.length() ; j++)
+      {
+        String ch = comm.substring(j,j+1);
+         switch (ch)
+         {
+           case GROUND_CHASE:
+          
+           case THREE_WALL_CHASE:
+          
+           case X_CUE:
+          
+           case CHASE:
+          
+           case HOME_CHASE:
+          
+           case FLY:
+          
+           case HOME_FLY:
+          
+           case "U": return j;
+            
+         }
+      }
+      
+      return comm.length();
+    }
+    
+    void parseString(String comm)
+    {
+      int i = 0;
+      
+      println(comm.substring(i,i+1));
+      
+      while (i<comm.length())
+      {
+        
+       switch (comm.substring(i,i+1))
+       {
+         case GROUND_CHASE:
+          
+         case THREE_WALL_CHASE:
+        
+         case X_CUE:
+        
+         case CHASE:
+        
+         case HOME_CHASE:
+        
+         case FLY:
+        
+         case HOME_FLY:
+         
+         Game newGame = new Game(myRoom,comm.substring(i,i+11));
+         games.add(newGame);
+         i=i+11;
+         break;
+        
+         case "U": 
+         int end = findNextRoutineIndex(comm,i+1);
+         CustomGame newCustomGame = new CustomGame(myRoom,comm.substring(i,end));
+         games.add(newCustomGame);
+         i=end;
+         break;
+       }
+       
+      }
+      
+      println("# of games: " + games.size() );
+    }
+   
+    
+    Game handleExistingRoutine(String type){
+      
+      String existingRoutineCommand;
+      Game newGame = null;
+      
+      if (type.equals(THREE_WALL_CHASE)) existingRoutineCommand = "tn010100000";
+      else if (type.equals(HOME_CHASE)) existingRoutineCommand = "gn010100000";
+      else if (type.equals(HOME_FLY)) existingRoutineCommand = "jn010100000";
+      else if (type.equals(GROUND_CHASE)) existingRoutineCommand = "mn010100000";
+      else if (type.equals(X_CUE)) existingRoutineCommand = "xn010100000";
+      else return newGame;
+      
+      Game newGame = new Game(myRoom,existingRoutineCommand);
+      
+      return newGame;
+    }
+    
+    
+}
+
+interface GameInterface
+{
+  
+   void handleSingleClick(int x, int y);
+   void handleDoubleClick(int x, int y);
+   void createRoutine();
+   boolean checkStatus();
+   void startRoutine();
+}
+
+class CustomGame implements GameInterface
+{
+  
+  Room myRoom;
+  boolean isThisGameOver;
+  boolean isThisGameStarted;
+  String command;
+  Routine myCustomRoutine;
+  int rounds;
+  int roundsPlayed;
+  
+  CustomGame(Room r, String c)
+  {
+    println("Starting custom game");
+    myRoom = r;
+    command = c;
+    roundsPlayed = 0;
+    createRoutine();
+  }
+  
+  void startRoutine(){
+    println("start Routine custom game");
+    myCustomRoutine.startRoutine(); 
+  }
+  
+  boolean isGameStarted() { 
+    return isThisGameStarted;
+  }
+  boolean isGameOver() { 
+    return checkStatus();
+  }
+  
+  boolean checkStatus() {
+    
+    if (rounds == roundsPlayed){
+      println("Game Finished: Check Status Called");
+      return true;
+    }
+    else
+      return false;
+  }
+  
+  void handleSingleClick(int x, int y)
+  {
+    //println("handle single click in Custom Game"); 
+    if ( myCustomRoutine.handleInput(x, y, 1, 0) )
+    { 
+      println("Single clickkkkkkk");
+      roundsPlayed++;
+      println("roundsPlayed: "+roundsPlayed+" rounds: "+rounds);
+    }
+  }
+  
+  void handleDoubleClick(int x, int y)
+  {
+    //println("handle double click in Custom Game"); 
+    if ( myCustomRoutine.handleInput(x, y, 2, 0) )
+    { 
+      //println("Double clickkkkkkk");
+      roundsPlayed++;
+      println("roundsPlayed: "+roundsPlayed+" rounds: "+rounds);
+    }
+  }
+  
+  void createRoutine()
+  {
+    // Start playing custom routine
+    rounds = int(command.substring(1, 3));
+    //println("Rounds: " +rounds+" RoundsPlayed: "+roundsPlayed);
+    //println("Rounds: "+rounds);
+    myCustomRoutine = new CustomRoutine(myRoom, command);
+  }
+  
+}
+
+class Round
+{
+  ArrayList steps;
+  
+  Round()
+  {
+    steps = new ArrayList(); 
+  }
+  
+  int getTotalNumberOfSteps()
+  {
+    return steps.size(); 
+  }
+  
+  void addStep(Step s)
+  {
+     steps.add(s);
+  }
+  
+  Step getStep(int stepNumber)
+  {
+    return (Step)(steps.get(stepNumber));
+  }
+}
+
+class Step
+{
+  ArrayList targets;
+  String stepType;
+  
+  Step(ArrayList t, String s)
+  {
+    stepType = s;
+    targets = t;
+  }
+  
+  String getStepStype(){ return stepType;}
+  
+  void addTarget(Target t) { targets.add(t) };
+  
+}
+
+class Target
+{
+  ArrayList pads;
+  
+  Target()
+  {
+    pads = new ArrayList();
+  }
+  
+  void addPadToTarget(Pad newPad)
+  {
+    pads.add(newPad);
+  }
+  
+}
+
+class CustomRoutine extends Routine
+{ 
+  ArrayList roundsArray;
+  ArrayList padsToLight;
+  String command;
+  Round currentRound;
+  int numberOfRounds;
+  int currentRoundNumber;
+  int currentStepNumber;
+  int currentCommandPosition;
+  int targetsClickedInStep;
+  
+  CustomRoutine(Room r, String c)
+  {
+    super.startRoutine();
+    myRoom = r;
+    command = c;
+    targetsClickedInStep = 0;
+    roundsArray = new ArrayList();
+    padsToLight = new ArrayList();
+    currentRoundNumber = 0;
+    currentCommandPosition = 3;
+    currentStepNumber = 0;
+    numberOfRounds = int(command.substring(1,3));
+    storeCommand();
+    //println("After storeCommand");
+    //generateStep();
+  }
+  
+  void startRoutine(){
+    println("start Routine Custom routine");
+    generateStep();  
+  }
+
+  void generateStep(){
+    
+    super.generateStep(); 
+    println("Generate Step Custom Routine");
+    currentRound = roundsArray.get(currentRoundNumber);
+    
+    if (currentRound.getTotalNumberOfSteps() == currentStepNumber)
+    {
+      clearPads();
+      println("ROUND IS OVER");
+      currentStepNumber = 0;
+      currentRoundNumber++;
+      generateStep();
+     // Round is over
+    }else{
+      // Round is not over, keep feeding steps 
+      
+      ArrayList s = currentRound.steps;
+      //println("Number of steps: " +s.size());
+      Step currStep = s.get(currentStepNumber);
+      ArrayList tArray = currStep.targets;
+      //println("Round #:"+ currentRoundNumber+" Step #: "+currentStepNumber+" # of Targets: "+currStep.targets.size());
+     
+      String x = currStep.getStepStype();
+      
+      if (x.equals("N"))
+      {
+        if (targetsClickedInStep == 0)
+        {
+          for (int i = 0; i<tArray.size() ; i++)
+          {
+            Target newTarget = tArray.get(i);
+            //println("Target Number: "+i);
+            for (int j = 0; j<newTarget.pads.size(); j++)
+            {
+              Pad currPad = newTarget.pads.get(j);
+              currPad.setColor(green); 
+            }
+          }
+        } 
+        
+      } else if (currStep.stepType.equals("G"))
+      {
+        //println("Ground");
+        //println("# of Targets: " +tArray.size());
+        for (int i = 0; i<tArray.size() ; i++)
+        {
+          Target newTarget = tArray.get(i);
+          //println("Target Number: "+i);
+          for (int j = 0; j<newTarget.pads.size(); j++)
+          {
+            Pad currPad = newTarget.pads.get(j);
+            currPad.setColor(yellow); 
+          }
+        }
+      }
+   
+    }
+  }
+  
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
+  {
+    super.handleInput(x, y, clickNum, deltaClickTime) ;
+    ArrayList s = currentRound.steps;
+    Step currStep = s.get(currentStepNumber);
+    ArrayList tArray = currStep.targets;
+    String type = currStep.getStepStype();
+    Target targetToLight;
+    
+    println(type);
+    
+    if ((clickNum == 2) && (type.equals("N")) )
+    {
+        if (myRoom.colorOfClick(x,y) == green)
+        { 
+            targetsClickedInStep++;
+            
+            if (targetsClickedInStep >= tArray.size()){
+              targetsClickedInStep++;
+              println("Step"+currentStepNumber+" In Round"+currentRoundNumber+" is finished");
+              currentStepNumber++;
+              targetsClickedInStep = 0;
+              
+              if (currentRound.getTotalNumberOfSteps() == currentStepNumber)
+              {
+                clearPads();
+                println("rounds is NOW over");
+                currentStepNumber = 0;
+                currentRoundNumber++;
+                if (numberOfRounds == currentRoundNumber) return true;
+                generateStep();
+                return true;
+              }
+              
+            }
+            
+            for (int i = 0; i<tArray.size() ; i++)
+            {
+              Target newTarget = tArray.get(i);
+              for (int j = 0; j<newTarget.pads.size(); j++)
+              {
+                Pad clickedPad = myRoom.getPad(x,y);
+                Pad currPad = newTarget.pads.get(j);
+                if (clickedPad == currPad) {
+                  //println("The clicked pad exists as a target");
+                  targetToLight = newTarget;
+                }
+              }
+            }
+            
+            if (targetToLight != null) {
+              //println("The clicked pad exists as a target");
+              lightTarget(targetToLight);
+            }
+            
+            //if (type.equals("G")) clearPads();
+            
+            generateStep();
+            
+          //return true;
+        }
+    } else if ((clickNum == 1) && (type.equals("G"))) {
+      println("One click ground step");
+       if (myRoom.colorOfClick(x,y) == yellow)
+       {
+          
+          targetsClickedInStep++;
+            
+          if (targetsClickedInStep >= tArray.size()){
+            targetsClickedInStep++;
+            println("Step"+currentStepNumber+" In Round"+currentRoundNumber+" is finished");
+            currentStepNumber++;
+            targetsClickedInStep = 0;
+            
+            if (currentRound.getTotalNumberOfSteps() == currentStepNumber)
+            {
+              clearPads();
+              println("rounds is NOW over");
+              currentStepNumber = 0;
+              currentRoundNumber++;
+              if (numberOfRounds == currentRoundNumber) return true;
+              generateStep();
+              return true;
+            }
+            
+          }
+         
+         Target newTarget = tArray.get(0);
+         Pad clickedPad = myRoom.getPad(x,y);
+         
+          for (int j = 0; j<newTarget.pads.size(); j++)
+          {
+            Pad clickedPad = myRoom.getPad(x,y);
+            Pad currPad = newTarget.pads.get(j);
+            if (clickedPad == currPad) {
+              //println("The clicked pad exists as a target");
+              targetToLight = newTarget;
+            }
+          }
+         
+         println("erase");
+         if (type.equals("G")) clearPads();
+         
+         generateStep();
+       }
+    }
+    
+    return false; 
+  }
+  
+  void clearPads()
+  {
+    for (int i = 0; i<5;i++)
+      myRoom.lightWall(i,padOffColor);
+  }
+  
+  void lightTarget(Target t)
+  {
+    for (int i = 0; i < t.pads.size() ; i++)
+    {
+      println("Light Target");
+      Pad currPad = t.pads.get(i);
+      currPad.setColor(blue);
+    }
+  }
+  
+  void storeCommand()
+  {
+    int numberOfStepsPerRound;
+    Round newRound;
+    String curr;
+    ArrayList pads = new ArrayList();
+    ArrayList targets = new ArrayList();
+    Target newTarget;
+    println("StoreCommand");
+    curr = str(command.charAt(currentCommandPosition));
+    
+    while (currentCommandPosition < command.length())
+    {
+       if (curr.equals("R"))
+       {
+         newRound = new Round();
+         roundsArray.add(newRound);
+         currentCommandPosition++;
+       } 
+       else if (curr.equals("#"))
+       {
+         numberOfStepsPerRound = curr.substring(currentCommandPosition+1,currentCommandPosition+3);
+         currentCommandPosition+=3;
+       } 
+       else if (curr.equals("*")) 
+       {
+         println("New Target");
+         if (newTarget != null) targets.add(newTarget);
+         //targets.add(newTarget);
+         newTarget = new Target();
+         currentCommandPosition++;
+       }
+       else if (curr.equals("S")) 
+       {
+         // Remember to add newTarget to targetArray
+         targets.add(newTarget);
+         
+         String stepType = str(command.charAt(currentCommandPosition+1));
+         Step newStep = new Step(targets,stepType);
+         newRound.addStep(newStep);
+         targets = null;
+         targets = new ArrayList();
+         newTarget = null;
+         //println("step.targets after removal: "+newStep.targets.size());
+         currentCommandPosition+=2;
+       }
+       else 
+       {
+         int wallID = int(command.charAt(currentCommandPosition));
+         int row = int(command.charAt(currentCommandPosition+1));
+         int column = int(command.charAt(currentCommandPosition+2));
+         println(wallID+" "+row+" "+column);
+         Pad newPad = myRoom.getPadRC(wallID,row,column);
+         newTarget.addPadToTarget(newPad);
+         currentCommandPosition+=3;
+       }
+       curr = str(command.charAt(currentCommandPosition));
+    }
+  
+  }
+  
+}
+
+class Game implements GameInterface
 {
   boolean isThisGameOver ;
   boolean isThisGameStarted ;
@@ -224,28 +837,34 @@ class Game
   int routineTime ;
   int rounds ;
   int roundsPlayed;
+  String command;
   
   Routine myRoutine ;
   Room myRoom;
   boolean isRoutineGroundBased ;
 
-  Game(Room r, String command)
+  Game(Room r, String c)
   {
     isThisGameOver = false;
     isThisGameStarted = true;
     myRoom = r;
+    command = c;
     rounds = -1; 
     roundsPlayed = 0;
     gameTime = 0;
     routineTime = 0;
     routineTimeStart = 0;
-    createRoutine(command);
+    //createRoutine(command);
     coachFeedback = false;
     //playTest();
   }
 
+  void startRoutine(){
+    myRoutine.startRoutine(); 
+  }
+
   // Method that breaks the command and creates a routine
-  void createRoutine(String command)
+  void createRoutine()
   {  
     String type = str(command.charAt(0));
     String difficulty = str(command.charAt(1));
@@ -267,10 +886,12 @@ class Game
    
     startTime = millis() ;
     isRoutineGroundBased = false; 
-    if (type.equals(CHASE_ME)) myRoutine = new ChaseRoutine(myRoom, difficulty, missingWall);
+    if (type.equals(CHASE)) {
+      myRoutine = new ChaseRoutine(myRoom, difficulty, missingWall);
+      //myRoutine.startRoutine();
+    }
     else if (type.equals(THREE_WALL_CHASE)){
-      if (!customCoachRoutine) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
-      else myRoutine = new ThreeWallChaseCustomRoutine(myRoom,difficulty,missingWall,command);
+      myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
     }
     else if (type.equals(HOME_CHASE))
     {
@@ -301,6 +922,7 @@ class Game
   boolean isGameOver() { 
     return checkStatus();
   }
+  
   boolean isGameGroundBased() { 
     return isRoutineGroundBased ;
   }
@@ -665,8 +1287,10 @@ class xCueRoutine extends Routine
     successClicks = 0;
     myStats = new Stats();
     myStats.setXTime(3);
-    generateStep();
+    //generateStep();
   }
+  
+  void startRoutine() {generateStep();}
   
   boolean isGroundPadPressed(){
     return groundPadPressed; 
@@ -1032,8 +1656,10 @@ class GroundChaseRoutine extends Routine
      redPadArray = new Pad[(EW_HEIGHT-2)];
      previousPadIndex = -1;
      initRowRepetitionArray();  // Set array values to false
-     generateStep();
+     //generateStep();
    }
+   
+   void startRoutine() {generateStep();}
    
    void generateStep()
    {
@@ -1234,8 +1860,11 @@ class HomeChaseRoutine extends Routine
     successClicks = 0;    // keeps track on the number of succesfull clicks
     groundPadPressed = false;
     groundPad = null;
-    generateStep();
+    //generateStep();
   }
+  
+  void startRoutine() {generateStep();}
+  
   boolean isGroundPadPressed() { 
     return groundPadPressed ;
   } 
@@ -1396,8 +2025,10 @@ class HomeFlyRoutine extends Routine
     myStats = new Stats() ; 
     successClicks = 0;    // keeps track on the number of succesfull clicks
     groundPadPressed = false;
-    generateStep();
+    //generateStep();
   }
+  
+  void startRoutine() {generateStep();}
 
   void generateStep()
   {
@@ -1559,6 +2190,11 @@ class FlyRoutine extends Routine
     wall1 = int(random(4)) + 1;
     wall2 = (wall1 % 4) + 1;
     myStats = new Stats() ; 
+    //generateStep();
+    //generateStep();
+  }
+  
+  void startRoutine() {
     generateStep();
     generateStep();
   }
@@ -1659,6 +2295,11 @@ class ChaseRoutine extends Routine
     wall1 = int(random(4)) + 1;
     wall2 = wall1 % 4 + 1;
     myStats = new Stats() ;  
+    //generateStep();
+    //generateStep();
+  }
+  
+  void startRoutine() {
     generateStep();
     generateStep();
   }
@@ -1730,8 +2371,10 @@ class ThreeWallChaseRoutine extends Routine
     greenPads = new ArrayList() ;
     redPads = new ArrayList() ;
     myStats = new Stats() ;
-    generateStep();
+    //generateStep();
   }
+  
+  void startRoutine() {generateStep();}
 
   void generateStep() 
   {

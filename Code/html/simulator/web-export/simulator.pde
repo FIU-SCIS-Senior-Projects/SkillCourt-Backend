@@ -1,6 +1,11 @@
-//String routineCommand = "pa003000000";
-//String warning ="" ;
-//boolean isReadyToPlay = true ;
+//to run in java
+/*String routineCommand = "ca031100000";
+String warning ="" ;
+boolean isReadyToPlay = true ;
+void playTest(){}
+void playSuccessSound(){}
+void playMissSound(){}
+*/
 
 //pad attributes
 color lineColor = color(0, 0, 0);
@@ -54,6 +59,7 @@ Room newRoom ;
 boolean isPlaying;
 PImage soccerBall ;
 Game myGame; 
+MasterGame myMasterGame;
 
 double ballMass = 0.45;
 
@@ -77,42 +83,53 @@ void setup()
 
 void draw()
 {
-  if (isReadyToPlay)                                                        
-  {  
-    if (routineCommand.length() != 11)
+    if (isReadyToPlay)                                                        
     { 
-      background(101, 176, 152); 
-      textSize(32) ;
-      fill(255) ;
-      text("Make sure all options are filled out", 30, 30, 540, 540);
-    }
-    else if (countdown() && !isPlaying)
-    {
-      newRoom = new Room() ;
-      myGame = new Game(newRoom, routineCommand) ;
-      isPlaying = true ;
-    } 
-    else if(isPlaying)
-    {  
-      setupDisplay() ;
-      if (!myGame.isGameOver()) newRoom.drawRoom();
-      else 
+      //if (countdown() && !isPlaying)
+      if (!isPlaying)
       {
-        isReadyToPlay = false ;
-        isPlaying = false ;
         newRoom = new Room() ;
-        routineCommand = "" ; 
-        warning ="" ;
+        
+        if (!customCoachRoutine)
+        {
+          if (routineCommand.length() != 11)
+          { 
+            background(101, 176, 152); 
+            textSize(32) ;
+            fill(255) ;
+            text("Make sure all options are filled out", 30, 30, 540, 540);
+          } else {
+            myMasterGame = new MasterGame(newRoom,routineCommand);
+            isPlaying = true ;
+          }
+        } else {
+            myMasterGame = new MasterGame(newRoom,customRoutineCommand);
+            isPlaying = true ;
+        }
+      } 
+      else if(isPlaying)
+      {  
+        setupDisplay() ;   
+        //newRoom.drawRoom();  
+        if (!myMasterGame.areGamesOver()) newRoom.drawRoom();
+        else 
+        {
+          isReadyToPlay = false ;
+          isPlaying = false ;
+          newRoom = new Room() ;
+          routineCommand = "" ; 
+          warning ="" ;
+        }
       }
+    } 
+    else
+    {
+      background(101, 176, 152); 
+      fill(255) ;
+      textSize(32) ;
+      text("Click start to play the chosen routine: " + warning, 30, 200, 540, 540) ;
     }
-  } 
-  else
-  {
-    background(101, 176, 152); 
-    fill(255) ;
-    textSize(32) ;
-    text("Click start to play the chosen routine: " + warning, 30, 200, 540, 540) ;
-  }
+  
 }
 
 void reset()
@@ -125,7 +142,25 @@ void reset()
 
 void mousePressed()
 { 
-  if (myGame.isGameStarted())
+  if (myMasterGame.didGamesStarted())
+  {
+     if (isFirstClick || !(mouseX == prevX && mouseY == prevY))
+    {
+      prevX = mouseX ;
+      prevY = mouseY ;
+      isFirstClick = false ;
+      //println("mouse Pressed: Calling handleSingleClick");
+      myMasterGame.handleSingleClick(mouseX, mouseY) ;
+      firstClickTime = millis() ;
+    } else  //second click
+    {
+      //sprintln("mouse Pressed: Calling handleDoubleClick");
+      myMasterGame.handleDoubleClick(mouseX, mouseY , millis() - firstClickTime) ;
+      isFirstClick = true ;
+    }
+  }
+  
+  /*if (myGame.isGameStarted())
   {
     if (isFirstClick || !(mouseX == prevX && mouseY == prevY))
     {
@@ -141,7 +176,7 @@ void mousePressed()
       myGame.handleDoubleClick(mouseX, mouseY , millis() - firstClickTime) ;
       isFirstClick = true ;
     }
-  }
+  }*/
 }
 
 void setupImages() 
@@ -206,7 +241,477 @@ void printOnGround(int n)
   }
 }
 
-class Game
+class MasterGame
+{
+    ArrayList games;
+    boolean didTheGamesStarted;
+    String command;
+    GameInterface currentGame;
+    Room myRoom;
+    
+    MasterGame(Room r, String c)
+    {
+      //println("Master Game Constructor");
+      didTheGamesStarted = true;
+      myRoom = r; 
+      games = new ArrayList();
+      command = c;
+      parseString(command);
+      //startGames();
+    }
+    
+    void startGames()
+    {
+      //currentGame = games.get(0);
+      //println("Command before create routine: "+command);
+      //currentGame.createRoutine();
+    }
+    
+    void handleSingleClick(int x, int y)
+    {
+      if (currentGame != null) currentGame.handleSingleClick(x,y);
+      else 
+        println("Current game is null");
+    }
+    
+    void handleDoubleClick(int x, int y)
+    {
+      if (currentGame != null) currentGame.handleDoubleClick(x,y);
+      else 
+        println("Current game is null");
+    }
+    
+    boolean didGamesStarted(){
+      return  didTheGamesStarted;
+    }
+    
+    void areGamesOver(){
+      
+      if (games.size() == 0) return true;
+      else
+      {
+        if (currentGame.checkStatus())
+          games.remove(0);
+      }
+      
+      return false;
+    }
+    
+    void parseString(String command){
+      
+      println(command);
+      String newCreatedCommand;
+      String resultingCommand = "";
+      String type;
+   
+      if (!customCoachRoutine) {
+        Game newGame = new Game(myRoom,command);
+        games.add(newGame);
+      } else {
+        
+        for (int i = 0; i<command.length(); i++){
+          if (type.equals("g"))
+          {
+            if (!resultingCommand.equals("")) {
+              println("Custom Game");
+              CustomGame newCustomGame = new CustomGame(myRoom,resultingCommand);
+              games.add(newCustomGame);
+            }
+            Game newGame = handleExistingRoutine(type);
+            if (newGame != null){
+              println("Existing Routine Game created");
+              games.add(newGame);
+            }
+            resultingCommand = "";
+          } else {
+            resultingCommand += type; 
+          }
+        }
+        
+        if (games.size() == 0) {
+          println("Custom Game only");
+          pritntln("resultingCommand: " +resultingCommand);
+          CustomGame newCustomGame = new CustomGame(myRoom,resultingCommand);
+          games.add(newCustomGame);
+        }
+      }
+    
+    }
+    
+    Game handleExistingRoutine(String type){
+      
+      
+      
+      String existingRoutineCommand;
+      Game newGame = null;
+      
+      if (type.equals(THREE_WALL_CHASE)) existingRoutineCommand = "tn010100000";
+      else if (type.equals(HOME_CHASE)) existingRoutineCommand = "gn010100000";
+      else if (type.equals(HOME_FLY)) existingRoutineCommand = "jn010100000";
+      else if (type.equals(GROUND_CHASE)) existingRoutineCommand = "mn010100000";
+      else if (type.equals(X_CUE)) existingRoutineCommand = "xn010100000";
+      else return newGame;
+      
+      Game newGame = new Game(myRoom,existingRoutineCommand);
+      
+      return newGame;
+    }
+    
+    
+}
+
+interface GameInterface
+{
+   void handleSingleClick(int x, int y);
+   void handleDoubleClick(int x, int y);
+   void createRoutine();
+   boolean checkStatus();
+}
+
+class CustomGame implements GameInterface
+{
+  
+  Room myRoom;
+  boolean isThisGameOver;
+  boolean isThisGameStarted;
+  String command;
+  CustomRoutine myCustomRoutine;
+  int rounds;
+  int roundsPlayed;
+  
+  CustomGame(Room r, String c)
+  {
+    println("Starting custom game");
+    myRoom = r;
+    command = c;
+    roundsPlayed = 0;
+    createRoutine();
+  }
+  
+  boolean isGameStarted() { 
+    return isThisGameStarted;
+  }
+  boolean isGameOver() { 
+    return checkStatus();
+  }
+  
+  boolean checkStatus() {
+    
+    if (rounds == roundsPlayed) return true;
+    else
+      return false;
+  }
+  
+  void handleSingleClick(int x, int y)
+  {
+    //println("handle single click in Custom Game"); 
+  }
+  
+  void handleDoubleClick(int x, int y)
+  {
+    //println("handle double click in Custom Game"); 
+    if ( myCustomRoutine.handleInput(x, y, 2, 0) )
+    { 
+      //println("Double clickkkkkkk");
+      roundsPlayed++;
+    }
+  }
+  
+  void createRoutine()
+  {
+    // Start playing custom routine
+    rounds = int(command.substring(1, 3));
+    //println("Rounds: " +rounds+" RoundsPlayed: "+roundsPlayed);
+    //println("Rounds: "+rounds);
+    myCustomRoutine = new CustomRoutine(myRoom, command);
+  }
+  
+}
+
+class Round
+{
+  ArrayList steps;
+  
+  Round()
+  {
+    steps = new ArrayList(); 
+  }
+  
+  int getTotalNumberOfSteps()
+  {
+    return steps.size(); 
+  }
+  
+  void addStep(Step s)
+  {
+     steps.add(s);
+  }
+  
+  Step getStep(int stepNumber)
+  {
+    return (Step)(steps.get(stepNumber));
+  }
+}
+
+class Step
+{
+  ArrayList targets;
+  String stepType;
+  
+  Step(ArrayList t, String s)
+  {
+    stepType = s;
+    targets = t;
+    println("Step initialized");
+  }
+  
+  String getStepStype(){ return stepType;}
+  
+  void addTarget(Target t) { targets.add(t) };
+  
+}
+
+class Target
+{
+  ArrayList pads;
+  
+  Target()
+  {
+    pads = new ArrayList();
+  }
+  
+  void addPadToTarget(Pad newPad)
+  {
+    pads.add(newPad);
+  }
+  
+}
+
+class CustomRoutine extends Routine
+{ 
+  ArrayList roundsArray;
+  ArrayList padsToLight;
+  String command;
+  Round currentRound;
+  int currentRoundNumber;
+  int currentStepNumber;
+  int currentCommandPosition;
+  int targetsClickedInStep;
+  
+  CustomRoutine(Room r, String c)
+  {
+    super.startRoutine();
+    targetsClickedInStep = 0;
+    roundsArray = new ArrayList();
+    padsToLight = new ArrayList();
+    currentRoundNumber = 0;
+    currentCommandPosition = 3;
+    currentStepNumber = 0;
+    myRoom = r;
+    command = c;
+    storeCommand();
+    //println("After storeCommand");
+    //generateStep();
+  }
+  
+  void generateStep(){
+    
+    super.generateStep(); 
+    println("Generate Step Custom Routine");
+    currentRound = roundsArray.get(currentRoundNumber);
+    
+    if (currentRound.getTotalNumberOfSteps() == currentStepNumber)
+    {
+      clearPads();
+      println("ROUND IS OVER");
+      currentStepNumber = 0;
+      currentRoundNumber++;
+      generateStep();
+     // Round is over
+    }else{
+      // Round is not over, keep feeding steps 
+      
+      ArrayList s = currentRound.steps;
+      //println("Number of steps: " +s.size());
+      Step currStep = s.get(currentStepNumber);
+      ArrayList tArray = currStep.targets;
+      //println("Round #:"+ currentRoundNumber+" Step #: "+currentStepNumber+" # of Targets: "+currStep.targets.size());
+     
+      String x = currStep.getStepStype();
+      
+      if (x.equals("N"))
+      {
+        if (targetsClickedInStep == 0)
+        {
+          for (int i = 0; i<tArray.size() ; i++)
+          {
+            Target newTarget = tArray.get(i);
+            //println("Target Number: "+i);
+            for (int j = 0; j<newTarget.pads.size(); j++)
+            {
+              Pad currPad = newTarget.pads.get(j);
+              currPad.setColor(green); 
+            }
+          }
+        } 
+        
+      } else if (currStep.stepType.equals("G"))
+      {
+        //println("Ground");
+        //println("# of Targets: " +tArray.size());
+        for (int i = 0; i<tArray.size() ; i++)
+        {
+          Target newTarget = tArray.get(i);
+          //println("Target Number: "+i);
+          for (int j = 0; j<newTarget.pads.size(); j++)
+          {
+            Pad currPad = newTarget.pads.get(j);
+            currPad.setColor(green); 
+          }
+        }
+      }
+   
+    }
+  }
+  
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
+  {
+    super.handleInput(x, y, 2, deltaClickTime) ;
+    ArrayList s = currentRound.steps;
+    Step currStep = s.get(currentStepNumber);
+    ArrayList tArray = currStep.targets;
+    String type = currStep.getStepStype();
+    Target targetToLight;
+    
+    if (currentRoundNumber>roundsArray.size())
+    {
+      println("Round is over");
+      return true; 
+    }
+    
+    if (myRoom.colorOfClick(x,y) == green)
+    { 
+        targetsClickedInStep++;
+        
+        if (targetsClickedInStep >= tArray.size()){
+          targetsClickedInStep++;
+          println("Step"+currentStepNumber+" In Round"+currentRoundNumber+" is finished");
+          currentStepNumber++;
+          targetsClickedInStep = 0;
+        }
+        
+        for (int i = 0; i<tArray.size() ; i++)
+        {
+          Target newTarget = tArray.get(i);
+          for (int j = 0; j<newTarget.pads.size(); j++)
+          {
+            Pad clickedPad = myRoom.getPad(x,y);
+            Pad currPad = newTarget.pads.get(j);
+            if (clickedPad == currPad) {
+              //println("The clicked pad exists as a target");
+              targetToLight = newTarget;
+            }
+          }
+        }
+        
+        if (targetToLight != null) {
+          //println("The clicked pad exists as a target");
+          lightTarget(targetToLight);
+        }
+        
+        if (type.equals("G")) clearPads();
+        
+        generateStep();
+        
+        
+   
+      //return true;
+    }
+    
+    return false; 
+  }
+  
+  void clearPads()
+  {
+    for (int i = 0; i<5;i++)
+      myRoom.lightWall(i,padOffColor);
+  }
+  
+  void lightTarget(Target t)
+  {
+    for (int i = 0; i < t.pads.size() ; i++)
+    {
+      println("Light Target");
+      Pad currPad = t.pads.get(i);
+      currPad.setColor(blue);
+    }
+  }
+  
+  void storeCommand()
+  {
+    int numberOfStepsPerRound;
+    Round newRound;
+    String curr;
+    ArrayList pads = new ArrayList();
+    ArrayList targets = new ArrayList();
+    Target newTarget;
+    println("StoreCommand");
+    curr = str(command.charAt(currentCommandPosition));
+    int numberOfRounds = curr.substring(1,3);
+    
+    while (currentCommandPosition < command.length())
+    {
+       if (curr.equals("R"))
+       {
+         newRound = new Round();
+         roundsArray.add(newRound);
+         currentCommandPosition++;
+       } 
+       else if (curr.equals("#"))
+       {
+         numberOfStepsPerRound = curr.substring(currentCommandPosition+1,currentCommandPosition+3);
+         currentCommandPosition+=3;
+       } 
+       else if (curr.equals("*")) 
+       {
+         println("New Target");
+         if (newTarget != null) targets.add(newTarget);
+         //targets.add(newTarget);
+         newTarget = new Target();
+         currentCommandPosition++;
+       }
+       else if (curr.equals("S")) 
+       {
+         // Remember to add newTarget to targetArray
+         targets.add(newTarget);
+         
+         String stepType = str(command.charAt(currentCommandPosition+1));
+         Step newStep = new Step(targets,stepType);
+         newRound.addStep(newStep);
+         targets = null;
+         targets = new ArrayList();
+         newTarget = null;
+         //println("step.targets after removal: "+newStep.targets.size());
+         currentCommandPosition+=2;
+       }
+       else 
+       {
+         int wallID = int(command.charAt(currentCommandPosition));
+         int row = int(command.charAt(currentCommandPosition+1));
+         int column = int(command.charAt(currentCommandPosition+2));
+         println(wallID+" "+row+" "+column);
+         Pad newPad = myRoom.getPadRC(wallID,row,column);
+         newTarget.addPadToTarget(newPad);
+         currentCommandPosition+=3;
+       }
+       curr = str(command.charAt(currentCommandPosition));
+    }
+  
+  }
+  
+}
+
+class Game implements GameInterface
 {
   boolean isThisGameOver ;
   boolean isThisGameStarted ;
@@ -217,65 +722,73 @@ class Game
   int routineTime ;
   int rounds ;
   int roundsPlayed;
+  String command;
   
   Routine myRoutine ;
   Room myRoom;
   boolean isRoutineGroundBased ;
 
-  Game(Room r, String command)
+  Game(Room r, String c)
   {
     isThisGameOver = false;
     isThisGameStarted = true;
     myRoom = r;
+    command = c;
     rounds = -1; 
     roundsPlayed = 0;
     gameTime = 0;
     routineTime = 0;
     routineTimeStart = 0;
-    createRoutine(command);
+    //createRoutine(command);
     coachFeedback = false;
     //playTest();
   }
 
   // Method that breaks the command and creates a routine
-  void createRoutine(String command)
+  void createRoutine()
   {  
     String type = str(command.charAt(0));
     String difficulty = str(command.charAt(1));
+    
+    rounds = int(command.substring(2, 4));
+    
+    int missingWall = ( (command.substring(4,5).equals("1")) ? 1 : -1 ) * int(command.substring(5,6)) ;
 
-    rounds = int(command.substring(2, 5));
-    gameTime = int(command.substring(5, 9)) *60000;
+    if(missingWall > 0) myRoom.removeWall(missingWall) ;
+    
+    gameTime = int(command.substring(6, 9)) *60000;
     int timeBased = int(command.substring(9, 11));
     // Check if the game is timeBased or roundBased  
     if (rounds == 0) rounds = -1;
-    //else text(rounds-roundsPlayed, 100, 100);
     text(rounds-roundsPlayed, 100, 100);
     routineTime = timeBased*1000;
-    //println("timeBased: " + timeBased);
     
     if (routineTime > 0) routineTimeStart = millis();
    
     startTime = millis() ;
     isRoutineGroundBased = false; 
-    if (type.equals(CHASE_ME)) myRoutine = new ChaseRoutine(myRoom, difficulty);
-    else if (type.equals(THREE_WALL_CHASE)) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty);
+    if (type.equals(CHASE_ME)) myRoutine = new ChaseRoutine(myRoom, difficulty, missingWall);
+    else if (type.equals(THREE_WALL_CHASE)){
+      if (!customCoachRoutine) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
+      else myRoutine = new ThreeWallChaseCustomRoutine(myRoom,difficulty,missingWall,command);
+    }
     else if (type.equals(HOME_CHASE))
     {
-      myRoutine = new HomeChaseRoutine(myRoom, difficulty);
+      myRoutine = new HomeChaseRoutine(myRoom, difficulty, missingWall);
       isRoutineGroundBased = true;
-    } else if (type.equals(FLY))  myRoutine = new FlyRoutine(myRoom, difficulty); 
+    } else if (type.equals(FLY))  myRoutine = new FlyRoutine(myRoom, difficulty, missingWall); 
     else if (type.equals(HOME_FLY)) 
     {
-      myRoutine = new HomeFlyRoutine(myRoom, difficulty);
+      myRoutine = new HomeFlyRoutine(myRoom, difficulty, missingWall);
       isRoutineGroundBased = true ;
     }
     else if (type.equals(GROUND_CHASE))
     {
-      myRoutine = new GroundChaseRoutine(myRoom, difficulty); 
+      myRoutine = new GroundChaseRoutine(myRoom, difficulty, missingWall); 
       isRoutineGroundBased = true ; 
     }else if (type.equals(X_CUE))
     {
-      myRoutine = new xCueRoutine(myRoom, difficulty) ; 
+      myRoutine = new xCueRoutine(myRoom, difficulty, missingWall);  
       isRoutineGroundBased = true ;
     } else {
        println("Empty Routine command: Custom Coach routine");
@@ -288,6 +801,7 @@ class Game
   boolean isGameOver() { 
     return checkStatus();
   }
+  
   boolean isGameGroundBased() { 
     return isRoutineGroundBased ;
   }
@@ -300,8 +814,9 @@ void handleDoubleClick(int x, int y, int deltaClickTime)
     //text(rounds, 0, 150);
     //rounds--;
     roundsPlayed++;
-
+    println("Rounds Played: " +roundsPlayed);  
   }
+  
 }
 
 void handleSingleClick(int x, int y)
@@ -314,7 +829,6 @@ void handleSingleClick(int x, int y)
     //text(rounds, 0, 150);
     //rounds--;
     roundsPlayed++;
-
     // If you succesfully generatedStep then startTime = millis()
     if (routineTime > 0) startTime = millis();
   }
@@ -375,7 +889,7 @@ boolean checkStatus()
       return true;
     }
   }
-   else
+  else
   {
     if (rounds != -1)
       text("Rounds Left " + (rounds-roundsPlayed), 10, 10, 160, 160);
@@ -402,11 +916,179 @@ boolean checkStatus()
   return false;
 }
 
-void startGame() 
-{
-  isThisGameStarted = true;
-  isThisGameOver = false;
+  void startGame() 
+  {
+    isThisGameStarted = true;
+    isThisGameOver = false;
+  }
 }
+
+class ThreeWallChaseCustomRoutine extends Routine
+{
+  String command;
+  String padCommand;
+  int currentPosition;
+  int currentWallID;
+  int prevWallID;
+  ArrayList firstWall;
+  ArrayList secondWall;
+  ArrayList thirdWall;
+  ArrayList padsToLight;
+
+  ThreeWallChaseCustomRoutine(Room r, String d, int m, String c)
+  {
+    myRoom = r;
+    difficulty = d;
+    missingWall = m;
+    command = c;
+    padCommand = command.substring(11,command.length());
+    println(padCommand);
+    currentPosition = 0;
+    firstWall = new ArrayList() ;
+    secondWall = new ArrayList() ;
+    thirdWall = new ArrayList() ;
+    padsToLight = new ArrayList() ; 
+    myStats = new Stats() ;
+    generateStep();
+  }
+  
+  void generateStep()
+  {
+    super.generateStep();
+    clearLitPads();
+    initializeRedPads();
+    println("Generate step"); 
+    println("CurrentPosition: " + currentPosition + " -> "+ padCommand.length());
+    if (currentPosition < padCommand.length()){
+      
+      currentWallID = int(padCommand.charAt(currentPosition));
+      prevWallID = currentWallID;
+      
+      while (currentWallID == prevWallID){
+        int wallID = int(padCommand.charAt(currentPosition));
+        int row = int(padCommand.charAt(currentPosition+1));
+        int column = int(padCommand.charAt(currentPosition+2));
+        //println("wallID: " + wallID + ": " + row + " ,"+column);
+        currentPosition += 3;
+        currentWallID = int(padCommand.charAt(currentPosition));
+        Pad newPad = myRoom.getPadRC(wallID,row,column);
+        padsToLight.add(newPad);
+      }
+      
+      handleDifficulty(difficulty);
+    }
+    
+  }
+  
+  boolean handleInput(int x, int y,int clickNum, int deltaClickTime) 
+  {
+    super.handleInput(x, y, clickNum, deltaClickTime) ;
+      
+    if(myRoom.colorOfClick(x, y) == green) //green - success
+    {
+      myStats.addForceDoubleClickTime(deltaClickTime) ;
+      myStats.success() ;
+      generateStep() ;
+      
+      return true ;  
+    }
+    
+    if(myRoom.colorOfClick(x, y) == red) myStats.minusPoint(); 
+    
+    myStats.miss() ;    
+    return false ;
+  } 
+  
+  void handleDifficulty(String difficulty)
+  {
+    int randomPadIndex = int(random(3)); // get random pad index for difficulty
+
+    if (difficulty.equals(NOVICE))      // Lit all pads green
+    {
+      setRowToColor(padsToLight, green);
+    } else if (difficulty.equals(INTERMEDIATE)) {    // Lit one pad red
+      setRowAndPadToColor(padsToLight, randomPadIndex, red);
+    } else if (difficulty.equals(ADVANCED)) {
+      setRowAndPadToColor(padsToLight, randomPadIndex, green);  // Lit one pad green
+    }
+  }
+  
+  void initializeRedPads(){
+    
+    boolean isMissingWall = missingWall > 0 ;
+    int wallID = (isMissingWall) ? wallID = missingWall % 4 + 1 : 4 ;  //start at WEST wall ; W -> N -> E
+    
+    for (int i = 0; i < 3; i++)
+    {
+      //gets num of pads depending on wall 
+      int numPads = (wallID == NORTH || wallID == SOUTH) ? NS_WIDTH - 2 : EW_HEIGHT/2 - 1; 
+      int r ,  c , incR , incC ;
+      //initializes start point based on row/column depending on wall
+      if(missingWall == SOUTH || !isMissingWall)
+      {
+        if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
+        else if(wallID == EAST){ r = 0 ; c = 1 ; }
+        else { r = EW_WIDTH - 1 ; c = 1 ; }
+      }
+      else if(missingWall == NORTH)
+      {
+        if(wallID == SOUTH){ r = 1 ; c = 0 ; }
+        else if(wallID == EAST){ r = 0 ; c = EW_HEIGHT/2 - 1; }
+        else { r = EW_WIDTH - 1 ; c = EW_HEIGHT/2 - 1 ; }
+      }
+      else 
+      {  
+        if(wallID == SOUTH){ r = 1 ; c = 0 ; }
+        else if(wallID == NORTH){ r = 1 ; c = NS_HEIGHT - 1 ; }
+        else if(wallID == EAST){ r = 0 ; c = 2 ; numPads = EW_HEIGHT/2 ; }
+        else { r = EW_WIDTH - 1 ; c = 2 ; numPads = EW_HEIGHT/2 ; }
+      }
+      //initializes increments for wall/column depending on wall
+      incR = (wallID == NORTH || wallID == SOUTH) ? 1 : 0 ;
+      incC = (wallID == NORTH || wallID == SOUTH) ? 0 : 1 ;
+    
+      //println("numPads : "+numPads);
+      //gets numPads pads into appropriate color list
+      
+      //(i == 0) ? wall1 = wallID : ((i == 1) ? wall2 = wallID : wall3 = wallID );
+      
+      for (int j = 0; j < numPads ; j++)
+      {
+        Pad newPad = myRoom.getPadRC( wallID , r + incR*j , c + incC*j );
+        addCoordinatesToArray(i,newPad,wallID,r + incR*j,c + incC*j);
+        
+      }  
+      //gets next pad in sequence 1-2-3-4-1-...
+      wallID = wallID % 4 + 1 ;
+    } 
+    
+    setRowToColor(firstWall,red);
+    setRowToColor(secondWall,red);
+    setRowToColor(thirdWall,red);
+  }
+  
+  void addCoordinatesToArray(int i, Pad newPad, int wallID, int row, int column){
+    if (i == 0) {
+      //wall1 = wallID;
+      firstWall.add(newPad);
+    } else if (i == 1)  {
+      //wall2 = wallID;
+      secondWall.add(newPad);
+    } else if (i == 2) {
+      //wall3 = wallID;
+      thirdWall.add(newPad);
+    }
+  }
+  
+  //turns off all lit pads and empties lists
+  private void clearLitPads()
+  {
+    //turns off pads
+    for (int i = 0; i < padsToLight.size (); i++) ((Pad)padsToLight.get(i)).setColor(padOffColor) ;
+    //Remove all pads
+    while (padsToLight.size() > 0) padsToLight.remove(0) ;
+  }
+  
 }
 
 class Routine 
@@ -415,6 +1097,7 @@ class Routine
   String difficulty ;
   boolean groundPadPressed;
   Stats myStats ;
+  int missingWall ;
   
   boolean handleInput(int x, int y, int clickNum, int deltaClickTime) {
     return true;
@@ -468,9 +1151,10 @@ class xCueRoutine extends Routine
   Pad secondGroundPad = null;
   int timer;
 
-  xCueRoutine(Room myRoom, String difficulty)
+  xCueRoutine(Room myRoom, String difficulty, int  missingWall)
   {
     super.startRoutine();
+    this.missingWall = missingWall ;
     this.myRoom = myRoom;
     this.difficulty = difficulty; 
     groundPadPressed = false;
@@ -833,11 +1517,12 @@ class GroundChaseRoutine extends Routine
    int previousPadIndex;
    int [] greenPadCoordinateArray;
   
-   GroundChaseRoutine(Room myRoom, String difficulty)
+   GroundChaseRoutine(Room myRoom, String difficulty, int  missingWall)
    {
      super.startRoutine();
      this.myRoom = myRoom;
      this.difficulty = difficulty;
+     this.missingWall = missingWall ;
      myStats = new Stats() ;
      greenPads = new ArrayList();
      redPads = new ArrayList();
@@ -1038,11 +1723,12 @@ class HomeChaseRoutine extends Routine
   boolean isGroundPadNorth ; 
 
 
-  HomeChaseRoutine (Room myRoom, String difficulty) 
+  HomeChaseRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+     this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     myStats = new Stats() ; 
@@ -1200,11 +1886,12 @@ class HomeFlyRoutine extends Routine
   Pad groundPad = null;
   boolean isGroundPadNorth ;
 
-  HomeFlyRoutine (Room myRoom, String difficulty) 
+  HomeFlyRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+     this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     myStats = new Stats() ; 
@@ -1362,11 +2049,12 @@ class FlyRoutine extends Routine
   int wall1 ;
   int wall2 ;
 
-  FlyRoutine (Room myRoom, String difficulty) 
+  FlyRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+    this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     wall1 = int(random(4)) + 1;
@@ -1461,11 +2149,12 @@ class ChaseRoutine extends Routine
   int wall1 ;
   int wall2 ;
 
-  ChaseRoutine (Room myRoom, String difficulty) 
+  ChaseRoutine (Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+    this.missingWall = missingWall ;
     row1 = new ArrayList() ;
     row2 = new ArrayList() ;
     wall1 = int(random(4)) + 1;
@@ -1533,11 +2222,12 @@ class ThreeWallChaseRoutine extends Routine
   ArrayList greenPads ;
   ArrayList redPads ;
 
-  ThreeWallChaseRoutine(Room myRoom, String difficulty) 
+  ThreeWallChaseRoutine(Room myRoom, String difficulty, int  missingWall) 
   {
     super.startRoutine() ;        
     this.myRoom = myRoom ;
     this.difficulty = difficulty ;
+    this.missingWall = missingWall ;
     greenPads = new ArrayList() ;
     redPads = new ArrayList() ;
     myStats = new Stats() ;
@@ -1761,7 +2451,7 @@ class Stats
     roundsXPRS++ ; 
   }
   
-  void getXprs()
+  double getXprs()
   { 
     double result ;
     if(roundsXPRS == 0) return 0 ;  
@@ -1781,14 +2471,21 @@ class Stats
 class Room
 {
   Wall [] walls ;
-
+  int missingWall ;
+  
   Room()
   {
+    missingWall = -1 ;
     walls = new Wall[5] ;
     for (int i = 0; i < 5; i++ )
       setupWall( i ) ;
   }
-
+  
+  void removeWall(int wallID)
+  {
+    missingWall = wallID ;
+  }
+  
   void switchValid(int wallID)
   {
     walls[wallID].switchValid() ;
@@ -2204,6 +2901,7 @@ interface JavaScript
 
 JavaScript javascript = null ;
 void setJavaScript(JavaScript js) { javascript = js ; }
+
 
 
 
