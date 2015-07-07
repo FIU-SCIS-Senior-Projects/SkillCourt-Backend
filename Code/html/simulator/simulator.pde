@@ -278,9 +278,9 @@ class MasterGame
         println("Current game is null");
     }
     
-    void handleDoubleClick(int x, int y)
+    void handleDoubleClick(int x, int y, int deltaClickTime)
     {
-      if (currentGame != null) currentGame.handleDoubleClick(x,y);
+      if (currentGame != null) currentGame.handleDoubleClick(x,y,deltaClickTime);
       else 
         println("Current game is null");
     }
@@ -404,7 +404,7 @@ interface GameInterface
 {
   
    void handleSingleClick(int x, int y);
-   void handleDoubleClick(int x, int y);
+   void handleDoubleClick(int x, int y, int deltaClickTime);
    void createRoutine();
    boolean checkStatus();
    void startRoutine();
@@ -463,10 +463,10 @@ class CustomGame implements GameInterface
     }
   }
   
-  void handleDoubleClick(int x, int y)
+  void handleDoubleClick(int x, int y, int delltaClickTime)
   {
     //println("handle double click in Custom Game"); 
-    if ( myCustomRoutine.handleInput(x, y, 2, 0) )
+    if ( myCustomRoutine.handleInput(x, y, 2, deltaClickTime) )
     { 
       //println("Double clickkkkkkk");
       roundsPlayed++;
@@ -3043,6 +3043,3 @@ interface JavaScript
 
 JavaScript javascript = null ;
 void setJavaScript(JavaScript js) { javascript = js ; }
-
-
-
