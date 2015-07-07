@@ -24,7 +24,6 @@
 			<ul>
 				<li class="blockButtons clicked">
 					<select id="stepType" onchange="changeDescription();">
-						<option name="description" value="single">Single Target</option>
 						<option name="description" value="set">Target Set</option>
 						<option name="description" value="ground">Ground Target</option>
 					</select>
