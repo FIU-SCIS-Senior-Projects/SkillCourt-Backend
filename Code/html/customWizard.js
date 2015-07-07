@@ -1,6 +1,5 @@
 var groundTargetDescription = "Select a ground pad for this step. When the correct ground pad is selected, press the 'Finish Step' button.";
-var singleTargetDescription = "Select a group of pads to make up a target. Your pads must be adjacent and on the same wall. When the correct pads are selected, press the 'Finish Step' button.";
-var setTargetDescription = "Select many groups of pads to make up targets. Each target must be made up of adjacent pads. Only one target per wall. When you are finished, press the 'Finish Step' button.";
+var setTargetDescription = "Select many groups of pads to make up targets. Each target is comprised of the pads that share the same wall, only one target per wall. When you are finished, press the 'Finish Step' button.";
 var stepWarning = "Please select your targets properly before finishing this step" ;
 var roundWarning = "Please finish your steps properly before finishing this round" ;
 var routineWarning = "Please finish your rounds properly before finishing this routine" ;
@@ -16,7 +15,7 @@ setTimeout(function()
 	getRoundNumber() ;
 	getStepTotal() ;
 	getRoundTotal() ;
-	processingInstance.setStepCreator("single") ;
+	processingInstance.setStepCreator("set") ;
 }, 500);
 
 
@@ -147,7 +146,6 @@ function changeDescription(){
 	
 	switch(stepTypeObj.value)
 	{
-		case "single": descriptionObj.innerHTML = singleTargetDescription; break;
 		case "set": descriptionObj.innerHTML = setTargetDescription; break;
 		case "ground": descriptionObj.innerHTML = groundTargetDescription; break;
 	}
@@ -163,6 +161,7 @@ function finishStep(){
 	{
 		setStepButton(false) ;			
 		document.getElementById("Warning").innerHTML = "" ;
+		if(step < stepTotal) nextStep() ;
 	}
 	else document.getElementById("Warning").innerHTML = stepWarning ;
 	
