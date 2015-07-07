@@ -7,6 +7,10 @@ var timePerRound ;
 var customRoutineCommand;
 var processingInstance ;
 var customCoachRoutine = false;
+var s0 = new buzz.sound( "s0", { formats: [ "ogg", "mp3"] });
+var s1 = new buzz.sound( "s1", { formats: [ "ogg", "mp3"] });
+var s2 = new buzz.sound( "s2", { formats: [ "ogg", "mp3"] });
+var s3 = new buzz.sound( "s3", { formats: [ "mp3"] });
 	
 function allowRounds()
 {
@@ -141,7 +145,7 @@ function quickStartGame()
     customCoachRoutine = true;
     isReadyToPlay = true;
     console.log("quickStartGame()");
-    customRoutineCommand = "U02R#05*013SG*024SG*400410411401*131132142152151*205204213222SN*000SG*406407417*300311322SNR#03*013SG*101111121*311321331SN*031SG";
+    customRoutineCommand = "U01R#09*000SG*001SG*002SG*003SG*013SG*023SG*022SG*021SG*032SG";
     //customRoutineCommand = "U02R#03*011012SG*100110120130140*200210220*300SN*031SGR#02*015025SG*411412SN";
     //isReadyToPlay = true ;
     //changeScreen() ;

@@ -55,7 +55,6 @@ final int EW_HEIGHT = 8 ;
 
 //step types
 
-final String STEP_SINGLE = "single" ;
 final String STEP_SET = "set" ;
 final String STEP_GROUND = "ground" ;
 
@@ -219,7 +218,6 @@ class Wizard
   { 
       switch(type)
       {
-        case STEP_SINGLE: 
         case STEP_SET:  
           creator = new SetTargetCreator(myRoom, getCurrentStep()) ; 
           break ;
@@ -311,7 +309,6 @@ class Wizard
         
         switch(currentStep.getType())
         {
-          case STEP_SINGLE:
           case STEP_SET: comm += "SN" ; break;
           case STEP_GROUND: comm += "SG" ; break;
           default: comm += "ERROR" ; 
