@@ -6,10 +6,6 @@ var difficultyForGame ;
 var timePerRound ;
 var customRoutineCommand = "bfdx";
 var processingInstance ;
-var s0 = new buzz.sound( "s0", { formats: [ "ogg", "mp3"] });
-var s1 = new buzz.sound( "s1", { formats: [ "ogg", "mp3"] });
-var s2 = new buzz.sound( "s2", { formats: [ "ogg", "mp3"] });
-var s3 = new buzz.sound( "s3", { formats: [ "mp3"] });
 var customCoachRoutine = false;
 	
 function allowRounds()
