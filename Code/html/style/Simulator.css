@@ -1,3 +1,7 @@
+@import "compass/css3";
+
+@import url("http://fonts.googleapis.com/css?family=Lato");
+
 *
 {
     background-color: #65B098;
@@ -64,14 +68,36 @@ body
 	float: left ;
 }
 
-#SettingsList
+#tabs
+{
+	list-style: none ;
+	margin-top: 100px;
+	margin-left: 50px;
+	margin-right: 50px;
+	width: 300px;
+}
+
+#tabs li
+{
+	display: inline-block ;
+	background-color: black ;
+	
+}
+
+#tabs li button
+{
+	color: white ;
+	background-color: black ;
+	border: none;
+}
+
+.SettingsList
 {
 	margin-left: 50px ;
 	margin-right: 50px ;
-	margin-top: 100px ;
 }
 
-#SettingsList p
+.SettingsList p
 {
 	background-color: #65B098;
 	font-size: 24px ;
@@ -82,7 +108,7 @@ body
 	margin-bottom: 0px ;
 }
 
-#SettingsList ul
+.SettingsList ul
 {
 	list-style: none ;	
 	padding: 5px;
@@ -94,36 +120,36 @@ body
 	border-radius: 5px ;
 }
 	
-#SettingsList ul li
+.SettingsList ul li
 {
 	background: #CCCCCC; 
 }
 
-#SettingsList ul li select
+.SettingsList ul li select
 {
 	background: white ;
 	color: black; 
 }
 
-#SettingsList ul li select option
+.SettingsList ul li select option
 {
 	background: white ;
 	color: black; 
 }
 
-#SettingsList ul li select option
+.SettingsList ul li select option
 {
 	background: white ;
 	color: black; 
 }
 
-#SettingsList input[type="number"]
+.SettingsList input[type="number"]
 {
 	background: white ;
 	color: black; 
 }
 
-#SettingsList ul li button
+.SettingsList ul li button
 {
 	margin-top: 10px ;	
 	margin-left: 10px ;	
@@ -224,50 +250,7 @@ body
 	display: none;
 }
 
-#CustomPlay
+#CustomList
 {
-	margin-left: 50px ;
-	margin-right: 50px ;
-	margin-top: 150px ;
-	display: block ;
+	display: none;
 }
-
-#CustomPlay p
-{
-	background-color: #65B098;
-	font-size: 24px ;
-	font-style: italic ;
-	color:white ;
-	text-align: center ;
-	margin-top: 0px ;
-	margin-bottom: 0px ;
-}
-
-#CustomPlay ul
-{
-	list-style: none ;	
-	padding: 5px;
-	background: #CCCCCC;
-	margin-top: 2px; 
-	font-size: 18px ;
-}
-	
-#CustomPlay ul li
-{
-	background: #CCCCCC; 
-}
-
-#CustomPlay ul li button
-{
-	margin-top: 10px ;	
-	margin-left: 10px ;	
-	background: white ;
-	color: #65B098 ;
-	font-weight: bold ;
-	height: 40px ;
-	width: 180px ;
-	border-radius: 1px ;
-	text-align: center;
-	border: 2px solid #65B098 ;
-}
-

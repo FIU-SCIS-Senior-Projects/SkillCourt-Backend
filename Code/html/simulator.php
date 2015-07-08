@@ -12,9 +12,26 @@
 	<body>
 		<div id="Header"> 
             SkillCourt Simulator 
-        </div>
+            </div>
+		</div>	
 		<div id="SimSettings">
-			<div id="SettingsList">
+			<ul id="tabs">
+				<li>
+					<button onclick="showDefault();">Default</button>
+				</li>
+				<li>
+					<button onclick="showCustom();">Custom</button>
+				</li>
+			</ul>
+			<div class="SettingsList" id="CustomList">
+				<ul>
+					<li>
+						<input id="commandInput" type="text"></input>
+					</li>
+					<li><button onclick="quickStartGame();">Play!</button></li>
+				</ul>
+			</div>
+			<div class="SettingsList" id="DefaultList">
 				<p>SkillCourt Routines</p>
 				<ul>
 					<li><input id="customRoomCheck" type="checkbox" onclick="switchCustom();"/>Remove Wall</li>
@@ -51,8 +68,8 @@
 							<input type="number" id="amount" min="1" max="30" value="1">
 						</select></li>
 					<li ><button onclick="startGame();">Play!</button></li>
-					</ul>
-			</div>	
+                </ul>
+			</div>
 			<div id="FeedbackList">
 				<p>SkillCourt Performance</p>
 				<ul>	
@@ -67,13 +84,7 @@
 					<li><button onclick="stopGame();">STOP</button></li>
 				</ul> 
 			</div>
-            <div id="CustomPlay">
-                <p>Play Custom Routine</p>
-                <ul>
-                    <li><button onclick="quickStartGame();">Play!</button></li>
-                </ul>
-            </div>
-		</div>	
+		</div>
 		<div id="Simulator">
 				<br><br><br>
 				<canvas id="sketch" data-processing-sources="simulator/simulator.pde" width="600" height="600">
