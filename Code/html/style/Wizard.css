@@ -134,3 +134,38 @@ body {
 #EditStep {
 	display: none ;
 }
+
+#command {
+	text-align: center ;
+	color: white ;
+	font-size: 20px ;
+}
+
+#nav {
+	background-color: white ;
+	list-style: none ;
+	text-align: justify ;
+	min-width: 500px ;
+}
+
+#nav:after {
+	content: '' ;
+	display: inline-block ;
+	width: 100% ;
+}
+
+#nav li{
+	background-color: white ;
+	display: inline-block ;	
+	text-align: center ;
+	margin-right: auto ;
+	margin-left: auto ;
+	line-height: 50px; 
+}
+
+#nav a{
+	background-color: white ;
+	text-decoration: none ;
+	color: #429A74;
+	font-size: 30px ;	
+}
