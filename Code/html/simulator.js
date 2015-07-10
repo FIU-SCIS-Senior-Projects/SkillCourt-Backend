@@ -156,9 +156,9 @@ function quickStartGame()
 
 function changeScreen()
 {
-    document.getElementById("CustomPlay").style.display = "none" ;
-	document.getElementById("SettingsList").style.display = "none" ;
+	document.getElementById("DefaultList").style.display = "none" ;
 	document.getElementById("FeedbackList").style.display = "block" ;
+	document.getElementById("CustomList").style.display = "none" ;
 	
 	postFeedback(0,0,0,0,0,0,0);
 	
