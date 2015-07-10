@@ -173,7 +173,11 @@ function finishRound(){
 
 function finishRoutine(){
 	if(processingInstance.finishRoutine()) 
-		console.log(processingInstance.command()) ;
+	{
+		var command = processingInstance.command() ;
+		//console.log(processingInstance.command()) ;
+		document.getElementById("command").innerHTML = command ;
+	}
 	else
 		document.getElementById("Warning").innerHTML = routineWarning ;
 }
