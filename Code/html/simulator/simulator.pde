@@ -289,21 +289,21 @@ class MasterGame
       return  didTheGamesStarted;
     }
     
-    void areGamesOver(){
+    boolean areGamesOver(){
       
-      if (games.size() == 0) return true;
-      else
+      if (currentGame.checkStatus())
       {
-        if (currentGame.checkStatus())
-        {
-          println("areGamesOver called: Check Status returned true");
-          //println(games.size());
-          //games.remove(0);
-          currentGameNumber++;
+        println("areGamesOver called: Check Status returned true");
+        currentGameNumber++;
+        if (games.size() == currentGameNumber) {
+          println("games.size(): " +games.size());
+          println("currentGameNumber: "+currentGameNumber);
+          return true;
+        } else {
           startGames();
         }
+        
       }
-      
       return false;
     }
     
@@ -463,7 +463,7 @@ class CustomGame implements GameInterface
     }
   }
   
-  void handleDoubleClick(int x, int y, int delltaClickTime)
+  void handleDoubleClick(int x, int y, int deltaClickTime)
   {
     //println("handle double click in Custom Game"); 
     if ( myCustomRoutine.handleInput(x, y, 2, deltaClickTime) )
@@ -3043,6 +3043,3 @@ interface JavaScript
 
 JavaScript javascript = null ;
 void setJavaScript(JavaScript js) { javascript = js ; }
-
-
-

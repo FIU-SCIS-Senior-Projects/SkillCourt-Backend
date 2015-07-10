@@ -145,7 +145,10 @@ function quickStartGame()
     customCoachRoutine = true;
     isReadyToPlay = true;
     console.log("quickStartGame()");
-    customRoutineCommand = "U01R#09*000SG*001SG*002SG*003SG*013SG*023SG*022SG*021SG*032SG";
+	var c = document.getElementById("commandInput").value;
+	customRoutineCommand = c;
+	console.log(customRoutineCommand);
+    //customRoutineCommand = "U01R#09*000SG*001SG*002SG*003SG*013SG*023SG*022SG*021SG*032SG";
     //customRoutineCommand = "U02R#03*011012SG*100110120130140*200210220*300SN*031SGR#02*015025SG*411412SN";
     //isReadyToPlay = true ;
     //changeScreen() ;
@@ -153,9 +156,9 @@ function quickStartGame()
 
 function changeScreen()
 {
-    document.getElementById("CustomPlay").style.display = "none" ;
-	document.getElementById("SettingsList").style.display = "none" ;
+	document.getElementById("DefaultList").style.display = "none" ;
 	document.getElementById("FeedbackList").style.display = "block" ;
+	document.getElementById("CustomList").style.display = "none" ;
 	
 	postFeedback(0,0,0,0,0,0,0);
 	
@@ -212,6 +215,20 @@ function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, 
 	document.getElementById("arTimeNum").innerHTML = ((arTimeNum/1000).toFixed(2) + " s") ;
 	document.getElementById("dribbleTimeNum").innerHTML = ((dribbleTimeNum/1000).toFixed(2) + " s") ;	
 	document.getElementById("xprs").innerHTML = ((xprs/1000).toFixed(2) + " s") ;	
+}
+
+function showDefault()
+{
+	console.log("Show Default");
+	document.getElementById("CustomList").style.display = "none";
+	document.getElementById("DefaultList").style.display = "block";
+}
+
+function showCustom()
+{
+	console.log("Show Custom");
+	document.getElementById("CustomList").style.display = "block";
+	document.getElementById("DefaultList").style.display = "none";
 }
 
 function stopGame()
