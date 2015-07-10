@@ -8,9 +8,17 @@
         <script src="customWizard.js"></script>
 		</head>
 	<body>
+		<!--<ul id="nav">
+			<li><a href=#>Home</a></li>
+			<li><a href=#>Simulator</a></li>
+			<li><a href=#>Wizard</a></li>
+			<li><a href=#>Login</a></li>
+			<li><a href=#>Register</a></li>
+		</ul>-->
 		<div id="Header"> 
             SkillCourt Custom Routine Wizard 
         </div>	
+		<p id="command"></p>
 		<div id="Simulator">
 				<br><br><br>
 				<canvas id="sketch" data-processing-sources="customWizard/customWizard.pde" width="600" height="600">
