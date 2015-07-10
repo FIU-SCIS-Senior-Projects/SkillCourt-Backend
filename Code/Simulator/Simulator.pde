@@ -1,5 +1,6 @@
 import processing.serial.* ;
 import ddf.minim.* ;
+import java.nio.ByteBuffer ;
 
 String routineCommand ;//= "ta101200000" ; 
                       //    cn000 0600 00
@@ -387,120 +388,124 @@ class Game
     return isRoutineGroundBased ;
   }
 
-void handleDoubleClick(int x, int y, int deltaClickTime) 
-{ 
-  if ( myRoutine.handleInput(x, y, 2, deltaClickTime) )
+  void handleDoubleClick(int x, int y, int deltaClickTime) 
   { 
-    fill(0, 0, 0);
-    //text(rounds, 0, 150);
-    //rounds--;
-    roundsPlayed++;
-
-  }
-}
-
-void handleSingleClick(int x, int y)
-{
-  //if (isRoutineGroundBased) myRoutine.handleInput(x, y, 1) ;
+    if ( myRoutine.handleInput(x, y, 2, deltaClickTime) )
+    { 
+      fill(0, 0, 0);
+      //text(rounds, 0, 150);
+      //rounds--;
+      roundsPlayed++;
   
-  if ( (isRoutineGroundBased) && (myRoutine.handleInput(x, y, 1, 0)) )
-  { 
-    fill(0, 0, 0);
-    //text(rounds, 0, 150);
-    //rounds--;
-    roundsPlayed++;
-
-    // If you succesfully generatedStep then startTime = millis()
-    if (routineTime > 0) startTime = millis();
-  }
-  
-}
-void postGame() {}
-
-boolean checkStatus()
-{
-  
-  if (roundsPlayed == rounds)
-  { 
-    fill(0, 0, 0);
-    isThisGameOver = true ;
-    //text("Round Game is Over", 0, 150);
-    return true;
-  }
-  
-  if (rounds != -1 && roundsPlayed == (rounds/2))
-  {
-    if (!coachFeedback){
-      feedbackSound = minim.loadFile("feedback.mp3") ;
-      feedbackSound.play() ; 
-      coachFeedback = true;
-    } 
-  }
-
-  // gameTime > 0 if the game is timeBased
-  if (gameTime > 0)
-  {
-    fill(0, 0, 0);
-    int timer = int((startTime+gameTime - millis())/1000) ;
-    int sec = int(timer % 60)  ;
-    int min = int(timer / 60) ;
-    String timerOutput = (sec < 10) ? min + ":0" + sec :  min + ":" + sec ;
-    text("Time Left " + timerOutput, 10, 10, 160, 160);
-   
-    //println("startTime: " + (millis() - startTime));
-    
-    if ( (millis()-startTime) >= (gameTime/2) ) 
-    {
-      if (!coachFeedback)
-      {
-        feedbackSound = minim.loadFile("feedback.mp3") ;
-        feedbackSound.play() ;
-        coachFeedback = true;
-      }
-      //println("You are half WAY!!!");      
-      //text("You are half WAY!!!", 0, 400);
     }
+  }
 
-   // Calculating game time in minutes
-    if ((millis() - startTime) > gameTime) 
+  void handleSingleClick(int x, int y)
+  {
+    //if (isRoutineGroundBased) myRoutine.handleInput(x, y, 1) ;
+    
+    if ( (isRoutineGroundBased) && (myRoutine.handleInput(x, y, 1, 0)) )
+    { 
+      fill(0, 0, 0);
+      //text(rounds, 0, 150);
+      //rounds--;
+      roundsPlayed++;
+  
+      // If you succesfully generatedStep then startTime = millis()
+      if (routineTime > 0) startTime = millis();
+    }
+    
+  }
+  void postGame() {}
+  
+  boolean checkStatus()
+  {
+    
+    if (roundsPlayed == rounds)
     { 
       fill(0, 0, 0);
       isThisGameOver = true ;
-      //text("Time Game is Over", 0, 150);
+      //text("Round Game is Over", 0, 150);
+      padPort.write('E');
+      padPort.write('\n'); 
       return true;
     }
-  }
-   else
-  {
-    text("Rounds Left " + (rounds-roundsPlayed), 10, 10, 160, 160);
-  }
-  
-  // routineTime > 0 if game is timeRound based
-  if (routineTime > 0)
-  {
-    if ( ((millis() - routineTimeStart)) > routineTime )
+    
+    if (rounds != -1 && roundsPlayed == (rounds/2))
     {
-      //println("Sorry! took too long");
-      fill(0, 0, 0);
-      //text("Sorry! took too long", 0, 150);
-      routineTimeStart = millis();
-      //println("Before Timeout");
-      myRoutine.timeout();
-      roundsPlayed++;
-      myRoutine.groundPadPressed = false;
-      myRoutine.generateStep();
-      return false;
+      if (!coachFeedback){
+        feedbackSound = minim.loadFile("feedback.mp3") ;
+        feedbackSound.play() ; 
+        coachFeedback = true;
+      } 
     }
+  
+    // gameTime > 0 if the game is timeBased
+    if (gameTime > 0)
+    {
+      fill(0, 0, 0);
+      int timer = int((startTime+gameTime - millis())/1000) ;
+      int sec = int(timer % 60)  ;
+      int min = int(timer / 60) ;
+      String timerOutput = (sec < 10) ? min + ":0" + sec :  min + ":" + sec ;
+      text("Time Left " + timerOutput, 10, 10, 160, 160);
+     
+      //println("startTime: " + (millis() - startTime));
+      
+      if ( (millis()-startTime) >= (gameTime/2) ) 
+      {
+        if (!coachFeedback)
+        {
+          feedbackSound = minim.loadFile("feedback.mp3") ;
+          feedbackSound.play() ;
+          coachFeedback = true;
+        }
+        //println("You are half WAY!!!");      
+        //text("You are half WAY!!!", 0, 400);
+      }
+  
+     // Calculating game time in minutes
+      if ((millis() - startTime) > gameTime) 
+      { 
+        fill(0, 0, 0);
+        isThisGameOver = true ;
+        padPort.write('E');
+        padPort.write('\n'); 
+        //text("Time Game is Over", 0, 150);
+        return true;
+      }
+    }
+     else
+    {
+      text("Rounds Left " + (rounds-roundsPlayed), 10, 10, 160, 160);
+    }
+    
+    // routineTime > 0 if game is timeRound based
+    if (routineTime > 0)
+    {
+      if ( ((millis() - routineTimeStart)) > routineTime )
+      {
+        //println("Sorry! took too long");
+        fill(0, 0, 0);
+        //text("Sorry! took too long", 0, 150);
+        routineTimeStart = millis();
+        //println("Before Timeout");
+        myRoutine.timeout();
+        roundsPlayed++;
+        myRoutine.groundPadPressed = false;
+        myRoutine.generateStep();
+        return false;
+      }
+    }
+    
+    return false;
   }
   
-  return false;
-}
-
-void startGame() 
-{
-  isThisGameStarted = true;
-  isThisGameOver = false;
-}
+  void startGame() 
+  {
+    isThisGameStarted = true;
+    isThisGameOver = false;
+  }
 }
 
 class Routine 
@@ -1753,7 +1758,7 @@ class ThreeWallChaseRoutine extends Routine
 
 class Stats
 {
-  double forceSum ;
+  float forceSum ;
   int successes ;
   int misses ;
   int anticipationReactionSum ;
@@ -1785,7 +1790,7 @@ class Stats
 
   void addForceDoubleClickTime(int deltaTime) 
   { 
-    forceSum += (30 + (double)1/(deltaTime-105)) * ballMass;
+    forceSum += (30 + (float)1/(deltaTime-105)) * ballMass;
     //forceSum += deltaTime;   
   }
   
@@ -1813,33 +1818,33 @@ class Stats
     printSummary() ;
   }
  
-  double getForceAvg() 
+  float getForceAvg() 
   { 
-    double result = forceSum/successes ; 
+    float result = forceSum/successes ; 
     return result ;
   }
   
   int getSuccesses() { return successes ; }
   
-  double getAccuracy() 
+  float getAccuracy() 
   { 
-    double result = (double)successes/(successes + misses) ;
+    float result = (float)successes/(successes + misses) ;
     return result ;
   }
   int getMinusPoints() { 
     return minusPoints ;
   }
-  double getAvgARTime() 
+  float getAvgARTime() 
   {
     if(successes == 0) return 0 ;  
-    double result = (double)anticipationReactionSum/successes ;
+    float result = (float)anticipationReactionSum/successes ;
     return result ;
   }
   
-  double getAvgDribbleARTime()
+  float getAvgDribbleARTime()
   {
     if(dribbleSuccesses == 0) return 0 ;
-    double result = (double)dribbleARSum/dribbleSuccesses ; 
+    float result = (float)dribbleARSum/dribbleSuccesses ; 
     return result ;   
   }
   
@@ -1863,15 +1868,56 @@ class Stats
     roundsXPRS++ ; 
   }
   
-  double getXprs()
+  float getXprs()
   { 
-    double result ;
+    float result ;
     if(roundsXPRS == 0) return 0 ;  
-    else result = (double)sumXPRS/roundsXPRS ; 
+    else result = (float)sumXPRS/roundsXPRS ; 
     return result ;  
   }
+  void printSummary()
+  {
+    byte [] arr = new byte [32] ;
+    ByteBuffer bf = ByteBuffer.wrap(arr) ;
+    bf.putInt(successes);
+    bf.putInt(misses);
+    bf.putInt(minusPoints) ;
+    bf.putFloat(getAccuracy()) ;
+    bf.putFloat(getForceAvg()) ;
+    bf.putFloat(getAvgARTime()) ;
+    bf.putFloat(getAvgDribbleARTime()) ;
+    bf.putFloat(getXprs()) ;  
+    padPort.write('F');
+    padPort.write(arr) ;
+    padPort.write('\n') ;
+  }
+/*  void printSummary1()
+  {
+    byte [] feedback = new byte[32]; //3 ints 5floats
+    intToBytes(successes, feedback, 0) ;
+    intToBytes(misses, feedback, 4) ;
+    intToBytes(minusPoints, feedback, 8) ;
+    floatToBytes(getAccuracy(), feedback, 12);
+    floatToBytes(getForceAvg(), feedback, 16);
+    floatToBytes(getAvgARTime(), feedback, 20);
+    floatToBytes(getAvgDribbleARTime(), feedback, 24);
+    floatToBytes(getXprs(), feedback, 28);
+    padPort.write('F');
+    padPort.write(feedback) ;
+    padPort.write('\n') ;
+  }
   
-  void printSummary(){}
+  void intToBytes(int n, byte[] arr, int start)
+  {
+    for(int i = 0 ; i < 4 ; i++)
+      arr[i+start] = byte(n >> 8*(3-i) & 0xFF);  
+  }
+  
+  void floatToBytes(float f, byte[] arr, int start)
+  {
+    for(int i = 0 ; i < 4 ; i++)
+      arr[i+start] = byte(f >> 8*(3-i) & 0xFF);  
+  }*/
 }
 
 class Room

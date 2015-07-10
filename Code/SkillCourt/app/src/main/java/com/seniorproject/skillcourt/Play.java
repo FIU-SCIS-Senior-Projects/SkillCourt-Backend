@@ -1,5 +1,6 @@
 package com.seniorproject.skillcourt;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,11 +53,12 @@ public class Play extends ActionBarActivity {
     CheckBox timePerRoundCheck ;
     Switch playBySwitch;
     String rname, user, usertype;
-    int missingWall = -1 ;
+    int missingWall;
     boolean isRoundTimeBased = false ;
     boolean isWallRemoved = false ;
     boolean roundsAreDisabled = false ;
-    boolean isCustomRoomDisabled = false ;
+    boolean isCustomRoomDisabled = true ;
+    boolean isOnCreate ;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,16 +71,18 @@ public class Play extends ActionBarActivity {
 
         coach = (new dbInteraction()).getCoach(puname);
 
+        isOnCreate = true ;
         // Set Spinners
-        setWallSpinner();
         setSpinnerDefault();
         setSpinnerCustom();
         setSpinnerCoach();
 
+        setWallSpinner();
         // Set Tabs
         setTabs();
 
         timePerRoundCheck = (CheckBox)findViewById(R.id.timePerRoundCheck) ;
+        isOnCreate = false ;
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,8 +112,11 @@ public class Play extends ActionBarActivity {
 
         wallRemove.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                missingWall = position + 1;
-                isWallRemoved = true;
+                if(!isOnCreate){
+                    missingWall = position + 1;
+                    System.out.println("in setWallSpinner missingWall = " + missingWall);
+                    isWallRemoved = true;
+                }
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -136,48 +144,45 @@ public class Play extends ActionBarActivity {
                 String routine = defa.getItemAtPosition(position).toString().trim();
                 String[] routines = getResources().getStringArray(R.array.routine_array) ;
                 // Set Description based on description variable
-
-                if(routine.equals(routines[0])) //three wall chase
+                if(!isOnCreate)
                 {
-                    defaDesc.setText(R.string.three_wall_desc) ;
-                    disableRounds(false);
-                    disableCustomRoom(false);
-                }
-                else if(routine.equals(routines[1])) //chase
-                {
-                    defaDesc.setText(R.string.chase_desc);
-                    disableRounds(true);
-                    disableCustomRoom(false);
-                }
-                else if(routine.equals(routines[2])) //fly
-                {
-                    defaDesc.setText(R.string.fly_desc);
-                    disableRounds(true);
-                    disableCustomRoom(false);
-                }
-                else if(routine.equals(routines[3])) //home chase
-                {
-                    defaDesc.setText(R.string.home_chase_desc);
-                    disableRounds(false);
-                    disableCustomRoom(false);
-                }
-                else if(routine.equals(routines[4])) //home fly
-                {
-                    defaDesc.setText(R.string.home_fly_desc);
-                    disableRounds(false);
-                    disableCustomRoom(false);
-                }
-                else if(routine.equals(routines[5])) //ground chase
-                {
-                    defaDesc.setText(R.string.ground_chase_desc);
-                    disableRounds(false);
-                    disableCustomRoom(false);
-                }
-                else if(routine.equals(routines[6])) //xcue
-                {
-                    defaDesc.setText(R.string.xcue_desc) ;
-                    disableRounds(false) ;
-                    disableCustomRoom(true);
+                    System.out.println("checking routines");
+                    if (routine.equals(routines[0])) //three wall chase
+                    {
+                        defaDesc.setText(R.string.three_wall_desc);
+                        disableRounds(false);
+                        disableCustomRoom(false);
+                    } else if (routine.equals(routines[1])) //chase
+                    {
+                        defaDesc.setText(R.string.chase_desc);
+                        disableRounds(true);
+                        disableCustomRoom(false);
+                    } else if (routine.equals(routines[2])) //fly
+                    {
+                        defaDesc.setText(R.string.fly_desc);
+                        disableRounds(true);
+                        disableCustomRoom(false);
+                    } else if (routine.equals(routines[3])) //home chase
+                    {
+                        defaDesc.setText(R.string.home_chase_desc);
+                        disableRounds(false);
+                        disableCustomRoom(false);
+                    } else if (routine.equals(routines[4])) //home fly
+                    {
+                        defaDesc.setText(R.string.home_fly_desc);
+                        disableRounds(false);
+                        disableCustomRoom(false);
+                    } else if (routine.equals(routines[5])) //ground chase
+                    {
+                        defaDesc.setText(R.string.ground_chase_desc);
+                        disableRounds(false);
+                        disableCustomRoom(false);
+                    } else if (routine.equals(routines[6])) //xcue
+                    {
+                        defaDesc.setText(R.string.xcue_desc);
+                        disableRounds(false);
+                        disableCustomRoom(true);
+                    }
                 }
             }
 
@@ -188,19 +193,24 @@ public class Play extends ActionBarActivity {
 
     private void disableCustomRoom(boolean disable)
     {
+        if(!isOnCreate){
+        System.out.println("disableCustomRoom");
         if(disable ^ !isCustomRoomDisabled)
         {
             findViewById(R.id.removeWallCheck).setVisibility((disable) ? View.GONE : View.VISIBLE);
             findViewById(R.id.removeWallSpin).setVisibility((disable) ? View.GONE : View.VISIBLE);
             if(!disable) defa.setSelection(0);
             missingWall *= -1 ;
+            System.out.println("in disableCustomRoom missingWall = " + missingWall);
             isWallRemoved = !disable ;
             isCustomRoomDisabled = !isCustomRoomDisabled ;
-        }
+        }}
     }
 
     private void disableRounds(boolean disable)
     {
+        if(!isOnCreate){
+        System.out.println("disableRounds");
         if(disable ^ !roundsAreDisabled)
         {
             findViewById(R.id.timedRoundsGroup).setVisibility((disable) ? View.GONE : View.VISIBLE) ;
@@ -211,7 +221,7 @@ public class Play extends ActionBarActivity {
             findViewById(R.id.rtSwitch).setEnabled(!disable);
             isRoundTimeBased = !disable ;
             roundsAreDisabled = !roundsAreDisabled ;
-        }
+        }}
     }
 
     public void setSpinnerCustom() {
@@ -317,10 +327,12 @@ public class Play extends ActionBarActivity {
     {
         findViewById(R.id.removeWallSpin).setVisibility((((CheckBox) view).isChecked()) ? View.VISIBLE : View.GONE);
         missingWall *= -1 ;
+        System.out.println("in wallCheckBoxClicked missingWall = " + missingWall);
     }
 
     public void roundsCheckboxClicked(View view)
     {
+        System.out.println("roundsCheckboxClicked");
         findViewById(R.id.timePerRoundInput).setEnabled(((CheckBox)view).isChecked());
     }
 
@@ -330,6 +342,7 @@ public class Play extends ActionBarActivity {
      */
     public void switchChange(View view)
     {
+        System.out.println("switchChange");
         tv = (TextView) findViewById(R.id.rtText);
         if (((Switch)view).isChecked()) tv.setText(R.string.rounds); // on for rounds
         else tv.setText(R.string.minutes);// off for timer
@@ -355,6 +368,7 @@ public class Play extends ActionBarActivity {
             //Gametime Minutes - 3 chars - Indices in command: 6-8
             boolean isPlayByRounds = ((Switch)findViewById(R.id.rtSwitch)).isChecked() ;
             String playByInput = ((EditText)findViewById(R.id.rtEdit)).getText().toString() ;
+            if(playByInput.equals("")) System.out.println("ERROR 1");
             int inputValue = Integer.parseInt(playByInput) ;
             System.out.println(playByInput);
             if(isPlayByRounds) //set rounds properly and time to "000"
@@ -378,6 +392,7 @@ public class Play extends ActionBarActivity {
             }
 
             //Missing Wall - 2 chars - Indices in command 4-5
+            System.out.println("in playDef missingWall = " + missingWall);
             command[4] = (missingWall > 0) ? '1' : '0' ;
             command[5] = (missingWall > 0) ? Character.forDigit(missingWall,10): '0' ;
 
@@ -385,6 +400,7 @@ public class Play extends ActionBarActivity {
             if(timePerRoundCheck.isChecked())
             {
                 String timePerRoundInput = ((EditText)findViewById(R.id.timePerRoundInput)).getText().toString() ;
+                if(timePerRoundInput.equals("")) System.out.printf("ERROR 2");
                 int tprValue = Integer.parseInt(timePerRoundInput) ;
                 command[9] = (tprValue > 9) ? timePerRoundInput.charAt(0) : '0' ;
                 command[10] = timePerRoundInput.charAt((tprValue > 9) ? 1 : 0 );
@@ -576,44 +592,28 @@ public class Play extends ActionBarActivity {
 
         // To Do:
         //   Send routine via Bluetooth to master pad
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //Date date = new Date();
         //Testing stat storage
-        for(int i = 0 ; i < command.length ; i++) if(command[i] == '0') command[i] = 'z' ;
+        for(int i = 0 ; i < command.length ; i++)
+            if(command[i] == '0') command[i] = 'z' ;
         String message = "S" + new String(command) + "E" ;
         try {
-            btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+            //btSocket = dev.createRfcommSocketToServiceRecord(MY_UUID);
+            Method m = dev.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+            btSocket = (BluetoothSocket) m.invoke(dev, 1);
             btSocket.connect();
             outStream = btSocket.getOutputStream();
-            inStream = btSocket.getInputStream();
             outStream.write(message.getBytes());
-            //btSocket.close();//delete this
-            //
-            /*int availableBytes = inStream.available();
-
-            //long startTime = System.currentTimeMillis();
-            while(availableBytes < 40)//(System.currentTimeMillis() - startTime)/1000 <= 10)
-                availableBytes = inStream.available();
-
-
-            byte[] packetBytes = new byte[availableBytes];
-            inStream.read(packetBytes);
-
-            message = getMessage(packetBytes);
-            message = message.substring(0, message.indexOf('n'));
-            //********************************************************call Mathews function
-            Statistic s = parseMessage(message, puname, difficulty, date);
-            dbInteraction dbi = new dbInteraction();
-            dbi.addStat(s);
-            btSocket.close();
-            Intent intent = new Intent(this, GameResults.class);
+            Thread.sleep(500);
+            btSocket.close() ;
+            Intent intent = new Intent(this, Feedback.class) ;
             intent.putExtra(Home.EXTRA_PAD, dev);
-            intent.putExtra("stats", s);
-            intent.putExtra(Login.EXTRA_MESSAGE, puname);
-            startActivity(intent);*/
+            startActivity(intent) ;
 
         }catch (Exception e)
         {
+            System.out.println(e);
             genericWarning w = new genericWarning();
             w.setPossitive("OK");
             w.setMessage("It looks like there is an issue in the bluetooth connection. Make sure that your pad is on....");

@@ -136,6 +136,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.seniorproject.skillcourt.Home" />
         </activity>
+        <activity
+            android:name=".Feedback"
+            android:label="@string/title_activity_feedback"
+            android:parentActivityName=".Home" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seniorproject.skillcourt.Home" />
+        </activity>
     </application>
 
 </manifest>

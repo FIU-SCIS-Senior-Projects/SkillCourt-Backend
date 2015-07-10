@@ -130,7 +130,7 @@
     </string>
 
     <string name="title_activity_display_stats">DisplayStats</string>
-
+    <string name="title_activity_feedback">Feedback</string>
     <string name="choose_a_routine">Choose a Routine:</string>
     <string-array name="routine_array">
         <item>Three Wall Chase</item>
@@ -167,7 +167,7 @@
     <string name="accuracy">Accuracy: </string>
     <string name="average_force">Average Force: </string>
     <string name="ar_shot_time">AR Shot Time: </string>
-    <string name="ar_dribbling_time">AR Dribbling Time: </string>
+    <string name="ar_dribble_time">AR Dribbling Time: </string>
     <string name="xprs_speed">xPRS Speed: </string>
     <string name="stop">Stop!</string>
     <string name="percent"> %</string>

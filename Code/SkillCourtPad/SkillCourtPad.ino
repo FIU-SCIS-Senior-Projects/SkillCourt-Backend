@@ -73,6 +73,12 @@ void loop()
           conn = false;
         }
       }
+      if(Serial.available())
+      {
+        byte buff[34] ;
+        Serial.readBytesUntil('\n', buff, 34) ;
+        bluetooth.write(buff, 34) ;
+      }
     }
     else//routine playing wating to know which light to turn on or if the end to send back stats and reset variables
     {
