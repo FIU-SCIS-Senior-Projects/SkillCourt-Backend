@@ -127,7 +127,9 @@ void draw()
       background(101, 176, 152); 
       fill(255) ;
       textSize(32) ;
-      text("Click start to play the chosen routine: " + warning, 30, 200, 540, 540) ;
+      text("Click start to play the chosen routine: ", 30, 200, 540, 540) ;
+      fill(red) ;
+      text(warning, 30, 30, 540, 540);
     }
   
 }
@@ -142,7 +144,7 @@ void reset()
 
 void mousePressed()
 { 
-  if (myMasterGame.didGamesStarted())
+  if (myMasterGame != null && myMasterGame.didGamesStarted())
   {
      if (isFirstClick || !(mouseX == prevX && mouseY == prevY))
     {
