@@ -2259,9 +2259,15 @@ class FlyRoutine extends Routine
       ArrayList rowHit = (myRoom.getWallID(x, y) == wall1)  ? row1 : row2 ;
       setRowToColor(rowHit, padOffColor) ;
       while( rowHit.size() > 0 ) rowHit.remove(0) ;   
-      generateStep() ;  
+      generateStep() ; 
+      return true; 
     }
-    else if (myRoom.colorOfClick(x, y) == padOffColor) myStats.miss() ;
+    else if (myRoom.colorOfClick(x, y) == padOffColor) {
+      myStats.miss() ;
+      println("You missed");
+    } else if (myRoom.colorOfClick(x, y) == red) {
+      myStats.minusPoint();
+    }
     
     return false;
   }   
@@ -2352,8 +2358,13 @@ class ChaseRoutine extends Routine
       setRowToColor(rowHit, padOffColor) ;
       while( rowHit.size() > 0 ) rowHit.remove(0) ;   
       generateStep() ;  
+      return true;
     }
-    else if(myRoom.colorOfClick(x, y) == padOffColor) myStats.miss() ;
+    else if(myRoom.colorOfClick(x, y) == padOffColor) {
+      myStats.miss() ;
+    } else if (myRoom.colorOfClick(x, y) == red) {
+      myStats.minusPoint();
+    }
     
     return false;
   }  
