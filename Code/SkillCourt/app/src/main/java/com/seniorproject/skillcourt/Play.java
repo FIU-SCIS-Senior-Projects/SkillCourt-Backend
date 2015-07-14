@@ -607,9 +607,9 @@ public class Play extends ActionBarActivity {
             outStream.write(message.getBytes());
             Thread.sleep(500);
             btSocket.close() ;
-            Intent intent = new Intent(this, Feedback.class) ;
-            intent.putExtra(Home.EXTRA_PAD, dev);
-            startActivity(intent) ;
+            //Intent intent = new Intent(this, Feedback.class) ;
+           // intent.putExtra(Home.EXTRA_PAD, dev);
+           // startActivity(intent) ;
 
         }catch (Exception e)
         {

@@ -2249,7 +2249,7 @@
         Chase the green light around the room while avoiding the red ones!
     </string><string name="rounds">rounds</string><string name="email">EMAIL</string><string name="verify_button">Verify</string><string name="ground_chase_desc">
         Dribble towards the green light for the next one to appear! Stay off red lights!
-    </string><string name="stop">Stop!</string><string name="warning_guest_positive">CONTINUE</string><string name="warning_invalid_code_possitive">OK</string><string name="choose_the_difficulty">Choose the Difficulty:</string><string name="verify_email_text_field">A 5 digits confirmation code has been sent to the email address provided. Please enter the code.</string><string name="go_to_log_in_screen">Go To Login</string><string name="warning_email_exists_message">The email you selected is already being used by another SkillCourt user.</string><string name="ar_shot_time">AR Shot Time: </string><string name="choose_a_routine">Choose a Routine:</string><string name="title_activity_feedback">Feedback</string><string name="percent"> %</string><string name="play_by">Play by:</string><string name="minus_points">Minus Points: </string><string name="warning_username_exists_message">The username you selected is already being used by another SkillCourt user.</string><string name="warning_email_exists_positive">OK</string><string-array name="wall_to_remove_array">
+    </string><string name="stop">Stop!</string><string name="warning_guest_positive">CONTINUE</string><string name="warning_invalid_code_possitive">OK</string><string name="choose_the_difficulty">Choose the Difficulty:</string><string name="verify_email_text_field">A 5 digits confirmation code has been sent to the email address provided. Please enter the code.</string><string name="go_to_log_in_screen">Go To Login</string><string name="warning_email_exists_message">The email you selected is already being used by another SkillCourt user.</string><string name="ar_shot_time">AR Shot Time: </string><string name="title_activity_feedback">Feedback</string><string name="choose_a_routine">Choose a Routine:</string><string name="percent"> %</string><string name="play_by">Play by:</string><string name="minus_points">Minus Points: </string><string name="warning_username_exists_message">The username you selected is already being used by another SkillCourt user.</string><string name="warning_email_exists_positive">OK</string><string-array name="wall_to_remove_array">
         <item>North</item>
         <item>East</item>
         <item>South</item>
@@ -2267,7 +2267,7 @@
         <item>c</item>
         <item>h</item>
         <item>g</item>
-        <item>h</item>
+        <item>j</item>
         <item>m</item>
         <item>x</item>
     </string-array><string name="newtons"> N</string><string name="title_activity_create_account4">CreateAccount4</string><string name="title_activity_create_account1">CreateAccount1</string><string name="time_per_rounds">Time Per Round:</string><string name="empty"/><string name="home_chase_desc">
