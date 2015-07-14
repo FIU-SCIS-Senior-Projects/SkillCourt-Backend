@@ -1,6 +1,7 @@
 var routineCommand = "" ;
 var warning=""; 
 var isReadyToPlay =false ;
+var areSettingsProper = false ;
 var routineForGame ;
 var difficultyForGame ;
 var timePerRound ;
@@ -81,7 +82,7 @@ function getRounds()
 	if(!isTimeBased()) 
 	{
 		var roundsObj = document.getElementById("amount");
-		if (roundsObj.checkValidity() == false) {isReadyToPlay = false ;warning = roundsObj.validationMessage ;}
+		if (roundsObj.checkValidity() == false) {areSettingsProper = false ;warning = roundsObj.validationMessage ;}
 		else return parseInt(roundsObj.value) ;
 	}
 	return 0 ;
@@ -92,7 +93,7 @@ function getMinutes()
 	if(isTimeBased()) 
 	{
 		var roundsObj = document.getElementById("amount");
-		if (roundsObj.checkValidity() == false) isReadyToPlay = false ;
+		if (roundsObj.checkValidity() == false) areSettingsProper = false ;
 		else return parseInt(roundsObj.value) ;
 	}
 	return 0 ;
@@ -103,8 +104,15 @@ function getTimePerRound()
 	var timePerRoundObj = document.getElementById("timePerRound") ;
 	if(!timePerRoundObj.disabled)
 	{
-		if(timePerRoundObj.checkValidity() == false) isreadyToPlay = false ;
-		else return parseInt(timePerRoundObj.value) ;
+		if(timePerRoundObj.checkValidity() == false )//|| timePerRoundObj.value == undefined) 
+		{
+			areSettingsProper = false ;
+		}
+		else 
+		{
+			console.log(timePerRoundObj.value == NaN) ;
+			return parseInt(timePerRoundObj.value) ;
+		}
 	}
 	
 	return 0 ; 
@@ -118,7 +126,7 @@ function startGame()
 	processingInstance = Processing.getInstanceById('sketch');
 	processingInstance.setJavaScript(this);
 	
-	isReadyToPlay=true ;
+	areSettingsProper = true ;
 	
 	routineForGame = getRoutine() ;																				//routine 		1 character
 	difficultyForGame = getDifficulty() ;																		//difficulty 	1 character 
@@ -132,10 +140,13 @@ function startGame()
 	var timePerRoundStr = (timePerRound > 9 ) ? (timePerRound.toString()) : "0"+ timePerRound.toString(); 		//seconds		2 characters		
 	
 	routineCommand = routineForGame + difficultyForGame + roundsForGameStr  + missingWallStr + timeForGameStr + timePerRoundStr ;
-    
-    console.log(routineCommand);
-	
-	if(isReadyToPlay) changeScreen() ;
+	console.log(routineCommand) ;
+	if(areSettingsProper && routineCommand.length == 11)
+	{
+		isReadyToPlay = areSettingsProper ; 
+		playScreen() ;
+	}
+	else warning = "Please fill out all options properly." ;
 }
 
 function quickStartGame()
@@ -154,7 +165,7 @@ function quickStartGame()
     //changeScreen() ;
 }
 
-function changeScreen()
+function playScreen()
 {
 	document.getElementById("DefaultList").style.display = "none" ;
 	document.getElementById("FeedbackList").style.display = "block" ;
@@ -236,7 +247,7 @@ function stopGame()
 	processingInstance.reset();
 	postFeedback(0,0,0,0,0,0,0,0);
 	document.getElementById("routineType").firstChild.selected = "true" ;
-	document.getElementById("SettingsList").style.display = "block" ;
+	document.getElementById("DefaultList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;
 }
 
