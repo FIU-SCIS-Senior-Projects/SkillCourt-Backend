@@ -355,13 +355,22 @@ class Game
    
     startTime = millis() ;
     isRoutineGroundBased = false; 
-    if (type.equals(CHASE_ME)) myRoutine = new ChaseRoutine(myRoom, difficulty, missingWall);
-    else if (type.equals(THREE_WALL_CHASE)) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
+    if (type.equals(CHASE_ME)) 
+    {
+      myRoutine = new ChaseRoutine(myRoom, difficulty, missingWall);
+      routineTime = 0 ;
+      routineTimeStart = 0 ;
+    }else if (type.equals(THREE_WALL_CHASE)) myRoutine = new ThreeWallChaseRoutine(myRoom, difficulty, missingWall);
     else if (type.equals(HOME_CHASE))
     {
       myRoutine = new HomeChaseRoutine(myRoom, difficulty, missingWall);
       isRoutineGroundBased = true;
-    } else if (type.equals(FLY))  myRoutine = new FlyRoutine(myRoom, difficulty, missingWall); 
+    } else if (type.equals(FLY))  
+    {
+      myRoutine = new FlyRoutine(myRoom, difficulty, missingWall); 
+      routineTime = 0 ;
+      routineTimeStart = 0 ;
+    }
     else if (type.equals(HOME_FLY)) 
     {
       myRoutine = new HomeFlyRoutine(myRoom, difficulty, missingWall);
@@ -486,7 +495,7 @@ class Game
       if ( ((millis() - routineTimeStart)) > routineTime )
       {
         //println("Sorry! took too long");
-        fill(0, 0, 0);
+        //fill(0, 0, 0);
         //text("Sorry! took too long", 0, 150);
         routineTimeStart = millis();
         //println("Before Timeout");
@@ -809,7 +818,6 @@ class xCueRoutine extends Routine
         }
       } 
     }
-    
   }
 
   void generateNorthPads()
