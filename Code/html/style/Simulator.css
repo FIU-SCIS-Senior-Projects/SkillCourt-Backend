@@ -6,6 +6,7 @@
 {
     background-color: #65B098;
 }
+
 	
 body
 {
@@ -43,6 +44,7 @@ body
 	background-image: url("screen.png");
 	background-size: cover ;
 	display: inline-block ;
+    /*display: none;*/
 	width: 309px ;
 	height: 600px ;	
 	float:left;
@@ -64,7 +66,8 @@ body
 	padding-left: 0 ;
 	padding-right: 0 ;
 	width: 600px ;
-	display: inline-block; 
+	display: inline-block;
+    /*display: none;*/
 	float: left ;
 }
 

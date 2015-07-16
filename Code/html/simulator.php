@@ -1,5 +1,23 @@
 <?php
-    $isCustom = isset($_GET['rc']);
+    
+    include_once("parseHeader.php");
+    
+    use Parse\ParseUser;
+    use Parse\ParseObject;
+    use Parse\ParseException;
+    
+    $currentUser = ParseUser::getCurrentUser();
+    $username;
+    
+    if ($currentUser) {
+        //$username = $currentUser->getObjectId();
+        //echo $currentUser->getUsername();
+        $username = $currentUser->getUsername();
+    } else {
+        // show the signup or login page
+        Header('Location:index.php');
+    }
+    
 ?>
 <!DOCTYPE html>
 	<head>
@@ -10,10 +28,7 @@
 		<script src="processing.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<div id="Header"> 
-            SkillCourt Simulator 
-            </div>
-		</div>	
+		<div id="Header"> SkillCourt Simulator </div>
 		<div id="SimSettings">
 			<ul id="tabs">
 				<li>
@@ -98,12 +113,13 @@
         <script src="simulator.js"></script>
         <script>
                 <?php if($isCustom): ?>
-                    document.getElementById("SettingsList").style.display = "none" ;
-                    document.getElementById("CustomPlay").style.display = "block" ;
-                    customRoutineCommand = <?php echo "\"".$_GET['rc']."\"" ?>;
+                    document.getElementById("DefaultList").style.display = "none" ;
+                    document.getElementById("CustomList").style.display = "block" ;
+                    //customRoutineCommand = <?php echo "\"".$_GET['rc']."\"" ?>;
+                    //customRoutineCommand = "U02R_01*122132142SNR_01*320330331SN";
+                    console.log(customRoutineCommand);
                     customCoachRoutine = true;
                 <?php endif ; ?>
-            console.log(customRoutineCommand) ;
         </script>
 	</body>
 </html>

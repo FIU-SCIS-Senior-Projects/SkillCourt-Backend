@@ -784,7 +784,7 @@ class CustomRoutine extends Routine
          roundsArray.add(newRound);
          currentCommandPosition++;
        } 
-       else if (curr.equals("#"))
+       else if (curr.equals("_"))
        {
          numberOfStepsPerRound = curr.substring(currentCommandPosition+1,currentCommandPosition+3);
          currentCommandPosition+=3;
