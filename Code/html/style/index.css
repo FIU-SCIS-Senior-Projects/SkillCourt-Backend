@@ -1,0 +1,287 @@
+html
+{
+    background: url(images/soccerTraining8.jpg); no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+#text
+{
+    position: absolute;
+    left: 0px;
+    width: 388px;
+    top: 10px;
+    height: 62px;
+    background: none;
+    border: none;
+    font-size: 54.5px;
+    text-align: center;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    padding: 1px 0;
+}
+#rectangle2
+{
+    position: absolute;
+    left: 1px;
+    width: 100%;
+    top: 419px;
+    height: 189px;
+    background: rgb(255, 255, 255); /* fallback */
+    background: rgba(255, 255, 255, 0.337);
+    border: none;
+    display: none;
+}
+
+#loginform
+{
+    
+}
+
+#navigationBar
+{
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    top: 0px;
+    height: 90px;
+    background: rgb(10, 10, 10); /* fallback */
+    background: rgba(10, 10, 10, 0.3);
+    border: none;
+}
+
+.navigationButtons button
+{
+    position: relative;
+    left: 481px;
+    width: 92px;
+    top: 12px;
+    height: 62px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    text-align: center;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    padding: 20px 0;
+    -webkit-border-radius: 6.5px 6.5px 6.5px 6.5px;
+    -moz-border-radius: 6.5px 6.5px 6.5px 6.5px;
+    border-radius: 6.5px 6.5px 6.5px 6.5px;
+}
+
+.navigationButtons button:hover
+{
+    background-color: rgb(105, 101, 101);
+}
+
+.navigationButtons button:active
+{
+    top: 1px;
+}
+
+#homeButton
+{
+    left: 481px;
+}
+
+#aboutButton
+{
+    left: 500px;
+}
+
+#routineButton
+{
+    left:519px;
+}
+
+#simulatorButton
+{
+    left:538px;
+}
+
+#usernameButton
+{
+    left:557px;
+}
+
+#logInButton
+{
+    position: absolute;
+    background-color: black;
+    background: rgb(255, 255, 255); /* fallback */
+    background: rgba(255, 255, 255, 0);
+    left: 86%;
+    width: 90px;
+    top: 27px;
+    height: 35px;
+    border: 2px solid rgb(45, 101, 158);
+    font-size: 19px;
+    text-align: right;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(45, 101, 158);
+    padding: 5px 15px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+#logInButton:hover
+{
+    background: rgba(145, 145, 145, 0.35);
+}
+
+#informationRectangle
+{
+    position: absolute;
+    left: 52px;
+    width: 493px;
+    top: 171px;
+    height: 302px;
+    background: rgb(173, 166, 166); /* fallback */
+    background: rgba(173, 166, 166, 0.8);
+    border: none;
+    -webkit-border-radius: 40px 40px 40px 40px;
+    -moz-border-radius: 40px 40px 40px 40px;
+    border-radius: 40px 40px 40px 40px;
+}
+#textRectangle
+{
+    position: absolute;
+    left: 99px;
+    width: 399px;
+    top: 203px;
+    height: 253px;
+    background: none;
+    border: none;
+    font-size: 17px;
+    text-align: left;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+}
+
+.black_overlay{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+.white_content {
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 461px;
+    height: 331px;
+    padding: 16px;
+    background-color: white;
+    z-index:1002;
+    overflow: auto;
+    -webkit-border-radius: 19px 19px 19px 19px;
+    -moz-border-radius: 19px 19px 19px 19px;
+    border-radius: 19px 19px 19px 19px;
+}
+
+#logInRectangle
+{
+    display: none;
+    position: absolute;
+    width: 495px;
+    top: 0px;
+    left: 0px;
+    height: 360px;
+    background: rgb(245, 240, 240);
+    border: none;
+    -webkit-border-radius: 19px 19px 19px 19px;
+    -moz-border-radius: 19px 19px 19px 19px;
+    border-radius: 19px 19px 19px 19px;
+}
+
+#headerLogInRectangle
+{
+    display: none;
+    position: absolute;
+    width: 495px;
+    top: 0px;
+    left: 0px;
+    height: 33px;
+    background: rgb(216, 210, 210);
+    border: none;
+    font-size: 27px;
+    text-align: center;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(0, 0, 0);
+    padding: 18px 0;
+    -webkit-border-radius: 19px 19px 0 0;
+    -moz-border-radius: 19px 19px 0 0;
+    border-radius: 19px 19px 0 0;
+}
+
+#username
+{
+    position: absolute;
+     left: 743px;
+     width: 186px;
+     top: 456px;
+    height: 32px;
+    background: rgb(255, 255, 255);
+    border: 0px solid rgb(255, 255, 255);
+    -webkit-box-shadow: 2.75px 2.25px 5px 0 rgba(0, 0, 0, 0.579) inset;
+    -moz-box-shadow: 2.75px 2.25px 5px 0 rgba(0, 0, 0, 0.579) inset;
+    box-shadow: 2.75px 2.25px 5px 0 rgba(0, 0, 0, 0.579) inset;
+    -webkit-border-radius: 3.25px 3.25px 3.25px 3.25px;
+    -moz-border-radius: 3.25px 3.25px 3.25px 3.25px;
+    border-radius: 3.25px 3.25px 3.25px 3.25px;
+}
+#password
+{
+    position: absolute;
+     left: 743px;
+     width: 186px;
+     top: 500px;
+    height: 32px;
+    background: rgb(255, 255, 255);
+    border: 0px solid rgb(255, 255, 255);
+    -webkit-box-shadow: 2.75px 2.25px 5px 0 rgba(0, 0, 0, 0.579) inset;
+    -moz-box-shadow: 2.75px 2.25px 5px 0 rgba(0, 0, 0, 0.579) inset;
+    box-shadow: 2.75px 2.25px 5px 0 rgba(0, 0, 0, 0.579) inset;
+    -webkit-border-radius: 3.25px 3.25px 3.25px 3.25px;
+    -moz-border-radius: 3.25px 3.25px 3.25px 3.25px;
+    border-radius: 3.25px 3.25px 3.25px 3.25px;
+}
+
+#signinbutton
+{
+    position: absolute;
+    left: 743px;
+    width: 105px;
+    top: 553px;
+    height: 32px;
+    background: rgb(237, 130, 80);
+    border: 1px solid rgb(255, 255, 255);
+    font-size: 14.5px;
+    text-align: center;
+    font-weight: bold;
+    font-family: CenturyGothic-Bold, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    color: rgb(255, 255, 255);
+    padding: 6px 0;
+    -webkit-border-radius: 4.5px 4.5px 4.5px 4.5px;
+    -moz-border-radius: 4.5px 4.5px 4.5px 4.5px;
+    border-radius: 4.5px 4.5px 4.5px 4.5px;
+}
+
+#routineList
+{
+    
+}
+

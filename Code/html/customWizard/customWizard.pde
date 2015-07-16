@@ -285,7 +285,7 @@ class Wizard
     {
       Round currentRound = (Round)(rounds.get(n)) ;
       int stepNum = currentRound.getStepAmount() ;
-      comm += "R#" + ((stepNum > 9) ? "" : "0") +  stepNum ;
+      comm += "R_" + ((stepNum > 9) ? "" : "0") +  stepNum ;
       
       for(int s = 0 ; s < stepNum ; s++) 
       {
