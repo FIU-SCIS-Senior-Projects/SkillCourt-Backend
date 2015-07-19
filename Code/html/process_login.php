@@ -9,7 +9,7 @@ use Parse\ParseException;
 if (isset($_POST['username'], $_POST['password'])) {
 
     $username = $_POST['username']; 
-    $password = $_POST['password']; 
+    $password = $_POST['password'];
     
     try {
   		$user = ParseUser::logIn($username, $password);

@@ -29,6 +29,8 @@ if ($currentUser) {
     </head>
     <body>
         <?php include 'navigation_bar.php'; ?>
-        <div id="text">SkillCourt</div>
+        <?php if($currentUser) :  ?>
+        <?php include 'card.php' ?>
+        <?php endif ?>
     </body>
 </html>
