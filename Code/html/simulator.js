@@ -155,6 +155,8 @@ function quickStartGame()
     processingInstance.setJavaScript(this);
     customCoachRoutine = true;
     isReadyToPlay = true;
+    console.log("asdfasdf");
+    console.log("cust " +customRoutineCommand);
     console.log("quickStartGame()");
 	//var c = document.getElementById("commandInput").value;
 	//customRoutineCommand = c;

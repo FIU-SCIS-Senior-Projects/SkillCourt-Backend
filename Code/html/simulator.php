@@ -25,10 +25,12 @@
 		<title>SkillCourt Simulator</title>
 		<meta name="Generator" content="Processing" />
         <link rel="stylesheet" type="text/css" href="style/Simulator.css">
+        <link rel="stylesheet" type="text/css" href="style/index.css">
 		<script src="processing.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="Header"> SkillCourt Simulator </div>
+        <?php include 'navigation_bar.php'; ?>
 		<div id="SimSettings">
 			<ul id="tabs">
 				<li>
@@ -67,7 +69,7 @@
 							<option name="routine" value="x">X-Cue</option>
 						</select></li>
 					<li>Choose the Difficulty:</li>
-					<li>
+					<li id="difficultyRadioButton">
 						<input type="radio" name="difficulty" value="n" checked="true">Novice<br>
 						<input type="radio" name="difficulty" value="i">Intermediate<br>
 						<input type="radio" name="difficulty" value="a">Advanced</li>
@@ -112,14 +114,57 @@
 		<script src="buzz.min.js"></script>
         <script src="simulator.js"></script>
         <script>
-                <?php if($isCustom): ?>
-                    document.getElementById("DefaultList").style.display = "none" ;
-                    document.getElementById("CustomList").style.display = "block" ;
-                    //customRoutineCommand = <?php echo "\"".$_GET['rc']."\"" ?>;
-                    //customRoutineCommand = "U02R_01*122132142SNR_01*320330331SN";
-                    console.log(customRoutineCommand);
-                    customCoachRoutine = true;
+                <?php if (isset($_GET['rc'])): ?>
+                    <?php if (isset($_GET['rt'])) : ?>
+                        document.getElementById("DefaultList").style.display = "none" ;
+                        document.getElementById("CustomList").style.display = "block" ;
+                        customRoutineCommand = <?php echo "\"".$_GET['rc']."\"" ?>;
+                        //customRoutineCommand = "U02R_01*122132142SNR_01*320330331SN";
+                        customCoachRoutine = true;
+                    <?php else : ?>
+                        document.getElementById("DefaultList").style.display = "block" ;
+                        document.getElementById("CustomList").style.display = "none" ;
+                        var rout = <?php echo "\"".$_GET['rc']."\"" ?>;
+                        console.log(rout);
+                        var rt = rout.charAt(0);
+                        var rdiff = rout.charAt(1);
+                        var rounds = parseInt(rout.substring(2, 4));
+                        var gametime = parseInt(rout.substring(6,9));
+                        var timebased = parseInt(rout.substring(9,11));
+
+                        document.getElementById("routineType").value = rt;
+                        console.log("rounds: "+rounds)
+                        if (rounds > 0)
+                        {
+                            document.getElementById("gameType").value = "rounds";
+                            document.getElementById("amount").value = rounds;
+                        } else {
+                            document.getElementById("gameType").value = "time";
+                            document.getElementById("amount").value = gametime;
+                        }
+
+                        if(parseInt(rout.charAt(4)) == 0)
+                        {
+                            document.getElementById("customRoomCheck").checked = false;
+                        } else {
+                            document.getElementById("customRoomCheck").checked = true;
+                            document.getElementById("removedWall").value = parseInt(rout.charAt(5));
+                            document.getElementById("removedWall").style.display = "block";
+                        }
+
+                        if(timebased>0)
+                        {
+                            document.getElementById("timePerRoundCheck").checked = true;
+                            document.getElementById("timePerRound").value = timebased;
+                        } else {
+                            document.getElementById("timePerRoundCheck").checked = false;
+                        }
+
+                        //xi010100000
+
+                    <?php endif ; ?>
                 <?php endif ; ?>
         </script>
+
 	</body>
 </html>
