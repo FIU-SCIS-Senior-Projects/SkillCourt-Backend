@@ -1420,8 +1420,11 @@ class xCueRoutine extends Routine
            return true;
         }
       }
-      if (myRoom.colorOfClick(x,y) == red) myStats.minusPoint() ;
-      myStats.miss() ;
+      else
+      { 
+        if (myRoom.colorOfClick(x,y) == red) myStats.minusPoint() ;
+        myStats.miss() ;
+      }
     }
     
     return false;
