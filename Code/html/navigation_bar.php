@@ -15,7 +15,10 @@
             <?php endif ?>
 
             <?php if ($isCoach):?>
-
+				<button id="routineButton" onclick="location.href = 'coachRoutines.php';">Routines</button>
+                <button id="simulatorButton" onclick="location.href = 'customWizard.php'; ">Wizard</button>
+                <button id="usernameButton" onclick="location.href = 'profile.php';"><?php echo $username ?></button>
+           
             <?php else:?>
                 <button id="routineButton" onclick="location.href = 'routines.php';">Routines</button>
                 <button id="simulatorButton" onclick="location.href = 'simulator.php'; ">Simulator</button>
