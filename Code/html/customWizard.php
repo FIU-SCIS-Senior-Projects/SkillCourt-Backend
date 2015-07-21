@@ -44,6 +44,7 @@ if ($currentUser) {
 		</div>
 		<div id="WizardOptionsWrapper">
 			<div id="WizardOptions">
+				<h1>Custom Options</h1>
 				<ul>
 					<li>
 						<select id="stepType" onchange="changeDescription();">
@@ -68,15 +69,15 @@ if ($currentUser) {
 						of&nbsp;
 						<span id="totalRounds"></span>
 						<button id="roundArrowRight" class="myButton round" onclick="nextRound();">></button>
-						<button id="addRound" class="myButton round" onclick="addRound();" title="Click to add a new Round">+</button>
+						<button id="addRound" class=" myButton round" onclick="addRound();" title="Click to add a new Round">+</button>
 					</li>
 					<li class="buttonList">
 						<button id="DeleteStep"  class="myButton" onclick="deleteStep();">Delete Step</button>
 						<button id="DeleteRound" class="myButton" onclick="deleteRound();">Delete Round</button>
 					</li>
 					<li class="buttonList">
-						<button id="EditStep" class="myButton" onclick="editStep();">Edit Step</button>
-						<button id="FinishStep" class="myButton" onclick="finishStep();">Finish Step</button>
+						<button id="EditStep" class="myButton wide" onclick="editStep();">Edit Step</button>
+						<button id="FinishStep" class="myButton wide" onclick="finishStep();">Finish Step</button>
 					</li>	
 					<li class="buttonList">
 						<button id="FinishRoutineButton" class="myButton wide" onclick="finishRoutine();">Finish Routine</button>
