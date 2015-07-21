@@ -1,17 +1,12 @@
-@import "compass/css3";
-
-@import url("http://fonts.googleapis.com/css?family=Lato");
-
 *
 {
-    /*background-color: #65B098;*/
+    background-color: #65B098 ;
 }
 	
 body
 {
     font-family: Calibri, Veranda, Sans-Serif;
     font-size: 12pt;
-    background-color: #CCCCCC;
     text-align: right;
 }
 
