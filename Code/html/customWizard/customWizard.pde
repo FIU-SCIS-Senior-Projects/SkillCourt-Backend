@@ -78,7 +78,7 @@ void setup()
 
 void draw()
 {
-  background(101, 176, 152);   //window bg color
+  background(0, 0, 0, 90);   //window bg color
   if(!myWizard.isFinished()) newRoom.drawRoom() ;
   //else might want to do something when routine is finished
 }
@@ -90,7 +90,7 @@ void mousePressed()
 
 void setupDisplay() 
 {
-  background(101, 176, 152);   //window bg color
+  background(0, 0, 0, 90);   //window bg color
   fill(0, 0, 0) ;  //next will be filled with black
   textSize(32) ;
 }
