@@ -68,8 +68,7 @@ $_SESSION["defaultRoutines"] = $query->find() ;
 			</div>
 			<div id="routinesInfoBlock">
 				<p id="playerSelectPar">assigned to:</p>
-				<select id="playerSelect">
-				</select>
+				<select id="playerSelect"></select>
 				<textarea id="description" readonly></textarea>
 			</div>
 			<div id="assignPopup">
