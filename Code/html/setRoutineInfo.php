@@ -101,7 +101,7 @@ function unassign($routine)
 	}
 }
 
-function assign($routine)
+function assign($currentUser, $routine)
 {
 	foreach ($_POST['assign'] as $selectedOption)
 	{
