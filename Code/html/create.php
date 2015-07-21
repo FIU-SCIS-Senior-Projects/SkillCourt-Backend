@@ -5,6 +5,7 @@
 	<title>Secure Login: Protected Page</title>
 	<link rel="stylesheet" type="text/css" href="style/index.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="parse_php/parse.js"></script>  
 <script>
 $(document).ready(function(){
                   $("#continueButton").click(function(){
@@ -33,9 +34,10 @@ $(document).ready(function(){
                 <input type="text" id="createEmailInput" name="createEmailInput" required >
                 <div id="createPositionHeader">Position</div>
                 <select id="createPositionInput" name="createPositionInput" required>
-                    <option>Midfielder</option>
-                    <option>Goalkeeper</option>
-                    <option>Defender</option>
+                    <option value="midfielder">Midfielder</option>
+                    <option value="goalkeeper">Goalkeeper</option>
+                    <option value="defender">Defender</option>
+                    <option value="coach" style="display: none;">Coach</option>
                 </select>
             </div>
             <div id="createRectangle2">
@@ -55,7 +57,7 @@ $(document).ready(function(){
                     <option>Female</option>
                 </select>
                 <div id="createCoachHeader">Coach</div>
-                <input type="checkbox" id="createCoachInput" name="createCoachInput" >
+                <input  type="checkbox" id="createCoachInput" name="createCoachInput" onclick="disableCoach()" >
             </div>
             <div><input type="submit" id="createPlayerButton" value="SAVE" name="Submit" ><br></div>
             </form>

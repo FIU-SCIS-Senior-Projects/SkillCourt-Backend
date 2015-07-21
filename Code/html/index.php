@@ -88,8 +88,13 @@
     <div id="fade" class="black_overlay"></div>
     <div id="rectangle2"> </div>
     <div id="informationRectangle"></div>
+    <div id="informationRectangleHeader">Welcome to SkillCourt!</div>
     <div id="textRectangle">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+I&apos;m a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me and you can start adding your own content and make changes to the font.<br/>
+​<br/>
+This is a great space to write long text about your company and your services. You can use this space to go into a little more detail about your company.<br/>
+<br/>
+Tip: Use this area to describe one of your services. You can change the title to the service you provide and use this text area to describe your service. Feel free to change the image.
     </div>
     <div id="pageFooter"></div>
 </body>
