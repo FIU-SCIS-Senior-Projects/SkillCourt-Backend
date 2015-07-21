@@ -15,7 +15,8 @@
         $username = $currentUser->getUsername();
     } else {
         // show the signup or login page
-        Header('Location:index.php');
+		$username = "Guest" ;
+      //  Header('Location:index.php');
     }
     
 ?>
@@ -30,7 +31,8 @@
 	</head>
 	<body>
 		<div id="Header"> SkillCourt Simulator </div>
-        <?php include 'navigation_bar.php'; ?>
+        <?php //include 'navigation_bar.php'; 
+		?>
 		<div id="SimSettings">
 			<ul id="tabs">
 				<li>
