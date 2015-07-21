@@ -34,40 +34,43 @@ include_once("parseHeader.php");
         <?php include 'card.php' ?>
         <div id="routineRectangle">
             <div id="routineRectangleHeader">Routines</div>
-            <button id="playRoutineButton" onclick="playRoutine();">Play</button>
-        </div>
-        <div id="playCustomRoutine" >
-            <div id="playCustomRoutineHeader">Custom</div>
-            <div class="scroll">
-                <?php
-                    if ($currentUser) {
-                        $query1->equalTo("type","Custom");
-                        $results1 = $query1->find();
-                        for ($i = 0; $i < count($results1); $i++) {
-                            $res = $results1[$i]->get("customRoutine");
-                            $res->fetch();
-                            //echo $res->get("name");
-                            echo "<button ". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
+            <div id="playCustomRoutine">
+                <h1>Custom</h1>
+                    <div class="scroll">
+                    <?php
+                        if ($currentUser) {
+                            $query1->equalTo("type","Custom");
+                            $results1 = $query1->find();
+                            if(count($results1) > 0){
+                                for ($i = 0; $i < count($results1); $i++) {
+                                    $res = $results1[$i]->get("customRoutine");
+                                    $res->fetch();
+                                    //echo $res->get("name");
+                                    echo "<button ". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
+                                }
+                            }
                         }
-                    }
-                ?>
+                        ?>
+                    </div>
             </div>
-        </div>
-        <div id="playDefaultRoutine">
-            <div id="playDefaultRoutineHeader">Default</div>
-            <div class="scroll">
-            <?php
-                if ($currentUser) {
-                    $query1->equalTo("type","Default");
-                    $results1 = $query1->find();
-                    for ($i = 0; $i < count($results1); $i++) {
-                        $res = $results1[$i]->get("defaultRoutine");
-                        $res->fetch();
-                        echo "<button ". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
-                    }
-                }
-            ?>
+            <div id="playDefaultRoutine">
+                <h1>Default</h1>
+                    <div class="scroll">
+                    <?php
+                        if ($currentUser) {
+                            $query1->equalTo("type","Default");
+                            $results1 = $query1->find();
+                            if (count($results1))
+                                for ($i = 0; $i < count($results1); $i++) {
+                                    $res = $results1[$i]->get("defaultRoutine");
+                                    $res->fetch();
+                                    echo "<button ". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
+                                }
+                        }
+                        ?>
+                    </div>
             </div>
+            <button id="playRoutineButton" onclick="playRoutine();">Play</button>
         </div>
     </body>
 </html>

@@ -957,6 +957,7 @@ void handleSingleClick(int x, int y)
   }
   
 }
+
 void postGame() {}
 
 boolean checkStatus()
