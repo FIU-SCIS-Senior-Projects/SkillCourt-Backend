@@ -39,6 +39,7 @@ $_SESSION["defaultRoutines"] = $query->find() ;
     </head>
     <body>
         <?php include 'navigation_bar.php'; ?>
+        <?php include 'card.php'; ?>
         <div id="text">SkillCourt</div>		
 		<div id="informationRectangle1">
 			<h1 class="page_heading">Coach Routines</h1>		

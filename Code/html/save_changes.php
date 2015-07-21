@@ -27,11 +27,6 @@
         $date = substr($date, 0, -3) . 'Z';
         echo $date;*/
         
-        
-        
-        
-        
-        
         $dateFormatString = 'Y-m-d\TH:i:s.u';
         $date = DateTime::createFromFormat('j-M-Y', '15-Feb-2009');
         echo date_format($date,$dateFormatString);
@@ -44,7 +39,7 @@
         $currentUser->set("position",$position);
         $currentUser->save();
         
-        //header('Location: profile.php');
+        header('Location: profile.php');
     } catch (ParseException $error) {
         echo $error->getCode() . " " . $error->getMessage();
     }

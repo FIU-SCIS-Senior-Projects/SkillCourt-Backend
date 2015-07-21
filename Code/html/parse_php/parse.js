@@ -1,6 +1,6 @@
-Parse.initialize("pBeFT0fHxcLjMnxwQaiJpb6Ul5HQqayb96X2UHAF", "JO3sLj47GgaQXiX1zbdHhim5YbpbgiYy3JhYpx9w");
+/*Parse.initialize("pBeFT0fHxcLjMnxwQaiJpb6Ul5HQqayb96X2UHAF", "JO3sLj47GgaQXiX1zbdHhim5YbpbgiYy3JhYpx9w");
 
-var currentUser = Parse.User.current();
+var currentUser = Parse.User.current();*/
 
 function enableFields(id)
 {
@@ -37,8 +37,11 @@ $(document).ready(function(){
                                     });
                   
                   
+                  $("#createCoachInput").change(function(){
+                                               
+                                        
                   
-                  
+                                               });
                   });
 
 function playRoutine()
@@ -70,3 +73,9 @@ function resetLogInWindow()
     document.getElementById("changePasswordRectangle").style.display = "none";
     document.getElementById("logInRectangle").style.display = "block";
 }
+
+function disableCoach()
+{
+    
+}
+
