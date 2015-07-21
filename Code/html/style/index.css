@@ -1617,7 +1617,12 @@ div.scroll button:hover
 	height: 90% ;
 	position: absolute ;
 	top: 5% ;
-	left: 5% ;
+	left: 5% ;font-family: HelveticaNeue-Thin, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#WizardOptions h1 {
+	text-align: center ;
+	color: white ;
 }
 
 #WizardOptions select{
@@ -1637,8 +1642,7 @@ div.scroll button:hover
 	width: 80% ;
 	color: white ;
 	list-style: none ;
-	font-family: HelveticaNeue-Thin, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-align: center ;
+	text-align: center ;
 }
 
 #WizardOptions ul
@@ -1692,4 +1696,11 @@ div.scroll button:hover
 	width: 244px;
 }
 
+#stepArrowLeft, #stepArrowRight, #roundArrowLeft, #roundArrowRight {
+	visibility: hidden ;
+}
+
+#EditStep {
+	display: none ;
+}
 /*#######################################*/
