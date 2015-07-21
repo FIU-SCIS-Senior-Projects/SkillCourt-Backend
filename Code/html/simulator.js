@@ -155,11 +155,11 @@ function quickStartGame()
     processingInstance.setJavaScript(this);
     customCoachRoutine = true;
     isReadyToPlay = true;
-    console.log("asdfasdf");
     console.log("cust " +customRoutineCommand);
     console.log("quickStartGame()");
-	//var c = document.getElementById("commandInput").value;
-	//customRoutineCommand = c;
+	var c = document.getElementById("commandInput").value;
+	customRoutineCommand = c;
+	
 	//console.log(customRoutineCommand);
     
     //customRoutineCommand = "U01R#09*000SG*001SG*002SG*003SG*013SG*023SG*022SG*021SG*032SG";
@@ -236,6 +236,7 @@ function showDefault()
 	console.log("Show Default");
 	document.getElementById("CustomList").style.display = "none";
 	document.getElementById("DefaultList").style.display = "block";
+	location.reload() ;
 }
 
 function showCustom()
@@ -249,9 +250,12 @@ function stopGame()
 {
 	processingInstance.reset();
 	postFeedback(0,0,0,0,0,0,0,0);
+	isRead
 	document.getElementById("routineType").firstChild.selected = "true" ;
 	document.getElementById("DefaultList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;
+	customCoachRoutine = false ;
+    isReadyToPlay = false ;
 }
 
 function playTest() {
