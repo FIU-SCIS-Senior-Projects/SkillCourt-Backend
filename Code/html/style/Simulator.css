@@ -1,8 +1,5 @@
 
-*
-{
-    background-color: #65B098 ;
-}
+
 	
 body
 {
@@ -41,6 +38,7 @@ body
 	display: inline-block ;
     /*display: none;*/
 	width: 309px ;
+    top: 120px;
 	height: 600px ;	
 	float:left;
 	clear: right;

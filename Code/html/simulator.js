@@ -163,9 +163,9 @@ function quickStartGame()
         //document.getElementById("customRoutineList");
         customRoutineCommand = document.getElementById("customRoutineList").value;
         console.log("quickStartGame()");
+    } else {
+        alert("No Custom Routines Assigned");
     }
-    
-    alert("No Custom Routines Assigned");
     
 	//var c = document.getElementById("commandInput").value;
 	//customRoutineCommand = c;

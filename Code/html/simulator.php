@@ -32,7 +32,6 @@
 		<script src="processing.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<div id="Header"> SkillCourt Simulator </div>
         <?php include 'navigation_bar.php'; ?>
             <div id="phoneBackground"></div>
 		<div id="SimSettings">
