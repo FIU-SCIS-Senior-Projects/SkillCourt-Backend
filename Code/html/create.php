@@ -5,11 +5,13 @@
 	<title>Secure Login: Protected Page</title>
 	<link rel="stylesheet" type="text/css" href="style/index.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.5.0.min.js"></script>
     <script src="parse_php/parse.js"></script>  
 <script>
 $(document).ready(function(){
                   $("#continueButton").click(function(){
                                    $("#createRectangle2").slideDown("slow");
+                  
                                    });
                   });
 </script>
@@ -23,7 +25,7 @@ $(document).ready(function(){
             </div>
         </div>
         <div id="text">SkillCourt</div>
-            <form action="submit_new_player.php" method="POST" name="create_form">
+            <form action="javascript:validateSignUp();" method="POST" name="create_form">
             <div id="createRectangle">
                 <p id="signUpTitle">Sign up with your email address</p>
                 <div id="createUsernameHeader">Username</div>
@@ -34,10 +36,10 @@ $(document).ready(function(){
                 <input type="text" id="createEmailInput" name="createEmailInput" required >
                 <div id="createPositionHeader">Position</div>
                 <select id="createPositionInput" name="createPositionInput" required>
-                    <option value="midfielder">Midfielder</option>
-                    <option value="goalkeeper">Goalkeeper</option>
-                    <option value="defender">Defender</option>
-                    <option value="coach" style="display: none;">Coach</option>
+                    <option value="Midfielder">Midfielder</option>
+                    <option value="Goalkeeper">Goalkeeper</option>
+                    <option value="Defender">Defender</option>
+                    <option value="Coach" style="display: none;">Coach</option>
                 </select>
             </div>
             <div id="createRectangle2">
@@ -58,12 +60,14 @@ $(document).ready(function(){
                 </select>
                 <div id="createCoachHeader">Coach</div>
                 <input  type="checkbox" id="createCoachInput" name="createCoachInput" onclick="disableCoach()" >
+                <div><input class="round_orange_buttons" type="submit" id="createPlayerButton" value="SIGN UP" name="Submit" ><br></div>
             </div>
-            <div><input type="submit" id="createPlayerButton" value="SAVE" name="Submit" ><br></div>
             </form>
+            <div id="existingAccountHeader">Already have an account?
+                <a id="existingAccountButton" href="index.php?logIn" >Log in</a>
+            </div>
         <div id="rectangle"></div>
         <div id="panel"></div>
-        <div><button id="continueButton">Continue</button></div>
         <div id="pageFooter"></div>
     </body>
 </html>

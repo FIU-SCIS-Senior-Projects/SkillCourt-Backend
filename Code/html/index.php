@@ -24,6 +24,10 @@
         <script src="parse_php/parse.js"></script>
         <script>
         $(document).ready(function(){
+                          <?php if ( isset($_GET["logIn"])) :?>
+                          $("#fade").fadeIn() ;
+                          $(".white_content").fadeIn() ;
+                          <?php endif ?>
                           $("#logInButton").click(function(){
                                                   $("#fade").fadeIn() ;
                                                   $(".white_content").fadeIn() ;
@@ -53,7 +57,7 @@
     <div id="registerNowZoom">
         <div id="zoomRectangle">
             <div id="zoomOval"></div>
-            <button onclick="location.href = 'create.php';" id="registerNowButton">REGISTER NOW</button>
+            <button class="round_orange_buttons" onclick="location.href = 'create.php';" id="registerNowButton">REGISTER NOW</button>
             <div id="registerNowHeader">and start playing!</div>
         </div>
     </div>
@@ -67,7 +71,7 @@
                 <form action="process_login.php" method="POST" name="login_form">
                     <input type="text" name="username" id="username" placeholder="Username" required><br>
                     <input type="password" name="password" id="password" placeholder="Password" required><br>
-                    <input type="submit" id="popUplogInButton" value ="LOG IN"><br>
+                    <input type="submit" class="round_orange_buttons" id="popUplogInButton" value ="LOG IN"><br>
                 </form>
                 <button id="changePasswordButton" onclick="change_password();">Forgot your username or password?</button>
                 <div id="signUpHeader">Don&apos;t have an account?</div>
@@ -81,7 +85,7 @@
             <div id="passwordResetInformation">Enter your SkillCourt email address that you used to register. We&apos;ll send you an email with your username and a link to reset your password.</div>
             <form action="change_password.php" method="POST" name="change_password_form">
                 <input type="text" name="emailAddressForPasswordChange" id="emailAddressForPasswordChange" placeholder="Email Address" required><br>
-                <input type="submit" id="submitPasswordChange" value="SEND"><br>
+                <input class="round_orange_buttons" type="submit" id="submitPasswordChange" value="SEND"><br>
             </form>
         </div>
     </div>
