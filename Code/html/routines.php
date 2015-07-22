@@ -60,7 +60,6 @@ include_once("parseHeader.php");
                         if ($currentUser) {
                             $query1->equalTo("type","Default");
                             $results1 = $query1->find();
-                            if (count($results1))
                                 for ($i = 0; $i < count($results1); $i++) {
                                     $res = $results1[$i]->get("defaultRoutine");
                                     $res->fetch();
@@ -70,7 +69,7 @@ include_once("parseHeader.php");
                         ?>
                     </div>
             </div>
-            <button id="playRoutineButton" onclick="playRoutine();">Play</button>
+            <button class="round_orange_buttons" id="playRoutineButton" onclick="playRoutine();">Play</button>
         </div>
     </body>
 </html>

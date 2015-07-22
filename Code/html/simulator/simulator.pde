@@ -94,7 +94,7 @@ void draw()
         {
           if (routineCommand.length() != 11)
           { 
-            background(101, 176, 152); 
+            background(0,0,0,90); 
             textSize(32) ;
             fill(255) ;
             text("Make sure all options are filled out", 30, 30, 540, 540);
@@ -124,7 +124,7 @@ void draw()
     } 
     else
     {
-      background(101, 176, 152); 
+      background(0,0,0,90); 
       fill(255) ;
       textSize(32) ;
       text("Click start to play the chosen routine: ", 30, 200, 540, 540) ;
@@ -189,7 +189,7 @@ void setupImages()
 
 void setupDisplay() 
 {
-  background(101, 176, 152);   //window bg color
+  background(0,0,0,90);   //window bg color
   fill(0, 0, 0) ;  //next will be filled with black
   textSize(32) ;
 }
@@ -197,7 +197,7 @@ void setupDisplay()
 boolean countdown()
 {
   if(startCountdownTime == 0) startCountdownTime = millis() ;
-  background(101, 176, 152); 
+  background(0,0,0,90); 
   int deltaTime = millis()-startCountdownTime ;
   
   if(deltaTime > 3000)  return true ;

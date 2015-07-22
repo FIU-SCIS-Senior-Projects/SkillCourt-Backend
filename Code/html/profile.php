@@ -20,8 +20,6 @@
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -83,10 +81,9 @@
                 <div id="emailHeader">Email:</div>
                 <input type="email" name="emailInput" id="emailInput" value=<?php echo $currentUser->get("email");  ?> disabled></br>
             </div>
-            <input id="submitButton" name="Submit"  type="submit" value="SAVE"/>
-                <button id="editProfileButton" onclick="enableFields(this);" >EDIT PROFILE</div>
+            <input class="round_orange_buttons" id="submitButton" name="Submit"  type="submit" value="SAVE"/>
             </form>
-
+            <button class="round_orange_buttons" id="editProfileButton" onclick="enableFields(this);" >EDIT PROFILE</div>
         </div>
     </body>
 </html>

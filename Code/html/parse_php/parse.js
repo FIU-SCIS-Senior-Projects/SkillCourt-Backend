@@ -1,6 +1,5 @@
-/*Parse.initialize("pBeFT0fHxcLjMnxwQaiJpb6Ul5HQqayb96X2UHAF", "JO3sLj47GgaQXiX1zbdHhim5YbpbgiYy3JhYpx9w");
 
-var currentUser = Parse.User.current();*/
+Parse.initialize("pBeFT0fHxcLjMnxwQaiJpb6Ul5HQqayb96X2UHAF", "JO3sLj47GgaQXiX1zbdHhim5YbpbgiYy3JhYpx9w");
 
 function enableFields(id)
 {
@@ -46,7 +45,6 @@ $(document).ready(function(){
 
 function playRoutine()
 {
-    console.log("Hello world");
     if (currentCommand != "")
     {
         var c = currentCommand.charAt(0);
@@ -76,6 +74,56 @@ function resetLogInWindow()
 
 function disableCoach()
 {
+    if (!document.getElementById("createCoachInput").checked)
+    {
+        document.getElementById("createPositionInput").value = "midfielder";
+        document.getElementById("createPositionInput").disabled = false;
+    } else {
+        document.getElementById("createPositionInput").value = "coach";
+        document.getElementById("createPositionInput").disabled = true;
+    }
+}
+
+function validateSignUp()
+{
+    var firstName = document.getElementById("createFirstNameInput").value;
+    var middleName = document.getElementById("createMiddleNameInput").value;
+    var lastName = document.getElementById("createLastNameInput").value;
+    var phone = document.getElementById("createPhoneInput").value;
+    var gender = document.getElementById("createGenderInput").value;
+    var position = document.getElementById("createPositionInput").value;
+    var birthdate = document.getElementById("createBirthdateInput").value;
+    var username = document.getElementById("createUsernameInput").value;
+    var password = document.getElementById("createPasswordInput").value;
+    var email = document.getElementById("createEmailInput").value;
+    var isCoach;
     
+    console.log(birthdate);
+    console.log(document.getElementById("createCoachInput").checked);
+    console.log(position);
+    
+    
+    var user = new Parse.User();
+    user.set("firstName",firstName);
+    user.set("lastName",lastName);
+    user.set("middleInitial",middleName);
+    user.set("phone",phone);
+    user.set("gender",gender);
+    user.set("position",position);
+    user.set("birthdate",birthdate);
+    user.set("username",username);
+    user.set("password",password);
+    user.set("email",email);
+    user.set("isCoach",isCoach);
+    
+    user.signUp(null, {
+                success: function(user) {
+                // Hooray! Let them use the app now.
+                },
+                error: function(user, error) {
+                // Show the error message somewhere and let the user try again.
+                alert("Error: " + error.code + " " + error.message);
+                }
+                });
 }
 

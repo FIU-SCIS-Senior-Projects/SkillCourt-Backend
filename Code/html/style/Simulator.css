@@ -1,7 +1,5 @@
-*
-{
-    background-color: #65B098 ;
-}
+
+
 	
 body
 {
@@ -40,6 +38,7 @@ body
 	display: inline-block ;
     /*display: none;*/
 	width: 309px ;
+    top: 120px;
 	height: 600px ;	
 	float:left;
 	clear: right;
@@ -64,6 +63,7 @@ body
 	display: inline-block;
     /*display: none;*/
 	float: left ;
+    top: -40px;
 }
 
 #tabs
@@ -251,4 +251,9 @@ body
 #CustomList
 {
 	display: none;
+}
+
+#customRoutineList
+{
+    width: 140px;
 }

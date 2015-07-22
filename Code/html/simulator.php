@@ -5,6 +5,7 @@
     use Parse\ParseUser;
     use Parse\ParseObject;
     use Parse\ParseException;
+    use Parse\ParseQuery;
     
     $currentUser = ParseUser::getCurrentUser();
     $username;
@@ -12,11 +13,12 @@
     if ($currentUser) {
         //$username = $currentUser->getObjectId();
         //echo $currentUser->getUsername();
+        $query1 = new ParseQuery("AssignedRoutines");
+        $query1->equalTo("user",$currentUser);
         $username = $currentUser->getUsername();
     } else {
-        // show the signup or login page
-		$username = "Guest" ;
-      //  Header('Location:index.php');
+        // show the signup or login page=
+        Header('Location:index.php');
     }
     
 ?>
@@ -30,9 +32,8 @@
 		<script src="processing.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<div id="Header"> SkillCourt Simulator </div>
-        <?php //include 'navigation_bar.php'; 
-		?>
+        <?php include 'navigation_bar.php'; ?>
+            <div id="phoneBackground"></div>
 		<div id="SimSettings">
 			<ul id="tabs">
 				<li>
@@ -44,13 +45,25 @@
 			</ul>
 			<div class="SettingsList" id="CustomList">
 				<ul>
-					<li>
-						<input id="commandInput" type="text"></input>
-					</li>
-					<li><button onclick="quickStartGame();">Play!</button></li>
+                    <li><select id="customRoutineList">
+                    <?php
+                        if ($currentUser) {
+                            $query1->equalTo("type","Custom");
+                            $results1 = $query1->find();
+                            if (count($results1) > 0){
+                                for ($i = 0; $i < count($results1); $i++) {
+                                    $res = $results1[$i]->get("customRoutine");
+                                    $res->fetch();
+                                    echo "<option ". "value=" . $res->get("command")  .">".$res->get("name")."</option></br>";
+                                }
+                            }
+                        }
+                    ?>
+                    </select></li>
+					<li><button id="quickStartButton" onclick="quickStartGame();" >Play!</button></li>
 				</ul>
 			</div>
-			<div class="SettingsList" id="DefaultList">
+			<div class="SettingsList" id="DefaultList" >
 				<p>SkillCourt Routines</p>
 				<ul>
 					<li><input id="customRoomCheck" type="checkbox" onclick="switchCustom();"/>Remove Wall</li>
@@ -89,6 +102,7 @@
 					<li ><button onclick="startGame();">Play!</button></li>
                 </ul>
 			</div>
+
 			<div id="FeedbackList">
 				<p>SkillCourt Performance</p>
 				<ul>	
@@ -104,6 +118,7 @@
 				</ul> 
 			</div>
 		</div>
+
 		<div id="Simulator">
 				<br><br><br>
 				<canvas id="sketch" data-processing-sources="simulator/simulator.pde" width="600" height="600">
@@ -113,6 +128,7 @@
 					<p>JavaScript is required to view the contents of this page.</p>
 				</noscript>
 		</div>
+
 		<script src="buzz.min.js"></script>
         <script src="simulator.js"></script>
         <script>
@@ -122,7 +138,8 @@
                         document.getElementById("CustomList").style.display = "block" ;
                         customRoutineCommand = <?php echo "\"".$_GET['rc']."\"" ?>;
                         //customRoutineCommand = "U02R_01*122132142SNR_01*320330331SN";
-                        customCoachRoutine = true;
+                        //customCoachRoutine = true;
+                        //isReadyToPlay = true;
                     <?php else : ?>
                         document.getElementById("DefaultList").style.display = "block" ;
                         document.getElementById("CustomList").style.display = "none" ;
@@ -162,11 +179,13 @@
                             document.getElementById("timePerRoundCheck").checked = false;
                         }
 
-                        //xi010100000
+                        routineCommand = rout;
+                        //isReadyToPlay = true;
+                        //playScreen();
+                        //document.getElementById("FeedbackList").style.display = "block" ;
 
                     <?php endif ; ?>
                 <?php endif ; ?>
         </script>
-
 	</body>
 </html>
