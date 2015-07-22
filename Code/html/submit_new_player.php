@@ -17,49 +17,39 @@
     $username = $_POST['createUsernameInput'];
     $password = $_POST['createPasswordInput'];
     $email = $_POST['createEmailInput'];
-    $coach;
+    $isCoach;
     
     if (isset($_POST['createCoachInput']))
     {
-        echo $coach;
-        $coach = TRUE;
+        $isCoach = true;
         
     } else {
-        $coach = FALSE;
+        $isCoach = false;
     }
     
-    $query = ParseUser::query();
-    $query->equalTo("username", $username);
-    $results = $query->find();
+    echo $isCoach;
     
-    if (!count($results))
-    {
-        $user = new ParseUser();
-        $user->set("firstName",$firstName);
-        $user->set("lastName",$lastName);
-        $user->set("middleInitial",$middleName);
-        $user->set("phone",$phone);
-        $user->set("gender",$gender);
-        $user->set("position",$position);
-        $user->set("birthdate",$birthdate);
-        $user->set("username",$username);
-        $user->set("password",$password);
-        $user->set("email",$email);
-        $user->set("isCoach",$coach);
-        
-        try {
-            $user->signUp();
-            header('Location: index.php');
-            // Hooray! Let them use the app now.
-        } catch (ParseException $ex) {
-            // Show the error message somewhere and let the user try again.
-            echo "Error: " . $ex->getCode() . " " . $ex->getMessage();
-        }
-        
-    } else {
-        echo "Credentials already exists";
+    $user = new ParseUser();
+    $user->set("firstName",$firstName);
+    $user->set("lastName",$lastName);
+    $user->set("middleInitial",$middleName);
+    $user->set("phone",$phone);
+    $user->set("gender",$gender);
+    $user->set("position",$position);
+    $user->set("birthdate",$birthdate);
+    $user->set("username",$username);
+    $user->set("password",$password);
+    $user->set("email",$email);
+    $user->set("isCoach",$isCoach);
+    
+    try {
+        $user->signUp();
+        echo "Success";
+        //header('Location: index.php');
+        // Hooray! Let them use the app now.
+    } catch (ParseException $ex) {
+        // Show the error message somewhere and let the user try again.
+        echo "Error: " . $ex->getCode() . " " . $ex->getMessage();
     }
-    
-    echo $firstName . " " . $username;
     
 ?>

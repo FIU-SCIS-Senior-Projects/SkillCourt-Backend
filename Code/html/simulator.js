@@ -153,11 +153,20 @@ function quickStartGame()
 {
     processingInstance = Processing.getInstanceById('sketch');
     processingInstance.setJavaScript(this);
-    customCoachRoutine = true;
-    isReadyToPlay = true;
-    console.log("asdfasdf");
-    console.log("cust " +customRoutineCommand);
-    console.log("quickStartGame()");
+    
+    if (document.getElementById("customRoutineList").value != "")
+    {
+        customCoachRoutine = true;
+        isReadyToPlay = true;
+        console.log("asdfasdf");
+        console.log("cust " +customRoutineCommand);
+        //document.getElementById("customRoutineList");
+        customRoutineCommand = document.getElementById("customRoutineList").value;
+        console.log("quickStartGame()");
+    }
+    
+    alert("No Custom Routines Assigned");
+    
 	//var c = document.getElementById("commandInput").value;
 	//customRoutineCommand = c;
 	//console.log(customRoutineCommand);

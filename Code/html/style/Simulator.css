@@ -1,6 +1,3 @@
-@import "compass/css3";
-
-@import url("http://fonts.googleapis.com/css?family=Lato");
 
 *
 {
@@ -69,6 +66,7 @@ body
 	display: inline-block;
     /*display: none;*/
 	float: left ;
+    top: -40px;
 }
 
 #tabs
@@ -256,4 +254,9 @@ body
 #CustomList
 {
 	display: none;
+}
+
+#customRoutineList
+{
+    width: 140px;
 }

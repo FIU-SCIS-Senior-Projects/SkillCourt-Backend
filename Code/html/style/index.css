@@ -5,6 +5,7 @@
     width: 200%;
     height: 200%;
 }
+
 #bg img {
     position: absolute;
     top: 0;
@@ -14,6 +15,29 @@
     margin: auto;
     min-width: 2600px;
     min-height: 1733px;
+}
+
+.round_orange_buttons
+{
+    background: rgb(236, 142, 75);
+    border: none;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    font-family: HelveticaNeue-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    padding: 4px 0;
+    -webkit-border-radius: 13px 13px 13px 13px;
+    -moz-border-radius: 13px 13px 13px 13px;
+    border-radius: 13px 13px 13px 13px;
+    cursor: pointer;
+}
+.round_orange_buttons:hover
+{
+    background: rgba(107, 172, 255, 0.8);
+    color: rgba(0,0,0,0.75);
+    background: rgba(236, 142, 75,0.8);
+    cursor: pointer;
 }
 
 #text
@@ -377,17 +401,6 @@
     width: 209px;
     top: 230px;
     height: 27px;
-    background: rgb(236, 142, 75);
-    border: none;
-    font-size: 14px;
-    text-align: center;
-    font-weight: bold;
-    font-family: HelveticaNeue-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: rgb(255, 255, 255);
-    padding: 4px 0;
-    -webkit-border-radius: 13px 13px 13px 13px;
-    -moz-border-radius: 13px 13px 13px 13px;
-    border-radius: 13px 13px 13px 13px;
 }
 
 #popUplogInButton
@@ -397,25 +410,6 @@
     width: 209px;
     top: 240px;
     height: 27px;
-    background: rgb(236, 142, 75);
-    border: none;
-    font-size: 14px;
-    text-align: center;
-    font-weight: bold;
-    font-family: HelveticaNeue-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: rgb(255, 255, 255);
-    padding: 4px 0;
-    -webkit-border-radius: 13px 13px 13px 13px;
-    -moz-border-radius: 13px 13px 13px 13px;
-    border-radius: 13px 13px 13px 13px;
-}
-
-#popUplogInButton:hover
-{
-    background: rgba(107, 172, 255, 0.8);
-    color: rgba(0,0,0,0.75);
-    background: rgba(236, 142, 75,0.9);
-    cursor: pointer;
 }
 
 #changePasswordButton
@@ -1130,7 +1124,7 @@
     left: 400px;
     width: 480px;
     top: 100px;
-    height: 280px;
+    height: 270px;
     background: rgb(227, 227, 227); /* fallback */
     background: rgba(227, 227, 227, 0.905);
     border: none;
@@ -1142,8 +1136,8 @@
     position: relative;
     left: 400px;
     width: 480px;
-    top: 110px;
-    height: 430px;
+    top: 100px;
+    height: 454px;
     background: rgb(227, 227, 227); /* fallback */
     background: rgba(227, 227, 227, 0.905);
     border: none;
@@ -1157,7 +1151,7 @@
     top: 0px;
 }
 
-#createRectangle2 input
+#createRectangle2 > input
 {
     position: relative;
     left: 80px;
@@ -1248,22 +1242,49 @@
 #createPlayerButton
 {
     position: relative;
-    width: 209px;
+    width: 280px;
     height: 27px;
-    left: 530px;
-    top: 65px;
-    background: rgb(58, 57, 57);
+    left: 0px;
+    top: 0px;
+}
+
+#existingAccountHeader
+{
+    position: relative;
+    left: 520px;
+    width: 162px;
+    top:70px;
+    height: 23px;
+    background: none;
     border: none;
-    font-size: 14px;
+    font-size: 13.5px;
     text-align: center;
-    font-weight: bold;
-    font-family: HelveticaNeue-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: rgb(255, 255, 255);
-    padding: 4px 0;
-    -webkit-border-radius: 13px 13px 13px 13px;
-    -moz-border-radius: 13px 13px 13px 13px;
-    border-radius: 13px 13px 13px 13px;
-    display: block;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(0, 0, 0);
+}
+
+#existingAccountButton
+{
+    position: relative;
+    left: 100px;
+    width: 68px;
+    top: -17px;
+    height: 21px;
+    background: none;
+    border: none;
+    font-size: 14.5px;
+    text-align: left;
+    font-family: HelveticaNeue-Thin, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(24, 91, 210);
+}
+
+#existingAccountButton:hover
+{
+    font-size: 14.5px;
+    text-align: left;
+    font-family: HelveticaNeue-Thin, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgba(24, 91, 210,0.4);
+    cursor: pointer;
 }
 
 /* Routine */
@@ -1374,28 +1395,6 @@
     left: 0px;
     width: 209px;
     height: 27px;
-    background: rgb(236, 142, 75);;
-    border: 2px solid rgb(236, 142, 75);
-    font-size: 14px;
-    text-align: center;
-    font-weight: bold;
-    font-family: HelveticaNeue-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: white;
-    padding: 4px 0;
-    -webkit-border-radius: 14.25px 14.25px 14.25px 14.25px;
-    -moz-border-radius: 14.25px 14.25px 14.25px 14.25px;
-    border-radius: 14.25px 14.25px 14.25px 14.25px;
-}
-
-
-#playRoutineButton:hover
-{
-    background: rgba(107, 172, 255, 0.8);
-    font-size: 13px;
-    color: black;
-    background: rgb(86, 139, 206); /* fallback */
-    background: rgb(236, 142, 75);
-    cursor: pointer;
 }
 
 div.scroll {
@@ -1404,7 +1403,7 @@ div.scroll {
     margin-right: auto;
     margin-left: auto;
     width: 180px;
-    height: 255px;
+    height: 230px;
     overflow: scroll;
     background: rgb(0, 0, 0); /* fallback */
     background: rgba(0, 0, 0, 0.513);
@@ -1416,11 +1415,11 @@ div.scroll button
     left: 0px;
     width: 180px;
     top: 0px;
-    height: 40px;
+    height: 20px;
     background: rgb(0, 0, 0); /* fallback */
     background: rgba(0, 0, 0, 0.513);
     border: 1px solid rgb(0, 0, 0);
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
     font-family: HelveticaNeue-Thin, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
@@ -1479,27 +1478,7 @@ div.scroll button:hover
     width: 207px;
     top: 45px;
     height: 30px;
-    background: none;
-    border: 2px solid rgb(236, 142, 75);
-    font-size: 14px;
-    text-align: center;
-    font-weight: bold;
-    font-family: HelveticaNeue-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: rgb(236, 142, 75);
-    padding: 4px 0;
-    -webkit-border-radius: 14.25px 14.25px 14.25px 14.25px;
-    -moz-border-radius: 14.25px 14.25px 14.25px 14.25px;
-    border-radius: 14.25px 14.25px 14.25px 14.25px;
-}
-
-#registerNowButton:hover
-{
-    background: rgba(107, 172, 255, 0.8);
-    font-size: 14px;
-    color: white;
-    background: rgb(86, 139, 206); /* fallback */
-    background: rgb(236, 142, 75);
-    cursor: pointer;
+    
 }
 
 #registerNowHeader
@@ -1555,4 +1534,14 @@ div.scroll button:hover
 #assignPopup
 {
     display: none;
+}
+
+#phoneBackground
+{
+    position: absolute;
+    left: 36px;
+    width: 252px;
+    top: 226px;
+    height: 406px;
+    background: #65B098;
 }
