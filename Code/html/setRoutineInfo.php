@@ -3,6 +3,7 @@ include_once("parseHeader.php");
 use Parse\ParseObject ;
 use Parse\ParseUser;
 use Parse\ParseQuery ;
+use Parse\ParseException ;
 $currentUser = ParseUser::getCurrentUser() ;
 
 $i = $_POST["i"] ;
@@ -21,9 +22,17 @@ else
 if(isset($_POST['assign'])) assign($currentUser, $routine) ;
 else if(isset($_POST['unassign'])) unassign($routine) ;
 else if(isset($_POST['delete'])) delete($currentUser, $routine) ;
+else if(isset($_POST['edit'])) edit($currentUser, $routine) ;
 
-function delete($currentUser, $routine)
-{
+function edit($currentUser, $routine){
+	$command = $routine->get("command") ;
+	$firstChar = substr($command, 0 , 1) ;
+	$name = ($firstChar == 'U') ? "custom" : "default" ;
+	
+	echo $name.'='.$command.'&routine='.$routine->getObjectId() ;
+}
+
+function delete($currentUser, $routine){
 	$command = $routine->get("command") ;
 	$firstChar = substr($command, 0 , 1) ;
 	$type = ($firstChar == 'U') ? "Custom" : "Default" ;
@@ -65,7 +74,8 @@ function unassign($routine)
 	$selectedOption = $_POST["unassign"] ;
 	for($j = 0 ; $j < count($_SESSION["myPlayers"]) ; $j++)
 	{
-		$player = $_SESSION["myPlayers"][$j] ;
+		$playerLink = $_SESSION["myPlayers"][$j] ;
+		$player = $playerLink->get("player") ;
 		$playerId = $player->getObjectId() ;
 		if($playerId == $selectedOption) 
 		{
@@ -119,13 +129,15 @@ function assign($currentUser, $routine)
 		
 		for($j = 0 ; $j < count($_SESSION["myPlayers"]) ; $j++)
 		{
-			$player = $_SESSION["myPlayers"][$j] ;
+			$playerLink = $_SESSION["myPlayers"][$j] ;
+			$player = $playerLink->get("player") ;
 			$playerId = $player->getObjectId() ;
+			
 			if($playerId == $selectedOption)
 			{
 				$link->set("user", $player);	 
 				echo '<option value="'.$playerId.'">' ;
-				echo $player->getUsername() ;
+				echo $playerLink->get("playerUsername") ;
 				echo'</option>' ;
 				continue ;
 			}
