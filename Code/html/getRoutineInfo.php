@@ -52,12 +52,13 @@ if(isset($_SESSION["coachRoutines"]) and isset($_SESSION["defaultRoutines"]))
 				$linkUserId = $linkUser->getObjectId() ;
 				for($k = 0 ; $k < count($_SESSION["myPlayers"]) ; $k++)
 				{
-					$player = $_SESSION["myPlayers"][$k] ;
+					$playerLink = $_SESSION["myPlayers"][$k] ;
+					$player = $playerLink->get("player") ;
 					$playerId = $player->getObjectId() ;
 					if($linkUserId == $playerId)
 					{
 						echo '<option value="'.$playerId.'">' ;
-						echo $player->getUsername() ;
+						echo $playerLink->get("playerUsername") ;
 						echo'</option>' ;
 					}
 				}
@@ -73,35 +74,32 @@ if(isset($_SESSION["coachRoutines"]) and isset($_SESSION["defaultRoutines"]))
 		refreshAssignedRoutines($currentUser) ;
 		for($p = 0 ; $p < count($_SESSION["myPlayers"]) ; $p++)
 		{
-			$player = $_SESSION["myPlayers"][$p] ;
+			$playerLink = $_SESSION["myPlayers"][$p] ;
+			$player = $playerLink->get("player") ; 
 			$playerId = $player->getObjectId() ;
 			echo '<option value="'.$playerId.'">' ;
-			echo $player->get("username") ;
+			echo $playerLink->get("playerUsername") ;
 			echo '</option>' ;
 		}
 	}
 }	
-else
-{
+else{
 	echo "ERROR not set in SESSION" ;
 }
 
-function refreshMyPlayers($currentUser)
-{
-	$query = ParseUser::query();
+function refreshMyPlayers($currentUser) {
+	$query = new ParseQuery("SignedPlayer");
 	$query->equalTo("coach", $currentUser) ;
 	$_SESSION["myPlayers"] = $query->find() ;
 }
 
-function refreshAssignedRoutines($currentUser)
-{
+function refreshAssignedRoutines($currentUser) {
 	$query = new ParseQuery("AssignedRoutines") ;
 	$query->equalTo("assignedBy", $currentUser) ;
 	$_SESSION["assignedRoutines"] = $query->find() ;
 }
 
-function refreshRoutines($currentUser)
-{
+function refreshRoutines($currentUser) {
 	$query = new ParseQuery("CustomRoutine") ;
 	$query->equalTo("creator" , $currentUser) ;
 	$_SESSION["coachRoutines"] = $query->find() ;
