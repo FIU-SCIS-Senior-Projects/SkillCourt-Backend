@@ -60,16 +60,16 @@ $_SESSION["defaultRoutines"] = $query->find() ;
 					?>
 				</select>
 				<div id="buttonsBlock">
-					<button class="activeButton" id="assignRoutine">Assign</button>
-					<button class="activeButton" id="unassignRoutine">Unassign</button><br>
-					<button class="activeButton" id="editRoutine">Edit</button>
-					<button class="activeButton" id="deleteRoutine">Delete</button>
+					<button class="round_orange_buttons" id="assignRoutine">Assign</button>
+					<button class="round_orange_buttons" id="unassignRoutine">Unassign</button><br>
+					<button class="round_orange_buttons" id="editRoutine">Edit</button>
+					<button class="round_orange_buttons" id="deleteRoutine">Delete</button>
 				</div>
 			</div>
 			<div id="routinesInfoBlock">
 				<p id="playerSelectPar">assigned to:</p>
 				<select id="playerSelect"></select>
-				<textarea id="description" readonly></textarea>
+				<textarea id="description" class="center" readonly></textarea>
 			</div>
 			<div id="assignPopup">
 				<h3 id="assignPopupHeading">assignPopupHeading</h3>
