@@ -1,12 +1,11 @@
 var currentCommand ;
 
 	$(".scroll button").click(function(){
-		$(".scroll button [value="+ currentCommand+"]").css("background-color","black") ;
+		$(".scroll button[value='"+ currentCommand+"']").css("background-color","black") ;
 		$(this).css("background-color","orange") ;
 		currentCommand = $(this).val() ;
 	});
-$(document).ready(function()
-{
+$(document).ready(function(){
 	//whenever a routine is selected
 	$("#routineSelect").change(function()
 	{
@@ -18,14 +17,11 @@ $(document).ready(function()
 			$("#buttonsBlock").slideDown() ;
 		}
 		//slides in info block
-		$("#routinesInfoBlock").css("display","inline-block") ;
-		$("#routinesInfoBlock").animate({
-			opacity: 1 ,
-			left: 0
-		});
+		$("#routinesInfoBlock").fadeIn(); 
 		//gets info for selected routines
 		$.get("getRoutineInfo.php?i=" + $("#routineSelect").val() , function(data, status)
 		{
+			console.log(data);
 			$("#playerSelect").remove() ;
 			$("#description").remove() ;
 			$("#playerSelectPar").after(data) ;
@@ -47,6 +43,7 @@ $(document).ready(function()
 		//gets names of all players for this coach
 		$.get("getRoutineInfo.php?assign" , function(data, status)
 		{
+			console.log(data);
 			$("#assignPlayersSelect").append(data) ;
 			//removes the names of players who already have the routine assigned
 			$("#playerSelect option").each(function(){
@@ -65,6 +62,7 @@ $(document).ready(function()
 		var toSend = $("#assignPlayersSelect").serialize() ;
 		toSend = toSend + "&i=" + $("#routineSelect").val() ;
 		$.post("setRoutineInfo.php",toSend,function(data,status){
+			console.log(data);
 			$("#playerSelect").append(data) ; 
 		});
 		clearAssignPopup() ;
@@ -80,7 +78,7 @@ $(document).ready(function()
 		$("#assignPopupHeading").text("Unassign \"" + $("#routineSelect option:selected").text() + "\" from the following players:") ;
 		//gets names of all players for this coach
 		$("#playerSelect option").each(function(){
-			$("#assignPlayersSelect").append("<option value="+$(this).val()+">"+$(this).html()+"</option>") ;
+			$("#assignPlayersSelect").append("<option value=\""+$(this).val()+"\">"+$(this).html()+"</option>") ;
 		});
 		$("#assignPopup").fadeIn() ;
 	});
@@ -89,6 +87,7 @@ $(document).ready(function()
 		var toSend = $("#assignPlayersSelect").serialize() ;
 		toSend = toSend + "&i=" + $("#routineSelect").val() ;
 		$.post("setRoutineInfo.php",toSend,function(data,status){
+			console.log(data);
 			$("#playerSelect option").each(function(){
 				alert(data) ;
 				if($(this).val() == data) $(this).remove() ;
@@ -103,9 +102,9 @@ $(document).ready(function()
 		{
 			var toSend = "i=" + $("#routineSelect").val()+"&delete" ;
 			$.post("setRoutineInfo.php",toSend,function(data,status){
-				
+				console.log(data);
 				var removed = $("#routineSelect option:selected").val();
-					console.log("removed: " + removed) ;
+				console.log("removed: " + removed) ;
 				$("#routineSelect option:selected").remove() ;
 				$("#routineSelect option").each(function(){
 					if($(this).val() > removed)
@@ -117,9 +116,14 @@ $(document).ready(function()
 			});
 		}
 	});
+	//in case EDIT is clicked
 	$("#editRoutine").click(function()
 	{
-		alert("edit") ;
+		var toSend = "i=" + $("#routineSelect").val() + "&edit" ;
+		$.post("setRoutineInfo.php", toSend, function(data, status){
+			console.log(data);
+			window.location.assign("customWizard.php?" + data) ;
+		});
 	});
 });
 
