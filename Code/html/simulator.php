@@ -27,13 +27,12 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>SkillCourt Simulator</title>
 		<meta name="Generator" content="Processing" />
-        <link rel="stylesheet" type="text/css" href="style/Simulator.css">
         <link rel="stylesheet" type="text/css" href="style/index.css">
 		<script src="processing.js" type="text/javascript"></script>
 	</head>
 	<body>
         <?php include 'navigation_bar.php'; ?>
-            <div id="phoneBackground"></div>
+        <div id="phoneBackground"></div>
 		<div id="SimSettings">
 			<ul id="tabs">
 				<li>

@@ -41,6 +41,13 @@
     cursor: pointer;
 }
 
+.default_rectangle_color
+{
+    position: relative;
+    background: rgb(0, 0, 0); /* fallback */
+    background: rgba(0, 0, 0, 0.513);
+}
+
 #text
 {
     position: absolute;
@@ -55,19 +62,6 @@
     font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: rgb(255, 255, 255);
     padding: 1px 0;
-}
-
-#rectangle2
-{
-    position: absolute;
-    left: 1px;
-    width: 100%;
-    top: 419px;
-    height: 189px;
-    background: rgb(255, 255, 255); /* fallback */
-    background: rgba(255, 255, 255, 0.337);
-    border: none;
-    display: none;
 }
 
 #loginform
@@ -95,6 +89,7 @@
     left: 0px;
     width: 100%;
     top: 880px;
+    bottom: 100%;
     height: 90px;
     background: rgb(0, 0, 0); /* fallback */
     background: rgba(58, 57, 57,0.915);
@@ -153,6 +148,11 @@
 
 #usernameButton
 {
+    left:576px;
+}
+
+#playerButton
+{
     left:557px;
 }
 
@@ -161,7 +161,7 @@
 #logInButton
 {
     position: absolute;
-    left: 89%;
+    left: 1200px;
     width: 93px;
     top: 31px;
     height: 32px;
@@ -191,22 +191,19 @@
 #informationRectangle
 {
     position: absolute;
-    left: 552px;
-    width: 493px;
+    left: 452px;
+    width: 693px;
     top: 158px;
-    height: 366px;
-    background: rgb(77, 77, 77); /* fallback */
-    background: rgba(77, 77, 77, 0.72);
-    
+    height: 566px;
     border: none;
 }
 
 #informationRectangleHeader
 {
-    position: absolute;
-    left: 570px;
+    position: relative;
+    left: 0;
     width: 458px;
-    top: 180px;
+    top: 20px;
     height: 49px;
     background: none;
     border: none;
@@ -216,12 +213,21 @@
     color: rgb(255, 255, 255);
 }
 
+#roomPicture
+{
+    position: relative;
+    width: 300px;
+    height: 200px;
+    top: -80px;
+    left: 190px;
+}
+
 #textRectangle
 {
-    position: absolute;
-    left: 599px;
-    width: 399px;
-    top: 255px;
+    position: relative;
+    left: 40px;
+    width: 610px;
+    top: 40px;
     height: 253px;
     background: none;
     border: none;
@@ -248,7 +254,7 @@
     display: none;
     position: absolute;
     top: 25%;
-    left: 25%;
+    left: 30%;
     width: 461px;
     height: 331px;
     padding: 16px;
@@ -340,10 +346,12 @@
 
 #password
 {
-    position: absolute;
-    left: 75px;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 323px;
-    top: 186px;
+    top: 116px;
     height: 31px;
     background: rgb(255, 255, 255);
     border: border: 1px solid rgba(0, 0, 0, 0.184);
@@ -353,16 +361,28 @@
 }
 #username
 {
-    position: absolute;
-    left: 75px;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 323px;
-    top: 140px;
+    top: 120px;
     height: 31px;
     background: rgb(255, 255, 255);
     border: border: 1px solid rgba(0, 0, 0, 0.184);
     font-size: 18px;
     text-align: center;
     font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#invalidLoginMessage
+{
+    position: absolute;
+    top: 215px;
+    left: 165px;
+    color: red;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: none;
 }
 
 #emailAddressForPasswordChange
@@ -406,10 +426,12 @@
 
 #popUplogInButton
 {
-    position: absolute;
-    left: 140px;
-    width: 209px;
-    top: 240px;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    width: 323px;
+    top: 130px;
     height: 27px;
 }
 
@@ -417,9 +439,11 @@
 {
     position: relative;
     text-decoration: none;
-    left: 132px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 235px;
-    top: 230px;
+    top: 120px;
     height: 21px;
     background: none;
     border: none;
@@ -438,9 +462,10 @@
 #signUpHeader
 {
     position: relative;
+    display: block;
     left: 140px;
     width: 162px;
-    top:240px;
+    top:130px;
     height: 23px;
     background: none;
     border: none;
@@ -452,9 +477,10 @@
 #signupButton
 {
     position: relative;
-    left: 292px;
+    display: block;
+    left: 290px;
     width: 68px;
-    top: 216px;
+    top: 106px;
     height: 21px;
     background: none;
     border: none;
@@ -1325,7 +1351,7 @@
 }
 
 
-#playCustomRoutine
+#playCustomRoutineRectangle
 {
     position: relative;
     margin-left: auto;
@@ -1340,7 +1366,7 @@
 }
 
 
-#playDefaultRoutine
+#playDefaultRoutineRectangle
 {
     position: relative;
     margin-left: auto;
@@ -1355,7 +1381,7 @@
 }
 
 
-#playCustomRoutine h1
+#playCustomRoutineRectangle h1
 {
     position: relative;
     margin-left: auto;
@@ -1372,7 +1398,7 @@
     padding: 2px 0;
 }
 
-#playDefaultRoutine h1
+#playDefaultRoutineRectangle h1
 {
     position: relative;
     margin-left: auto;
@@ -1451,8 +1477,6 @@ div.scroll button:hover
     width: 282px;
     top: 120px;
     height: 366px;
-    background: rgb(77, 77, 77);
-    background: rgba(77, 77, 77, 0.72);
     border: none;
 }
 #zoomOval
@@ -1700,7 +1724,6 @@ div.scroll button:hover
 	display: none ;
 }
 
-
 #switchWrapper {
 	margin-right: auto ;
 	margin-left: auto ;
@@ -1766,3 +1789,435 @@ div.scroll button:hover
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+
+/* About us Page*/
+
+.aboutUs
+{
+    position: relative;
+    height: 326px;
+    width: 483px;
+}
+
+.aboutUsParagraph
+{
+    position: relative;
+    font-size: 14px;
+    text-align: left;
+    width: 420px;
+    height: 350px;
+    top: -40px;
+    left: 24px;
+    padding: 12px;
+    text-align: justify;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+}
+
+#aboutUsRectangle div h2
+{
+    position: relative;
+    width: 458px;
+    top: 0px;
+    height: 49px;
+    left: 35px;
+    background: none;
+    border: none;
+    font-size: 25px;
+    text-align: left;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+}
+
+#introductionRectangle
+{
+    position: relative;
+    display: inline-block;
+    top: 120px;
+    left: 200px;
+}
+
+#challengeRectangle
+{
+    position: relative;
+    display: inline-block;
+    top: 154px;
+    left: 200px;
+}
+
+#solutionRectangle
+{
+    position: relative;
+    left: 200px;
+    top: 103px;
+    height:200px;
+    width: 970px;
+}
+
+#solutionRectangle p
+{
+    position: relative;
+    font-size: 14px;
+    text-align: left;
+    width: 880px;
+    height: 150px;
+    top: -40px;
+    left: 24px;
+    padding: 12px;
+    text-align: justify;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+}
+
+
+/* Online Simulator */
+
+
+
+#SimSettings
+{
+    position: relative;
+    text-align: left ;
+    background-image: url("screen.png");
+    background-size: cover ;
+    display: inline-block ;
+    /*display: none;*/
+    width: 309px ;
+    top: 120px;
+    height: 600px ;
+    float:left;
+    clear: right;
+    color: black ;
+    font-weight: bold ;
+    font-family: Calibri, Veranda, Sans-Serif;
+}
+
+#routineType
+{
+    background: #CCCCCC;
+    color: white ;
+}
+
+#Simulator
+{
+    /*background-color:  #65B098 ;*/
+    position: relative;
+    padding-left: 0 ;
+    padding-right: 0 ;
+    width: 600px ;
+    display: inline-block;
+    /*display: none;*/
+    float: left ;
+    top: 140px;
+}
+
+#tabs
+{
+    list-style: none ;
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 150px;
+}
+
+#tabs li
+{
+    display: inline-block ;
+    background-color: black ;
+    
+}
+
+#tabs li button
+{
+    color: white ;
+    background-color: black ;
+    border: none;
+}
+
+.SettingsList
+{
+    margin-left: 50px ;
+    margin-right: 50px ;
+}
+
+.SettingsList p
+{
+    background-color: #65B098;
+    font-size: 24px ;
+    font-style: italic ;
+    color:white ;
+    text-align: center ;
+    margin-top: 0px ;
+    margin-bottom: 0px ;
+}
+
+.SettingsList ul
+{
+    list-style: none ;
+    padding: 5px;
+    background: #CCCCCC;
+    margin-top: 2px;
+    font-size: 18px ;
+    
+    border: 1px solid #CCCCCC;
+    border-radius: 5px ;
+}
+
+.SettingsList ul li
+{
+    background: #CCCCCC;
+}
+
+.SettingsList ul li select
+{
+    background: white ;
+    color: black;
+}
+
+.SettingsList ul li select option
+{
+    background: white ;
+    color: black;
+}
+
+.SettingsList ul li select option
+{
+    background: white ;
+    color: black;
+}
+
+.SettingsList input[type="number"]
+{
+    background: white ;
+    color: black;
+}
+
+.SettingsList ul li button
+{
+    margin-top: 10px ;
+    margin-left: 10px ;
+    background: white ;
+    color: #65B098 ;
+    font-weight: bold ;
+    height: 40px ;
+    width: 180px ;
+    border-radius: 1px ;
+    text-align: center;
+    border: 2px solid #65B098 ;
+}
+
+#sketch
+{
+    position: relative ;
+    left: 150px ;
+}
+
+#FeedbackList
+{
+    margin-left: 50px ;
+    margin-right: 50px ;
+    margin-top: 10px ;
+    display: none ;
+}
+
+#FeedbackList p
+{
+    background-color: #65B098;
+    font-size: 24px ;
+    font-style: italic ;
+    color:white ;
+    text-align: center ;
+    margin-top: 0px ;
+    margin-bottom: 0px ;
+}
+
+#FeedbackList ul
+{
+    list-style: none ;
+    padding: 5px;
+    background: #CCCCCC;
+    margin-top: 2px;
+    font-size: 18px ;
+}
+
+#FeedbackList ul li
+{
+    background: #CCCCCC;
+}
+
+#FeedbackList ul li button
+{
+    margin-top: 10px ;
+    margin-left: 10px ;
+    background: white ;
+    color: #65B098 ;
+    font-weight: bold ;
+    height: 40px ;
+    width: 180px ;
+    border-radius: 1px ;
+    text-align: center;
+    border: 2px solid #65B098 ;
+}
+
+#FeedbackList ul li span
+{
+    background: #CCCCCC  ;
+}
+
+#successesNum
+{
+    color: green ;
+    font-style: bold ;
+    font-size: 20px   ;
+}
+
+#removedWall 
+{
+    display: none ;
+}
+
+#minusNum
+{
+    color: red ;
+    font-style: bold ;	
+    font-size: 20px   ;
+}
+
+#wizardWalls
+{
+    display: none;
+}
+
+#playCustomRoutine
+{
+    display: none;
+}
+
+#CustomList
+{
+    display: none;
+}
+
+#customRoutineList
+{
+    width: 140px;
+}
+
+/* Manage Players */
+
+#listOfPlayersRectangle
+{
+    position: relative;
+    width: 550px;
+    height: 500px;
+    top: 161px;
+    left: 400px;
+}
+
+#listOfPlayersRectangle select
+{
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 240px;
+    top: 60px;
+    height: 31px;
+    background: rgb(255, 255, 255);
+    border: border: 1px solid rgba(0, 0, 0, 0.184);
+    font-size: 14px;
+    text-align: center;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#signPlayersRectangle
+{
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 180px;
+}
+
+#releasePlayersRectangle
+{
+    position: relative;
+    top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 180px;
+}
+
+#listOfPlayersRectangle h2
+{
+    position: relative;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 30pt;
+    top: 20px;
+    left: 40px;
+    color: white;
+}
+
+#usernamePlayersPage
+{
+    position: relative;
+    width: 240px;
+    top: 60px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    height: 31px;
+    background: rgb(255, 255, 255);
+    border: border: 1px solid rgba(0, 0, 0, 0.184);
+    font-size: 18px;
+    text-align: center;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#submitPlayerForm
+{
+    position: relative;
+    top: 80px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+
+#releasePlayerFromCoachButton
+{
+    position: relative;
+    top: 80px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 200px;
+}
+
+#releasePlayersRectangle div
+{
+    position: relative;
+    display: block;
+    left: 40px;
+    top: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#signPlayersRectangle div
+{
+    position: relative;
+    display: block;
+    left: 40px;
+    top: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+>>>>>>> UserInterface-PlayerFixes

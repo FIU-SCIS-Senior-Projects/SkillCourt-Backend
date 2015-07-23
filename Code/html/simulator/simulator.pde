@@ -127,7 +127,7 @@ void draw()
       background(0,0,0,90); 
       fill(255) ;
       textSize(32) ;
-      text("Click start to play the chosen routine: ", 30, 200, 540, 540) ;
+      text("Click the Play button to start the chosen routine", 30, 200, 540, 540) ;
       fill(red) ;
       text(warning, 30, 30, 540, 540);
     }
@@ -983,7 +983,7 @@ boolean checkStatus()
   // gameTime > 0 if the game is timeBased
   if (gameTime > 0)
   {
-    fill(0, 0, 0);
+    fill(255);
     int timer = int((startTime+gameTime - millis())/1000) ;
     int sec = int(timer % 60)  ;
     int min = int(timer / 60) ;
@@ -1007,7 +1007,7 @@ boolean checkStatus()
    // Calculating game time in minutes
     if ((millis() - startTime) > gameTime) 
     { 
-      fill(0, 0, 0);
+      fill(255);
       isThisGameOver = true ;
       //text("Time Game is Over", 0, 150);
       return true;
@@ -1016,6 +1016,7 @@ boolean checkStatus()
   else
   {
     if (rounds != -1)
+      fill(255);
       text("Rounds Left " + (rounds-roundsPlayed), 10, 10, 160, 160);
   }
   

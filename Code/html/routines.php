@@ -34,7 +34,7 @@ include_once("parseHeader.php");
         <?php include 'card.php' ?>
         <div id="routineRectangle">
             <div id="routineRectangleHeader">Routines</div>
-            <div id="playCustomRoutine">
+            <div id="playCustomRoutineRectangle">
                 <h1>Custom</h1>
                     <div class="scroll">
                     <?php
@@ -53,7 +53,7 @@ include_once("parseHeader.php");
                         ?>
                     </div>
             </div>
-            <div id="playDefaultRoutine">
+            <div id="playDefaultRoutineRectangle">
                 <h1>Default</h1>
                     <div class="scroll">
                     <?php

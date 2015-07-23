@@ -17,6 +17,7 @@
             <?php if ($isCoach):?>
 				<button id="routineButton" onclick="location.href = 'coachRoutines.php';">Routines</button>
                 <button id="simulatorButton" onclick="location.href = 'customWizard.php'; ">Wizard</button>
+                <button id="playerButton" onclick="location.href = 'managePlayers.php';">Players</button>
                 <button id="usernameButton" onclick="location.href = 'profile.php';"><?php echo $username ?></button>
            
             <?php else:?>

@@ -191,6 +191,7 @@ function finishStep(){
 	{
 		setStepButton(false) ;			
 		document.getElementById("Warning").innerHTML = "" ;
+        
 		if(step < stepTotal) nextStep() ;
 		document.getElementById("stepType").disabled = true ;
 	}

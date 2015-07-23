@@ -31,6 +31,11 @@ $(document).ready(function(){
 			else { disableDelete() ; }//enableUnassign() ; }
 		});
 	});
+                  
+    //in case submitPlayerForm Button is clicked
+    
+                  
+                  
 	//in case the ASSIGN button is clicked
 	$("#assignRoutine").click(function()
 	{	
