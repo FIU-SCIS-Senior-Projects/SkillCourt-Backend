@@ -24,6 +24,7 @@ $(document).ready(function(){
                 <button id="aboutButton">About</button>
             </div>
         </div>
+        <button id="logInButton" href = "javascript:void(0)" >Log In</button>
         <div id="text">SkillCourt</div>
             <form action="javascript:validateSignUp();" method="POST" name="create_form">
             <div id="createRectangle">
@@ -31,14 +32,24 @@ $(document).ready(function(){
                 <div id="createUsernameHeader">Username</div>
                 <input type="text" id="createUsernameInput" name="createUsernameInput" required>
                 <div id="createPasswordHeader">Password</div>
-                <input type="text" id="createPasswordInput" name="createPasswordInput" required>
+                <input type="password" id="createPasswordInput" name="createPasswordInput" required>
                 <div id="createEmailHeader">Email</div>
                 <input type="text" id="createEmailInput" name="createEmailInput" required >
                 <div id="createPositionHeader">Position</div>
                 <select id="createPositionInput" name="createPositionInput" required>
-                    <option value="Midfielder">Midfielder</option>
                     <option value="Goalkeeper">Goalkeeper</option>
-                    <option value="Defender">Defender</option>
+                    <option value="Center-Back">Center-Back</option>
+                    <option value="Left-Back">Left-Back</option>
+                    <option value="Right-Back">Right-Back</option>
+                    <option value="Left Wing Back">Left Wing Back</option>
+                    <option value="Right Wing Back">Right Wing Back</option>
+                    <option value="Defending Midfielder">Defending Midfielder</option>
+                    <option value="Central Midfielder">Central Midfielder</option>
+                    <option value="Attacking Midfielder">Attacking Midfielder</option>
+                    <option value="Left Wing">Left Wing</option>
+                    <option value="Right Wing">Right Wing</option>
+                    <option value="Withdrawn Striker">Withdrawn Striker</option>
+                    <option value="Striker">Striker</option>
                     <option value="Coach" style="display: none;">Coach</option>
                 </select>
             </div>

@@ -8,8 +8,7 @@
     $errorMessage  = "" ;
     
     if (isset($_GET["error"])) {
-        $errorMessage = "Invalid Login Credentials";
-        echo $errorMessage;
+        //echo $errorMessage;
     }
 ?>
 
@@ -28,6 +27,13 @@
                           $("#fade").fadeIn() ;
                           $(".white_content").fadeIn() ;
                           <?php endif ?>
+                          
+                          <?php if (isset($_GET["error"])) : ?>
+                          $("#invalidLoginMessage").fadeIn() ;
+                          $("#fade").fadeIn() ;
+                          $(".white_content").fadeIn() ;
+                          <?php endif ?>
+                          
                           $("#logInButton").click(function(){
                                                   $("#fade").fadeIn() ;
                                                   $(".white_content").fadeIn() ;
@@ -40,7 +46,7 @@
                                                  $("#fade").fadeOut() ;
                                                  $(".white_content").fadeOut() ;
                                                  });
-
+                          
                           });
 
         </script>
@@ -50,12 +56,12 @@
     <div id="navigationBar">
         <div class="navigationButtons" id="buttonGroup">
             <button id="homeButton" onclick="location.href = 'index.php';">Home</button>
-            <button id="aboutButton">About</button>
+            <button id="aboutButton" onclick="location.href = 'about.php';">About</button>
         </div>
         <div id="text">SkillCourt</div>
     </div>
     <div id="registerNowZoom">
-        <div id="zoomRectangle">
+        <div id="zoomRectangle" class = "default_rectangle_color">
             <div id="zoomOval"></div>
             <button class="round_orange_buttons" onclick="location.href = 'create.php';" id="registerNowButton">REGISTER NOW</button>
             <div id="registerNowHeader">and start playing!</div>
@@ -72,6 +78,7 @@
                     <input type="text" name="username" id="username" placeholder="Username" required><br>
                     <input type="password" name="password" id="password" placeholder="Password" required><br>
                     <input type="submit" class="round_orange_buttons" id="popUplogInButton" value ="LOG IN"><br>
+                    <div id="invalidLoginMessage" >Invalid Login credentials</div>
                 </form>
                 <button id="changePasswordButton" onclick="change_password();">Forgot your username or password?</button>
                 <div id="signUpHeader">Don&apos;t have an account?</div>
@@ -90,15 +97,14 @@
         </div>
     </div>
     <div id="fade" class="black_overlay"></div>
-    <div id="rectangle2"> </div>
-    <div id="informationRectangle"></div>
-    <div id="informationRectangleHeader">Welcome to SkillCourt!</div>
-    <div id="textRectangle">
+    <div id="informationRectangle" class="default_rectangle_color">
+    <div id="informationRectangleHeader" >Welcome to SkillCourt!</div>
+<div id="textRectangle">
 I&apos;m a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me and you can start adding your own content and make changes to the font.<br/>
 ​<br/>
 This is a great space to write long text about your company and your services. You can use this space to go into a little more detail about your company.<br/>
-<br/>
-Tip: Use this area to describe one of your services. You can change the title to the service you provide and use this text area to describe your service. Feel free to change the image.
+</div>
+        <div><img src="style/images/room.png" id="roomPicture" alt=""></div>
     </div>
     <div id="pageFooter"></div>
 </body>

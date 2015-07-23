@@ -161,7 +161,7 @@ function finishStep(){
 	{
 		setStepButton(false) ;			
 		document.getElementById("Warning").innerHTML = "" ;
-		if(step < stepTotal) nextStep() ;
+		//if(step < stepTotal) nextStep() ;
 	}
 	else document.getElementById("Warning").innerHTML = stepWarning ;
 	

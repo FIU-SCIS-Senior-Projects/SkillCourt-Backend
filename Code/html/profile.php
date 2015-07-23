@@ -70,9 +70,20 @@
                 <h1>Account Information</h1>
                 <div id="positionHeader">Position:</div>
                 <select id ="positionInput" name = "positionInput" value=<?php echo $currentUser->get("position");  ?> disabled></br>
-                    <option value="Midfielder" >Midfielder</option>
-                    <option value="Goalkeeper" >Goalkeeper</option>
-                    <option value="Defender" >Defender</option>
+                    <option value="Goalkeeper">Goalkeeper</option>
+                    <option value="Center-Back">Center-Back</option>
+                    <option value="Left-Back">Left-Back</option>
+                    <option value="Right-Back">Right-Back</option>
+                    <option value="Left Wing Back">Left Wing Back</option>
+                    <option value="Right Wing Back">Right Wing Back</option>
+                    <option value="Defending Midfielder">Defending Midfielder</option>
+                    <option value="Central Midfielder">Central Midfielder</option>
+                    <option value="Attacking Midfielder">Attacking Midfielder</option>
+                    <option value="Left Wing">Left Wing</option>
+                    <option value="Right Wing">Right Wing</option>
+                    <option value="Withdrawn Striker">Withdrawn Striker</option>
+                    <option value="Striker">Striker</option>
+                    <option value="Coach">Coach</option>
                 </select>
                 <div id="usernameHeader">Username:</div>
                 <input type="text"     name="usernameInput" id="usernameInput" value=<?php echo $currentUser->get("username");  ?>  disabled ></br>

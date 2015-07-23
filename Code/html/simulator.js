@@ -232,8 +232,11 @@ function postFeedback(successesNum, missesNum, minusNum, accuracyNum, forceNum, 
 {
 	document.getElementById("successesNum").innerHTML = successesNum ;	
 	document.getElementById("missesNum").innerHTML = missesNum ;	
-	document.getElementById("minusNum").innerHTML = minusNum ;	
-	document.getElementById("accuracyNum").innerHTML = (accuracyNum.toFixed(2) + "%") ;	
+	document.getElementById("minusNum").innerHTML = minusNum ;
+    console.log("before accuracy: " +accuracyNum);
+    accuracyNum = accuracyNum*100;
+    console.log("afteraccuracy: " +accuracyNum);
+	document.getElementById("accuracyNum").innerHTML = (accuracyNum.toFixed(0) + "%") ;
 	document.getElementById("forceNum").innerHTML = (forceNum.toFixed(2) + " N") ; 	
 	document.getElementById("arTimeNum").innerHTML = ((arTimeNum/1000).toFixed(2) + " s") ;
 	document.getElementById("dribbleTimeNum").innerHTML = ((dribbleTimeNum/1000).toFixed(2) + " s") ;	
@@ -259,7 +262,7 @@ function stopGame()
 {
 	processingInstance.reset();
 	postFeedback(0,0,0,0,0,0,0,0);
-	isRead
+    isReadyToPlay = false;
 	document.getElementById("routineType").firstChild.selected = "true" ;
 	document.getElementById("DefaultList").style.display = "block" ;
 	document.getElementById("FeedbackList").style.display = "none" ;

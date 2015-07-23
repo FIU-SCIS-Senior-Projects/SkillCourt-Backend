@@ -36,11 +36,27 @@ $(document).ready(function(){
                                     });
                   
                   
-                  $("#createCoachInput").change(function(){
+                  $("#listOfPlayersSelect").change(function(){
                                                
-                                        
+                                                   var x = document.getElementById("listOfPlayersSelect").value;
+                                                   
+                                                   document.getElementById("releasePlayerFromCoachButton").style.display = "block";
                   
                                                });
+                  
+                  $("#releasePlayerFromCoachButton").click(function(){
+                                            
+                                            
+                                            console.log("Clicked Release")
+                                            
+                                                           var message = "playerUsername=" + document.getElementById("listOfPlayersSelect").value;
+                                                           $.post("release_player.php",message,function(data,status){
+                                                                  //console.log(data);
+                                                                  alert(data);
+                                                                  window.location.assign("managePlayers.php");
+                                                                  })
+                                            });
+                  
                   });
 
 function playRoutine()
@@ -76,10 +92,10 @@ function disableCoach()
 {
     if (!document.getElementById("createCoachInput").checked)
     {
-        document.getElementById("createPositionInput").value = "midfielder";
+        document.getElementById("createPositionInput").value = "Goalkeeper";
         document.getElementById("createPositionInput").disabled = false;
     } else {
-        document.getElementById("createPositionInput").value = "coach";
+        document.getElementById("createPositionInput").value = "Coach";
         document.getElementById("createPositionInput").disabled = true;
     }
 }
@@ -96,10 +112,9 @@ function validateSignUp()
     var username = document.getElementById("createUsernameInput").value;
     var password = document.getElementById("createPasswordInput").value;
     var email = document.getElementById("createEmailInput").value;
-    var isCoach;
+    var isCoach = document.getElementById("createCoachInput").checked;
     
     console.log(birthdate);
-    console.log(document.getElementById("createCoachInput").checked);
     console.log(position);
     
     
@@ -119,6 +134,7 @@ function validateSignUp()
     user.signUp(null, {
                 success: function(user) {
                 // Hooray! Let them use the app now.
+                window.location.assign("index.php");
                 },
                 error: function(user, error) {
                 // Show the error message somewhere and let the user try again.
@@ -126,4 +142,6 @@ function validateSignUp()
                 }
                 });
 }
+
+
 
