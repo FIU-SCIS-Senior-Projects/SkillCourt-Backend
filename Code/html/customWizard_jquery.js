@@ -37,7 +37,7 @@ $(document).ready(function(){
 			$(this).find("span").text("Default") ;
 			$("#Simulator").fadeIn() ;
 			$("#WizardOptionsWrapper").animate({
-					left: '660px'
+					left: '900px'
 			});
 			$("#DefaultOptions").hide();
 			$("#WizardOptions").show();
