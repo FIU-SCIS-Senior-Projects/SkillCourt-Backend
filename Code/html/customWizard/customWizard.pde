@@ -27,7 +27,8 @@ void prevRound(){ myWizard.prevRound() ; }
 void deleteStep(){ myWizard.deleteStep() ; }
 void deleteRound(){ myWizard.deleteRound() ; }
 String command(){ return myWizard.command() ; } 
-
+void buildWizardFromCommand(String command){ myWizard.buildFromCommand(command); }
+String getCurrentStepType(){ return myWizard.getCurrentStepType();}
 //pad attributes
 color gray = color(125) ;
 color lineColor = color(0, 0, 0);
@@ -104,14 +105,86 @@ class Wizard
   int roundIndex ;
   int stepIndex ;
   
-  Wizard(Room myRoom)
-  {
+  Wizard(Room myRoom) {
     this.myRoom = myRoom ;
     isWizardFinished = false ;  
     rounds = new ArrayList() ;  
     roundIndex = 0 ;
     stepIndex = 0 ; 
     createRound() ; //add an empty round with an empty step to end of rounds
+  }
+  
+  void buildFromCommand(String command) {
+    rounds = new ArrayList() ;
+    storeCommand(command) ;
+    roundIndex = 0 ;
+    stepIndex = 0 ;
+    isWizardFinished = false ;
+    println("steps:"+getNumberOfSteps());
+    println("rounds:"+getNumberOfRounds());
+    showCurrentStep() ;
+  }
+  
+  void storeCommand(String command)
+  {
+    int currentCommandPosition = 3; 
+    Round newRound;
+    String curr;
+    ArrayList pads = new ArrayList();
+    ArrayList targets = new ArrayList();
+    Target newTarget ;
+    curr = str(command.charAt(currentCommandPosition));
+    
+    while (currentCommandPosition < command.length())
+    {
+       if (curr.equals("R"))
+       {
+         newRound = new Round();
+         rounds.add(newRound);
+         currentCommandPosition++;
+       } 
+       else if (curr.equals("_"))
+       {
+         currentCommandPosition+=3;
+       } 
+       else if (curr.equals("*")) //NEW TARGET
+       {
+         if (newTarget != null) targets.add(newTarget);
+         //targets.add(newTarget);
+         int wallID = int(command.charAt(currentCommandPosition+1));
+         newTarget = new Target(wallID);
+         currentCommandPosition++;
+       }
+       else if (curr.equals("S")) 
+       {
+         // Remember to add newTarget to targetArray
+         targets.add(newTarget);
+         
+         String stepTypeChar = str(command.charAt(currentCommandPosition+1));
+         String stepType = (stepTypeChar.equals("G")) ? STEP_GROUND : STEP_SET ;
+         Step newStep = new Step(targets,stepType);
+         newStep.finish() ;
+         newRound.addStep(newStep);
+         targets = null;
+         targets = new ArrayList();
+         newTarget = null;
+         //println("step.targets after removal: "+newStep.targets.size());
+         currentCommandPosition+=2;
+       }
+       else 
+       {
+         int wallID = int(command.charAt(currentCommandPosition));
+         int row = int(command.charAt(currentCommandPosition+1));
+         int column = int(command.charAt(currentCommandPosition+2));
+         println(wallID+" "+row+" "+column);
+         Pad newPad = myRoom.getPadRC(wallID,row,column);
+         if(newTarget == null) println("NULL");
+         newTarget.addPad(newPad);
+         currentCommandPosition+=3;
+       }
+       curr = str(command.charAt(currentCommandPosition));
+    }
+  
   }
  
   void createRound()
@@ -143,7 +216,7 @@ class Wizard
   
   void correctStepView()
   {
-    creator.erase() ;
+    if(creator!=null)creator.erase() ;
     Step s = getCurrentStep() ;
     if(s.isFinished()) 
     {
@@ -153,7 +226,7 @@ class Wizard
     }
     else
     {
-      setStepCreator(javascript.getDescription()) ;
+      setStepCreator(javascript.getDescription()) ; 
       javascript.setStepButton(true) ;
     }
   }
@@ -224,12 +297,14 @@ class Wizard
         case STEP_GROUND: 
           creator = new GroundTargetCreator(myRoom, getCurrentStep()) ; 
           break ;
+        default: println("ERROR IN setStepCreator()");
       }
   }
   
   void editStep()
   {
-    setStepCreator(getCurrentStep().getType()) ;
+    getCurrentStep().edit() ;
+    setStepCreator(getCurrentStep().getType());
   }
   
   boolean finishRound()
@@ -244,6 +319,7 @@ class Wizard
       creator.finishStep() ; 
       return true ;
     }
+    javascript.console.log("ERROR NOT FINISHED");
     return false; 
   }
   
@@ -273,6 +349,12 @@ class Wizard
     return  current ;
   }
   private Step getCurrentStep(){ return getCurrentRound().getStep(stepIndex) ; }
+  
+  String getCurrentStepType()
+  {
+    Step current = getCurrentStep() ;
+    return current.getType();
+  }
   
   String command()
   {
@@ -388,6 +470,13 @@ class Step
       finished = false; 
     }
     
+    Step(ArrayList targets, String type)
+    {
+      this.type = type ;
+      this.targets = targets ;
+      finished = true; 
+    }
+    
     Step()
     {
       targets = new ArrayList() ; //might not need this? too scared to remove
@@ -447,6 +536,7 @@ class Step
     
     void setTargetsToColor(color stepColor)
     {
+      javascript.console.log(type+" "+ targets.size());  
       for(int i = 0 ; i < targets.size() ; i++)
         ((Target)(targets.get(i))).setColor(stepColor) ; 
     }
@@ -478,13 +568,23 @@ class SetTargetCreator implements StepCreator
   
   SetTargetCreator(Room r, Step s)
   {
+    println("NEW SetTargetCreator") ;
     this.s = s ; 
-    targets = (s.isFinished()) ? s.getTargets() : new ArrayList() ; 
-    s.edit() ;
+    //targets = (s.isFinished()) ? s.getTargets() : new ArrayList() ; 
+    //targets = (s.getType() == STEP_SET) ? s.getTargets() : new ArrayList(); 
+    if(s.getType() == STEP_SET)
+    {
+      targets = s.getTargets();
+      javascript.console.log("SetTargetCreator: targets.size()="+targets.size());
+    }
+    else
+    {
+      targets = new ArrayList() ;
+    }
     myRoom = r ;
     myRoom.lightWall(0, gray) ;
     for(int i = 1 ; i < 5 ; i++) myRoom.lightWall(i, padOffColor) ; 
-    if(s.isFinished) s.drawStep() ;
+    s.drawStep() ;
   }
   
   void handleClick(int x, int y)
@@ -536,11 +636,14 @@ class SetTargetCreator implements StepCreator
   void finishStep()
   {
     s.clearTargets() ;
+    javascript.console.log("finishStep(): targets.size() = " + targets.size());
     for(int i = 0 ; i < targets.size() ; i ++)
     {
+      javascript.console.log("IN HERE " + i);
       Target t = (Target)(targets.get(i));
-      if(!t.isEmpty()) s.addTarget(t) ;
+      s.addTarget(t) ;
     }
+    javascript.console.log("calling getTargetAmount()="+s.getTargetAmount());
     s.finish() ;
     s.setType(STEP_SET) ;
     return s ;
@@ -561,9 +664,9 @@ class SetTargetCreator implements StepCreator
     for(int i = 0 ; i < targets.size() ; i ++)
     {
       Target t = (Target)targets.get(i) ;
-      if(!t.isEmpty()) return true ;
+      if(t.isEmpty()) return false ;
     }
-    return false;
+    return true;
   }
 }
 
@@ -575,6 +678,7 @@ class GroundTargetCreator implements StepCreator
   
   GroundTargetCreator(Room r, Step s)
   {
+    println("NEW GroundTargetCreator");
     this.s = s ; 
     target = (s.isFinished()) ? s.getTargetAt(0) : new Target(0) ; 
     s.edit() ;
