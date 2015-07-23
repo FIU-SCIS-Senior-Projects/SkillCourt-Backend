@@ -1520,24 +1520,52 @@ div.scroll button:hover
 #routinesBlock
 {
     display: inline-block;
+    background: rgb(0, 0, 0); /* fallback */
+    background: rgba(0, 0, 0, 0.513);
+	width: 40% ;
+	height: 70% ;
+	position: absolute ;
+	left: 5% ;
+	top: 20%;
 }
 
-#buttonsBlock
-{
-    visibility: hidden;
-}
 
-#routinesInfoBlock
-{
-    display: none;
-	opacity: 0 ;
+#routinesBlock select{
 	position: relative ;
-	left: 150px ;
+	top: 20px ;
 }
 
-#assignPopup
-{
+#buttonsBlock{
+    visibility: hidden;
+	position: absolute;
+	top: 220px ;
+	width: 100% ;
+}
+
+#buttonsBlock button{
+	width: 30% ;
+	margin-bottom: 3px ;
+}
+
+#routinesInfoBlock{
     display: none;
+	position: absolute ;
+	left: 50%;
+	top: 20%  ;
+	width: 48% ;
+	height: 70% ;
+    background: rgb(0, 0, 0); /* fallback */
+    background: rgba(0, 0, 0, 0.513);
+}
+
+#assignPopup {
+    display: none;
+	position: absolute ;
+	top:20% ;
+	width: 100% ;
+	height: 70% ;
+    background: rgb(0, 0, 0); /* fallback */
+    background: rgba(0, 0, 0, 0.95);
 }
 
 #playerSelectPar
@@ -1587,9 +1615,7 @@ div.scroll button:hover
 	left: 660px ;
 }
 
-
-#WizardOptions
-{
+.innerOptions {
 	background: rgba(0, 0, 0, 0.513);
 	width: 90% ;
 	height: 90% ;
@@ -1598,32 +1624,24 @@ div.scroll button:hover
 	left: 5% ;font-family: HelveticaNeue-Thin, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-#WizardOptions h1 {
+.innerOptions h1 {
 	text-align: center ;
 	color: white ;
+	padding: 0 ;
+	margin: 5px ;
 }
 
-#WizardOptions select{
+.innerOptions select{
 	background: transparent ;
 	color: white ;
 	text-align: center ;
 }
 
-#WizardOptions select option{
+.innerOptions select option{
 	color: black ;
 }
 
-#WizardOptions ul
-{
-	display: inline-block ;
-	background: rgba(0, 0, 0, 0.513);
-	width: 80% ;
-	color: white ;
-	list-style: none ;
-	text-align: center ;
-}
-
-#WizardOptions ul
+.innerOptions ul
 {
 	display: inline-block ;
 	background: transparent;
@@ -1689,7 +1707,8 @@ div.scroll button:hover
 	width: 100% ;
 	height:15px ;	
 	text-align: center ;
-	margin-top: 10px ;
+	position: absolute ;
+	top: 3px ;
 }
 
 #phoneBackground
@@ -1702,3 +1721,48 @@ div.scroll button:hover
     background: #65B098;
 }
 
+#DefaultOptions, #timedRoundInput {
+	display: none ;
+} 
+
+#DefaultOptions ul{ 
+	text-align: left ;
+}
+
+#DefaultOptions ul li{ 
+	padding-bottom: 2px ;
+}
+
+.smallInput{
+	width: 30px ;
+}
+
+.center{
+	text-align: center ;
+}
+
+#GetNameDescription {
+	display: none ;
+	text-align: left ;
+}
+
+#GetNameDescription textarea{
+	resize: none ;
+	width: 300px ;
+	height: 100px ;
+}
+
+#defaultDescription {
+	resize: none ;
+	width: 300px ;
+	height: 75px ;
+}
+
+#GetNameDescription input, #GetNameDescription textarea, 
+#defaultDescription, #defaultName{
+	font-family: "Lucida Console", Monaco, monospace ;
+	padding: 2px ;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
