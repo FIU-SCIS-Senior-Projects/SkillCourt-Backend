@@ -1,21 +1,50 @@
+//############# CUSTOM WIZARD ################################
 var groundTargetDescription = "Select a ground pad for this step. When the correct ground pad is selected, press the 'Finish Step' button.";
 var setTargetDescription = "Select many groups of pads to make up targets. Each target is comprised of the pads that share the same wall, only one target per wall. When you are finished, press the 'Finish Step' button.";
 var stepWarning = "Please select your targets properly before finishing this step" ;
 var roundWarning = "Please finish your steps properly before finishing this round" ;
 var routineWarning = "Please finish your rounds properly before finishing this routine" ;
 var processingInstance;
-
+var commandToEdit = "" ;
+var defaultToEdit = "" ;
+var routineId = "";
 var step, round, stepTotal, roundTotal;
 
 setTimeout(function()
 {
 	processingInstance = Processing.getInstanceById("sketch");
 	processingInstance.setJavaScript(this);
-	getStepNumber() ;
-	getRoundNumber() ;
-	getStepTotal() ;
-	getRoundTotal() ;
-	processingInstance.setStepCreator("set") ;
+	
+	if(commandToEdit.length > 0 )
+	{
+		processingInstance.buildWizardFromCommand(commandToEdit) ;
+		getStepTotal() ;
+		getRoundTotal() ;
+		getStepNumber() ;
+		getRoundNumber() ;
+		checkArrows();
+		var type = processingInstance.getCurrentStepType() ;
+		console.log(type) ; 
+		//processingInstance.setStepCreator(type) ;
+		setDescription(type) ;
+		var stepTypeObj = document.getElementById("stepType");
+		var descriptionObj = document.getElementById("stepDescription");
+		
+		switch(stepTypeObj.value)
+		{
+			case "set": descriptionObj.innerHTML = setTargetDescription; break;
+			case "ground": descriptionObj.innerHTML = groundTargetDescription; break;
+		}
+		setStepButton(false) ;
+	}
+	else
+	{
+		getStepNumber() ;
+		getRoundNumber() ;
+		getStepTotal() ;
+		getRoundTotal() ;
+		processingInstance.setStepCreator("set") ;
+	}
 }, 500);
 
 
@@ -154,6 +183,7 @@ function changeDescription(){
 function editStep(){
 	setStepButton(true) ;
 	processingInstance.editStep();
+		document.getElementById("stepType").disabled = false ;
 }
 
 function finishStep(){
@@ -162,6 +192,7 @@ function finishStep(){
 		setStepButton(false) ;			
 		document.getElementById("Warning").innerHTML = "" ;
 		if(step < stepTotal) nextStep() ;
+		document.getElementById("stepType").disabled = true ;
 	}
 	else document.getElementById("Warning").innerHTML = stepWarning ;
 	
@@ -175,8 +206,27 @@ function finishRoutine(){
 	if(processingInstance.finishRoutine()) 
 	{
 		var command = processingInstance.command() ;
-		//console.log(processingInstance.command()) ;
-		document.getElementById("command").innerHTML = command ;
+		
+		$("#Simulator").fadeOut();
+		$("#WizardOptions").fadeOut();
+		$("#switchWrapper").fadeOut();
+		$("#GetNameDescription").fadeIn() ;
+		$("#FullFinishRoutine").val(command);
+	}
+	else
+		document.getElementById("Warning").innerHTML = routineWarning ;
+}
+
+function finishEdit(){
+	if(processingInstance.finishRoutine()) 
+	{
+		var command = processingInstance.command() ;
+		console.log(command);
+		var toSend = "editCustom=" + command ;
+		toSend += "&routineId=" + routineId ;
+		$.post("createRoutine.php", toSend, function(data,status){
+			console.log(data) ;
+		});
 	}
 	else
 		document.getElementById("Warning").innerHTML = routineWarning ;
@@ -185,3 +235,44 @@ function finishRoutine(){
 function roundNotReady() {
 	document.getElementById("Warning").innerHTML = roundWarning ;
 }
+
+function defaultLock() {
+	$(document).ready(function(){
+		setTimeout(function(){
+			processingInstance.noLoop() 
+		},501);;
+		
+		$("#Simulator").fadeOut() ;
+		$("#WizardOptionsWrapper").animate({
+				left: '450px'
+		},"slow");
+		$("#WizardOptions").hide();
+		$("#DefaultOptions").show();
+		fillInOptions() ;
+	});
+}
+//------------------------FINISH ROUTINE---------------------------
+
+$(document).ready(function(){
+	$("#FullFinishRoutine").click(function(){
+		var description = $("#getDescription").val();
+		var name = $("#getName").val();
+		if(name.length < 1 || description.length < 1)
+		{
+			alert("Your Routine must have a name and description");
+		}
+		else
+		{
+			var command = $(this).val() ;
+			console.log(command) ;
+			var toSend = "newCustom=" + command ;
+			toSend += "&name=" + name ;
+			toSend += "&description=" + description ;
+			$.post("createRoutine.php", toSend, function(data,status){
+				console.log(data) ;
+				window.location.assign('coachRoutines.php');
+			});
+		}
+	});
+});
+
