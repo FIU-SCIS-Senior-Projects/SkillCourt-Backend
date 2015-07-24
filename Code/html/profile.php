@@ -69,7 +69,7 @@
             <div id="accountInformationRectangle">
                 <h1>Account Information</h1>
                 <div id="positionHeader">Position:</div>
-                <select id ="positionInput" name = "positionInput" value=<?php echo $currentUser->get("position");  ?> disabled></br>
+                <select id ="positionInput" name = "positionInput" disabled></br>
                     <option value="Goalkeeper">Goalkeeper</option>
                     <option value="Center-Back">Center-Back</option>
                     <option value="Left-Back">Left-Back</option>
@@ -85,6 +85,9 @@
                     <option value="Striker">Striker</option>
                     <option value="Coach">Coach</option>
                 </select>
+                <script>
+                    document.getElementById("positionInput").value = <?php echo '"'.$currentUser->get("position").'"';  ?>;
+                </script>
                 <div id="usernameHeader">Username:</div>
                 <input type="text"     name="usernameInput" id="usernameInput" value=<?php echo $currentUser->get("username");  ?>  disabled ></br>
                 <div id="passwordHeader">Password:</div>

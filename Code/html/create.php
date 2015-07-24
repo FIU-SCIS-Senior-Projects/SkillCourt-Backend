@@ -62,8 +62,6 @@ $(document).ready(function(){
                 <input type="text" id="createLastNameInput" name="createLastNameInput" required >
                 <div id="createPhoneHeader">Phone</div>
                 <input type="text" id="createPhoneInput" name="createPhoneInput" required >
-                <div id="createBirthdateHeader">Birthdate</div>
-                <input type="date" id="createBirthdateInput" name="createBirthdateInput" required >
                 <div id="createGenderHeader">Gender</div>
                 <select id="createGenderInput" name="createGenderInput" >
                     <option>Male</option>

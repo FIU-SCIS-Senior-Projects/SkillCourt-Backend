@@ -42,7 +42,7 @@
             <script>alert("Player Succesfully Added");</script>
         <?php endif ?>
         <div id="listOfPlayersRectangle" class="default_rectangle_color">
-            <h2>Players</h2>
+            <h2 align="center">Players</h2>
             <div id="signPlayersRectangle" class="default_rectangle_color" >
                 <div>Search for a player to release</div>
                 <select id="listOfPlayersSelect">
@@ -59,7 +59,7 @@
                         }
                     ?>
                 </select>
-                <button class="round_orange_buttons" id="releasePlayerFromCoachButton" >Release Player</button>
+                <button class="round_orange_buttons" id="releasePlayerFromCoachButton" >RELEASE PLAYER</button>
             </div>
             <div id="releasePlayersRectangle" class="default_rectangle_color" >
                 <div>Search for a player to sign</div>

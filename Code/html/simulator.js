@@ -249,6 +249,7 @@ function showDefault()
 	document.getElementById("CustomList").style.display = "none";
 	document.getElementById("DefaultList").style.display = "block";
 	location.reload() ;
+    window.location.assign("simulator.php");
 }
 
 function showCustom()

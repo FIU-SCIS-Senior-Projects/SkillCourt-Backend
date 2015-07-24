@@ -100,9 +100,9 @@
     <div id="informationRectangle" class="default_rectangle_color">
     <div id="informationRectangleHeader" >Welcome to SkillCourt!</div>
 <div id="textRectangle">
-I&apos;m a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me and you can start adding your own content and make changes to the font.<br/>
+There is a lot involved with the training of soccer players.  The current system for training is primitive usually involving an instructor and a physical field for playing.  The primary objective is to produce a new, modern, and system for training soccer players.  The system will be a program with features that will assist players for learning the skills required on their own.<br/>
 ​<br/>
-This is a great space to write long text about your company and your services. You can use this space to go into a little more detail about your company.<br/>
+Implementing this system is revolutionary to the way avid players train in the sport.  With the functionality and portability that SkillCourt offers, the user can create a personalized regimen for improving skills. Thus, SkillCourt offers an overall improvement to both the soccer training and playing experience for players.<br/>
 </div>
         <div><img src="style/images/room.png" id="roomPicture" alt=""></div>
     </div>

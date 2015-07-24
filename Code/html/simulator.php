@@ -110,8 +110,8 @@
 					<li>Misses: <span id="missesNum"></span></li>
 					<li>Accuracy: <span id="accuracyNum"></span></li>
 					<li>Average Force: <span id="forceNum"></span></li>
-					<li>AR Shot Time: <span id="arTimeNum"></span></li>
-					<li>AR Dribbling Time: <span id="dribbleTimeNum"></span></li>
+					<li>Average Resolution Shot Time: <span id="arTimeNum"></span></li>
+					<li>Average Resolution Dribbling Time: <span id="dribbleTimeNum"></span></li>
 					<li>xPRS Speed: <span id="xprs"></span></li>
 					<li><button onclick="stopGame();">STOP</button></li>
 				</ul> 
