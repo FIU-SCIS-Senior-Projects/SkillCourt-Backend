@@ -13,7 +13,7 @@
     }
 ?>
 
-<div id="welcomeProfileHeader">Welcome, <?php /*echo $currentUser->get('firstName')*/ ?> </div>
+<div id="welcomeProfileHeader">Welcome <?php /*echo $currentUser->get('firstName')*/ ?> </div>
 <div id="cardProfileHeader">Profile</div>
 <div id="cardProfileRectangle">
     <div id="cardOval"></div>

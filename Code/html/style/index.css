@@ -202,9 +202,11 @@
 {
     position: relative;
     left: 0;
+    display: block;
     width: 458px;
     top: 20px;
-    height: 49px;
+    margin-right: auto;
+    margin-left: auto;
     background: none;
     border: none;
     font-size: 35px;
@@ -218,7 +220,7 @@
     position: relative;
     width: 300px;
     height: 200px;
-    top: -80px;
+    top: -20px;
     left: 190px;
 }
 
@@ -561,7 +563,7 @@
     position: relative;
     left: 60px;
     width: 317px;
-    top: -50px;
+    top: -22px;
     height: 265px;
     display: inline-block;
     background: rgb(255, 255, 255);
@@ -633,7 +635,7 @@
     position: relative;
     left: 280px;
     width: 209px;
-    top: -20px;
+    top: 0px;
     height: 27px;
     background: rgb(236, 142, 75);
     border: none;
@@ -710,7 +712,7 @@
     position: relative;
     left: 20px;
     width: 84px;
-    top: -20px;
+    top: -16px;
     height: 15px;
     background: none;
     border: none;
@@ -723,6 +725,7 @@
 #birthDateHeader
 {
     position: relative;
+    display: none;
     left: 20px;
     width: 84px;
     top: -30px;
@@ -802,7 +805,7 @@
     position: relative;
     left: 100px;
     width: 175px;
-    top: -43px;
+    top: -39px;
     height: 9px;
     background: none;
     border: none;
@@ -845,6 +848,7 @@
 #birthDateInput
 {
     position: relative;
+    display: none;
     left: 100px;
     width: 174px;
     top: -54px;
@@ -1164,7 +1168,7 @@
     left: 400px;
     width: 480px;
     top: 100px;
-    height: 454px;
+    height: 424px;
     background: rgb(227, 227, 227); /* fallback */
     background: rgba(227, 227, 227, 0.905);
     border: none;
@@ -1272,7 +1276,7 @@
     width: 280px;
     height: 27px;
     left: 0px;
-    top: 0px;
+    top: 20px;
 }
 
 #existingAccountHeader
@@ -2155,9 +2159,11 @@ div.scroll button:hover
 {
     position: relative;
     font-family: HelveticaNeue-Light, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 30pt;
+    font-size: 25pt;
     top: 20px;
-    left: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     color: white;
 }
 
