@@ -94,9 +94,11 @@ function unassign($routine)
 					$linkId = $link->getObjectId() ;
 					$objId = $obj->getObjectId() ;
 					if($linkId == $objId) 
+					{
 						unset($_SESSION["assignedRoutines"][$k]);
+						$_SESSION["assignedRoutines"] = array_values($_SESSION["assignedRoutines"]) ;
+					}
 				}
-				
 				try {
 					$obj->destroy() ;
 					echo $playerId ;

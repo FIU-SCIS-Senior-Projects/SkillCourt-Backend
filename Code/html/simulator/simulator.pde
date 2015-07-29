@@ -85,8 +85,8 @@ void draw()
 {
     if (isReadyToPlay)                                                        
     { 
-      //if (countdown() && !isPlaying)
-      if (!isPlaying)
+      if (countdown() && !isPlaying)
+      //if (!isPlaying)
       {
         newRoom = new Room() ;
         

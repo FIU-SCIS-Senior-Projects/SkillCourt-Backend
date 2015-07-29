@@ -37,6 +37,7 @@ function editCustom($currentUser){
 	$query = new ParseQuery("CustomRoutine") ;
 	$query->equalTo("objectId",$_POST["routineId"]);
 	$obj = $query->first();
+	$obj->set("command",$_POST["editCustom"]) ;
 	
 	try {
 		$obj->save();

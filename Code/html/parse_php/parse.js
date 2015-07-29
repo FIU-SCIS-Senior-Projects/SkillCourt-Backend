@@ -108,13 +108,11 @@ function validateSignUp()
     var phone = document.getElementById("createPhoneInput").value;
     var gender = document.getElementById("createGenderInput").value;
     var position = document.getElementById("createPositionInput").value;
-    var birthdate = document.getElementById("createBirthdateInput").value;
     var username = document.getElementById("createUsernameInput").value;
     var password = document.getElementById("createPasswordInput").value;
     var email = document.getElementById("createEmailInput").value;
     var isCoach = document.getElementById("createCoachInput").checked;
     
-    console.log(birthdate);
     console.log(position);
     
     
@@ -125,7 +123,6 @@ function validateSignUp()
     user.set("phone",phone);
     user.set("gender",gender);
     user.set("position",position);
-    user.set("birthdate",birthdate);
     user.set("username",username);
     user.set("password",password);
     user.set("email",email);

@@ -24,7 +24,7 @@ setTimeout(function()
 		getRoundNumber() ;
 		checkArrows();
 		var type = processingInstance.getCurrentStepType() ;
-		console.log(type) ; 
+		//console.log(type) ; 
 		//processingInstance.setStepCreator(type) ;
 		setDescription(type) ;
 		var stepTypeObj = document.getElementById("stepType");
@@ -222,11 +222,11 @@ function finishEdit(){
 	if(processingInstance.finishRoutine()) 
 	{
 		var command = processingInstance.command() ;
-		console.log(command);
+		//console.log(command);
 		var toSend = "editCustom=" + command ;
 		toSend += "&routineId=" + routineId ;
 		$.post("createRoutine.php", toSend, function(data,status){
-			console.log(data) ;
+			window.location.assign('coachRoutines.php');	
 		});
 	}
 	else
@@ -265,12 +265,12 @@ $(document).ready(function(){
 		else
 		{
 			var command = $(this).val() ;
-			console.log(command) ;
+			//console.log(command) ;
 			var toSend = "newCustom=" + command ;
 			toSend += "&name=" + name ;
 			toSend += "&description=" + description ;
 			$.post("createRoutine.php", toSend, function(data,status){
-				console.log(data) ;
+				//console.log(data) ;
 				window.location.assign('coachRoutines.php');
 			});
 		}

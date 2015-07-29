@@ -100,7 +100,7 @@
     <div id="informationRectangle" class="default_rectangle_color">
     <div id="informationRectangleHeader" >Welcome to SkillCourt!</div>
 <div id="textRectangle">
-There is a lot involved with the training of soccer players.  The current system for training is primitive usually involving an instructor and a physical field for playing.  The primary objective is to produce a new, modern, and system for training soccer players.  The system will be a program with features that will assist players for learning the skills required on their own.<br/>
+There is a lot involved with the training of soccer players.  The current system for training is primitive usually involving an instructor and a physical field for playing.  The primary objective is to produce a modern system for training soccer players.  The system will be a program with features that will assist players for learning the skills required on their own.<br/>
 ​<br/>
 Implementing this system is revolutionary to the way avid players train in the sport.  With the functionality and portability that SkillCourt offers, the user can create a personalized regimen for improving skills. Thus, SkillCourt offers an overall improvement to both the soccer training and playing experience for players.<br/>
 </div>

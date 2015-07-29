@@ -15,7 +15,7 @@ $(document).ready(function(){
 		if(validateDefault())
 		{
 			console.log("valid");
-			$.post("createRoutine.php", "newDefault"+prepareMessage(), function(data,status){
+			$.post("createRoutine.php", "newDefault="+prepareMessage(), function(data,status){
 				console.log(data) ;
 				window.location.assign('coachRoutines.php');
 			});

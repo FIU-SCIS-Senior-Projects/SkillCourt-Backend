@@ -11,7 +11,6 @@
 $(document).ready(function(){
                   $("#continueButton").click(function(){
                                    $("#createRectangle2").slideDown("slow");
-                  
                                    });
                   });
 </script>

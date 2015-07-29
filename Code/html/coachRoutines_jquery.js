@@ -21,7 +21,7 @@ $(document).ready(function(){
 		//gets info for selected routines
 		$.get("getRoutineInfo.php?i=" + $("#routineSelect").val() , function(data, status)
 		{
-			console.log(data);
+			//console.log(data);
 			$("#playerSelect").remove() ;
 			$("#description").remove() ;
 			$("#playerSelectPar").after(data) ;
@@ -48,7 +48,7 @@ $(document).ready(function(){
 		//gets names of all players for this coach
 		$.get("getRoutineInfo.php?assign" , function(data, status)
 		{
-			console.log(data);
+			//console.log(data);
 			$("#assignPlayersSelect").append(data) ;
 			//removes the names of players who already have the routine assigned
 			$("#playerSelect option").each(function(){
@@ -67,7 +67,7 @@ $(document).ready(function(){
 		var toSend = $("#assignPlayersSelect").serialize() ;
 		toSend = toSend + "&i=" + $("#routineSelect").val() ;
 		$.post("setRoutineInfo.php",toSend,function(data,status){
-			console.log(data);
+			//console.log(data);
 			$("#playerSelect").append(data) ; 
 		});
 		clearAssignPopup() ;
@@ -92,9 +92,8 @@ $(document).ready(function(){
 		var toSend = $("#assignPlayersSelect").serialize() ;
 		toSend = toSend + "&i=" + $("#routineSelect").val() ;
 		$.post("setRoutineInfo.php",toSend,function(data,status){
-			console.log(data);
+			//console.log(data);
 			$("#playerSelect option").each(function(){
-				alert(data) ;
 				if($(this).val() == data) $(this).remove() ;
 			}); 
 		});
@@ -107,15 +106,15 @@ $(document).ready(function(){
 		{
 			var toSend = "i=" + $("#routineSelect").val()+"&delete" ;
 			$.post("setRoutineInfo.php",toSend,function(data,status){
-				console.log(data);
+				//console.log(data);
 				var removed = $("#routineSelect option:selected").val();
-				console.log("removed: " + removed) ;
+				//console.log("removed: " + removed) ;
 				$("#routineSelect option:selected").remove() ;
 				$("#routineSelect option").each(function(){
 					if($(this).val() > removed)
 					{
 						$(this).val($(this).val() - 1) ;
-						console.log($(this).val());
+						//console.log($(this).val());
 					}
 				}); 
 			});
@@ -126,7 +125,7 @@ $(document).ready(function(){
 	{
 		var toSend = "i=" + $("#routineSelect").val() + "&edit" ;
 		$.post("setRoutineInfo.php", toSend, function(data, status){
-			console.log(data);
+			//console.log(data);
 			window.location.assign("customWizard.php?" + data) ;
 		});
 	});
