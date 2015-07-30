@@ -53,13 +53,14 @@
     </head>
 <body>
     <div><img src="style/images/soccer2.jpg" id="bg" alt=""></div>
-    <div id="navigationBar">
+    <header>
+    <header id="navigationBar">
         <div class="navigationButtons" id="buttonGroup">
             <button id="homeButton" onclick="location.href = 'index.php';">Home</button>
             <button id="aboutButton" onclick="location.href = 'about.php';">About</button>
         </div>
         <div id="text">SkillCourt</div>
-    </div>
+    </header>
     <div id="registerNowZoom">
         <div id="zoomRectangle" class = "default_rectangle_color">
             <div id="zoomOval"></div>
@@ -106,6 +107,6 @@ Implementing this system is revolutionary to the way avid players train in the s
 </div>
         <div><img src="style/images/room.png" id="roomPicture" alt=""></div>
     </div>
-    <div id="pageFooter"></div>
+    <footer id="pageFooter"></footer>
 </body>
 </html>

@@ -73,9 +73,9 @@
 
 #navigationBar
 {
-    position: absolute;
-    left: 0px;
+    position: fixed;
     width: 100%;
+    left: 0px;
     top: 0px;
     height: 90px;
     background: rgb(0, 0, 0); /* fallback */
@@ -218,10 +218,11 @@
 #roomPicture
 {
     position: relative;
-    width: 300px;
-    height: 200px;
-    top: -20px;
-    left: 190px;
+    display: block;
+    width: 400px;
+    height: 300px;
+    top: -40px;
+    left: 150px;
 }
 
 #textRectangle
