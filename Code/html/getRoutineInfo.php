@@ -47,7 +47,6 @@ if(isset($_SESSION["coachRoutines"]) and isset($_SESSION["defaultRoutines"]))
 			$linkedRoutineId = $linkedRoutine->getObjectId() ;
 			if($linkedRoutineId == ($routine->getObjectId()))
 			{
-				
 				$linkUser  = $link->get("user") ;
 				$linkUserId = $linkUser->getObjectId() ;
 				for($k = 0 ; $k < count($_SESSION["myPlayers"]) ; $k++)
@@ -72,6 +71,7 @@ if(isset($_SESSION["coachRoutines"]) and isset($_SESSION["defaultRoutines"]))
 	else if(isset($_GET["assign"]))
 	{
 		refreshAssignedRoutines($currentUser) ;
+		//echo count($_SESSION["myPlayers"]) ;
 		for($p = 0 ; $p < count($_SESSION["myPlayers"]) ; $p++)
 		{
 			$playerLink = $_SESSION["myPlayers"][$p] ;
