@@ -205,7 +205,8 @@ function fillInOptions(){
 	$("#difficultyRadio input[value='"+difficulty+"']").prop('checked','true');
 	
 	if(timePerRound > 0) {
-		$("#timedRoundInput").show().prop('checked','true') ;
+		$("#timedRoundsCheckbox input").prop('checked','true') ;
+		$("#timedRoundInput").show() ;
 	}
 	$("#actualTimedRoundInput").val(timePerRound);
 	
