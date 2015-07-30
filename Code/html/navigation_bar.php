@@ -28,4 +28,4 @@
 		</div>
         <button id="logInButton" onclick="location.href = 'logout.php';">Log Out</button>
 </div>
-<div id="pageFooter"></div>
+<footer id="pageFooter"></footer>
