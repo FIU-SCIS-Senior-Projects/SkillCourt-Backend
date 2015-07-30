@@ -117,6 +117,7 @@ $(document).ready(function(){
 						//console.log($(this).val());
 					}
 				}); 
+				$("#routineSelect option[value='0']").prop("selected","true");
 			});
 		}
 	});
