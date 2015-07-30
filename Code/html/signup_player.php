@@ -30,6 +30,8 @@
                 $newSignedPlayer->set("coachUsername",$currentUser->get("username"));
                 try {
                     $newSignedPlayer->save();
+					if(isset($_SESSION["myPlayers"])) array_push($_SESSION["myPlayers"] , $usernameExists);
+					
                     header('Location:managePlayers.php?sc');
                     echo 'New object created with objectId: ' . $newSignedPlayer->getObjectId();
                 } catch (ParseException $ex) {
