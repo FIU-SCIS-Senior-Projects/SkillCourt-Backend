@@ -17,7 +17,12 @@
         if (count($results) > 0) {
             $signedPlayerToDelete = $results[0];
             echo "Player " . $signedPlayerToDelete->get("playerUsername") . " Deleted";
-            $signedPlayerToDelete->destroy();
+			$signedPlayerToDelete->destroy();
+			if(isset($_SESSION["myPlayers"]))	{
+				$query = new ParseQuery("SignedPlayer");
+				$query->equalTo("coach", $currentUser) ;
+				$_SESSION["myPlayers"] = $query->find() ;
+			}
         }
         //echo $username;
     } else {
