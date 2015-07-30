@@ -146,8 +146,8 @@ function assign($currentUser, $routine)
 		}
 
 		try {
-			array_push($_SESSION["assignedRoutines"] , $link);
 			$link->save();
+			array_push($_SESSION["assignedRoutines"] , $link);
 		} catch (ParseException $ex) {  
 			// Execute any logic that should take place if the save fails.
 			// error is a ParseException object with an error code and message.
