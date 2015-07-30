@@ -48,7 +48,7 @@ $(document).ready(function(){
 		//gets names of all players for this coach
 		$.get("getRoutineInfo.php?assign" , function(data, status)
 		{
-			//console.log(data);
+			console.log(data);
 			$("#assignPlayersSelect").append(data) ;
 			//removes the names of players who already have the routine assigned
 			$("#playerSelect option").each(function(){
