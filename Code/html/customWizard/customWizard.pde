@@ -168,7 +168,7 @@ class Wizard
          targets = null;
          targets = new ArrayList();
          newTarget = null;
-         //javascript.console.log("step.targets after removal: "+newStep.targets.size());
+         javascript.console.log("step.targets after removal: "+newStep.targets.size());
          currentCommandPosition+=2;
        }
        else 
@@ -643,7 +643,7 @@ class SetTargetCreator implements StepCreator
   void finishStep()
   {
     //s.clearTargets() ;
-    javascript.alert("finishStep(): targets.size() = " + targets.size());
+    //javascript.alert("finishStep(): targets.size() = " + targets.size());
     /*
     for(int i = 0 ; i < targets.size() ; i++)
     {
@@ -652,7 +652,7 @@ class SetTargetCreator implements StepCreator
       s.addTarget(t) ;
     }*/
     s.targets = targets ;
-    javascript.console.log("calling getTargetAmount()="+s.getTargetAmount());
+    //javascript.console.log("calling getTargetAmount()="+s.getTargetAmount());
     s.finish() ;
     s.setType(STEP_SET) ;
     return s ;
