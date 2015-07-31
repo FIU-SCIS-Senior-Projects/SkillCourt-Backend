@@ -168,6 +168,7 @@ function setDescription(type){
 }
 
 function changeDescription(){
+	editStep() ;
 	var stepTypeObj = document.getElementById("stepType");
 	var descriptionObj = document.getElementById("stepDescription");
 	
@@ -183,7 +184,7 @@ function changeDescription(){
 function editStep(){
 	setStepButton(true) ;
 	processingInstance.editStep();
-		document.getElementById("stepType").disabled = false ;
+	//document.getElementById("stepType").disabled = false ;
 }
 
 function finishStep(){
@@ -193,7 +194,7 @@ function finishStep(){
 		document.getElementById("Warning").innerHTML = "" ;
         
 		if(step < stepTotal) nextStep() ;
-		document.getElementById("stepType").disabled = true ;
+		//document.getElementById("stepType").disabled = true ;
 	}
 	else document.getElementById("Warning").innerHTML = stepWarning ;
 	
@@ -207,7 +208,7 @@ function finishRoutine(){
 	if(processingInstance.finishRoutine()) 
 	{
 		var command = processingInstance.command() ;
-		
+		console.log(command) ;
 		$("#Simulator").fadeOut();
 		$("#WizardOptions").fadeOut();
 		$("#switchWrapper").fadeOut();
