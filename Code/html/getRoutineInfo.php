@@ -70,7 +70,7 @@ if(isset($_SESSION["coachRoutines"]) and isset($_SESSION["defaultRoutines"]))
 	}
 	else if(isset($_GET["assign"]))
 	{
-		refreshAssignedRoutines($currentUser) ;
+		refreshMyPlayers($currentUser) ;
 		//echo count($_SESSION["myPlayers"]) ;
 		for($p = 0 ; $p < count($_SESSION["myPlayers"]) ; $p++)
 		{
@@ -91,6 +91,7 @@ function refreshMyPlayers($currentUser) {
 	$query = new ParseQuery("SignedPlayer");
 	$query->equalTo("coach", $currentUser) ;
 	$_SESSION["myPlayers"] = $query->find() ;
+	print_r($_SESSION["myPlayers"]);
 }
 
 function refreshAssignedRoutines($currentUser) {
