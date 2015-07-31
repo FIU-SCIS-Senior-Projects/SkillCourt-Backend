@@ -6,7 +6,7 @@ interface JavaScript
 }
 JavaScript javascript = null ;
 
-//functions called from js
+//functions called from js on the customWizard page
 void setJavaScript(JavaScript js) { javascript = js ; }
 void showStep(){ myWizard.showCurrentStep() ; } 
 void setStepCreator(String type){ myWizard.setStepCreator(type) ; }
@@ -120,8 +120,8 @@ class Wizard
     roundIndex = 0 ;
     stepIndex = 0 ;
     isWizardFinished = false ;
-    println("steps:"+getNumberOfSteps());
-    println("rounds:"+getNumberOfRounds());
+    javascript.console.log("steps:"+getNumberOfSteps());
+    javascript.console.log("rounds:"+getNumberOfRounds());
     showCurrentStep() ;
   }
   
@@ -168,7 +168,7 @@ class Wizard
          targets = null;
          targets = new ArrayList();
          newTarget = null;
-         //println("step.targets after removal: "+newStep.targets.size());
+         //javascript.console.log("step.targets after removal: "+newStep.targets.size());
          currentCommandPosition+=2;
        }
        else 
@@ -176,12 +176,13 @@ class Wizard
          int wallID = int(command.charAt(currentCommandPosition));
          int row = int(command.charAt(currentCommandPosition+1));
          int column = int(command.charAt(currentCommandPosition+2));
-         println(wallID+" "+row+" "+column);
+         javascript.console.log(wallID+" "+row+" "+column);
          Pad newPad = myRoom.getPadRC(wallID,row,column);
-         if(newTarget == null) println("NULL");
+         if(newTarget == null) javascript.console.log("NULL");
          newTarget.addPad(newPad);
          currentCommandPosition+=3;
        }
+       
        curr = str(command.charAt(currentCommandPosition));
     }
   
@@ -297,7 +298,7 @@ class Wizard
         case STEP_GROUND: 
           creator = new GroundTargetCreator(myRoom, getCurrentStep()) ; 
           break ;
-        default: println("ERROR IN setStepCreator()");
+        default: javascript.console.log("ERROR IN setStepCreator()");
       }
   }
   
@@ -568,7 +569,7 @@ class SetTargetCreator implements StepCreator
   
   SetTargetCreator(Room r, Step s)
   {
-    println("NEW SetTargetCreator") ;
+    javascript.console.log("NEW SetTargetCreator") ;
     this.s = s ; 
     //targets = (s.isFinished()) ? s.getTargets() : new ArrayList() ; 
     //targets = (s.getType() == STEP_SET) ? s.getTargets() : new ArrayList(); 
@@ -579,6 +580,8 @@ class SetTargetCreator implements StepCreator
     }
     else
     {
+      s.erase() ;
+      s.clearTargets() ;
       targets = new ArrayList() ;
     }
     myRoom = r ;
@@ -610,7 +613,11 @@ class SetTargetCreator implements StepCreator
     for(int i = 0 ; i < targets.size() ; i++)
     {
       Target t = (Target)(targets.get(i)) ;
-      if(t.getWallID() == wallID) t.removePad(p) ;
+      if(t.getWallID() == wallID) 
+      {
+        t.removePad(p) ;
+        continue ;
+      }
     }  
   }
   
@@ -635,14 +642,16 @@ class SetTargetCreator implements StepCreator
   
   void finishStep()
   {
-    s.clearTargets() ;
-    javascript.console.log("finishStep(): targets.size() = " + targets.size());
-    for(int i = 0 ; i < targets.size() ; i ++)
+    //s.clearTargets() ;
+    javascript.alert("finishStep(): targets.size() = " + targets.size());
+    /*
+    for(int i = 0 ; i < targets.size() ; i++)
     {
-      javascript.console.log("IN HERE " + i);
+      javascript.alert("IN HERE " + i + "/" +targets.size());
       Target t = (Target)(targets.get(i));
       s.addTarget(t) ;
-    }
+    }*/
+    s.targets = targets ;
     javascript.console.log("calling getTargetAmount()="+s.getTargetAmount());
     s.finish() ;
     s.setType(STEP_SET) ;
@@ -661,6 +670,7 @@ class SetTargetCreator implements StepCreator
   
   boolean isReady()
   {  
+    if(targets.size() == 0) return false ;
     for(int i = 0 ; i < targets.size() ; i ++)
     {
       Target t = (Target)targets.get(i) ;
@@ -678,9 +688,15 @@ class GroundTargetCreator implements StepCreator
   
   GroundTargetCreator(Room r, Step s)
   {
-    println("NEW GroundTargetCreator");
+    javascript.console.log("NEW GroundTargetCreator");
     this.s = s ; 
-    target = (s.isFinished()) ? s.getTargetAt(0) : new Target(0) ; 
+    if(s.isFinished()) {
+      target = s.getTargetAt(0) ;
+    } else {
+      target =  new Target(0) ; 
+      s.erase() ;
+      s.clearTargets() ;
+    }
     s.edit() ;
     myRoom = r ;
     myRoom.lightWall(0, padOffColor) ;
