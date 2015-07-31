@@ -91,7 +91,7 @@ function refreshMyPlayers($currentUser) {
 	$query = new ParseQuery("SignedPlayer");
 	$query->equalTo("coach", $currentUser) ;
 	$_SESSION["myPlayers"] = $query->find() ;
-	print_r($_SESSION["myPlayers"]);
+	//print_r($_SESSION["myPlayers"]);
 }
 
 function refreshAssignedRoutines($currentUser) {
