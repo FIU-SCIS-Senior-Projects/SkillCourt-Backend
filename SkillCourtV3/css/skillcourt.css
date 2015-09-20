@@ -1,0 +1,78 @@
+body{
+    background-image: url("../img/soccer.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    display: block;
+}
+footer {
+    color: #fff;
+}
+
+footer .footer-below {
+    padding: 15px 0;
+    background-color: #222222;
+    border: 2px solid black;
+}
+
+.btn-outline {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #80AD46;
+    background: 0 0;
+    transition: all .3s ease-in-out;
+}
+
+#socialBanner{
+    border-radius: 0 0 25px 25px;
+    border: 2px solid black;
+    background-color: #222222;
+}
+
+#bannerImg{
+    margin-top: 50px;
+    padding: 0;
+    text-decoration: bold;
+    color: white;
+}
+
+div.bannerText{
+    margin: 0;
+    background-color: black;
+    opacity: 0.6;
+}
+
+div.bannerText p{
+    margin: 5%;
+    font-weight: bold;
+    color: white;
+}
+#socialIcons{
+    float: right;
+    margin-top: 12px;
+}
+
+.contBorders{
+    border-radius: 25px;
+    border: 2px solid #80AD46;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+}
+
+#registerLink{
+    color: #80AD46;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.btn-link:hover{
+    color: #23527C !important;
+}
+
+.btn:focus,
+.btn:active,
+.btn.active {
+    outline: 0;
+}
