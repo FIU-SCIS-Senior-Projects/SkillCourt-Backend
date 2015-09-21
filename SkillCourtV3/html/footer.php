@@ -12,12 +12,20 @@
             </div>
         </div>
     </footer>
-
+    
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
 
+    <!-- JQuery Scripts -->
+    <script>
+        $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();}); 
+    </script>
+
+
+      
 </body>
 </html>

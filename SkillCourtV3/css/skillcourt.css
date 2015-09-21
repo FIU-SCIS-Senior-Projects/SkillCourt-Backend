@@ -71,6 +71,20 @@ div.bannerText p{
     color: #23527C !important;
 }
 
+.topBannerIcon{
+    color: #80AD46 !important;
+    padding: 0;
+    margin: 0 3px 0 5px;
+    border:0;
+}
+
+.topBannerIconUser{
+    color: #80AD46 !important;
+    padding: 0;
+    margin: 13px 3px 0 5px;
+    border:0;
+}
+
 .btn:focus,
 .btn:active,
 .btn.active {
