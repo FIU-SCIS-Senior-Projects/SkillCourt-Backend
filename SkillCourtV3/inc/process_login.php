@@ -15,13 +15,13 @@ if (isset($_POST['username'], $_POST['password'])) {
     try {
   		$user = ParseUser::logIn($username, $password);
   		$currentUser = ParseUser::getCurrentUser();
-		echo $currentUser->getUsername();
-		header('Location: ../html/main.php');
+		// echo $currentUser->getUsername();
+		header('Location: ../index.php');
   		// Do stuff after successful login.
 	} catch (ParseException $error) {
   		// The login failed. Check error to see why.
   		echo $error->getCode() . " " . $error->getMessage();
-  		header('Location: index.php?error=1');
+  		header('Location: ../index.php?error=1');
 	}
 	
 	

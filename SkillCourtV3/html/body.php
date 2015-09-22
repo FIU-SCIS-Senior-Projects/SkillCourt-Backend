@@ -4,7 +4,7 @@
 			
 			<h1>Place holder for FRAME!!</h1>
 			<!-- Frame goes here -->
-			<img src="../img/stadium.jpg">
+			<img class="img-responsive" src="./img/stadium.jpg">
 
 		</div>
 	</div>
@@ -30,3 +30,4 @@
 		</div>
 	</div>
 </div>
+

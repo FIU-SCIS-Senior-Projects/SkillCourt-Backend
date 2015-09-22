@@ -6,10 +6,10 @@
 <meta name="author" content="Will Rodriguez, Sergio Saucedo">
 
 <!-- Bootstrap Core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
 <!-- Custom CSS -->
-<link href="../css/skillcourt.css" rel="stylesheet" type="text/css">
+<link href="./css/skillcourt.css" rel="stylesheet" type="text/css">
 
 <!-- Custom Fonts -->
-<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">

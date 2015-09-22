@@ -15,7 +15,7 @@ if ($currentUser) {
     $username = $currentUser->getUsername();
 } else {
     // show the signup or login page
-    Header('Location:index.php');
+    Header('Location:../index.php');
 }
 
 ?>
@@ -26,10 +26,13 @@ if ($currentUser) {
         <?php include '../inc/headerCode.php'; ?>
     </head>
     <body>
-        <?php include '../inc/navbar.php'; ?>
-        <?php if($currentUser) :  ?>
-        <?php include 'card.php' ?>
-        <?php endif ?>
-        <?php include '../html/footer.php'; ?>
+        <?php 
+
+            include '../inc/navbar.php';
+            if($currentUser)
+                include '../inc/card.php';
+
+            include '../html/footer.php'; 
+        ?>
     </body>
 </html>

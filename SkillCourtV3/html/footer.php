@@ -17,12 +17,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
 
     <!-- JQuery Scripts -->
     <script>
-        $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();}); 
+        $(function () {
+            $('#passwordModal').on('show.bs.modal', function (e) {
+              $('#emailAddressForPasswordChange').val('');
+            });
+            
+            $('[data-toggle=tooltip]').tooltip();
+            
+            $('[data-toggle=popover]').popover({
+                html: true, 
+                content: function() {
+                  return $('#popover-content').html();
+                },
+                viewport: '.container'
+            });
+        });
+
+        
     </script>
 
 

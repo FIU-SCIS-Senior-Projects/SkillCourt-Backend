@@ -10,7 +10,7 @@
     if (isset($_POST['emailAddressForPasswordChange']))
         try {
             ParseUser::requestPasswordReset($_POST['emailAddressForPasswordChange']);
-            header('Location: ../html/index.php');
+            header('Location: ./index.php');
             // Password reset request was sent successfully
         } catch (ParseException $ex) {
             // Password reset failed, check the exception message
