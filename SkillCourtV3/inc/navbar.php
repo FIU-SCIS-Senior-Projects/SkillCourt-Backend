@@ -24,13 +24,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">SkillCourt &copy;</a>
+            <a class="navbar-brand" href="index.php">SkillCourt &copy;</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Help</a></li>
+                <li id="homeli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "home") ? 'class=active' : ''; ?> ><a id="home" href="index.php?show=home">Home</a></li>
+                <li id="aboutli"<?php echo (isset($_GET["show"]) && $_GET["show"] == "about") ? 'class=active' : ''; ?>><a id="about" href="index.php?show=about">About</a></li>
+                <li id="helpli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "help") ? 'class=active' : ''; ?>><a id="help" href="index.php?show=help">Help</a></li>
             </ul>
             <?php if (!$currentUser) : ?>
                 <!-- Login Form -->
@@ -49,31 +49,33 @@
                     </button>
                 </form>
             <?php endif?>
-            <ul class="nav navbar-nav navbar-right">
-                <?php if($isCoach): ?> 
-                    <!-- This is the coach -->
-                    <li><a href="#contact">Routines</a></li>
-                    <li><a href="#contact">Wizards</a></li>
-                    <li><a href="#contact">Players</a></li>
-                    <li><a href="#contact"><?php echo $username ?></a></li>
+            <?php if($isCoach): ?> 
+                <!-- This is the coach -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "routinesCoach") ? 'class=active' : ''; ?>><a href="index.php?show=routinesCoach">Routines</a></li>
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "wizards") ? 'class=active' : ''; ?>><a href="index.php?show=wizards">Wizards</a></li>
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "players") ? 'class=active' : ''; ?>><a href="index.php?show=players">Players</a></li>
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>
                     <li>
                         <button type="button" class="btn btn-link btn-lg topBannerIconUser" data-toggle="tooltip" data-placement="bottom" title="Logout" onclick="location.href = './inc/logout.php';">
                             <span class="glyphicon glyphicon glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </button>
                     </li>
-                <?php endif?>
-                <?php if($isPlayer): ?>
-                    <!-- This is the player -->
-                    <li><a href="#contact">Routines</a></li>
-                    <li><a href="#contact">Simulator</a></li>
-                    <li><a href="#contact"><?php echo $username ?></a></li>
+                </ul>
+            <?php endif?>
+            <?php if($isPlayer): ?>
+                <!-- This is the player -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "routinesPlayer") ? 'class=active' : ''; ?>><a href="index.php?show=routinesPlayer">Routines</a></li>
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "simulator") ? 'class=active' : ''; ?>><a href="index.php?show=simulator">Simulator</a></li>
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>
                     <li>
                         <button type="button" class="btn btn-link btn-lg topBannerIconUser" data-toggle="tooltip" data-placement="bottom" title="Logout" onclick="location.href = './inc/logout.php';">
                             <span class="glyphicon glyphicon glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </button>
                     </li>
-                <?php endif?>
-            </ul>
+                </ul>
+            <?php endif?>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
