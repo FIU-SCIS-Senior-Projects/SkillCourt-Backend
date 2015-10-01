@@ -125,19 +125,6 @@ function validateVariousSignUp()
             }
         }
     });
-
-//     $(function() {
-//     var map = {};
-//     $("input[name='myText[]']").each(function() {
-//         map[$(this).attr("myText[]")] = $(this).val();
-//     });
-//     $( "li" ).each(function( index ) {
-//   console.log( index + ": " + $( this ).text() );
-// });
-    
-//     alert(map[0]); // "red"
-// });
-
 }
 
 function disableCoach()
