@@ -85,6 +85,10 @@ function validatePersonalSignUp()
             if(currentUser.save()){
                 window.location.assign("index.php");
             }
+        },
+        error: function(user, error){
+            //Show error message
+            alert("Error: ") + error.code + " " + error.message;
         }
     });
 }
@@ -111,6 +115,10 @@ function validateAthleticSignUp()
             if(currentUser.save()){
                 window.location.assign("index.php");
             }
+        },
+        error: function(user, error){
+            //Show error message
+            alert("Error: ") + error.code + " " + error.message;
         }
     });
 }
@@ -122,11 +130,9 @@ function validateVariousSignUp()
     var inputArray = [];
     $(function(){
         $("input[name='teams']").each(function(i){
-            console.log(i + ": " + $( this ).val());
             teamsArr.push($(this).val().toLowerCase().trim());
         });
     });
-    console.log(Parse.User.current().id);
     var currentUser = Parse.User.current();
 
     //Add functionality for adding on to an existing array if any
@@ -137,7 +143,6 @@ function validateVariousSignUp()
     }else{
         //We got something here. Get that in an array, and append it to the newly added array. 
         inputArray = currentUser.get("favTeams");
-        console.log(inputArray);
         //Make sure we dont have duplicates
         for (var i = 0; i < teamsArr.length; i++) {
             if(inputArray.indexOf(teamsArr[i]) === -1){
@@ -172,7 +177,6 @@ function removeTeam(e)
     var inputArray = currentUser.get("favTeams");
 
     var i = inputArray.indexOf(teamToRemove);
-    console.log(i);
     if(i != -1){
         inputArray.splice(i, 1);
     }

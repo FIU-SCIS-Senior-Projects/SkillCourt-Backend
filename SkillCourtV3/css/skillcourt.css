@@ -3,16 +3,8 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center; 
+    background-size: 100% auto;
     display: block;
-}
-footer {
-    color: #fff;
-}
-
-footer .footer-below {
-    padding: 15px 0;
-    background-color: #222222;
-    border: 2px solid black;
 }
 
 .btn-outline {

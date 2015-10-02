@@ -23,6 +23,7 @@
 
 <!-- Custom CSS -->
 <link href="./css/skillcourt.css" rel="stylesheet" type="text/css">
+<link href="./css/sticky.css" rel="stylesheet" type="text/css">
 
 <!-- Custom Fonts -->
 <link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
