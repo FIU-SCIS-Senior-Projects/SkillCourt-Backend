@@ -10,7 +10,12 @@ function validatePartialSignUp()
     user.set("username",username);
     user.set("password",password);
     user.set("email",email);
-
+    //Lets assign the default flags to the newly added user
+    user.set("isPersComplete", false);
+    user.set("isAthComplete", false);
+    user.set("isVarComplete", false);
+    user.set("isCoach", false);
+            
     user.signUp(null, {
         success: function(user){
             //Succesfully sign in
@@ -73,11 +78,15 @@ function validatePersonalSignUp()
     if(altemail != null){
         currentUser.set("altEmail", altemail);
     }
-    currentUser.set("isPersComplete", true);
-    if(currentUser.save())
-    {
-        window.location.assign("index.php");
-    }
+    
+    currentUser.save(null, {
+        success: function(currentUser){
+            currentUser.set("isPersComplete", true);
+            if(currentUser.save()){
+                window.location.assign("index.php");
+            }
+        }
+    });
 }
 
 function validateAthleticSignUp()
@@ -108,21 +117,78 @@ function validateAthleticSignUp()
 
 function validateVariousSignUp()
 {
+
     var teamsArr = [];
+    var inputArray = [];
     $(function(){
         $("input[name='teams']").each(function(i){
             console.log(i + ": " + $( this ).val());
-            teamsArr.push($(this).val());
+            teamsArr.push($(this).val().toLowerCase().trim());
         });
     });
+    console.log(Parse.User.current().id);
     var currentUser = Parse.User.current();
-    currentUser.set("favTeams", teamsArr);
+
+    //Add functionality for adding on to an existing array if any
+    if(currentUser.get("favTeams") == null){
+        //Then there is nothing here!
+        //Go ahead and save
+        currentUser.set("favTeams", teamsArr);
+    }else{
+        //We got something here. Get that in an array, and append it to the newly added array. 
+        inputArray = currentUser.get("favTeams");
+        console.log(inputArray);
+        //Make sure we dont have duplicates
+        for (var i = 0; i < teamsArr.length; i++) {
+            if(inputArray.indexOf(teamsArr[i]) === -1){
+                inputArray.push(teamsArr[i]);
+            }else if(inputArray.indexOf(teamsArr[i]) > -1){
+                console.log(teamsArr[i] + 'Already exists in the Teams');
+            }
+        };
+
+        console.log(inputArray);
+        currentUser.set("favTeams", inputArray);
+    }
     currentUser.save(null, {
         success: function(currentUser){
             currentUser.set("isVarComplete", true);
             if(currentUser.save()){
                 window.location.assign("index.php");
             }
+        },
+        error: function(user, error){
+            //Show error message
+            alert("Error: ") + error.code + " " + error.message;
+        }
+    });
+}
+
+function removeTeam(e)
+{
+    e.preventDefault();
+    var teamToRemove = $(this).parent().find('strong').text().toLowerCase().trim();
+    var currentUser = Parse.User.current();
+    var inputArray = currentUser.get("favTeams");
+
+    var i = inputArray.indexOf(teamToRemove);
+    console.log(i);
+    if(i != -1){
+        inputArray.splice(i, 1);
+    }
+    currentUser.set(inputArray);
+    currentUser.save(null, {
+        success: function(currentUser){
+            if(inputArray.length == 0){
+                currentUser.set("isVarComplete", false);
+            }
+            if(currentUser.save()){
+                window.location.assign("index.php");
+            }
+        },
+        error: function(user, error){
+            //Show error message
+            alert("Error: ") + error.code + " " + error.message;
         }
     });
 }
@@ -152,3 +218,5 @@ function changeFunc(i){
         positionInput.disabled = false;
     }
 }
+
+$(document).on("click", ".remove_team", removeTeam);

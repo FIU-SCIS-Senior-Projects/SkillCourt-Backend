@@ -6,10 +6,10 @@
   		<div class="col-sm-3"><!--left col-->
               
             <?php 	
-            $currentUser->fetch();
-            $isPersComplete = $currentUser->get("isPersComplete");
-    		$isAthComplete = $currentUser->get("isAthComplete");
-    		$isVarComplete = $currentUser->get("isVarComplete");
+            $currentUserIndex->fetch();
+            $isPersComplete = $currentUserIndex->get("isPersComplete");
+    		$isAthComplete = $currentUserIndex->get("isAthComplete");
+    		$isVarComplete = $currentUserIndex->get("isVarComplete");
     		?>
 
     		<!-- If the profile is not completed, show message to complete it -->
@@ -28,9 +28,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Personal Information </div>
 				<div class="panel-body">
-					<strong>Full Name:</strong> <?php echo $currentUser->get("firstName") . " " . $currentUser->get("lastName");  ?><br>
-					<strong>Gender:</strong> <?php echo $currentUser->get("gender"); ?> <br>
-					<strong>Phone number: </strong> <?php echo $currentUser->get("phone"); ?>
+					<strong>Full Name:</strong> <?php echo $currentUserIndex->get("firstName") . " " . $currentUserIndex->get("lastName");  ?><br>
+					<strong>Gender:</strong> <?php echo $currentUserIndex->get("gender"); ?> <br>
+					<strong>Phone number: </strong> <?php echo $currentUserIndex->get("phone"); ?>
 				</div>
           	</div>
           	<?php endif ?>
@@ -40,8 +40,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Athletic Information </div>
 				<div class="panel-body">
-					<strong>Position:</strong> <?php echo $currentUser->get("position");  ?> <br>
-					<strong>Dominant Leg:</strong> <?php echo $currentUser->get("preferredFoot");  ?>
+					<strong>Position:</strong> <?php echo $currentUserIndex->get("position");  ?> <br>
+					<strong>Dominant Leg:</strong> <?php echo $currentUserIndex->get("preferredFoot");  ?>
 				</div>
           	</div>
           	<?php endif ?>
@@ -50,11 +50,12 @@
 			<?php if($isVarComplete) :?>
 			<div class="panel panel-default">
             	<div class="panel-heading">Favorite Soccer Teams:<i class="fa fa-link fa-1x"></i></div>
-            	<div class="panel-body">
+            	<div class="panel-body teamFavs">
 	            	<?php 
-	            		$favoriteTeams = $currentUser->get("favTeams");
+	            		$favoriteTeams = $currentUserIndex->get("favTeams");
 						for($x = 0; $x < count($favoriteTeams); $x++) {
-						    echo "<strong>" . $favoriteTeams[$x] . "</strong></br>";
+						    echo "<div><strong>" . ucwords($favoriteTeams[$x]) . " </strong>" . 
+						    	 "<a href=\"javascript:void(0);\" class=\"remove_team\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></a></br></div>";
 						}
 	            	?>
             	</div>

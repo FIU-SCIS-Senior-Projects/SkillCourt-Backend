@@ -1,15 +1,21 @@
 <?php
-    if(!$currentUser){
+    $isCoach = $isPlayer = true;
+    if($userNotLogged){
         //User has not logged in
-        $username = $isCoach = $isPlayer = false;
+        $isCoach = $isPlayer = false;
     }else{
         //User has logged in
-        $username = $currentUser->getUsername();
-        $isCoach = $currentUser->get("isCoach");
+        $currentUserIndex->fetch();
+        $isCoach = $currentUserIndex->get("isCoach");
         if($isCoach){
             $isPlayer = false;
         }else{
-            $isPlayer = true;
+            if($currentUserIndex->get("isAthComplete")){
+                $isPlayer = true;
+                $isCoach = false;
+            }else{
+                $isPlayer = false;
+            }
         }
     }
 ?>
@@ -32,7 +38,7 @@
                 <li id="aboutli"<?php echo (isset($_GET["show"]) && $_GET["show"] == "about") ? 'class=active' : ''; ?>><a id="about" href="index.php?show=about">About</a></li>
                 <li id="helpli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "help") ? 'class=active' : ''; ?>><a id="help" href="index.php?show=help">Help</a></li>
             </ul>
-            <?php if (!$currentUser) : ?>
+            <?php if($userNotLogged) : ?>
                 <!-- Login Form -->
                 <form class="navbar-form navbar-right" action="./inc/process_login.php" method="POST" name="login_form">
                     <div class="form-group">
@@ -76,6 +82,17 @@
                     </li>
                 </ul>
             <?php endif?>
+            <?php if(!$isCoach && !$isPlayer && !$userNotLogged): ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>
+                    <li>
+                        <button type="button" class="btn btn-link btn-lg topBannerIconUser" data-toggle="tooltip" data-placement="bottom" title="Logout" onclick="location.href = './inc/logout.php';">
+                            <span class="glyphicon glyphicon glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+            <?php endif?>
+
         </div><!--/.nav-collapse -->
     </div>
 </nav>

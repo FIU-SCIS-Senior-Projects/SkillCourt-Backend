@@ -37,7 +37,7 @@
         </ul>
 
         <!-- Registration logic -->
-        <?php if(!$currentUser): ?>
+        <?php if($userNotLogged): ?>
             <button type="button" class="btn btn-link" id="registerLink" data-placement="bottom" data-toggle="popover" data-title="Register" data-container="body" data-html="true">Click here to Register</button>
             <div class="hide" id="popover-content">
                 

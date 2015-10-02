@@ -5,24 +5,18 @@
 	use Parse\ParseObject;
 	use Parse\ParseException;
     
-	$currentUser = ParseUser::getCurrentUser();
-	$username;
+	$currentUserIndex = ParseUser::getCurrentUser();
+	$username = $firstName = $lastName = '';
+    $userNotLogged = false;
 
-	if(!is_null($currentUser)){
-		if ($currentUser) {
-	    //$username = $currentUser->getObjectId();
-	    //echo $currentUser->getUsername();
-	    $username = $currentUser->getUsername();
-        $firstName = $currentUser->get("firstName");
-        $lastName = $currentUser->get("lastName");
-		} else {
-		    // show the signup or login page
-		    Header('Location:./index.php');
-		}
-	}
-	else{
-		$currentUser = false;
-	}
+    if($currentUserIndex){
+        //There is a logged in user!
+        $username = $currentUserIndex->getUsername();
+        $firstName = $currentUserIndex->get("firstName");
+        $lastName = $currentUserIndex->get("lastName");
+    }else{
+        $userNotLogged = true;
+    }
 
 
     $errorMessage  = "" ;

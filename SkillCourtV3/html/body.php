@@ -1,5 +1,5 @@
 <?php
-if(!$currentUser)
+if($userNotLogged)
 {
 	echo "
 	<div class=\"container contBorders\">
