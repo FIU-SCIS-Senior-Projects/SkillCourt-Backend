@@ -12,11 +12,10 @@
 <script src="./js/bootstrap.min.js"></script>
 
 <!-- Parse CDN -->
-<script src="//www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+<script src="//www.parsecdn.com/js/parse-1.6.4.min.js"></script>
 
 <!-- Custom Javascrip Files -->
 <script type="text/javascript" src="./js/signUpFunctions.js"></script>
-<!-- <script type="text/javascript" src="./js/pagination.js"></script> -->
 
 <!-- Bootstrap Core CSS -->
 <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">

@@ -54,6 +54,8 @@
                         <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                     </button>
                 </form>
+            <?php else: ?>
+                <input type="checkbox" style="visibility:hidden" id="validateUser" disabled>
             <?php endif?>
             <?php if($isCoach): ?> 
                 <!-- This is the coach -->
@@ -82,6 +84,7 @@
                     </li>
                 </ul>
             <?php endif?>
+            <!-- This is a user that has not picked to be a player or a coach -->
             <?php if(!$isCoach && !$isPlayer && !$userNotLogged): ?>
                 <ul class="nav navbar-nav navbar-right">
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>

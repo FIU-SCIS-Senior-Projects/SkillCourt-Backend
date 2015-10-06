@@ -99,33 +99,37 @@ function validateAthleticSignUp()
     var isCoach = document.getElementById("isCoach").value;
     var preferredFoot = document.getElementById("preferredFoot").value;
 
-    console.log(position + " " + isCoach + " " + preferredFoot);
-    var currentUser = Parse.User.current();
-    currentUser.set("position", position);
-    if(isCoach == 'Y'){
-        currentUser.set("isCoach", true);
-    }else{
-        currentUser.set("isCoach", false);
-    }
-    currentUser.set("preferredFoot", preferredFoot);
     
-    currentUser.save(null, {
-        success: function(currentUser){
-            currentUser.set("isAthComplete", true);
-            if(currentUser.save()){
-                window.location.assign("index.php");
-            }
-        },
-        error: function(user, error){
-            //Show error message
-            alert("Error: ") + error.code + " " + error.message;
+    var token = Parse.User.current().getSessionToken();
+    Parse.User.become(token).then(function (currentUser) {
+        // The current user is now set to user.
+        currentUser.set("position", position);
+        if(isCoach == 'Y'){
+            currentUser.set("isCoach", true);
+        }else{
+            currentUser.set("isCoach", false);
         }
+        currentUser.set("preferredFoot", preferredFoot);
+        
+        currentUser.save(null, {
+            success: function(currentUser){
+                currentUser.set("isAthComplete", true);
+                if(currentUser.save()){
+                    window.location.assign("index.php");
+                }
+            },
+            error: function(user, error){
+                //Show error message
+                alert("Error: ") + error.code + " " + error.message;
+            }
+        }); 
+    }, function (error) {
+        // The token could not be validated.
     });
 }
 
 function validateVariousSignUp()
 {
-
     var teamsArr = [];
     var inputArray = [];
     $(function(){
@@ -133,39 +137,42 @@ function validateVariousSignUp()
             teamsArr.push($(this).val().toLowerCase().trim());
         });
     });
-    var currentUser = Parse.User.current();
 
-    //Add functionality for adding on to an existing array if any
-    if(currentUser.get("favTeams") == null){
-        //Then there is nothing here!
-        //Go ahead and save
-        currentUser.set("favTeams", teamsArr);
-    }else{
-        //We got something here. Get that in an array, and append it to the newly added array. 
-        inputArray = currentUser.get("favTeams");
-        //Make sure we dont have duplicates
-        for (var i = 0; i < teamsArr.length; i++) {
-            if(inputArray.indexOf(teamsArr[i]) === -1){
-                inputArray.push(teamsArr[i]);
-            }else if(inputArray.indexOf(teamsArr[i]) > -1){
-                console.log(teamsArr[i] + 'Already exists in the Teams');
-            }
-        };
-
-        console.log(inputArray);
-        currentUser.set("favTeams", inputArray);
-    }
-    currentUser.save(null, {
-        success: function(currentUser){
-            currentUser.set("isVarComplete", true);
-            if(currentUser.save()){
-                window.location.assign("index.php");
-            }
-        },
-        error: function(user, error){
-            //Show error message
-            alert("Error: ") + error.code + " " + error.message;
+    var token = Parse.User.current().getSessionToken();
+    Parse.User.become(token).then(function (currentUser) {
+        // The current user is now set to user.
+        //Add functionality for adding on to an existing array if any
+        if(currentUser.get("favTeams") == null){
+            //Then there is nothing here!
+            //Go ahead and save
+            currentUser.set("favTeams", teamsArr);
+        }else{
+            //We got something here. Get that in an array, and append it to the newly added array. 
+            inputArray = currentUser.get("favTeams");
+            //Make sure we dont have duplicates
+            for (var i = 0; i < teamsArr.length; i++) {
+                if(inputArray.indexOf(teamsArr[i]) === -1){
+                    inputArray.push(teamsArr[i]);
+                }else if(inputArray.indexOf(teamsArr[i]) > -1){
+                    console.log(teamsArr[i] + 'Already exists in the Teams');
+                }
+            };
+            currentUser.set("favTeams", inputArray);
         }
+        currentUser.save(null, {
+            success: function(currentUser){
+                currentUser.set("isVarComplete", true);
+                if(currentUser.save()){
+                    window.location.assign("index.php");
+                }
+            },
+            error: function(user, error){
+                //Show error message
+                alert("Error: ") + error.code + " " + error.message;
+            }
+        });
+    }, function (error) {
+      // The token could not be validated.
     });
 }
 
@@ -173,27 +180,32 @@ function removeTeam(e)
 {
     e.preventDefault();
     var teamToRemove = $(this).parent().find('strong').text().toLowerCase().trim();
-    var currentUser = Parse.User.current();
-    var inputArray = currentUser.get("favTeams");
+    var sessionToken = Parse.User.current().getSessionToken();
+    Parse.User.become(sessionToken).then(function (currentUser) {
+        // The current user is now set to user.
+        var inputArray = currentUser.get("favTeams");
 
-    var i = inputArray.indexOf(teamToRemove);
-    if(i != -1){
-        inputArray.splice(i, 1);
-    }
-    currentUser.set(inputArray);
-    currentUser.save(null, {
-        success: function(currentUser){
-            if(inputArray.length == 0){
-                currentUser.set("isVarComplete", false);
-            }
-            if(currentUser.save()){
-                window.location.assign("index.php");
-            }
-        },
-        error: function(user, error){
-            //Show error message
-            alert("Error: ") + error.code + " " + error.message;
+        var i = inputArray.indexOf(teamToRemove);
+        if(i != -1){
+            inputArray.splice(i, 1);
         }
+        currentUser.set(inputArray);
+        currentUser.save(null, {
+            success: function(currentUser){
+                if(inputArray.length == 0){
+                    currentUser.set("isVarComplete", false);
+                }
+                if(currentUser.save()){
+                    window.location.assign("index.php");
+                }
+            },
+            error: function(currentUser, error){
+                //Show error message
+                alert("Error: ") + error.code + " " + error.message;
+            }
+        });
+    }, function (error) {
+      // The token could not be validated.
     });
 }
 
@@ -223,4 +235,33 @@ function changeFunc(i){
     }
 }
 
+//Get sessionToken, store it in localstorage, and use it across the 
+function validateUser()
+{
+    $.ajax({
+        type: 'POST',
+        url: './inc/sessiontoken.php',
+        data: '',
+        success : function(data){
+            storeSeshToken(data);
+        }
+    });
+}
+function storeSeshToken(data)
+{
+    var seshToken = data;
+    Parse.User.become(seshToken).then(function (currentUser) {
+        // The current user is now set to user.
+        console.log(currentUser.get('email'));
+    }, function (error) {
+      // The token could not be validated.
+    });
+}
+
+
 $(document).on("click", ".remove_team", removeTeam);
+$(document).one('ready', function() {
+    if (document.getElementById('validateUser')) {
+        validateUser();
+    }
+});

@@ -11,6 +11,7 @@
 
     if($currentUserIndex){
         //There is a logged in user!
+        $currentUserIndex->fetch();
         $username = $currentUserIndex->getUsername();
         $firstName = $currentUserIndex->get("firstName");
         $lastName = $currentUserIndex->get("lastName");
