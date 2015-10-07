@@ -16,6 +16,7 @@
 
 <!-- Custom Javascrip Files -->
 <script type="text/javascript" src="./js/signUpFunctions.js"></script>
+<script type="text/javascript" src="./js/registrationFunctions.js"></script>
 
 <!-- Bootstrap Core CSS -->
 <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">

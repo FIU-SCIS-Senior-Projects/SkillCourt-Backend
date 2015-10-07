@@ -1,4 +1,5 @@
 <?php
+    include 'inc/process_login.php';
     include_once("inc/parseHeader.php");
 
 	use Parse\ParseUser;

@@ -19,7 +19,7 @@ function validatePartialSignUp()
     user.signUp(null, {
         success: function(user){
             //Succesfully sign in
-            window.location.assign("index.php");
+            location.reload();
             alert("Confirm your e-mail address and log in!");
         },
         error: function(user, error){
@@ -83,12 +83,12 @@ function validatePersonalSignUp()
         success: function(currentUser){
             currentUser.set("isPersComplete", true);
             if(currentUser.save()){
-                window.location.assign("index.php");
+                location.reload();
             }
         },
         error: function(user, error){
             //Show error message
-            alert("Error: ") + error.code + " " + error.message;
+            console.log("Error: " + error.code + " " + error.message);
         }
     });
 }
@@ -115,12 +115,12 @@ function validateAthleticSignUp()
             success: function(currentUser){
                 currentUser.set("isAthComplete", true);
                 if(currentUser.save()){
-                    window.location.assign("index.php");
+                    location.reload();
                 }
             },
             error: function(user, error){
                 //Show error message
-                alert("Error: ") + error.code + " " + error.message;
+                console.log("Error: " + error.code + " " + error.message);
             }
         }); 
     }, function (error) {
@@ -163,12 +163,12 @@ function validateVariousSignUp()
             success: function(currentUser){
                 currentUser.set("isVarComplete", true);
                 if(currentUser.save()){
-                    window.location.assign("index.php");
+                    location.reload();
                 }
             },
             error: function(user, error){
                 //Show error message
-                alert("Error: ") + error.code + " " + error.message;
+                console.log("Error: " + error.code + " " + error.message);
             }
         });
     }, function (error) {
@@ -196,12 +196,12 @@ function removeTeam(e)
                     currentUser.set("isVarComplete", false);
                 }
                 if(currentUser.save()){
-                    window.location.assign("index.php");
+                    location.reload();
                 }
             },
             error: function(currentUser, error){
                 //Show error message
-                alert("Error: ") + error.code + " " + error.message;
+                console.log("Error: " + error.code + " " + error.message);
             }
         });
     }, function (error) {
@@ -235,33 +235,4 @@ function changeFunc(i){
     }
 }
 
-//Get sessionToken, store it in localstorage, and use it across the 
-function validateUser()
-{
-    $.ajax({
-        type: 'POST',
-        url: './inc/sessiontoken.php',
-        data: '',
-        success : function(data){
-            storeSeshToken(data);
-        }
-    });
-}
-function storeSeshToken(data)
-{
-    var seshToken = data;
-    Parse.User.become(seshToken).then(function (currentUser) {
-        // The current user is now set to user.
-        console.log(currentUser.get('email'));
-    }, function (error) {
-      // The token could not be validated.
-    });
-}
-
-
 $(document).on("click", ".remove_team", removeTeam);
-$(document).one('ready', function() {
-    if (document.getElementById('validateUser')) {
-        validateUser();
-    }
-});

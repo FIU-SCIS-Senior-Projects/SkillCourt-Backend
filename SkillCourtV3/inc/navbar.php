@@ -40,22 +40,20 @@
             </ul>
             <?php if($userNotLogged) : ?>
                 <!-- Login Form -->
-                <form class="navbar-form navbar-right" action="./inc/process_login.php" method="POST" name="login_form">
+                <form class="navbar-form navbar-right" method="POST" name="login_form">
                     <div class="form-group">
                         <input type="text" class="form-control input-sm" name="username" placeholder="Username" id="username" required>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control input-sm" name="password" placeholder="Password" id="password" required>
                     </div>
-                    <button type="submit" class="btn btn-link btn-lg topBannerIcon" data-toggle="tooltip" data-placement="bottom" title="Login">
+                    <button type="submit" class="btn btn-link btn-lg topBannerIcon" data-toggle="tooltip" data-placement="bottom" title="Login" id="loginButton">
                         <span class="glyphicon glyphicon glyphicon glyphicon-log-in" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-link btn-lg topBannerIcon" data-toggle="modal" data-target="#passwordModal">
                         <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                     </button>
                 </form>
-            <?php else: ?>
-                <input type="checkbox" style="visibility:hidden" id="validateUser" disabled>
             <?php endif?>
             <?php if($isCoach): ?> 
                 <!-- This is the coach -->
@@ -65,7 +63,7 @@
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "players") ? 'class=active' : ''; ?>><a href="index.php?show=players">Players</a></li>
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>
                     <li>
-                        <button type="button" class="btn btn-link btn-lg topBannerIconUser" data-toggle="tooltip" data-placement="bottom" title="Logout" onclick="location.href = './inc/logout.php';">
+                        <button type="button" class="btn btn-link btn-lg topBannerIconUser logUserOut" data-toggle="tooltip" data-placement="bottom" title="Logout">
                             <span class="glyphicon glyphicon glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </button>
                     </li>
@@ -78,7 +76,7 @@
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "simulator") ? 'class=active' : ''; ?>><a href="index.php?show=simulator">Simulator</a></li>
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>
                     <li>
-                        <button type="button" class="btn btn-link btn-lg topBannerIconUser" data-toggle="tooltip" data-placement="bottom" title="Logout" onclick="location.href = './inc/logout.php';">
+                        <button type="button" class="btn btn-link btn-lg topBannerIconUser logUserOut" data-toggle="tooltip" data-placement="bottom" title="Logout">
                             <span class="glyphicon glyphicon glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </button>
                     </li>
@@ -89,7 +87,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>
                     <li>
-                        <button type="button" class="btn btn-link btn-lg topBannerIconUser" data-toggle="tooltip" data-placement="bottom" title="Logout" onclick="location.href = './inc/logout.php';">
+                        <button type="button" class="btn btn-link btn-lg topBannerIconUser logUserOut" data-toggle="tooltip" data-placement="bottom" title="Logout">
                             <span class="glyphicon glyphicon glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </button>
                     </li>
