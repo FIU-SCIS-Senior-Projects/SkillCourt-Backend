@@ -8,11 +8,6 @@
   if(isset($_POST['action'])) {
     if($_POST['action'] == "login")
     {
-      /**
-      * we can pass any action like block, follow, unfollow, send PM....
-      * if we get a 'follow' action then we could take the user ID and create a SQL command
-      * but with no database, we can simply assume the follow action has been completed and return 'ok'
-      **/
       $sessionToken = $_POST['token'];
       try {
         $user = ParseUser::become($sessionToken);
