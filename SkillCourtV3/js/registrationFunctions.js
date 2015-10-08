@@ -39,7 +39,7 @@ function loginUsers(e)
                     data: {'action' : 'login', 'token': user.getSessionToken()},
                         success: function(data, status) {
                             console.log(data + " " + status);
-                            location.reload();
+                            window.location.assign('./index.php?show=profile');
                         },
                         error: function(xhr, desc, err) {
                             console.log(xhr);
@@ -72,7 +72,7 @@ function logoutUsers(e)
             data: {'action' : 'logout'},
                 success: function(data, status) {
                     console.log(data + " " + status);
-                    location.reload();
+                    window.location.assign('./index.php');
                 },
                 error: function(xhr, desc, err) {
                     console.log(xhr);
