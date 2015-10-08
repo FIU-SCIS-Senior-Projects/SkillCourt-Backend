@@ -45,7 +45,7 @@ else
         switch ($page) {
             case 'home':
                 //Index page
-
+            	include_once './view/home.php';
                 break;
             case 'about':
                  //about.php

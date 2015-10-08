@@ -30,12 +30,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">SkillCourt &copy;</a>
+            <?php if(!$userNotLogged) : ?>
+                <a class="navbar-brand" href="index.php?show=home">SkillCourt &copy;</a>
+            <?php else : ?>
+                <a class="navbar-brand" href="index.php">SkillCourt &copy;</a>
+            <?php endif ?>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li id="aboutli"<?php echo (isset($_GET["show"]) && $_GET["show"] == "about") ? 'class=active' : ''; ?>><a id="about" href="index.php?show=about">About</a></li>
-                <li id="helpli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "help") ? 'class=active' : ''; ?>><a id="help" href="index.php?show=help">Help</a></li>
+                <?php if(!$userNotLogged) : ?>
+                    <li id="helpli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "help") ? 'class=active' : ''; ?>><a id="help" href="index.php?show=help">Help</a></li>
+                <?php endif ?>
             </ul>
             <?php if($userNotLogged) : ?>
                 <!-- Login Form -->
