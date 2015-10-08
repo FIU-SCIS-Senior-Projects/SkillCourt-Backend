@@ -1,5 +1,28 @@
 Parse.initialize("pBeFT0fHxcLjMnxwQaiJpb6Ul5HQqayb96X2UHAF", "JO3sLj47GgaQXiX1zbdHhim5YbpbgiYy3JhYpx9w");
 
+function getUrlParts(url)
+{
+    // url contains your data.
+    var qs = url.indexOf("?");
+    if(qs==-1) return [];
+    
+    var fr = url.indexOf("#");
+    var q="";
+    q = (fr==-1)? url.substr(qs+1) : url.substr(qs+1, fr-qs-1);
+    var parts=q.split("&");
+    var vars={};
+    for(var i=0;i<parts.length; i++){
+        var p = parts[i].split("=");
+        if(p[1]){
+            vars[decodeURIComponent(p[0])] = decodeURIComponent(p[1]);
+        }else{
+            vars[decodeURIComponent(p[0])] = "";
+        }
+    }
+    // vars contain all the variables in an array.
+    return vars;
+}
+
 function loginUsers(e)
 {
     e.preventDefault();

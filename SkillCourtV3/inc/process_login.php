@@ -10,9 +10,8 @@
     {
       $sessionToken = $_POST['token'];
       try {
+        // The current user is now set to user.
         $user = ParseUser::become($sessionToken);
-        echo "become worked!";
-          // The current user is now set to user.
       } catch (ParseException $ex) {
         // The token could not be validated.
         echo "become DID NOT worked";

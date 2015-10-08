@@ -34,7 +34,6 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li id="homeli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "home") ? 'class=active' : ''; ?> ><a id="home" href="index.php?show=home">Home</a></li>
                 <li id="aboutli"<?php echo (isset($_GET["show"]) && $_GET["show"] == "about") ? 'class=active' : ''; ?>><a id="about" href="index.php?show=about">About</a></li>
                 <li id="helpli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "help") ? 'class=active' : ''; ?>><a id="help" href="index.php?show=help">Help</a></li>
             </ul>
@@ -59,7 +58,7 @@
                 <!-- This is the coach -->
                 <ul class="nav navbar-nav navbar-right">
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "routinesCoach") ? 'class=active' : ''; ?>><a href="index.php?show=routinesCoach">Routines</a></li>
-                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "wizards") ? 'class=active' : ''; ?>><a href="index.php?show=wizards">Wizards</a></li>
+                    <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "wizard") ? 'class=active' : ''; ?>><a href="index.php?show=wizard">Wizard</a></li>
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "players") ? 'class=active' : ''; ?>><a href="index.php?show=players">Players</a></li>
                     <li <?php echo (isset($_GET["show"]) && $_GET["show"] == "profile") ? 'class=active' : ''; ?>><a href="index.php?show=profile">Welcome <?php echo $username ?></a></li>
                     <li>

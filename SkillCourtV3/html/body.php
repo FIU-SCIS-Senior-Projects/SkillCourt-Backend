@@ -38,5 +38,50 @@ if($userNotLogged)
 }
 else
 {
-	include_once './view/profile.php';
+	if(isset($_GET['show']))
+    {
+        $page = $_GET['show'];
+
+        switch ($page) {
+            case 'home':
+                //Index page
+
+                break;
+            case 'about':
+                 //about.php
+            	include_once './view/about.php';
+                break;
+            case 'help':
+                //help.php
+            	include_once './view/help.php';
+                break;
+            case 'routinesCoach':
+                //routinesCoach.php
+            	include_once './view/routinesCoach.php';
+                break;
+            case 'wizard':
+                //wizard.php
+            	include_once './view/wizard.php';
+                break;
+            case 'players':
+                //players.php
+            	include_once './view/players.php';
+                break;
+            case 'routinesPlayer':
+                //routinesPlayer.php
+            	include_once './view/routinesPlayer.php';
+                break;
+            case 'simulator':
+                //simulator.php
+	            include_once './view/simulator.php';
+                break;
+            case 'profile':
+                //profile.php
+	            include_once './view/profile.php';
+                break;
+            default:
+                echo "Somewhere else";
+                break;
+        }
+    }
 }
