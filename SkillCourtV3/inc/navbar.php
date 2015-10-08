@@ -45,7 +45,7 @@
                         <input type="text" class="form-control input-sm" name="username" placeholder="Username" id="username" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control input-sm" name="password" placeholder="Password" id="password" required>
+                        <input type="password" class="form-control input-sm" name="password" placeholder="Password" id="password" data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Invalid credentials!" required>
                     </div>
                     <button type="submit" class="btn btn-link btn-lg topBannerIcon" data-toggle="tooltip" data-placement="bottom" title="Login" id="loginButton">
                         <span class="glyphicon glyphicon glyphicon glyphicon-log-in" aria-hidden="true"></span>
@@ -111,12 +111,12 @@
               
                 <p>Enter your SkillCourt email address that you used to register. We'll send you an email with your username and a link to reset your password.</p>
 
-                <form action="./inc/resetPassword.php" method="POST" name="change_password_form">    
+                <form method="POST" name="change_password_form">    
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input class="form-control" placeholder="Enter email" type="email" name="emailAddressForPasswordChange" id="emailAddressForPasswordChange" required>
+                        <input class="form-control" placeholder="Enter email" type="email" id="emailAddressForPasswordChange" required>
                     </div>
-                    <button class="btn btn-primary" type="submit" name="submitPasswordChange" value="SEND">Submit</button>                    
+                    <button disabled class="btn btn-primary" type="submit" name="submitPasswordChange" id="submitPasswordChange">Submit</button>                    
                 </form>
                 
             </div>
