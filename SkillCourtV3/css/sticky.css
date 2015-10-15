@@ -11,11 +11,12 @@ body {
 }
 .footer {
   position: absolute;
-  bottom: 0;
+  bottom: -15px;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 40px;
   background-color: #222222;
   color: #fff;
   border: 2px solid black;
+  left: 0px;
 }
