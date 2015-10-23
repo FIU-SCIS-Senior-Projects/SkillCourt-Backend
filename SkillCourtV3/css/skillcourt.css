@@ -121,6 +121,17 @@ div.wa{
     border-bottom: 1px solid white !important;
 }
 
+.videoBorder{
+    border-radius: 30px 30px 30px 30px;
+}
+
+.mainText {
+    color: #FFFFFF;
+    font-size: medium;
+    font-family: Verdana;
+    text-shadow: 2px 2px 2px #000000;
+}
+
 /*Styles for Coach Routines*/
 #assignColumn, #playerColumn
 {
