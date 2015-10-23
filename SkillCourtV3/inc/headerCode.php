@@ -54,7 +54,6 @@
 <!-- Custom Fonts -->
 <link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-<<<<<<< HEAD
 <!-- Custom Javascript for Interactive Summary Table -->
 <script type="text/javascript" src="./js/jquery.cycle.all.2.74.js"></script>
 <script type="text/javascript" src="./js/globalScripts.js"></script>
@@ -63,5 +62,4 @@
 <script src="./js/jquery.bxslider/jquery.bxslider.min.js"></script>
 <!-- bxSlider CSS file -->
 <link href="./css/jquery.bxslider.css" rel="stylesheet" />
-=======
->>>>>>> origin/scv3
+
