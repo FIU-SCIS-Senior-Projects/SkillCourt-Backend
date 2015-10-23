@@ -106,6 +106,15 @@
                 $('#limessages').removeClass('borderBottom');
             });
 
+            $("#releasePlayerFromCoachButton").click(function(){
+                console.log("Clicked Release");
+                   var message = "playerUsername=" + document.getElementById("listOfPlayersSelect").value;
+                   $.post("./inc/releasePlayer.php",message,function(data,status){
+                          //console.log(data);
+                          alert(data);
+                          window.location.assign("./index.php?show=players");
+                          })
+                });
 
         });
             

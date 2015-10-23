@@ -18,12 +18,39 @@
 <script type="text/javascript" src="./js/signUpFunctions.js"></script>
 <script type="text/javascript" src="./js/registrationFunctions.js"></script>
 
+<!-- Processing Javascript files -->
+<?php if(isset($_GET['show']) && $_GET['show'] == 'wizard' ) : ?>
+<script type="text/javascript" src="./js/processing.js" ></script>
+<script type="text/javascript" src="./js/wizardFunctionsjQuery.js"></script>
+<script type="text/javascript" src="./js/wizardFunctions.js"></script>
+<?php endif ?>
+
+<!-- Routines Coach Javascript files -->
+<?php if(isset($_GET['show']) && $_GET['show'] == 'routinesCoach' ) : ?>
+<script type="text/javascript" src="./js/coachRoutines.js"></script>
+<?php endif ?>
+
+<!-- Simulator Javascript files -->
+<?php if(isset($_GET['show']) && $_GET['show'] == 'simulator' ) : ?>
+<meta name="Generator" content="Processing" />
+<script type="text/javascript" src="./js/processing.js" ></script>
+<script type="text/javascript" src="./js/buzz.min.js"></script>
+<script type="text/javascript" src="./js/simulator.js"></script>
+<?php endif ?>
+
+<!-- Routines Player  -->
+<?php if(isset($_GET['show']) && $_GET['show'] == 'routinesPlayer' ) : ?>
+<script type="text/javascript" src="./js/simulatorPlay.js"></script>
+<?php endif ?>
+
 <!-- Bootstrap Core CSS -->
 <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
 <!-- Custom CSS -->
 <link href="./css/skillcourt.css" rel="stylesheet" type="text/css">
 <link href="./css/sticky.css" rel="stylesheet" type="text/css">
+<link href="./css/wizard.css" rel="stylesheet" type="text/css">
 
 <!-- Custom Fonts -->
 <link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+

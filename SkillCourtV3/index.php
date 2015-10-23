@@ -1,10 +1,7 @@
 <?php
     include 'inc/process_login.php';
-    include_once("inc/parseHeader.php");
 
 	use Parse\ParseUser;
-	use Parse\ParseObject;
-	use Parse\ParseException;
     
 	$currentUserIndex = ParseUser::getCurrentUser();
 	$username = $firstName = $lastName = '';

@@ -1,0 +1,185 @@
+#Simulator
+{
+	display: inline-block ;
+	top: 100px ;
+	width: 600px ;
+	min-width: 600px ;
+	height:600px ;
+	min-height:600px ;
+	margin: 0 ;
+}
+
+#sketch
+{
+    position: relative ;
+    bottom: 50px;
+}
+
+.wizardPane
+{
+	background: rgba(0, 0, 0, 0.513);
+	width: 80%;
+	margin-top: 40px;
+	padding-top: 10px;
+}
+
+.skillCourtPane
+{
+	background: rgba(0, 0, 0, 0.513);
+	margin-top: 40px;
+	padding-top: 10px;
+}
+
+.wizardCol
+{
+	padding-top: 10px;
+	padding-right: 40px;
+}
+
+.wizardLinks>li>a{
+    color: #80AD46;
+    border-radius: 25px;
+    border: 1px solid #80AD46;
+}
+
+.wizardLinks>li>a:focus,
+.wizardLinks>li>a:hover
+{
+	border: 1px solid #80AD46;
+	background-color: transparent;
+	color: white;
+}
+
+.wizardLinks>li.active>a,
+.wizardLinks>li.active>a:focus,
+.wizardLinks>li.active>a:hover
+{
+	background-color: #80AD46;
+}
+
+.wizardHeaders
+{
+	color: white;
+    text-shadow: 1px 1px 1px #000, 3px 3px 5px #000;
+    text-decoration: underline;
+}
+
+/*Modify the buttons*/
+.btn.outline {
+    background: none;
+}
+.btn-primary.outline {
+    border: 2px solid #80AD46;
+    color: white;
+}
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+    color: #80AD46;
+    border-color: #80AD46;
+}
+.btn-primary.outline:active, .btn-primary.outline.active {
+    border-color: #80AD46;
+    color: #80AD46;
+    box-shadow: none;
+}
+
+.delButtons
+{
+	width: 100px;
+}
+.stepButtons
+{
+	width: 200px;
+}
+
+.defaultInputs
+{
+	background-color: transparent; 
+	border-style: solid; 
+	border-width: 0px 0px 1px 0px; 
+	border-color: #80AD46;
+}
+
+#EditStep
+{
+	display: none;
+}
+
+/*Thi is for the round buttons*/
+.myButton {
+	width: 120px ;
+	height: 30px ;
+    background: rgb(255, 255, 255); /* fallback */
+    background: rgba(255, 255, 255, 0);
+    border: 2px solid #80AD46;
+    font-size: 14px; 
+	font-weight: bold ;	
+    font-family: HelveticaNeue-Medium, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #80AD46;
+    padding: 5px ;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.myButton:hover {
+	background: #80AD46; 
+	color:white ;
+	cursor:pointer ;
+}
+
+.round { 
+	width: 30px ;
+	height: 30px ;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+#stepArrowLeft, #stepArrowRight, #roundArrowLeft, #roundArrowRight {
+	visibility: hidden ;
+}
+
+#GetNameDescription {
+	display: none ;
+	text-align: left ;
+}
+
+#GetNameDescription textarea{
+	resize: none ;
+	width: 300px ;
+	height: 100px ;
+}
+
+#GetNameDescription input, #GetNameDescription textarea, 
+#defaultDescription, #defaultName{
+	font-family: "Lucida Console", Monaco, monospace ;
+	padding: 2px ;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#DefaultOptions, #timedRoundInput {
+	display: none ;
+} 
+
+#DefaultOptions ul{ 
+	text-align: left ;
+}
+
+#DefaultOptions ul li{ 
+	padding-bottom: 2px ;
+}
+
+#DefaultOptions, #timedRoundInput {
+	display: none ;
+}
+
+#defaultDescription {
+	resize: none ;
+	width: 300px ;
+	height: 75px ;
+}
+
+
+

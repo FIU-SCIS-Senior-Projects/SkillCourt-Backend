@@ -23,10 +23,16 @@ function validatePartialSignUp()
             alert("Confirm your e-mail address and log in!");
         },
         error: function(user, error){
-            //Show error message
-            alert("Error: ") + error.code + " " + error.message;
+            //Show error message on the submit button. 
+            regFailed();
         }
     });
+}
+
+function regFailed()
+{
+    //Prompt the user to login again
+    $('.popover #clearSignUpForm').tooltip('toggle');
 }
 
 function checkPass()
@@ -45,18 +51,33 @@ function checkPass()
         //The passwords match. 
         //Set the color to the good color and inform
         //the user that they have entered the correct password 
-        $(".popover #confirmPasswordInput").css("backgroundColor", goodColor);
+        $(".popover #confirmPasswordInput").css("border-color", goodColor);
         $(".popover #confirmMessage").css("color", goodColor);
         $(".popover #confirmMessage").text("Passwords Match!");
     }else{
         //The passwords do not match.
         //Set the color to the bad color and
         //notify the user.
-        $(".popover #confirmPasswordInput").css("backgroundColor", badColor);
+        $(".popover #confirmPasswordInput").css("border-color", badColor);
         $(".popover #confirmMessage").css("color", badColor);
         $(".popover #confirmMessage").text("Passwords Do Not Match!");
     }
 } 
+
+function clearRegForm()
+{
+    //Clear regform only if user has imputted values into the boxes
+    if($('.popover #confirmMessage').text() == "Passwords Do Not Match!")
+    {
+        $(".popover #createUsernameInput").val('');
+        $(".popover #createPasswordInput").val('');
+        $(".popover #confirmPasswordInput").val('');
+
+        $(".popover #confirmPasswordInput").css("border-color", '#ccc');
+        $(".popover #confirmMessage").text('');
+        $(".popover #createEmailInput").val('');
+    }
+}
 
 function validatePersonalSignUp()
 {
@@ -236,3 +257,7 @@ function changeFunc(i){
 }
 
 $(document).on("click", ".remove_team", removeTeam);
+$(document).on("click", ".popover #createUsernameInput, .popover #createPasswordInput, .popover #clearSignUpForm" ,function(){
+    $('.popover #clearSignUpForm').tooltip('destroy');
+    clearRegForm();
+});

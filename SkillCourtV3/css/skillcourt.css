@@ -81,7 +81,7 @@ div.wa{
     left: 35% !important;
 }
 
-.profileContainer{
+.leContainer{
     border-radius: 25px;
     border: 2px solid #80AD46;
     margin-top: 5px;
@@ -119,4 +119,273 @@ div.wa{
 
 .borderBottom{
     border-bottom: 1px solid white !important;
+}
+
+/*Styles for Coach Routines*/
+#assignColumn, #playerColumn
+{
+    display: none;
+}
+
+#buttonsBlock
+{
+    visibility: hidden;
+}
+
+#playerSelectPar
+{
+    padding-right: 5px;
+}
+
+.centerBlock 
+{
+    display: table;
+    margin: 0 auto;
+}
+
+/*Simulator styles*/
+#sketchSimulator
+{
+    position: relative;
+    top: 10px;
+    bottom: 50px;
+    left: 100px;
+}
+
+#SimSettings
+{
+    text-align: left ;
+    background-image: url("../img/screen.png");
+    background-size: cover ;
+    display: inline-block ;
+    /*display: none;*/
+    width: 309px ;
+    height: 600px ; 
+    float:left;
+    clear: right;
+    color: black ;
+    font-weight: bold ;
+    font-family: Calibri, Veranda, Sans-Serif;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+#routineType
+{
+    background: #CCCCCC;
+    color: white ;
+}
+
+#tabs ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0
+}
+
+#tabs li
+{
+    display: inline-block ;
+    background-color: black ;
+    
+}
+
+#tabs li button
+{
+    color: white ;
+    background-color: black ;
+    border: none;
+}
+
+.SettingsList
+{
+    margin-left: 50px ;
+    margin-right: 50px ;
+}
+
+.SettingsList p
+{
+    background-color: #65B098;
+    font-size: 24px ;
+    font-style: italic ;
+    color:white ;
+    text-align: center ;
+    margin-top: 0px ;
+    margin-bottom: 0px ;
+}
+
+.SettingsList ul
+{
+    list-style: none ;  
+    padding: 5px;
+    background: #CCCCCC;
+    margin-top: 2px; 
+    font-size: 15px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px ;
+}
+    
+.SettingsList ul li
+{
+    background: #CCCCCC; 
+}
+
+.SettingsList ul li select
+{
+    background: white ;
+    color: black; 
+}
+
+.SettingsList ul li select option
+{
+    background: white ;
+    color: black; 
+}
+
+.SettingsList ul li select option
+{
+    background: white ;
+    color: black; 
+}
+
+.SettingsList input[type="number"]
+{
+    background: white ;
+    color: black; 
+}
+
+.SettingsList ul li button
+{
+    margin-top: 10px ;  
+    margin-left: 10px ; 
+    background: white ;
+    color: #65B098 ;
+    font-weight: bold ;
+    height: 40px ;
+    width: 180px ;
+    border-radius: 1px ;
+    text-align: center;
+    border: 2px solid #65B098 ;
+}
+
+#FeedbackList
+{
+    margin-left: 50px ;
+    margin-right: 50px ;
+    margin-top: 10px ;
+    display: none ;
+    position: relative;
+    top: 100px;
+}
+
+#FeedbackList p
+{
+    background-color: #65B098;
+    font-size: 24px ;
+    font-style: italic ;
+    color:white ;
+    text-align: center ;
+    margin-top: 0px ;
+    margin-bottom: 0px ;
+}
+
+#FeedbackList ul
+{
+    list-style: none ;  
+    padding: 5px;
+    background: #CCCCCC;
+    margin-top: 2px; 
+    font-size: 15px ;
+}
+    
+#FeedbackList ul li
+{
+    background: #CCCCCC; 
+}
+
+#FeedbackList ul li button
+{
+    margin-top: 10px ;  
+    margin-left: 10px ; 
+    background: white ;
+    color: #65B098 ;
+    font-weight: bold ;
+    height: 40px ;
+    width: 180px ;
+    border-radius: 1px ;
+    text-align: center;
+    border: 2px solid #65B098 ;
+}
+
+#FeedbackList ul li span
+{
+    background: #CCCCCC  ;
+}
+
+#successesNum
+{
+    color: green ;
+    font-style: bold ;  
+    font-size: 20px   ;
+}
+
+#removedWall 
+{
+    display: none ;
+}
+
+#minusNum
+{
+    color: red ;
+    font-style: bold ;  
+    font-size: 20px   ;
+}
+
+#wizardWalls
+{
+    display: none;
+}
+
+#playCustomRoutine
+{
+    display: none;
+}
+
+#CustomList
+{
+    display: none;
+    position: relative;
+    top: 100px;
+}
+
+#customRoutineList
+{
+    width: 140px;
+}
+
+#DefaultList
+{
+    position: absolute;
+    top: 360px;
+    width: 210px;
+    left: 108px;
+}
+
+#leTabs
+{
+    z-index: 1;
+    position: relative;
+    left: 61px;
+    top: 100px;
+}
+
+#phoneBackground
+{
+    position: absolute;
+    left: 136px;
+    width: 252px;
+    top: 322px;
+    height: 404px;
+    background: #65B098;
+    border-radius: 5px;
 }
