@@ -59,7 +59,7 @@
                         <label for="InputEmail">Email Address</label>
                         <input type="email" class="form-control" id="createEmailInput" name="createEmailInput" placeholder="Email" required>
                     </div>
-                    <button type="reset" class="btn btn-default" id="clearSignUpForm">Clear</button>
+                    <button type="reset" class="btn btn-default" id="clearSignUpForm" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Invalid Username/E-mail">Clear</button>
                     <button type="submit" class="btn btn-default" id="createPlayerButton">Submit</button>
 
                 </form>

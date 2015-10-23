@@ -1,4 +1,4 @@
-<div class="container profileContainer">
+<div class="container leContainer">
 	<div class="row">
   		<div class="col-sm-12"><h2 class="whiteHeaders"><?php echo is_null($lastName) ? $username : $firstName . " " . $lastName ?></h2></div>
     </div>
@@ -30,6 +30,7 @@
 				<div class="panel-body">
 					<strong>Full Name:</strong> <?php echo $currentUserIndex->get("firstName") . " " . $currentUserIndex->get("lastName");  ?><br>
 					<strong>Gender:</strong> <?php echo $currentUserIndex->get("gender"); ?> <br>
+					<strong>Email: </strong> <?php echo $currentUserIndex->get("email"); ?> <br>
 					<strong>Phone number: </strong> <?php echo $currentUserIndex->get("phone"); ?>
 				</div>
           	</div>
@@ -124,7 +125,7 @@
 							    </div>
 							    <div class="form-group">
 							        <div class="col-xs-2">
-							            <label for="middle_name"><h4 class="whiteHeaders">Middle Initial</h4></label>
+							            <label for="middle_name"><h4 class="whiteHeaders">M.I</h4></label>
 							            <input type="text" class="form-control" name="middle_name" id="middle_name" placeholder="MI" title="Enter your Middle Initial" maxlength="1">
 							        </div>
 							    </div>

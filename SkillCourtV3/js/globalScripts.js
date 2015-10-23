@@ -35,4 +35,9 @@ $(document).ready(function() {
         return false;  
     });
 
+    $('#goto6').click(function() {  
+        $('#s1').cycle(5);  
+        return false;  
+    });
+
 });
