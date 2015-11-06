@@ -59,6 +59,14 @@
                 x--;
             });
 
+            $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#","");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+
             //How can I make this work?
             $.fn.borderBottom = function (x,y,z) {
                 if($(x).hasClass('active')){
@@ -87,6 +95,27 @@
                 $('#lisettings').addClass('borderBottom');
                 $('#limessages').removeClass('borderBottom');
             }
+
+            //Players Page
+            // if($('#listartpage').hasClass('active')){
+            //     $('#liplayers').addClass('borderBottom');
+            //     $('#listartpage').removeClass('borderBottom');
+            // }
+
+            // if($('#liplayers').hasClass('active')){
+            //     $('#listartpage').addClass('borderBottom');
+            //     $('#liplayers').removeClass('borderBottom');
+            // }
+
+            // $('#astart').on('click', function(){
+            //     $('#aselpl').addClass('borderBottom');
+            //     $('#astart').removeClass('borderBottom');
+            // });
+
+            // $('#aselpl').on('click', function(){
+            //     $('#astart').addClass('borderBottom');
+            //     $('#aselpl').removeClass('borderBottom');
+            // });
 
             $('#ahome').on('click', function(){
                 $('#limessages').addClass('borderBottom');
