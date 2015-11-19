@@ -63,3 +63,7 @@
 <!-- bxSlider CSS file -->
 <link href="./css/jquery.bxslider.css" rel="stylesheet" />
 
+<!-- Recruit/Release Player Scripts -->
+<?php if(isset($_GET['show']) && $_GET['show'] == 'players' ) : ?>
+<script type="text/javascript" src="./js/playerSign.js" ></script>
+<?php endif ?>

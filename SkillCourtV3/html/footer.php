@@ -59,22 +59,21 @@
                 x--;
             });
 
+            //This is the jQuery for the Search bar in the Players Page
             $('.search-panel .dropdown-menu').find('a').click(function(e) {
                 e.preventDefault();
                 var param = $(this).attr("href").replace("#","");
                 var concept = $(this).text();
+                if(param == "position"){
+                    $('#positionDowndownDiv').removeClass('hide'); 
+                    $('#inputSearch').addClass('hide');
+                }else{
+                    $('#positionDowndownDiv').addClass('hide');
+                    $('#inputSearch').removeClass('hide');
+                }
                 $('.search-panel span#search_concept').text(concept);
                 $('.input-group #search_param').val(param);
             });
-
-            //How can I make this work?
-            $.fn.borderBottom = function (x,y,z) {
-                if($(x).hasClass('active')){
-                    $(y).addClass('borderBottom');
-                    $(z).addClass('borderBottom');
-                    $(x).removeClass('borderBottom');
-                }
-            };
 
             //We do this when we the settings tab is clicked
             if($("#lihome").hasClass("active")){

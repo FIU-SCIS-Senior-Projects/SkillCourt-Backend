@@ -10,7 +10,8 @@ class Player
 	public $email;
 	public $position;
 	public $status;
-	public $action;
+	public $objectId;
+	public $coach;
 
 	public function __construct($firstName,
 								$lastName,
@@ -18,7 +19,8 @@ class Player
 								$email,
 								$position,
 								$status,
-								$action)
+								$objectId,
+								$coach)
 	{
 		$this->firstName = $firstName;
 		$this->lastName = $lastName;
@@ -26,39 +28,26 @@ class Player
 		$this->email = $email;
 		$this->position = $position;
 		$this->status = $status;
-		$this->action = $action;
+		$this->objectId = $objectId;
+		$this->coach = $coach;
 	} 
 
-	public static function all()
+	public function getCoach()
 	{
-		require_once('players_list.php');
-		$players = new PlayersList();
-		$list = $players->searchPlayer("default","Coach");
-		$usuarios = array();
-		for ($i=0; $i < count($list); $i++) { 
-			$object = $list[$i];
-			$usuarios[$i] = new Player($object->get('firstName'), $object->get('lastName'), $object->get('username'), $object->get('email'), $object->get('position'), "Signed", "FREE") ;
-		}
-		return $usuarios;
+		return $this->coach;
 	}
 
-	public static function find()
+	public function hasCoach()
 	{
-		$usuarios = array();
-		require_once('players_list.php');
-		if(isset($_GET['search_param']) && isset($_GET['x']))
-		{
-			$search_param = $_GET['search_param'];
-			$q = $_GET['x'];
-			$fetched = new PlayersList();
-			$list = $fetched->searchPlayer($search_param, $q);
+		return ($this->getCoach() == "No Coach*") ? false : true;
+	}
 
-			for ($i=0; $i < count($list); $i++) { 
-				$object = $list[$i];
-				$usuarios[$i] = new Player($object->get('firstName'), $object->get('lastName'), $object->get('username'), $object->get('email'), $object->get('position'), "Signed", "FREE") ;
-			}
-		}
-		return $usuarios;
+	public function isCurrentUserTheCoach()
+	{
+		$currentCoach = PlayersList::getCurrentUser();
+		$curCoachUsername = $currentCoach->get('username');
+
+		return ($curCoachUsername == $this->getCoach()) ? true : false;
 	}
 
 	public function getFirstName()
@@ -91,9 +80,83 @@ class Player
 		return $this->status;
 	}
 
-	public function getAction()
+	public function getId()
 	{
-		return $this->action;
+		return $this->objectId;
 	}
 
+
+	/** Static Methods
+	* These static methods allow to return a collection of players
+	*/
+
+
+	private static function newUser($object, $coach)
+	{	
+		$statusBool = ($coach == "No Coach*") ? false : true;
+
+		$user = new Player($object->get('firstName'), $object->get('lastName'), $object->get('username'), $object->get('email'), $object->get('position'), $statusBool, $object->getObjectId(), $coach);
+		return $user;
+	}
+
+	private static function createUser($list)
+	{
+		$userObject = array();
+		for ($i=0; $i < count($list); $i++) { 
+			$object = $list[$i];
+			$coach = PlayersList::getCoachName($object->get('username'));
+			$userObject[$i] = Player::newUser($object, $coach);
+		}
+		return $userObject;
+	}
+
+	public static function returnAll()
+	{
+		require_once('players_list.php');
+		$players = new PlayersList();
+		$list = $players->searchPlayer("default","Coach");
+		$usuarios = Player::createUser($list);
+		return $usuarios;
+	}
+
+	public static function find()
+	{
+		require_once('players_list.php');
+		$usuarios = array();
+		if(isset($_GET['search_param']) && isset($_GET['x']))
+		{
+			$search_param = $_GET['search_param'];
+			$q = $_GET['x'];
+			$fetched = new PlayersList();
+			$list = $fetched->searchPlayer($search_param, $q);
+
+			$usuarios = Player::createUser($list);
+		}
+		return $usuarios;
+	}
+
+	public static function getSignedPlayers()
+	{
+		require_once('players_list.php');
+		$fetched = new PlayersList();
+		$list = $fetched->getSignedPlayers();
+		
+		$signedPlayers = Player::createUser($list);
+		return $signedPlayers;
+	}
+
+	public static function getSignedPlayersByCoach()
+	{
+		require_once('players_list.php');
+		$fetched = new PlayersList();
+		$list = $fetched->getSignedPlayersByCoach();
+		
+		$signedPlayers = Player::createUser($list);
+		return $signedPlayers;
+	}
+
+	public static function isUserSigned()
+	{
+		
+	}
 }

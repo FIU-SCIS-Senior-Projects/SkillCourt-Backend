@@ -19,7 +19,7 @@
 
 	//Lets write the possible controllers and actions for the player section
 	$controllers = array('pages'   => ['home', 'error'],
-						 'players' => ['index', 'show']);
+						 'players' => ['index', 'recruit', 'signed']);
 
 	if(array_key_exists($controller, $controllers))
 	{

@@ -1,6 +1,10 @@
 <!-- Player Selection Tab -->
 <div class="container" id="start">
-<a href='index.php?show=players&controller=players&action=show'>Sign Players</a>
+	<br>
+	<ul class="nav nav-pills">
+	  <li role="presentation"><a href='index.php?show=players&controller=players&action=signed'>Players Signed</a></li>
+	  <li role="presentation"><a href='index.php?show=players&controller=players&action=recruit'>Sign/Release Players</a></li>
+	</ul>
 
 	<h2 class="whiteHeaders">Existent Players</h2>
 
@@ -13,7 +17,6 @@
 				<th>Email</th>
 				<th>Position</th>
 				<th>Status</th>
-				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -24,8 +27,7 @@
 			  	<td><?php echo $player->getUserName(); ?></td>
 			  	<td><?php echo $player->getEmail(); ?></td>
 			  	<td><?php echo $player->getPosition(); ?></td>
-			  	<td><?php echo $player->getStatus(); ?></td>
-			  	<td><?php echo $player->getAction(); ?></td>
+			  	<td><?php echo $player->getCoach(); ?></td>
 			  </tr>
 			<?php } ?>
 		</tbody>
