@@ -1,4 +1,4 @@
-<div class="container contBorders">
+<div class="container contBorders" style>
     <div class="row\">
         <div class="col-md-12 text-left" >
 

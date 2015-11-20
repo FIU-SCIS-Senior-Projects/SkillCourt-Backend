@@ -62,4 +62,3 @@
 <script src="./js/jquery.bxslider/jquery.bxslider.min.js"></script>
 <!-- bxSlider CSS file -->
 <link href="./css/jquery.bxslider.css" rel="stylesheet" />
-
