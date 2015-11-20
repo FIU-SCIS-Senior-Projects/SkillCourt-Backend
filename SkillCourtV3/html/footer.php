@@ -71,6 +71,13 @@
                     $('#positionDowndownDiv').addClass('hide');
                     $('#inputSearch').removeClass('hide');
                 }
+
+                $('#positionDropdown').change(function(){
+                    var selectedVal = $(this).val();
+                    $('.input-group #inputSearch').val(selectedVal);
+                });
+
+                inputSearch
                 $('.search-panel span#search_concept').text(concept);
                 $('.input-group #search_param').val(param);
             });

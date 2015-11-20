@@ -18,8 +18,8 @@
           </div>
           
           <div class="hide" id="positionDowndownDiv">
-            <select class="form-control" id="positionDropdown" name="positionDropdown" >
-              <option value=""></option>
+            <select class="form-control" id="positionDropdown" name="positionDropdown" required>
+              <option selected disabled>Choose Position</option>
               <option value="Goalkeeper">Goalkeeper</option>
               <option value="Center-Back">Center-Back</option>
               <option value="Left-Back">Left-Back</option>

@@ -35,7 +35,7 @@
 				  	</td>
 				  	<td>
 				  		<button class="btn btn-default" type="submit" <?php echo "value=\"" . $play->getId() . "\" " . ($play->hasCoach() ? ( $play->isCurrentUserTheCoach() ? "" : "disabled" ) : "") ?> >
-							<?php echo ($play->hasCoach() ? ( $play->isCurrentUserTheCoach() ? "RELS" : "CANT" ) : "SIGN"); ?>
+							<?php echo ($play->hasCoach() ? ( $play->isCurrentUserTheCoach() ? "RELS" : "TAKEN" ) : "SIGN"); ?>
 				  		</button>
 				  	</td>
 			 	</tr>

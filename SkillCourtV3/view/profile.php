@@ -88,7 +88,29 @@
           	<div class="tab-content">
             	
             	<div class="tab-pane fade in active" id="homeTab">
-              		<h2 class="whiteHeaders">This will be your new home!</h2>
+            	<br>
+              		<div class="row mainText border-between">
+              			<div class="col-lg-6">
+              				<h2>This is your profile Page!</h2>
+              				<p>Hi and welcome to your Skillcourt Home Page!. Here, you will have access to information about you and introductions to other users of Skillcourt. 
+              				Before enjoying all the benefits of Skillcourt.com, it will be cool to have a complete profile! To do this, just click on the settings tab, and complete your Personal Info. 
+              				Once you're done, go ahead and click on the Athletic Profile tab. Here you will be able to Pick whether you want to be a Player or a Coach. Lastly, to complete your profile. You can optionally, include who your favorite
+              				Soccer Teams are!.</p>
+              				<blockquote>Whether you're a Real Madrid, Barcelona, or even Atletico Junior fan... you will be able to keep up with their latest news and other information! (Coming soon!)</blockquote>
+              			</div>
+              			<div class="col-lg-6 vr">
+              				<h2>Coach or Player?</h2>
+              				<p>In Skillcourt, you will have the opportunity to be a Coach or a Player. As it was explained in the Home Page, 
+              				Skillcourt allows its users to pick from a Coach or Player Profiles. This will allow users to experience creating Routines through our Wizard, Assigning Custom 
+              				or Default routines to their players, and targetting players based on their on the field positions.</p>
+              				<p>Skillcout also allows its users to Play Simulated routines, which are a representation of our Real Life Skillcourt fields.
+              				Everything you see in this page will allow you to get a grasp and idea of what is to come with Skillcourt. This
+              				innovative, and engaging training/game for Soccer. Will revolutionize the industry! What are you waiting for? Start creating your routines,
+              				sign players, and engage yourself in the Skillcourt world.</p>
+              				<img src="./img/soccerball.svg" alt="" height="50px" width="50px">
+
+              			</div>
+              		</div>
              	</div><!--/tab-pane-->
 	            
 	            <div class="tab-pane fade" id="messages">
