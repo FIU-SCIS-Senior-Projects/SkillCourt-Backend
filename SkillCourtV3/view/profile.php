@@ -199,7 +199,7 @@
 									        <option value="Striker">Striker</option>
 									  		<option value="Coach" style="display: none;">Coach</option>
 									    </select>
-							         </div>
+							        </div>
 							    </div>
 							    <div class="form-group">
 							        <div class="col-xs-4">

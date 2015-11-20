@@ -1,4 +1,6 @@
 <?php
+    //This file is no longer used. 
+
     include_once 'parseHeader.php';
     
     use Parse\ParseUser;

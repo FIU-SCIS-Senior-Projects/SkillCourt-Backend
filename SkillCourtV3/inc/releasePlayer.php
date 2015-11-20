@@ -1,4 +1,5 @@
 <?php
+    //This code is obsolete. Using only one php file to deal with sign/release. 
     include_once 'parseHeader.php';
     
     use Parse\ParseUser;

@@ -269,6 +269,7 @@ if($userNotLogged)
 }
 else
 {
+    
 	if(isset($_GET['show']))
     {
         $page = $_GET['show'];
@@ -296,7 +297,16 @@ else
                 break;
             case 'players':
                 //players.php
-            	include_once './view/players.php';
+                //Set variables for MVC section
+                if(isset($_GET['controller']) && isset($_GET['action']))
+                {
+                    $controller = $_GET['controller'];
+                    $action     = $_GET['action'];
+                }else{
+                    $controller = 'pages';
+                    $action     = 'home';
+                }
+            	require_once './view/players.php';
                 break;
             case 'routinesPlayer':
                 //routinesPlayer.php

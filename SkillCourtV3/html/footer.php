@@ -59,14 +59,21 @@
                 x--;
             });
 
-            //How can I make this work?
-            $.fn.borderBottom = function (x,y,z) {
-                if($(x).hasClass('active')){
-                    $(y).addClass('borderBottom');
-                    $(z).addClass('borderBottom');
-                    $(x).removeClass('borderBottom');
+            //This is the jQuery for the Search bar in the Players Page
+            $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#","");
+                var concept = $(this).text();
+                if(param == "position"){
+                    $('#positionDowndownDiv').removeClass('hide'); 
+                    $('#inputSearch').addClass('hide');
+                }else{
+                    $('#positionDowndownDiv').addClass('hide');
+                    $('#inputSearch').removeClass('hide');
                 }
-            };
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
 
             //We do this when we the settings tab is clicked
             if($("#lihome").hasClass("active")){
@@ -87,6 +94,27 @@
                 $('#lisettings').addClass('borderBottom');
                 $('#limessages').removeClass('borderBottom');
             }
+
+            //Players Page
+            // if($('#listartpage').hasClass('active')){
+            //     $('#liplayers').addClass('borderBottom');
+            //     $('#listartpage').removeClass('borderBottom');
+            // }
+
+            // if($('#liplayers').hasClass('active')){
+            //     $('#listartpage').addClass('borderBottom');
+            //     $('#liplayers').removeClass('borderBottom');
+            // }
+
+            // $('#astart').on('click', function(){
+            //     $('#aselpl').addClass('borderBottom');
+            //     $('#astart').removeClass('borderBottom');
+            // });
+
+            // $('#aselpl').on('click', function(){
+            //     $('#astart').addClass('borderBottom');
+            //     $('#aselpl').removeClass('borderBottom');
+            // });
 
             $('#ahome').on('click', function(){
                 $('#limessages').addClass('borderBottom');
