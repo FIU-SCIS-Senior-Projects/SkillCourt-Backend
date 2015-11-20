@@ -8,6 +8,7 @@
     $query1 = new ParseQuery("AssignedRoutines");
     $query1->equalTo("user",$currentUser);
     $username = $currentUser->getUsername();
+
 ?>
 
 <div class="container leContainer">
@@ -15,10 +16,10 @@
 
 		<div clas="col-lg-7">
 
-			<div id="SimSettings">
+			<div id="SimSettings" data-step="2" data-intro="The phone represents the settings for the simulator and provides the feedback once the game has started" data-position="right">
 				
 				<div id="phoneBackground"></div>
-				<div id="leTabs">
+				<div id="leTabs" data-step="3" data-intro="The DEFAULT option will show the pre-defined routines while CUSTOM the ones assigned by a coach" data-position="top">
 					<ul id="tabs">
 						<li>
 							<button onclick="showDefault();">Default</button>
@@ -49,18 +50,18 @@
 					</ul>
 				</div>
 
-				<div class="SettingsList" id="DefaultList" >
+				<div class="SettingsList" id="DefaultList">
 					<p>SkillCourt Routines</p>
 					<ul>
-						<li><input id="customRoomCheck" type="checkbox" onclick="switchCustom();"/>Remove Wall</li>
+						<li data-step="4" data-intro="When checked, this option allows the player to remove a wall from the simulator" data-position="right"><input id="customRoomCheck" type="checkbox" onclick="switchCustom();"/>Remove Wall</li>
 						<li><select id="removedWall">
 								<option value="1" selected="true">North</option>
 								<option value="2">East</option>
 								<option value="3">South</option>
 								<option value="4">West</option>
 							</select></li>	
-						<li>Choose a Routine:</li>
-						<li><select id="routineType" onchange="allowRounds();">
+						<li EE>Choose a Routine:</li>
+						<li data-step="5" data-intro="List of pre-defined routines to simulate" data-position="left"><select id="routineType" onchange="allowRounds();">
 								<option name="routine" value="t"selected="true">Three Wall Chase</option>
 								<option name="routine" value="c">Chase</option>
 								<option name="routine" value="h">Fly</option>
@@ -70,22 +71,22 @@
 								<option name="routine" value="x">X-Cue</option>
 							</select></li>
 						<li>Choose the Difficulty:</li>
-						<li id="difficultyRadioButton">
+					<li id="difficultyRadioButton" data-step="6" data-intro="Sets the difficulty for the routine. An increase in difficulty makes the correct spot to click more specific" data-position="right">
 							<input type="radio" name="difficulty" value="n" checked="true">Novice<br>
 							<input type="radio" name="difficulty" value="i">Intermediate<br>
 							<input type="radio" name="difficulty" value="a">Advanced</li>
-						<li>Time Per Round</li>
-						<li><input id="timePerRoundCheck" type="checkbox" onclick="myFunction2();">
+						<li >Time Per Round</li>
+						<li data-step="7" data-intro="This option adds a time limit to each round narrowing the player's reaction time window" data-position="left"><input id="timePerRoundCheck" type="checkbox" onclick="myFunction2();">
 							<input id="timePerRound" type="number" min="1" max="30" disabled>
 							seconds</li>
 						<li>Play By</li>
-						<li>
+						<li data-step="8" data-intro="Total time for the routine simulation" data-position="right">
 							<select id="gameType">
 								<option value="time" selected="true">Time (minutes)</option>
 								<option value="rounds">Rounds</option>
 								<input type="number" id="amount" min="1" max="30" value="1">
 							</select></li>
-						<li ><button onclick="startGame();">Play!</button></li>
+						<li data-step="9" data-intro="Clicking PLAY! will start the simulator with routine and settings selected. Feedback is provided when simulation begins. time to play!" data-position="top"><button onclick="startGame();">Play!</button></li>
 	                </ul>
 				</div>
 
@@ -176,3 +177,4 @@
 		</div>
 	</div>
 </div>
+
