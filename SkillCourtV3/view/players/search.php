@@ -14,6 +14,7 @@
               <li><a href="#username">Username</a></li>
               <li><a href="#email">Email</a></li>
               <li><a href="#position" id="positionPicker">Position</a></li>
+              <li><a href="#allsigned" id="allsigned">My Players</a></li>
             </ul>
           </div>
           

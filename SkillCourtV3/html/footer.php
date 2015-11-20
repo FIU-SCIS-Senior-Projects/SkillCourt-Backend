@@ -64,6 +64,8 @@
                 e.preventDefault();
                 var param = $(this).attr("href").replace("#","");
                 var concept = $(this).text();
+                var placeholderText = $('#inputSearch').attr("placeholder");
+
                 if(param == "position"){
                     $('#positionDowndownDiv').removeClass('hide'); 
                     $('#inputSearch').addClass('hide');
@@ -72,12 +74,19 @@
                     $('#inputSearch').removeClass('hide');
                 }
 
+                if(param == "allsigned"){
+                    $('#inputSearch').attr("placeholder","Click Search");
+                    $("#inputSearch").prop('disabled', true);
+                }else{
+                    $('#inputSearch').attr("placeholder", placeholderText);
+                    $("#inputSearch").prop('disabled', false);
+                }
+
                 $('#positionDropdown').change(function(){
                     var selectedVal = $(this).val();
                     $('.input-group #inputSearch').val(selectedVal);
                 });
 
-                inputSearch
                 $('.search-panel span#search_concept').text(concept);
                 $('.input-group #search_param').val(param);
             });

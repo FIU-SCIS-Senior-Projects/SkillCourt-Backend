@@ -132,6 +132,12 @@ class Player
 
 			$usuarios = Player::createUser($list);
 		}
+		else{
+			if( isset($_GET['search_param']) ){
+				$search_param = $_GET['search_param'];
+				$usuarios = Player::getSignedPlayersByCoach();
+			}
+		}
 		return $usuarios;
 	}
 
@@ -153,10 +159,5 @@ class Player
 		
 		$signedPlayers = Player::createUser($list);
 		return $signedPlayers;
-	}
-
-	public static function isUserSigned()
-	{
-		
 	}
 }
