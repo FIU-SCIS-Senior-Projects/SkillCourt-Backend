@@ -56,7 +56,7 @@
           	<div class="tab-content">
             	<br>
 
-            	<div class="tab-pane active" id="customOptions">
+            	<div class="tab-pane active mainText" id="customOptions">
             	<!-- Custom Options Pane  -->
               		<div class="wizardPane center-block">
 
