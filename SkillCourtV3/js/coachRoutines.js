@@ -59,33 +59,42 @@ $(document).on('ready', function(){
 		//slides in info block
 		$("#assignColumn").fadeIn(); 
 		//gets info for selected routines
-		$.get("./inc/getRoutineInfo.php?i=" + $("#routineSelect").val() , function(data, status)
-		{
-			console.log(data);
-			$("#playerSelect").remove() ;
-			$('#routineDescription').remove();
-			$("#description").remove() ;
-			$("#playerSelectPar").after(data) ;
-			
-			var length = $('#playerSelect').children('option').length;
-			if(length == 0) { enableDelete() ;} //disabbleUnassign() ; }
-			else { disableDelete() ; }//enableUnassign() ; }
-		});
+			var selectValue = $("#routineSelect").val();
+			var value = JSON.parse( selectValue );
+		    var id = value['id'];
+		    var type = value['type'];
+		    
+			var ajaxurl = './inc/routineInfo.php';
+			data = {'id'   : id,
+					'type' : type};
+			$.post(
+					ajaxurl,
+					data,
+					function(data, status){
+						console.log(data);
+						$("#playerSelect").remove();
+						$('#routineDescription').remove();
+						$("#description").remove() ;
+						$("#playerSelectPar").after(data) ;
+						
+						var length = $('#playerSelect').children('option').length;
+						if(length == 0) { enableDelete() ;} //disabbleUnassign() ; }
+						else { disableDelete() ; }//enableUnassign() ; }
+					});
 	});
                   
-    //in case submitPlayerForm Button is clicked
-    
-                  
+    //in case submitPlayerForm Button is clicked          
                   
 	//in case the ASSIGN button is clicked - this triggers the modal 
 	$('#assignModal').on('show.bs.modal', function(event)
 	{
+		$("#assignPopupHeading").text("Assign \"" + $("#routineSelect option:selected").text() + "\" to the following players:") ;
+
 		$("#assignPlayersSelect").attr('multiple');
 		$("#assignPlayersSelect").prop('name','assign[]');
 		//prepares heading
-		$("#assignPopupHeading").text("Assign \"" + $("#routineSelect option:selected").text() + "\" to the following players:") ;
 		//gets names of all players for this coach
-		var getVal = $.get("./inc/getRoutineInfo.php?assign");
+		var getVal = $.get("./inc/routineInfo.php?assign");
 		getVal.done(function(data){
 			console.log(data);
 			$("#assignPlayersSelect").append(data) ;
@@ -98,14 +107,33 @@ $(document).on('ready', function(){
 
 		//in case ASSIGN is submitted
 		$("#assignSubmit").on('click',function(){
-			var toSend = $("#assignPlayersSelect").serialize() ;
-			toSend = toSend + "&i=" + $("#routineSelect").val() ;
-			$.post("./inc/setRoutineInfo.php",toSend,function(data,status){
-				//console.log(data);
-				$("#playerSelect").append(data) ; 
-			});
+			var userSelected = $("#assignPlayersSelect").val() ;
+			var routineSelect = $("#routineSelect").val();
+			var value = JSON.parse( routineSelect );
+		    var routineId = value['id'];
+		    var routineType = value['type'];
+			var ajaxurl = './inc/setRoutineInfo.php';
+			data = {'routineId'   : routineId,
+					'routineType' : routineType,
+					'userSelected': userSelected[0],
+					'assign'	  : true};
+
+			$.post(
+					ajaxurl,
+					data,
+					function(data, status){
+						closeModalAssign(data);
+					});
 		});
 	});
+
+	function closeModalAssign(data){
+		if(data){
+			//Close modal
+			$('#assignModal').modal('hide');
+			location.reload();
+		}
+	}
 	
 	//When modal is hidden, clear all of its contents
 	$('#assignModal').on('hidden.bs.modal', function (e) {
@@ -129,16 +157,35 @@ $(document).on('ready', function(){
 		
 		//in case UNASSIGN is submitted
 		$("#unassignSubmit").click(function(){
-			var toSend = $("#unassignPlayersSelect").serialize() ;
-			toSend = toSend + "&i=" + $("#routineSelect").val() ;
-			$.post("./inc/setRoutineInfo.php",toSend,function(data,status){
-				console.log(data);
-				$("#playerSelect option").each(function(){
-					if($(this).val() == data) $(this).remove() ;
-				}); 
-			});
+			var userSelected = $("#unassignPlayersSelect").val() ;
+			var routineSelect = $("#routineSelect").val();
+			var value = JSON.parse( routineSelect );
+		    var routineId = value['id'];
+		    var routineType = value['type'];
+			var ajaxurl = './inc/setRoutineInfo.php';
+			data = {'routineId'   : routineId,
+					'routineType' : routineType,
+					'userSelected': userSelected,
+					'unassign'	  : true};
+
+			$.post(
+					ajaxurl,
+					data,
+					function(data, status){
+						console.log(data);
+						closeModalunAssign(data);
+					});
 		});
 	});
+	function closeModalunAssign(data){
+		if(data){
+			//Close modal
+			$('#unassignModal').modal('hide');
+			// refresh or reload the users
+			location.reload();
+		}
+	}
+
 	//When modal is hidden, clear all of its contents
 	$('#unassignModal').on('hidden.bs.modal', function (e) {
 		$("#unassignPlayersSelect option").each(function(){
@@ -148,37 +195,71 @@ $(document).on('ready', function(){
 	
 
 
-	//in case DELETE is pushed
+	//in case DELETE is clicked
 	$("#deleteRoutine").click(function()
 	{
 		if(confirm("Are you sure you want to delete the routine " + $("#routineSelect option:selected").text()))
 		{
-			var toSend = "i=" + $("#routineSelect").val()+"&delete" ;
-			$.post("./inc/setRoutineInfo.php",toSend,function(data,status){
-				//console.log(data);
-				var removed = $("#routineSelect option:selected").val();
-				//console.log("removed: " + removed) ;
-				$("#routineSelect option:selected").remove() ;
-				$("#routineSelect option").each(function(){
-					if($(this).val() > removed)
-					{
-						$(this).val($(this).val() - 1) ;
-						//console.log($(this).val());
-					}
-				}); 
-				$("#routineSelect option[value='0']").prop("selected","true");
-			});
+			var routineSelect = $("#routineSelect").val();
+			var value = JSON.parse( routineSelect );
+		    var routineId = value['id'];
+		    var routineType = value['type'];
+			var ajaxurl = './inc/setRoutineInfo.php';
+			data = {'routineId'   : routineId,
+					'routineType' : routineType,
+					'delete'	  : true};
+
+			$.post(
+					ajaxurl,
+					data,
+					function(data, status){
+
+						console.log(data);
+						var removed = $("#routineSelect option:selected").val();
+						//console.log("removed: " + removed) ;
+						$("#routineSelect option:selected").remove() ;
+						$("#routineSelect option").each(function(){
+							if($(this).val() > removed)
+							{
+								$(this).val($(this).val() - 1) ;
+								//console.log($(this).val());
+							}
+						}); 
+						$("#routineSelect option[value='0']").prop("selected","true");
+					});
 		}
 	});
 	//in case EDIT is clicked
 	$("#editRoutine").click(function()
 	{
-		var toSend = "i=" + $("#routineSelect").val() + "&edit" ;
-		$.post("./inc/setRoutineInfo.php", toSend, function(data, status){
-			//console.log(data);
-			window.location.assign("index.php?show=wizard&" + data) ;
-		});
+		var routineSelect = $("#routineSelect").val();
+		var value = JSON.parse( routineSelect );
+	    var routineId = value['id'];
+	    var routineType = value['type'];
+		var ajaxurl = './inc/setRoutineInfo.php';
+		data = {'routineId'   : routineId,
+				'routineType' : routineType,
+				'edit'	  	  : true};
+
+		$.post(
+				ajaxurl,
+				data,
+				function(data, status){
+					assignRoutine(data);
+				});
+		// var toSend = "i=" + $("#routineSelect").val() + "&edit" ;
+		// $.post("./inc/setRoutineInfo.php", toSend, function(data, status){
+		// 	console.log(data);
+		// 	console.log(toSend);
+		// 	window.location.assign("index.php?show=wizard&" + data) ;
+		// });
 	});
+
+	//Get values to be editted
+	function assignRoutine(data){
+		window.location.assign("index.php?show=wizard&" + data) ;
+	}
+
 });
 
 function disableDelete()

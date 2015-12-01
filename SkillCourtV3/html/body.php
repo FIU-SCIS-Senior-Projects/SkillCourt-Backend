@@ -289,6 +289,15 @@ else
                 break;
             case 'routinesCoach':
                 //routinesCoach.php
+                //Set variables for MVC section
+                if(isset($_GET['controller']) && isset($_GET['action']))
+                {
+                    $controller = $_GET['controller'];
+                    $action     = $_GET['action'];
+                }else{
+                    $controller = 'pages';
+                    $action     = 'routinesHome';
+                }
             	include_once './view/routinesCoach.php';
                 break;
             case 'wizard':

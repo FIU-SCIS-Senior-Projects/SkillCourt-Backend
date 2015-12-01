@@ -50,40 +50,19 @@ class Player
 		return ($curCoachUsername == $this->getCoach()) ? true : false;
 	}
 
-	public function getFirstName()
-	{
-		return $this->firstName;
-	}
+	public function getFirstName(){ return $this->firstName; }
 
-	public function getLastName()
-	{
-		return $this->lastName;
-	}
+	public function getLastName(){ return $this->lastName; }
 
-	public function getUserName()
-	{
-		return $this->userName;
-	}
+	public function getUserName(){ return $this->userName; }
 
-	public function getEmail()
-	{
-		return $this->email;
-	}
+	public function getEmail(){ return $this->email; }
 
-	public function getPosition()
-	{
-		return $this->position;
-	}
+	public function getPosition(){ return $this->position; }
 
-	public function getStatus()
-	{
-		return $this->status;
-	}
+	public function getStatus(){ return $this->status; }
 
-	public function getId()
-	{
-		return $this->objectId;
-	}
+	public function getId(){ return $this->objectId; }
 
 
 	/** Static Methods
@@ -95,7 +74,14 @@ class Player
 	{	
 		$statusBool = ($coach == "No Coach*") ? false : true;
 
-		$user = new Player($object->get('firstName'), $object->get('lastName'), $object->get('username'), $object->get('email'), $object->get('position'), $statusBool, $object->getObjectId(), $coach);
+		$user = new Player($object->get('firstName'), 
+						   $object->get('lastName'), 
+						   $object->get('username'), 
+						   $object->get('email'), 
+						   $object->get('position'), 
+						   $statusBool, 
+						   $object->getObjectId(), 
+						   $coach);
 		return $user;
 	}
 
@@ -112,7 +98,6 @@ class Player
 
 	public static function returnAll()
 	{
-		require_once('players_list.php');
 		$players = new PlayersList();
 		$list = $players->searchPlayer("default","Coach");
 		$usuarios = Player::createUser($list);
@@ -121,7 +106,6 @@ class Player
 
 	public static function find()
 	{
-		require_once('players_list.php');
 		$usuarios = array();
 		if(isset($_GET['search_param']) && isset($_GET['x']))
 		{
@@ -143,7 +127,6 @@ class Player
 
 	public static function getSignedPlayers()
 	{
-		require_once('players_list.php');
 		$fetched = new PlayersList();
 		$list = $fetched->getSignedPlayers();
 		
@@ -153,11 +136,11 @@ class Player
 
 	public static function getSignedPlayersByCoach()
 	{
-		require_once('players_list.php');
 		$fetched = new PlayersList();
 		$list = $fetched->getSignedPlayersByCoach();
 		
 		$signedPlayers = Player::createUser($list);
 		return $signedPlayers;
 	}
+
 }

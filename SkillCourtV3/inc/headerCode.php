@@ -26,7 +26,7 @@
 <?php endif ?>
 
 <!-- Routines Coach Javascript files -->
-<?php if(isset($_GET['show']) && $_GET['show'] == 'routinesCoach' ) : ?>
+<?php if( isset($_GET['show']) && $_GET['show'] == 'routinesCoach' ) : ?>
 <script type="text/javascript" src="./js/coachRoutines.js"></script>
 <?php endif ?>
 

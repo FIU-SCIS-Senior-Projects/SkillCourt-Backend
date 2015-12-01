@@ -1,4 +1,9 @@
 <?php 
+	//Load required models when needed. 
+	spl_autoload_register(function ($class) {
+		require_once ('models/' . $class . '.php');
+	});
+
 
 	function call($controller, $action)
 	{
@@ -9,8 +14,10 @@
 				$controller = new PagesController();
 				break;
 			case 'players':
-				require_once('models/player.php');
 				$controller = new PlayersController();
+				break;
+			case 'routines':
+				$controller = new RoutinesController();
 				break;
 		}
 
@@ -18,8 +25,9 @@
 	}
 
 	//Lets write the possible controllers and actions for the player section
-	$controllers = array('pages'   => ['home', 'error'],
-						 'players' => ['index', 'recruit', 'signed']);
+	$controllers = array('pages'   => ['home', 'error', 'routinesHome'],
+						 'players' => ['index', 'recruit', 'signed'],
+						 'routines'=> ['showRoutines']);
 
 	if(array_key_exists($controller, $controllers))
 	{

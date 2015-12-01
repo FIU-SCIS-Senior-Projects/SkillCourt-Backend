@@ -16,6 +16,11 @@
     {
       require_once('view/pages/error.php');
     } 
+
+    public function routinesHome()
+    {
+      require_once('view/pages/routinesHome.php');
+    }
   }
 
 ?>

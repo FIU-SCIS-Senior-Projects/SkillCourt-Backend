@@ -6,34 +6,75 @@ use Parse\ParseQuery ;
 use Parse\ParseException ;
 $currentUser = ParseUser::getCurrentUser() ;
 
-$i = $_POST["i"] ;
-$routine ;
+// $i = $_POST["i"] ;
+// $routine ;
+// if($i < count($_SESSION["coachRoutines"]))
+// {
+// 	$routine = $_SESSION["coachRoutines"][$i] ;
+// }
+// else
+// {
+// 	$i = $i - count($_SESSION["coachRoutines"]);
+// 	$routine = $_SESSION["defaultRoutines"][$i] ;
+// }
+$routineId = $_POST['routineId'];
+$routineType = $_POST['routineType'];
+$routine = getRoutineObject($routineId, $routineType);
 
-if($i < count($_SESSION["coachRoutines"]))
-{
-	$routine = $_SESSION["coachRoutines"][$i] ;
+if(isset($_POST['assign'])){ 
+	$userSelected = $_POST['userSelected'];
+	assign($currentUser, $routine, $userSelected) ; 
+}else if(isset($_POST['unassign'])){ 
+	$userSelected = $_POST['userSelected'];
+	unassign($routine, $routineType, $userSelected, $currentUser) ;
+}else if(isset($_POST['delete'])){ 
+	delete($currentUser, $routine, $routineType) ;
+}else if(isset($_POST['edit'])){ 
+	edit($currentUser, $routine, $routineType) ; 
 }
-else
-{
-	$i = $i - count($_SESSION["coachRoutines"]);
-	$routine = $_SESSION["defaultRoutines"][$i] ;
+
+
+function getRoutineObject($routineId, $routineType)
+{	
+	// This will return the routine selected's information
+	$routineObject = getRoutinesById($routineId, $routineType);
+	return $routineObject[0];
 }
 
-if(isset($_POST['assign'])) assign($currentUser, $routine) ;
-else if(isset($_POST['unassign'])) unassign($routine) ;
-else if(isset($_POST['delete'])) delete($currentUser, $routine) ;
-else if(isset($_POST['edit'])) edit($currentUser, $routine) ;
+function getRoutinesById($id, $type)
+{
+	$returnRoutines;
+	if($type == 'default'){
+		$returnRoutines = queryRoutines($id, 'DefaultRoutine');
+	}else if($type == 'custom'){
+		$returnRoutines = queryRoutines($id, 'CustomRoutine');
+	}
+	return $returnRoutines;
+}
 
-function edit($currentUser, $routine){
+function queryRoutines($id, $type)
+{
+	$query = new ParseQuery($type);
+	$query->get($id);
+	return $query->find();
+}
+
+
+/*
+* Major Functions. Edit, Assign, Unassign, Delete. 
+*/
+function edit($currentUser, $routine, $type){
 	$command = $routine->get("command") ;
-	$firstChar = substr($command, 0 , 1) ;
-	$name = ($firstChar == 'U') ? "custom" : "default" ;
+	$name = $type;
 	
 	echo $name.'='.$command.'&routine='.$routine->getObjectId() ;
 }
 
-function delete($currentUser, $routine){
+function delete($currentUser, $routine, $type){
+	//Delete the routine!
 	$command = $routine->get("command") ;
+	($type == 'default') ? $query = new ParseQuery("DefaultRoutine") : $query = new ParseQuery("CustomRoutine");
+
 	$firstChar = substr($command, 0 , 1) ;
 	$type = ($firstChar == 'U') ? "Custom" : "Default" ;
 	if($type == "Custom") $query = new ParseQuery("CustomRoutine");
@@ -43,21 +84,41 @@ function delete($currentUser, $routine){
 	$query->equalTo("creator", $currentUser) ;
 	//$routineId = $routine->getObjectId() ;
 	//$query->equalTo("objectId", $routineId) ;
-	$obj = $query->first() ;
+	$obj = $query->first();
 	try {
 		$obj->destroy() ;
-		$i = $_POST["i"] ;
+		echo "true";
+	} catch (ParseException $ex) {  
+		// Execute any logic that should take place if the save fails.
+		// error is a ParseException object with an error code and message.
+		echo 'Failed to delete, with error message: ' . $ex->getMessage();
+	}
+}
 
-		if($i < count($_SESSION["coachRoutines"]))
-		{
-			unset($_SESSION["coachRoutines"][$i]) ;
-			$_SESSION["coachRoutines"] = array_values($_SESSION["coachRoutines"]) ;
+function unassign($routine, $type, $playerId, $curUser)
+{
+	//delete selected player from routine selected. 
+	$query = new ParseQuery("AssignedRoutines");
+	$players = $_SESSION['allPlayers'];
+
+	$isPlayer = false;
+	$userObjectId;
+
+	for ($i=0; !$isPlayer && $i < count($players); $i++) { 
+		if($players[$i]->getObjectId() == $playerId){
+			$userObjectId = $players[$i];
+			$isPlayer = true;
 		}
-		else
-		{	
-			unset($_SESSION["defaultRoutines"][$i]) ;
-			$_SESSION["defaultRoutines"] = array_values($_SESSION["defaultRoutines"]) ;
-		}
+	}
+
+	$query->equalTo("assignedBy", $curUser);
+	($type == 'default') ? $query->equalTo("defaultRoutine", $routine) : $query->equalTo("customRoutine", $routine);
+	$query->equalTo("user", $userObjectId);
+	//Here we will have the object to be deleted. 
+	$results = $query->find();
+	try {
+		$results[0]->destroy() ;
+		echo "true";
 	} catch (ParseException $ex) {  
 		// Execute any logic that should take place if the save fails.
 		// error is a ParseException object with an error code and message.
@@ -65,61 +126,11 @@ function delete($currentUser, $routine){
 	}
 }
 
-function unassign($routine)
+function assign($currentUser, $routine, $playerId)
 {
-	$command = $routine->get("command") ;
-	$firstChar = substr($command, 0 , 1) ;
-	$type = ($firstChar == 'U') ? "Custom" : "Default" ;
-	
-	$selectedOption = $_POST["unassign"] ;
-	for($j = 0 ; $j < count($_SESSION["myPlayers"]) ; $j++)
-	{
-		$playerLink = $_SESSION["myPlayers"][$j] ;
-		$player = $playerLink->get("player") ;
-		$playerId = $player->getObjectId() ;
-		if($playerId == $selectedOption) 
-		{
-			$query = new ParseQuery("AssignedRoutines");
-			$query->equalTo("user", $player);
-			if($type == "Custom") $query->equalTo("customRoutine" , $routine);
-			else $query->equalTo("defaultRoutine" , $routine);
-			$results = $query->find();
-			//echo count($results) ;
-			for($r = 0 ; $r < count($results) ; $r++)
-			{
-				$obj = $results[$r] ;
-				for($k = 0 ; $k < count($_SESSION["assignedRoutines"]) ; $k++)
-				{
-					$link = $_SESSION["assignedRoutines"][$k] ;
-					$linkId = $link->getObjectId() ;
-					$objId = $obj->getObjectId() ;
-					if($linkId == $objId) 
-					{
-						unset($_SESSION["assignedRoutines"][$k]);
-						$_SESSION["assignedRoutines"] = array_values($_SESSION["assignedRoutines"]) ;
-					}
-				}
-				try {
-					$obj->destroy() ;
-					echo $playerId ;
-				} catch (ParseException $ex) {  
-					// Execute any logic that should take place if the save fails.
-					// error is a ParseException object with an error code and message.
-					echo 'Failed to create new object, with error message: ' . $ex->getMessage();
-				}
-			}
-			continue ;
-		}
-	}
-}
-
-function assign($currentUser, $routine)
-{
-	foreach ($_POST['assign'] as $selectedOption)
-	{
 		$link = new ParseObject("AssignedRoutines");
 		$link->set("assignedBy", $currentUser);
-		
+
 		$command = $routine->get("command") ;
 		$firstChar = substr($command, 0 , 1) ;
 		$type = ($firstChar == 'U') ? "Custom" : "Default" ;
@@ -128,31 +139,29 @@ function assign($currentUser, $routine)
 		$link->set("customRoutine", ($type == "Custom") ? $routine : null);
 		$link->set("defaultRoutine", ($type == "Default") ? $routine : null);
 		
-		
-		for($j = 0 ; $j < count($_SESSION["myPlayers"]) ; $j++)
-		{
-			$playerLink = $_SESSION["myPlayers"][$j] ;
-			$player = $playerLink->get("player") ;
-			$playerId = $player->getObjectId() ;
-			
-			if($playerId == $selectedOption)
-			{
-				$link->set("user", $player);	 
-				echo '<option value="'.$playerId.'">' ;
-				echo $playerLink->get("playerUsername") ;
-				echo'</option>' ;
-				continue ;
+
+		$players = $_SESSION['allPlayers'];
+
+		$userObjectId;
+		$isPlayer = false;
+		for ($i=0; !$isPlayer &&$i < count($players); $i++) { 
+			if($players[$i]->getObjectId() == $playerId){
+				$userObjectId = $players[$i];
+				$isPlayer = true;
 			}
 		}
 
+		$link->set("user", $userObjectId);
+
 		try {
 			$link->save();
-			array_push($_SESSION["assignedRoutines"] , $link);
+			echo 'true';
+			// array_push($_SESSION["assignedRoutines"] , $link);
 		} catch (ParseException $ex) {  
 			// Execute any logic that should take place if the save fails.
 			// error is a ParseException object with an error code and message.
 			echo 'Failed to create new object, with error message: ' . $ex->getMessage();
 		}
-	}
 }
+
 ?>
