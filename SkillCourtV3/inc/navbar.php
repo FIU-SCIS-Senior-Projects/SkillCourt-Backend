@@ -40,7 +40,7 @@
             <ul class="nav navbar-nav navbar-left">
                 <li id="aboutli"<?php echo (isset($_GET["show"]) && $_GET["show"] == "about") ? 'class=active' : ''; ?>><a id="about" href="index.php?show=about">About</a></li>
                 <?php if(!$userNotLogged) : ?>
-                    <li id="helpli" <?php echo (isset($_GET["show"]) && $_GET["show"] == "help") ? 'class=active' : ''; ?>><a id="help" href="javascript:void(0);" onclick="javascript:introJs().setOption('showProgress', true).start();">Help</a></li>
+                    <li id="helpli"><a id="help" href="javascript:void(0);" onclick="javascript:introJs().setOption('showProgress', true).start();">Help</a></li>
                 <?php endif ?>
             </ul>
             <?php if($userNotLogged) : ?>
