@@ -15,15 +15,18 @@ use Parse\ParseQuery;
 	    $routineType = $_POST['type'];
 	    getPlayers($routineId, $routineType);
 
+	    // Get this coaches players - signed players and display them. 
+		if(!isset($_SESSION['allPlayers'])){
+			$myPlayers = getPlayersSignedByCoach();
+			$allPlayers = searchPlayer('default', 'coach');
+
+			$results = getUserObject($allPlayers, $myPlayers);
+			$_SESSION['allPlayers'] = $results;
+		}
+
 	}else if(isset($_GET["assign"]))
 	{
-		// Get this coaches players - signed players and display them. 
-		$myPlayers = getPlayersSignedByCoach();
-		$allPlayers = searchPlayer('default', 'coach');
-
-		$results = getUserObject($allPlayers, $myPlayers);
-		$_SESSION['allPlayers'] = $results;
-
+		$results = $_SESSION['allPlayers'];
 		for($p = 0 ; $p < count($results) ; $p++)
 		{
 			$playerObject = $results[$p];
@@ -138,7 +141,7 @@ use Parse\ParseQuery;
 	{	
 		// This will return the routine selected's information
 		$routineObject = getRoutinesById($routineId, $routineType);
-		return $routineObject[0];
+		return $routineObject;
 	}
 
 	function getRoutinesById($id, $type)
@@ -154,9 +157,12 @@ use Parse\ParseQuery;
 
 	function queryRoutines($id, $type)
 	{
-		$query = new ParseQuery($type);
-		$query->get($id);
-		return $query->find();
+		$query = $_SESSION[$type];
+		foreach ($query as $routine) {
+			if($routine->getObjectId() == $id){
+				return $routine;
+			}
+		}
 	}
 
 	//Not being used. 

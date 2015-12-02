@@ -79,10 +79,13 @@ void setup()
   prevY = 0 ;
   isPlaying = false ;
   startCountdownTime = 0 ;
+
+  mouseCursor = loadImage("./img/soccerball.gif");
 }
 
 void draw()
 {
+    cursor(mouseCursor, 0, 0);
     if (isReadyToPlay)                                                        
     { 
       if (countdown() && !isPlaying)

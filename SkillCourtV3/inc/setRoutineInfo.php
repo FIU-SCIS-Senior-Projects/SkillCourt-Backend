@@ -23,7 +23,7 @@ $routine = getRoutineObject($routineId, $routineType);
 
 if(isset($_POST['assign'])){ 
 	$userSelected = $_POST['userSelected'];
-	assign($currentUser, $routine, $userSelected) ; 
+	assign($currentUser, $routine, $routineType, $userSelected) ; 
 }else if(isset($_POST['unassign'])){ 
 	$userSelected = $_POST['userSelected'];
 	unassign($routine, $routineType, $userSelected, $currentUser) ;
@@ -117,8 +117,35 @@ function unassign($routine, $type, $playerId, $curUser)
 	//Here we will have the object to be deleted. 
 	$results = $query->find();
 	try {
-		$results[0]->destroy() ;
+		$results[0]->destroy();
 		echo "true";
+		if ($type == 'default') {
+			$defaultPls = $_SESSION['playersDefault'][$routine->getObjectId()];
+			$isPlayer = false;
+			for ($i=0; !$isPlayer && $i < count($defaultPls); $i++) { 
+				if($defaultPls[$i] == $userObjectId){
+					//This is the position of the user we need to unset from our array
+					unset($defaultPls[$i]);
+					//Rearrange the array
+					$defaultPls = array_values($defaultPls);
+					$isPlayer = true;
+				}
+			}
+			$_SESSION['playersDefault'][$routine->getObjectId()] = $defaultPls;
+		} else {
+			$customPls = $_SESSION['playersCustom'][$routine->getObjectId()];
+			$isPlayer = false;
+			for ($i=0; !$isPlayer && $i < count($customPls); $i++) { 
+				if($customPls[$i] == $userObjectId){
+					//This is the position of the user we need to unset from our array
+					unset($customPls[$i]);
+					//Rearrange the array
+					$customPls = array_values($customPls);
+					$isPlayer = true;
+				}
+			}
+			$_SESSION['playersCustom'][$routine->getObjectId()] = $customPls;
+		}
 	} catch (ParseException $ex) {  
 		// Execute any logic that should take place if the save fails.
 		// error is a ParseException object with an error code and message.
@@ -126,7 +153,7 @@ function unassign($routine, $type, $playerId, $curUser)
 	}
 }
 
-function assign($currentUser, $routine, $playerId)
+function assign($currentUser, $routine, $routType, $playerId)
 {
 		$link = new ParseObject("AssignedRoutines");
 		$link->set("assignedBy", $currentUser);
@@ -144,7 +171,7 @@ function assign($currentUser, $routine, $playerId)
 
 		$userObjectId;
 		$isPlayer = false;
-		for ($i=0; !$isPlayer &&$i < count($players); $i++) { 
+		for ($i=0; !$isPlayer && $i < count($players); $i++) { 
 			if($players[$i]->getObjectId() == $playerId){
 				$userObjectId = $players[$i];
 				$isPlayer = true;
@@ -156,7 +183,8 @@ function assign($currentUser, $routine, $playerId)
 		try {
 			$link->save();
 			echo 'true';
-			// array_push($_SESSION["assignedRoutines"] , $link);
+			// If succesful go ahead and push this new player to our session variable
+			($routType == 'default') ? array_push($_SESSION['playersDefault'][$routine->getObjectId()], $userObjectId) : array_push($_SESSION['playersCustom'][$routine->getObjectId()], $userObjectId);
 		} catch (ParseException $ex) {  
 			// Execute any logic that should take place if the save fails.
 			// error is a ParseException object with an error code and message.

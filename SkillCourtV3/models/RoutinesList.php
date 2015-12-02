@@ -172,7 +172,7 @@ class RoutinesList
 		$query = new ParseQuery('CustomRoutine');
 		$query->equalTo('creator', $currentUserIndex);
 		$customRoutines = $query->find();
-		// $_SESSION["coachRoutines"] = $customRoutines;
+		$_SESSION["CustomRoutine"] = $customRoutines;
 		return $customRoutines;
 	}
 
@@ -182,7 +182,7 @@ class RoutinesList
 		$query = new ParseQuery('DefaultRoutine');
 		$query->equalTo('creator', $currentUserIndex);
 		$defaultRoutines = $query->find();
-		// $_SESSION["defaultRoutines"] = $defaultRoutines;
+		$_SESSION["DefaultRoutine"] = $defaultRoutines;
 		return $defaultRoutines;
 	}
 

@@ -1,13 +1,14 @@
 Parse.initialize("pBeFT0fHxcLjMnxwQaiJpb6Ul5HQqayb96X2UHAF", "JO3sLj47GgaQXiX1zbdHhim5YbpbgiYy3JhYpx9w");
 
-var currentCommand ;
+// var currentCommand ;
 
-	$(".scroll button").click(function(){
-		$(".scroll button[value='"+ currentCommand+"']").css("background-color","black") ;
-		$(this).css("background-color","orange") ;
-		currentCommand = $(this).val() ;
-	});
+// 	$(".scroll button").click(function(){
+// 		$(".scroll button[value='"+ currentCommand+"']").css("background-color","black") ;
+// 		$(this).css("background-color","orange") ;
+// 		currentCommand = $(this).val() ;
+// 	});
 
+//Not being used. 
 function fetchPlayers(callback)
 {
 	var players;
@@ -25,6 +26,7 @@ function fetchPlayers(callback)
 		}
     });
 }
+//Not being used
 function getPlayer(id, callback)
 {
 	var player;
@@ -32,18 +34,6 @@ function getPlayer(id, callback)
 	player = object.get('playerUsername');
 	callback(player);
 }
-// fetchPlayers(function(players,id){
-// 	for(var i =0; i < id; i++)
-// 	{
-// 		getPlayer(players[i], function(username){
-// 			$("#assignPlayersSelect").append('<option value=' + players[i] + '>' + username + '</option>');
-// 		});
-// 	}
-// });
-// $("#playerSelect option").each(function(){
-// 	var thisVal = $(this).val() ;
-// 	$("#assignPlayersSelect [value='"+thisVal+"']").remove();
-// });
 
 $(document).on('ready', function(){
 	//whenever a routine is selected
@@ -59,32 +49,34 @@ $(document).on('ready', function(){
 		//slides in info block
 		$("#assignColumn").fadeIn(); 
 		//gets info for selected routines
-			var selectValue = $("#routineSelect").val();
-			var value = JSON.parse( selectValue );
-		    var id = value['id'];
-		    var type = value['type'];
-		    
-			var ajaxurl = './inc/routineInfo.php';
-			data = {'id'   : id,
-					'type' : type};
-			$.post(
-					ajaxurl,
-					data,
-					function(data, status){
-						console.log(data);
-						$("#playerSelect").remove();
-						$('#routineDescription').remove();
-						$("#description").remove() ;
-						$("#playerSelectPar").after(data) ;
-						
-						var length = $('#playerSelect').children('option').length;
-						if(length == 0) { enableDelete() ;} //disabbleUnassign() ; }
-						else { disableDelete() ; }//enableUnassign() ; }
-					});
+			getRoutines();
 	});
-                  
-    //in case submitPlayerForm Button is clicked          
-                  
+
+	function getRoutines(){
+		var selectValue = $("#routineSelect").val();
+		var value = JSON.parse( selectValue );
+	    var id = value['id'];
+	    var type = value['type'];
+	    
+		var ajaxurl = './inc/routineInfo.php';
+		data = {'id'   : id,
+				'type' : type};
+		$.post(
+				ajaxurl,
+				data,
+				function(data, status){
+					console.log(data);
+					$("#playerSelect").remove();
+					$('#routineDescription').remove();
+					$("#description").remove() ;
+					$("#playerSelectPar").after(data) ;
+					
+					var length = $('#playerSelect').children('option').length;
+					if(length == 0) { enableDelete() ;} //disabbleUnassign() ; }
+					else { disableDelete() ; }//enableUnassign() ; }
+				});
+	}
+                         
 	//in case the ASSIGN button is clicked - this triggers the modal 
 	$('#assignModal').on('show.bs.modal', function(event)
 	{
@@ -128,10 +120,10 @@ $(document).on('ready', function(){
 	});
 
 	function closeModalAssign(data){
-		if(data){
+		if(data == 'true'){
 			//Close modal
 			$('#assignModal').modal('hide');
-			location.reload();
+			getRoutines();
 		}
 	}
 	
@@ -178,11 +170,10 @@ $(document).on('ready', function(){
 		});
 	});
 	function closeModalunAssign(data){
-		if(data){
+		if(data == 'true'){
 			//Close modal
 			$('#unassignModal').modal('hide');
-			// refresh or reload the users
-			location.reload();
+			getRoutines();
 		}
 	}
 

@@ -73,6 +73,8 @@ void setup()
   newRoom = new Room() ;
   myWizard = new Wizard(newRoom) ;
 
+  mouseCursor = loadImage("./img/soccerball.gif");
+
   //testing
   frameRate(10) ;
 }
@@ -82,6 +84,7 @@ void draw()
   background(0, 0, 0, 90);   //window bg color
   if(!myWizard.isFinished()) newRoom.drawRoom() ;
   //else might want to do something when routine is finished
+  cursor(mouseCursor, 0, 0);
 }
 
 void mousePressed()
