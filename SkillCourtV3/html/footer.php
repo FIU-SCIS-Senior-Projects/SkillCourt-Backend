@@ -39,7 +39,13 @@
         });
         
 
+
+        $(window).load(function() {
+            $('body').addClass('loaded');
+        });
+
         $(document).ready(function(){
+
             var max_fields = 5;
             var wrapper = $(".input_fields_wrap");
             var add_button = $(".add_field_button");
@@ -164,8 +170,6 @@
             
 
     </script>
-
-
       
 </body>
 </html>

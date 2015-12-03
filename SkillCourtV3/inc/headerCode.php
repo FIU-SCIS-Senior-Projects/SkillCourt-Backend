@@ -5,6 +5,24 @@
 <meta name="description" content="Soccer Training - SkillCourt">
 <meta name="author" content="Will Rodriguez, Sergio Saucedo">
 
+<!-- Bootstrap Core CSS -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+<!-- Custom CSS -->
+<link href="./css/skillcourt.css" rel="stylesheet" type="text/css">
+<link href="./css/sticky.css" rel="stylesheet" type="text/css">
+<link href="./css/wizard.css" rel="stylesheet" type="text/css">
+<link href="./css/main.css" rel="stylesheet" type="text/css">
+
+<!-- Custom Fonts -->
+<link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<!-- bxSlider CSS file -->
+<link href="./css/jquery.bxslider.css" rel="stylesheet" />
+
+<!-- intro.js CSS file -->
+<link href="./js/intro.js/introjs.css" rel="stylesheet" type="text/css">
+
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -43,28 +61,12 @@
 <script type="text/javascript" src="./js/simulatorPlay.js"></script>
 <?php endif ?>
 
-<!-- Bootstrap Core CSS -->
-<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
-<!-- Custom CSS -->
-<link href="./css/skillcourt.css" rel="stylesheet" type="text/css">
-<link href="./css/sticky.css" rel="stylesheet" type="text/css">
-<link href="./css/wizard.css" rel="stylesheet" type="text/css">
-
-<!-- Custom Fonts -->
-<link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
 <!-- Custom Javascript for Interactive Summary Table -->
 <script type="text/javascript" src="./js/jquery.cycle.all.2.74.js"></script>
 <script type="text/javascript" src="./js/globalScripts.js"></script>
 
 <!-- bxSlider Javascript file -->
 <script src="./js/jquery.bxslider/jquery.bxslider.min.js"></script>
-<!-- bxSlider CSS file -->
-<link href="./css/jquery.bxslider.css" rel="stylesheet" />
-
-<!-- intro.js CSS file -->
-<link href="./js/intro.js/introjs.css" rel="stylesheet" type="text/css">
 
 <!-- intro.js Javascript file -->
 <script src="./js/intro.js/intro.js"></script>

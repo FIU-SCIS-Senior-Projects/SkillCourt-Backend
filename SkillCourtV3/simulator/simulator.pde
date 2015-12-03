@@ -85,7 +85,6 @@ void setup()
 
 void draw()
 {
-    cursor(mouseCursor, 0, 0);
     if (isReadyToPlay)                                                        
     { 
       if (countdown() && !isPlaying)
@@ -113,6 +112,7 @@ void draw()
       else if(isPlaying)
       {  
         setupDisplay() ;   
+        cursor(mouseCursor, 0, 0);
         //newRoom.drawRoom();  
         if (!myMasterGame.areGamesOver()) newRoom.drawRoom();
         else 
