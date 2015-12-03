@@ -35,7 +35,7 @@
 			<form>
 				<div class="form-group">
 					<label for="nameCustomWizard" class="whiteHeaders">Give your routine a Name! </label>
-					<input type="text" class="form-control input-sm defaultInputs" id="getName" placeholder="Routine Name" required>
+					<input type="text" class="form-control input-sm defaultInputs" id="getName" placeholder="Routine Name" maxlength="15" required>
 				</div>
 				<div class="form-group">
 					<label for="nameCustomWizard" class="whiteHeaders">Describe your new Custom Routine: </label>
@@ -144,7 +144,7 @@
 								<form class="form-inline">
 									<div class="form-group">
 										<label for="nameDefaultWizard" class="whiteHeaders">Name: </label>
-										<input type="text" class="form-control input-sm defaultInputs" id="defaultName" placeholder="Routine Name">
+										<input type="text" class="form-control input-sm defaultInputs mainText" id="defaultName" placeholder="Routine Name" maxlength="15" required>
 									</div>
 								</form>
 							</div>
@@ -153,7 +153,7 @@
 								<form class="form-inline">
 									<div class="form-group">
 										<label for="nameDefaultWizard" class="whiteHeaders">Routine: </label>
-										<select class="form-control input-sm defaultInputs" id="routineSelect">
+										<select class="form-control input-sm defaultInputs mainText" id="routineSelect">
 											<option value="" selected="true"></option>
 											<option value="t">Three Wall Chase</option>
 											<option value="c">Chase</option>
@@ -171,16 +171,16 @@
 								<form class="form-inline">
 									<div class="form-group">
 										<label for="nameDefaultWizard" class="whiteHeaders">Play By: </label>
-										<select class="form-control input-sm defaultInputs" id="playByType">
+										<select class="form-control input-sm defaultInputs mainText" id="playByType">
 											<option value="time" selected="true">Time (minutes)</option>
 											<option value="rounds">Rounds</option>
 										</select>	
-										<input class="form-control input-sm defaultInputs" type="number" id="playByTypeInput" min="1" max="30" value="1">
+										<input class="form-control input-sm defaultInputs mainText" type="number" id="playByTypeInput" min="1" max="30" value="1">
 									</div>
 								</form>
 							</div>
 
-							<div class="col-xs-8 col-xs-offset-3" id="difficultyRadio">
+							<div class="col-xs-8 col-xs-offset-3 mainText" id="difficultyRadio">
 								<label for="difficulty" class="whiteHeaders">Difficulty</label>
 								<div class="radio">
 									<label>
@@ -202,7 +202,7 @@
 								</div>							
 							</div>
 
-							<div class="col-xs-8 col-xs-offset-3">
+							<div class="col-xs-8 col-xs-offset-3 mainText">
 								<div id="timedRoundsCheckbox">
 									<label class="checkbox-inline">
 										<input type="checkbox" value="">
@@ -211,10 +211,10 @@
 								</div>
 							</div>
 
-							<div class="col-xs-8 col-xs-offset-3">
+							<div class="col-xs-8 col-xs-offset-3 mainText">
 								<form class="form-inline">
 									<div class="form-group" id="timedRoundInput">
-										<input class="form-control input-sm defaultInputs" id="actualTimedRoundInput" type="number" min="1" max="30">
+										<input class="form-control input-sm defaultInputs mainText" id="actualTimedRoundInput" type="number" min="1" max="30">
 										Seconds per Round
 									</div>
 								</form>
@@ -224,7 +224,7 @@
 								<form class="form-inline">
 									<div class="form-group">
 										<label for="nameDefaultWizard" class="whiteHeaders">Remove Wall: </label>
-										<select class="form-control input-sm defaultInputs" id="removeWallSelect">
+										<select class="form-control input-sm defaultInputs mainText" id="removeWallSelect">
 											<option value="0" selected="true">-None-</option>
 											<option value="1">North</option>
 											<option value="2">East</option>
