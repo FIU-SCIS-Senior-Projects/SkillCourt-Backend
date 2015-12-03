@@ -18,14 +18,6 @@
 
 ?>
 
-<div id="loader-wrapper">
-	<div id="loader"></div>
-
-	<div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-
-</div>
-
 <div class="container leContainer">
 	<!-- Tabs for two sections.  -->
 	<!-- Section one: Explanation of what you can do in this page (Players) -->
