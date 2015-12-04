@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	$("#FinishDefaultEdit").click(function(){
 		if(validateDefault())
 		{
@@ -28,15 +29,16 @@ $(document).ready(function(){
 		console.log(type) ;
 		if(type != "Custom") {	
 			$(this).find("span").text("Custom") ;
-			$("#Simulator").fadeOut() ;
+			$("#Simulator").fadeOut('slow',function(){
+				$("#WizardOptions").hide();
+				//We are going to default. Move the wrapper to the middle. 
+				$('#divWizardWrapper').removeClass(customClass);
+				$('#divWizardWrapper').addClass(defaultClass);
+				$("#DefaultOptions").show();
+			});
 			// $("#WizardOptionsWrapper").animate({
 			// 		left: '450px'
 			// },"slow");
-			$("#WizardOptions").hide();
-			//We are going to default. Move the wrapper to the middle. 
-			$('#divWizardWrapper').removeClass(customClass);
-			$('#divWizardWrapper').addClass(defaultClass);
-			$("#DefaultOptions").show();
 		}
 		else {
 			//We are going back to custom. Change the position of the column. 

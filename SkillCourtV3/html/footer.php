@@ -40,6 +40,13 @@
         
         $(window).load(function() {
             $('body').addClass('loaded');
+            
+            if($('#DefaultOptions').is(':visible')){
+                var customClass = 'col-lg-6';
+                var defaultClass = 'col-lg-6 col-lg-offset-3';
+                $('#divWizardWrapper').removeClass(customClass);
+                $('#divWizardWrapper').addClass(defaultClass);
+            }
         });
 
         $(document).ready(function(){
