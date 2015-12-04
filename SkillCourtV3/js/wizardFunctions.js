@@ -209,8 +209,9 @@ function finishRoutine(){
 	{
 		var command = processingInstance.command() ;
 		console.log(command) ;
-		$("#simulatorColumn").fadeOut();
-		$("#optionsColumn").fadeOut();
+		$("#Simulator").fadeOut();
+		$("#WizardOptions").fadeOut();
+		$("#switchWrapper").fadeOut();
 		$("#GetNameDescription").fadeIn() ;
 		$("#FullFinishRoutine").val(command);
 	}
@@ -218,6 +219,7 @@ function finishRoutine(){
 		document.getElementById("Warning").innerHTML = routineWarning ;
 }
 
+// This is the finish editing of a custom routine 
 function finishEdit(){
 	if(processingInstance.finishRoutine()) 
 	{
@@ -226,7 +228,7 @@ function finishEdit(){
 		var toSend = "editCustom=" + command ;
 		toSend += "&routineId=" + routineId ;
 		$.post("./customWizard/createRoutine.php", toSend, function(data,status){
-			window.location.assign('./index.php?show=routinesCoach');	
+			window.location.assign('./index.php?show=routinesCoach&controller=routines&action=showRoutines');	
 		});
 	}
 	else
@@ -244,9 +246,9 @@ function defaultLock() {
 		},501);;
 		
 		$("#Simulator").fadeOut() ;
-		$("#WizardOptionsWrapper").animate({
-				left: '450px'
-		},"slow");
+		// $("#WizardOptionsWrapper").animate({
+		// 		left: '450px'
+		// },"slow");
 		$("#WizardOptions").hide();
 		$("#DefaultOptions").show();
 		fillInOptions() ;
@@ -254,13 +256,13 @@ function defaultLock() {
 }
 //------------------------FINISH ROUTINE---------------------------
 
-$(document).on('ready', function(){
-	$("#FullFinishRoutine").on('click', function(){
+$(document).ready(function(){
+	$("#FullFinishRoutine").click(function(){
 		var description = $("#getDescription").val();
 		var name = $("#getName").val();
 		if(name.length < 1 || description.length < 1)
 		{
-			console.log("Routine Failed");
+			alert("Your Routine must have a name and description");
 		}
 		else
 		{
@@ -269,16 +271,10 @@ $(document).on('ready', function(){
 			var toSend = "newCustom=" + command ;
 			toSend += "&name=" + name ;
 			toSend += "&description=" + description ;
-			var posting = $.post("./customWizard/createRoutine.php", toSend);
-			posting.done(function(data){
-				console.log(data);
+			$.post("./customWizard/createRoutine.php", toSend, function(data,status){
+				//console.log(data) ;
 				window.location.assign('./index.php?show=routinesCoach');
 			});
 		}
-	});
-
-	$('#cancelRoutine').on('click', function(){
-		window.location.assign('./index.php?show=wizard');
-		return false;
 	});
 });

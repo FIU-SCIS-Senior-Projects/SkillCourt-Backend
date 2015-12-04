@@ -7,7 +7,7 @@ $(document).ready(function(){
 			toSend += "&routineId="+routineId ;
 			$.post("./customWizard/createRoutine.php", toSend, function(data,status){
 				console.log(data) ;
-				window.location.assign('./view/routinesCoach.php');
+				window.location.assign('./index.php?show=routinesCoach&controller=routines&action=showRoutines');
 			});
 		}
 	});
@@ -17,56 +17,40 @@ $(document).ready(function(){
 			console.log("valid");
 			$.post("./customWizard/createRoutine.php", "newDefault="+prepareMessage(), function(data,status){
 				console.log(data) ;
-				window.location.assign('./index.php?show=routinesCoach');
+				window.location.assign('./index.php?show=routinesCoach&controller=routines&action=showRoutines');
 			});
 		}
 	});
-	$("#wizardTab a").click(function(){
-		var type = $(this).attr('id');
-		var defaultClass = "col-lg-6 wizardCol";
-		var centerOptionsCol = "col-lg-6 col-lg-offset-6 wizardCol";
-		if(type != 'acustomopt')
-		{
-			$("#Simulator").fadeOut();		
-			$('#optionsColumn').css('left', 'auto');	
-			$("#optionsColumn").animate({
-					right: '300px'
-			},"slow");
-			
+	$("#switchWrapper button").click(function(){
+		var type = $(this).find("span").text() ;
+		var customClass = 'col-lg-6'
+		var defaultClass = 'col-lg-6 col-lg-offset-3';
+		console.log(type) ;
+		if(type != "Custom") {	
+			$(this).find("span").text("Custom") ;
+			$("#Simulator").fadeOut() ;
+			// $("#WizardOptionsWrapper").animate({
+			// 		left: '450px'
+			// },"slow");
+			$("#WizardOptions").hide();
+			//We are going to default. Move the wrapper to the middle. 
+			$('#divWizardWrapper').removeClass(customClass);
+			$('#divWizardWrapper').addClass(defaultClass);
+			$("#DefaultOptions").show();
 		}
-		else
-		{
-			$('#optionsColumn').css('right', 'auto');
-			$("#optionsColumn").animate({
-					left: '11px'
-			},"slow",
-			function(){
-				$("#Simulator").fadeIn();
-			});
+		else {
+			//We are going back to custom. Change the position of the column. 
+			$(this).find("span").text("Default") ;
+			$("#Simulator").fadeIn() ;
+			// $("#WizardOptionsWrapper").animate({
+			// 		left: '900px'
+			// });
+			$("#DefaultOptions").hide();
+			$('#divWizardWrapper').removeClass(defaultClass);
+			$('#divWizardWrapper').addClass(customClass);
+			$("#WizardOptions").show();
 		}
-		
 	});
-
-
-// if(type != "acustomopt") {	
-// 			$(this).find("span").text("Custom") ;
-// 			$("#Simulator").fadeOut() ;
-// 			$("#WizardOptionsWrapper").animate({
-// 					right: '450px'
-// 			},"slow");
-// 			$("#WizardOptions").hide();
-// 			$("#DefaultOptions").show();
-// 		}
-// 		else {
-// 			$(this).find("span").text("Default") ;
-// 			$("#Simulator").fadeIn() ;
-// 			$("#WizardOptionsWrapper").animate({
-// 					left: '5px'
-// 			});
-// 			$("#DefaultOptions").hide();
-// 			$("#WizardOptions").show();
-// 		}
-
 	$("#timedRoundsCheckbox input").click(function(){
 		$("#timedRoundInput").fadeToggle() ;
 	});

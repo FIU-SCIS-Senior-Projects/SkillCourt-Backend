@@ -9,6 +9,27 @@
 	margin: 0 ;
 }
 
+p#stepDescription {
+    border: 1px white solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#wizardPage ul{
+	/*remove the li */
+	list-style: none ;
+}
+
+#stepType{
+	width: auto !important;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.myul{
+	padding-right: 40px;
+}
+
 #sketch
 {
     position: relative ;
@@ -21,6 +42,8 @@
 	width: 80%;
 	margin-top: 40px;
 	padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .skillCourtPane
@@ -97,6 +120,8 @@
 	border-style: solid; 
 	border-width: 0px 0px 1px 0px; 
 	border-color: #80AD46;
+	width: auto !important;
+	margin: 0 0 0 5px !important;
 }
 
 #EditStep
