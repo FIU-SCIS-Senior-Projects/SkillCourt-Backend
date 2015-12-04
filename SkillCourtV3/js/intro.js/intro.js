@@ -57,7 +57,7 @@
       /* Show tour bullets? */
       showBullets: true,
       /* Show tour progress? */
-      showProgress: false,
+      showProgress: true,
       /* Scroll to highlighted element? */
       scrollToElement: true,
       /* Set the overlay opacity */
@@ -65,7 +65,7 @@
       /* Precedence of positions, when auto is enabled */
       positionPrecedence: ["bottom", "top", "right", "left"],
       /* Disable an interaction with element? */
-      disableInteraction: false
+      disableInteraction: true
     };
   }
 

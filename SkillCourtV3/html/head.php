@@ -18,11 +18,9 @@
         <div class="row">
             <div class="col-md-12">
                 <img class="img-responsive" src="./img/logo/bannerskillcourt.png" alt="">
-                <!-- <h1 class="text-center whiteHeaders" data-step="1" data-intro="Welcome to SkillCourt Simulator Tutorial">Welcome to SkillCourt </h1> -->
             </div>
         </div>
     </div>
-
     
     <!-- Social Media / Registration link  -->
     <div class="container" id="socialBanner"> 

@@ -39,8 +39,11 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li id="aboutli"<?php echo (isset($_GET["show"]) && $_GET["show"] == "about") ? 'class=active' : ''; ?>><a id="about" href="index.php?show=about">About</a></li>
-                <?php if(!$userNotLogged) : ?>
-                    <li id="helpli"><a id="help" href="javascript:void(0);" onclick="javascript:introJs().setOption('showProgress', true).start();">Help</a></li>
+                <?php if(!$userNotLogged && $_GET["show"] == "simulator") : ?>
+                    <li id="helpli"><a id="help" href="javascript:void(0);" onclick="simulatorguide.start();">Help</a></li>
+                <?php endif ?>
+                <?php if(!$userNotLogged && $_GET["show"] == "wizard") : ?>
+                    <li id="helpli"><a id="help" href="javascript:void(0);" onclick="wizardguide.start();">Help</a></li>
                 <?php endif ?>
             </ul>
             <?php if($userNotLogged) : ?>
@@ -132,3 +135,129 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+var simulatorguide = introJs();
+
+$(function SimulatorTutorial(){
+  // var startbtn   = $('#startdemotour');
+  
+  simulatorguide.setOptions({
+    steps: [
+    {
+      element: '#bannerImg',
+      intro: 'Welcome to SkillCourt Simulator Tutorial',
+      position: 'bottom'
+    },
+    {
+      element: '#SimSettings',
+      intro: 'The phone represents the settings for the simulator and provides the feedback once the game has started',
+      position: 'right'
+    },
+    {
+      element: '#leTabs',
+      intro: 'The DEFAULT option will show the pre-defined routines while CUSTOM the ones assigned by a coach',
+      position: 'top'
+    },
+    {
+      element: '#sStep4',
+      intro: 'When checked, this option allows the player to remove a wall from the simulator',
+      position: 'right'
+    },
+    {
+      element: '#sStep5',
+      intro: "List of pre-defined routines to simulate. Select your favorite or challenge yourself",
+      position: 'left'
+    },
+    {
+      element: '#difficultyRadioButton',
+      intro: "Sets the difficulty for the routine. An increase in difficulty makes the correct spot to click more specific",
+      position: 'right'
+    },
+    {
+      element: '#sStep7',
+      intro: "This option adds a time limit to each round narrowing the player's reaction time window",
+      position: 'left'
+    },
+    {
+      element: '#sStep8',
+      intro: "Total time for the routine simulation",
+      position: 'right'
+    },
+    {
+      element: '#sStep9',
+      intro: "Clicking PLAY! will start the simulator with routine and settings selected. Feedback is provided when simulation begins. Time to play!",
+      position: 'top'
+    }
+    ]
+
+  });
+});
+</script>
+
+<script type="text/javascript">
+
+var wizardguide = introJs();
+
+$(function wizardTutorial(){
+  // var startbtn   = $('#startdemotour');
+  
+  wizardguide.setOptions({
+    steps: [
+    {
+      element: '#bannerImg',
+      intro: 'Welcome to SkillCourt Wizard Tutorial',
+      position: 'bottom'
+    },
+    {
+      element: '#wizardTab',
+      intro: 'The CUSTOM option allows you to create your own routine, while DEFAULT option allows you to create a routine based on the pre-defined system routines',
+      position: 'left'
+    },
+    {
+      element: '#wStep3',
+      intro: 'This option allows you to base the routine between wall or ground targets',
+      position: 'right'
+    },
+    {
+      element: '#simulator',
+      intro: 'Select a group of pads to make up a target. Your pads must be adjacent and on the same wall. When the correct pads are selected, press the FINISH STEP button',
+      position: 'right'
+    },
+    {
+      element: '#wStep5',
+      intro: "Routines are made of rounds, which are made of steps. This allows for deep and endless customizations",
+      position: 'top'
+    },
+    {
+      element: '#wStep6',
+      intro: "(+) Adds a extra step to a round",
+      position: 'right'
+    },
+    {
+      element: '#wStep7',
+      intro: "(+) Adds a extra round to a routine",
+      position: 'left'
+    },
+    {
+      element: '#wStep8',
+      intro: "This options delete current step or round. You cannot delete your only step or round",
+      position: 'right'
+    },
+    {
+      element: '#FinishStep',
+      intro: "This option stores the pads selected in the simulator as a step",
+      position: 'top'
+    },
+    {
+      element: '#FinishRoutineButton',
+      intro: "This option saves the custom routine. Name and description will need to be provided afterwards. You are ready to start creating your own rotines!",
+      position: 'bottom'
+    }
+    ]
+
+  });
+});
+
+</script>
