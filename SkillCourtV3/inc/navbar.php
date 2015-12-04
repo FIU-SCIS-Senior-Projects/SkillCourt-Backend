@@ -211,12 +211,12 @@ $(function wizardTutorial(){
       position: 'bottom'
     },
     {
-      element: '#wizardTab',
-      intro: 'The CUSTOM option allows you to create your own routine, while DEFAULT option allows you to create a routine based on the pre-defined system routines',
+      element: '#routineSwitch',
+      intro: 'Switching to DEFAULT option allows you to create a routine based on the pre-defined system routines',
       position: 'left'
     },
     {
-      element: '#wStep3',
+      element: '#stepType',
       intro: 'This option allows you to base the routine between wall or ground targets',
       position: 'right'
     },
@@ -232,17 +232,17 @@ $(function wizardTutorial(){
     },
     {
       element: '#wStep6',
-      intro: "(+) Adds a extra step to a round",
+      intro: "(+) Adds an extra step to a round",
       position: 'right'
     },
     {
       element: '#wStep7',
-      intro: "(+) Adds a extra round to a routine",
+      intro: "(+) Adds an extra round to a routine",
       position: 'left'
     },
     {
       element: '#wStep8',
-      intro: "This options delete current step or round. You cannot delete your only step or round",
+      intro: "These options delete current step or round. You cannot delete your only step or round",
       position: 'right'
     },
     {
@@ -253,7 +253,7 @@ $(function wizardTutorial(){
     {
       element: '#FinishRoutineButton',
       intro: "This option saves the custom routine. Name and description will need to be provided afterwards. You are ready to start creating your own rotines!",
-      position: 'bottom'
+      position: 'top'
     }
     ]
 
