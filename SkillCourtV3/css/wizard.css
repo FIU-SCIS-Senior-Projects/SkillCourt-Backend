@@ -1,7 +1,7 @@
 #Simulator
 {
-	display: inline-block ;
-	top: 100px ;
+	display: relative ;
+	top: 0px ;
 	width: 600px ;
 	min-width: 600px ;
 	height:600px ;
