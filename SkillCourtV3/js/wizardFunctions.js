@@ -212,7 +212,13 @@ function finishRoutine(){
 		$("#Simulator").fadeOut();
 		$("#WizardOptions").fadeOut();
 		$("#switchWrapper").fadeOut();
-		$("#GetNameDescription").fadeIn() ;
+		$("#GetNameDescription").fadeIn(function(){
+			var customClass = 'col-lg-6'
+			var defaultClass = 'col-lg-6 col-lg-offset-3';
+			$('#divWizardWrapper').removeClass(customClass);
+			$('#divWizardWrapper').addClass(defaultClass);	
+		}) ;
+		
 		$("#FullFinishRoutine").val(command);
 	}
 	else
