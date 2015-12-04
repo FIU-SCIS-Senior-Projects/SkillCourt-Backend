@@ -64,7 +64,7 @@
 							<div class="row">
 								<div class="col-xs-4 col-xs-offset-4">
 								<br>
-									<div class="form-group">
+									<div class="form-group" id="wStep3">
 										<select class="form-control input-sm" id="stepType" onchange="changeDescription();">
 											<option name="description" value="set">Target Set</option>
 											<option name="description" value="ground">Ground Target</option>
@@ -76,9 +76,9 @@
 								</div>
 							</div>
 							
-							<div class="row">
+							<div class="row" id="wStep5">
 								
-								<div class="col-xs-8 col-xs-offset-3">
+								<div class="col-xs-8 col-xs-offset-3" id="wStep6">
 									<button id="stepArrowLeft" class="myButton round" onclick="prevStep();"><</button>
 									Step&nbsp;
 									<span id="stepNumber"></span>
@@ -88,7 +88,7 @@
 									<button id="addStep" class="myButton round" onclick="addStep();" title="Click to add a new Step">+</button>
 								</div>
 
-								<div class="col-xs-8 col-xs-offset-3">
+								<div class="col-xs-8 col-xs-offset-3" id="wStep7">
 									<button id="roundArrowLeft" class="myButton round" onclick="prevRound();"><</button>
 									Round&nbsp;
 									<span id="roundNumber"></span>
@@ -102,7 +102,7 @@
 							<div class="row">
 								<div class="col-xs-8 col-xs-offset-3">
 									<br>
-									<div class="btn-group" role="group">
+									<div class="btn-group" role="group" id="wStep8">
 										<button id="DeleteStep"  class="btn btn-primary btn-sm outline delButtons" onclick="deleteStep();">Delete Step</button>
 										<button id="DeleteRound" class="btn btn-primary btn-sm outline delButtons" onclick="deleteRound();">Delete Round</button>
 									</div>
