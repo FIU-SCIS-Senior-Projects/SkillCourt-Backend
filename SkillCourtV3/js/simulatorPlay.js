@@ -5,16 +5,16 @@ $(document).ready(function(){
 
     $(".scroll button").click(function(){
                             
-        if (!isFirstClick)
-        {
-            $(".scroll button [value='"+currentCommand+"']").css("font-size","15px");
-            $(".scroll button [value='"+currentCommand+"']").css("color","white");
-        }
-        else 
-            isFirstClick = false ;
+        // if (!isFirstClick)
+        // {
+        //     $(".scroll button [value='"+currentCommand+"']").css("font-size","15px");
+        //     $(".scroll button [value='"+currentCommand+"']").css("color","white");
+        // }
+        // else 
+        //     isFirstClick = false ;
         
-        $(this).css("font-size","15px");
-        $(this).css("color","white");
+        // $(this).css("font-size","15px");
+        // $(this).css("color","white");
         currentCommand = $(this).val();
                 //alert(currentCommand);
         });

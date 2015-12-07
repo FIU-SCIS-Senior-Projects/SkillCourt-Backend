@@ -10,6 +10,15 @@
             $isPersComplete = $currentUserIndex->get("isPersComplete");
     		$isAthComplete = $currentUserIndex->get("isAthComplete");
     		$isVarComplete = $currentUserIndex->get("isVarComplete");
+
+    		if($isPersComplete){
+    			// Get all the users information
+    		 	$first = $currentUserIndex->get("firstName");
+    		 	$last = $currentUserIndex->get("lastName");
+    		 	$gender = $currentUserIndex->get("gender");
+    		 	$phoneNumber = $currentUserIndex->get("phone");
+    		 	$email = $currentUserIndex->get("email");
+    		}
     		?>
 
     		<!-- If the profile is not completed, show message to complete it -->
@@ -28,10 +37,10 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Personal Information </div>
 				<div class="panel-body">
-					<strong>Full Name:</strong> <?php echo $currentUserIndex->get("firstName") . " " . $currentUserIndex->get("lastName");  ?><br>
-					<strong>Gender:</strong> <?php echo $currentUserIndex->get("gender"); ?> <br>
-					<strong>Email: </strong> <?php echo $currentUserIndex->get("email"); ?> <br>
-					<strong>Phone number: </strong> <?php echo $currentUserIndex->get("phone"); ?>
+					<strong>Full Name:</strong> <?php echo $first . " " . $last;  ?><br>
+					<strong>Gender:</strong> <?php echo $gender; ?> <br>
+					<strong>Email: </strong> <?php echo $email; ?> <br>
+					<strong>Phone number: </strong> <?php echo $phoneNumber; ?>
 				</div>
           	</div>
           	<?php endif ?>
@@ -138,11 +147,13 @@
 
 					<div class="tab-content">
 						<div class="tab-pane fade in active" id="personalInfo">
+							<h3 class="whiteHeaders">Hi <?php echo ($isPersComplete) ? $firstName . " " . $lastName : "" ?> </h3>
+							<div class=" alert alert-warning">Your personal information has been completed. If you wish to change it input any new information and click save!</div>
 							<form class="form" action="javascript:validatePersonalSignUp()" method="post" id="registrationFormPer">
 							    <div class="form-group">
 							        <div class="col-xs-4">
 							            <label for="first_name"><h4 class="whiteHeaders">First Name</h4></label>
-							            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="Enter your first name" required>
+							            <input type="text" class="form-control" name="first_name" id="first_name" placeholder=<?php echo is_null($first) ? "Enter your First Name" : $first; ?> title="Enter your first name" required>
 							         </div>
 							    </div>
 							    <div class="form-group">
@@ -154,13 +165,13 @@
 							    <div class="form-group">
 							        <div class="col-xs-4">
 							            <label for="last_name"><h4 class="whiteHeaders">Last Name</h4></label>
-							            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="Enter your last name if any." required>
+							            <input type="text" class="form-control" name="last_name" id="last_name" placeholder=<?php echo is_null($last) ? "Enter your Last Name" : $last; ?> title="Enter your last name if any." <?php echo is_null($last) ? "required" : ""; ?>>
 							        </div>
 							    </div>
 							    <div class="form-group">
 							        <div class="col-xs-2">
 							            <label for="gender"><h4 class="whiteHeaders" title="Select a gender">Gender</h4></label>
-										<select class="form-control" id="gender" required>
+										<select class="form-control" id="gender" <?php echo is_null($gender) ? "required" : ""; ?> >
 											<option></option>
 											<option>Male</option>
 											<option>Female</option>
@@ -176,7 +187,7 @@
 							    <div class="form-group">
 							        <div class="col-xs-4">
 							            <label for="phone"><h4 class="whiteHeaders">Phone Number</h4></label>
-							            <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any." required>
+							            <input type="text" class="form-control" name="phone" id="phone" placeholder=<?php echo is_null($phoneNumber) ? "Enter your Phone Number" : $phoneNumber; ?> title="enter your phone number if any." <?php echo is_null($phoneNumber) ? "required" : ""; ?>>
 							        </div>
 							    </div>
 							    <div class="form-group">
@@ -190,6 +201,9 @@
 							
 						</div>
 						<div class="tab-pane fade" id="athleticInfo">
+							<?php if($isAthComplete): ?>
+								<div class=" alert alert-warning">If you would like to change from being a Coach or a Player. Just save the new settings and access your new content.</div>
+							<?php endif ?>
 							<form class="form" action="javascript:validateAthleticSignUp()" method="post" id="registrationFormAth">
 							    <div class="form-group">
 							        <div class="col-xs-2">

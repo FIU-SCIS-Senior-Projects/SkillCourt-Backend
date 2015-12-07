@@ -32,7 +32,7 @@
 		                                    $res = $results1[$i]->get("customRoutine");
 		                                    $res->fetch();
 		                                    //echo $res->get("name");
-		                                    echo "<button class='btn btn-success btn-outline'". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
+		                                    echo "<button class='btn btn-success btn-outline routineButton btn-xs'". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
 		                                }
 		                            }
 		                        }
@@ -52,7 +52,7 @@
 		                                for ($i = 0; $i < count($results1); $i++) {
 		                                    $res = $results1[$i]->get("defaultRoutine");
 		                                    $res->fetch();
-		                                    echo "<button class='btn btn-success btn-outline'". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
+		                                    echo "<button class='btn btn-success btn-outline routineButton btn-xs'". "value=" . $res->get("command")  .">".$res->get("name")."</button></br>";
 		                                }
 		                        }
 		                        ?>

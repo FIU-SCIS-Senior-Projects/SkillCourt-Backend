@@ -6,6 +6,10 @@ body{
     background-size: 100% 100%;
     display: block;
 }
+.routineButton{
+    font-size: 15px;
+    color: white;
+}
 
 .imgSquare{
     height: 30px;
