@@ -205,7 +205,7 @@
                     <!-- -->
 
                      <!-- Routine Wizard Tab View -->
-                    <div style="display:none; background-color:#F4F4F4; height:150px; margin-top:-19px">
+                    <div style="display:none; background-color:#F4F4F4; height:150px;">
                     
                         <div style="font-size:25px; color:#2f7b2a;">
                              Specific customizations to simulate any particular skill
