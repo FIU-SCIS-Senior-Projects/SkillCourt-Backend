@@ -1,13 +1,16 @@
-﻿Explanation of the directory structure of the code:
+README.txt
+==========
 
-1.Simulator:
-The code for the simulator is located on a folder called simulator
-Inside that folder it will be found a group of images like soccerBall.png, tensional.png which are images used in the simulator. Also a sound file called “beep” which is also used to provide sound to the 10 second counting before starting a routine. There are a set of files with extension .java which are the classes used in the development of the simulator like for example “pad.java”, “play.java”. Inside this folder is a file called SkillCourt2.pde which is the main file that processing will accept.
+1. Website
+	Within this folder. You will find all the required files for the website. Inside this folder. You will find an organized easy to read structure of the whole project.
+	Different components of the website are located within their own folders. The controllers are all in the controllers folder, the views are all in the views folder, and so on. 
 
-2.Pad:
-Inside the folder called SkillCourtPad is a file called SkillCourtPad.ino which contains the code that runs in the micro controller (maste-rpad)
+	The page has a single-entry point. The index.php file will be run from the root, and this will start the entire site. Making the appropriate calls and instantiating the right classes.
 
-3.Android App:
-Inside the folder called SkillCourt is located the Android Application. This folder follows Android standards which can be learned from the provided Google’s documentation (https://developer.android.com/tools/projects/index.html)
+2. Pad files. 
+	Within this folder. You will find all the required files to run the simulator, app, and the arduino controller.
+		SkillCourt: Here you will find the Android Application. This folder follows Android standards which can be learned from the following google documentation. 
 
-4.Website:
+		SkillCourt 2: In this folder you will find the necessary files to run the simulator directly in your desktop. There are a set of files with extension .java which are the classes used in the development of the simulator like for example “pad.java”, “play.java”. Inside this folder is a file called SkillCourt2.pde which is the main file that processing will accept.
+
+		SkillCourtPad: In this folder you will find the arduino controller instructions file. Which is what controls the arduino. 

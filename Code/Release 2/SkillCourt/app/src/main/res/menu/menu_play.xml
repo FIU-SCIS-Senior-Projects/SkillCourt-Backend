@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.seniorproject.skillcourt.Play">
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+<!--
+    <item android:id="@+id/action_logout"
+        android:title="Logout"
+        android:orderInCategory="100"
+        app:showAsAction = "ifRoom|withText"
+        android:visible="true"
+        android:icon="@drawable/log_out_icon"
+        />
+
+    <item android:id="@+id/profile"
+        android:icon="@drawable/profile_icon"
+        android:title="Profile"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|withText"
+        android:visible="true"
+        />
+        -->
+</menu>

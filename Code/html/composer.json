@@ -1,5 +1,0 @@
-{
-  "require" : {
-    "parse/php-sdk" : "~1.1.0"
-  }
-}

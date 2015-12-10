@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.seniorproject.skillcourt.Login">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:background="#FF65B098">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/skillCourtText"
+            android:text="@string/skillCourt_header"
+            android:textStyle="bold|italic"
+            android:textSize="50dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffffffff"
+            android:layout_marginTop="20dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@drawable/innergrayborder"
+            android:layout_margin="20dp"
+            android:layout_weight="0.1"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/user_name"
+                android:id="@+id/textView11"
+                android:textColor="#ff000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:padding="5dp"
+                android:id="@+id/user_name"
+                android:background="#ffffffff"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/password"
+                android:id="@+id/textView12"
+                android:textColor="#ff000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:padding="5dp"
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:background="#ffffffff"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="logIn"
+                android:text="@string/login_button"
+                android:id="@+id/login_button"
+                android:background="@drawable/bluerectbutton"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="#ff447767"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="157dp"
+            android:layout_height="40dp"
+            android:onClick="logInTrouble"
+            android:background="@drawable/bluerectbutton"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/trouble_loggin_in"
+            android:layout_marginBottom="5dp"
+            android:text="@string/login_trouble"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="#ff559581" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
