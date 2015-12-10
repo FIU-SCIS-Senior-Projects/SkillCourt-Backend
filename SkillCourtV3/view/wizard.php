@@ -126,11 +126,11 @@
 					<h1 class="whiteHeaders text-center">Default Options</h1>
 					<hr>
 					<ul class="myul">
-						<li><span class="whiteHeaders">Name: </span> 
+						<li id="w2Step3"><span class="whiteHeaders">Name: </span> 
 							<input class="defaultInputs mainText" type="text" id="defaultName">
 						</li>
 						</br>
-						<li><span class="whiteHeaders">Routine: </span>
+						<li id="w2Step4"><span class="whiteHeaders">Routine: </span>
 							<select class="defaultInputs mainText" id="routineSelect">
 								<option value="t"selected="true">Three Wall Chase</option>
 								<option value="c">Chase</option>
@@ -142,7 +142,7 @@
 							</select>
 						</li>
 						</br>
-						<li><span class="whiteHeaders">Play By: </span>
+						<li id="w2Step5"><span class="whiteHeaders">Play By: </span>
 							<select class="defaultInputs mainText" id="playByType">
 								<option value="time" selected="true">Time (minutes)</option>
 								<option value="rounds">Rounds</option>
@@ -168,7 +168,7 @@
 							<span class="whiteHeaders">Seconds per round</span>
 						</li>
 						</br>
-						<li><span class="whiteHeaders">Remove Wall:</span>
+						<li id="w2Step8"><span class="whiteHeaders">Remove Wall:</span>
 						<select class="defaultInputs mainText" id="removeWallSelect">
 								<option value="0" selected="true">-None-</option>
 								<option value="1">North</option>
@@ -178,11 +178,11 @@
 							</select>
 						</li>	
 						</br>
-						<li><span class="whiteHeaders">Description: </span>
+						<li id="w2Step9"><span class="whiteHeaders">Description: </span>
 							<textarea id="defaultDescription"></textarea>
 						</li>
 						</br>
-						<li>
+						<li id="w2Step10">
 							<div class="text-center">
 								<?php if(isset($_GET["default"])):?>
 									<button id="FinishDefaultEdit" class="btn btn-primary btn-sm outline stepButtons">Finish Editing Routine</button>

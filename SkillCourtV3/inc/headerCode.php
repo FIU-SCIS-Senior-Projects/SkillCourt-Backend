@@ -65,11 +65,11 @@
 <script type="text/javascript" src="./js/jquery.cycle.all.2.74.js"></script>
 <script type="text/javascript" src="./js/globalScripts.js"></script>
 
-<!-- bxSlider Javascript file -->
-<script src="./js/jquery.bxslider/jquery.bxslider.min.js"></script>
-
 <!-- intro.js Javascript file -->
 <script src="./js/intro.js/intro.js"></script>
+
+<!-- bxSlider Javascript file -->
+<script src="./js/jquery.bxslider/jquery.bxslider.min.js"></script>
 
 <!-- Recruit/Release Player Scripts -->
 <?php if(isset($_GET['show']) && $_GET['show'] == 'players' ) : ?>
