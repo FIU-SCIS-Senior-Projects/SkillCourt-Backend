@@ -110,10 +110,14 @@ $(document).on('ready', function(){
 					'userSelected': userSelected[0],
 					'assign'	  : true};
 
-			$.post(
-					ajaxurl,
-					data,
-					function(data, status){
+			$.when($.post(
+						ajaxurl,
+						data
+					)
+					.done(function(data){
+						console.log(data);
+					}))
+					.then(function(data){
 						closeModalAssign(data);
 					});
 		});
@@ -160,11 +164,14 @@ $(document).on('ready', function(){
 					'userSelected': userSelected,
 					'unassign'	  : true};
 
-			$.post(
-					ajaxurl,
-					data,
-					function(data, status){
+			$.when($.post(
+						ajaxurl,
+						data
+					)
+					.done(function(data){
 						console.log(data);
+					}))
+					.then(function(data){
 						closeModalunAssign(data);
 					});
 		});

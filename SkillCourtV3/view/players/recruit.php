@@ -6,7 +6,7 @@
 	  <li role="presentation"><a href='index.php?show=players&controller=players&action=signed'>Players Signed</a></li>
 	</ul>
 
-	<h2 class="whiteHeaders text-center">Recruit Players!</h2> <br>
+	<h2 class="whiteHeaders text-center">Manage your Players</h2> <br>
 
 	<?php include_once('search.php') ?>
 

@@ -26,6 +26,18 @@ use Parse\ParseQuery;
 
 	}else if(isset($_GET["assign"]))
 	{
+		if(isset($_SESSION['allPlayers'])){
+			//If allPlayers is set, lets check if a new player has been added
+			$allPlayersSigned = $_SESSION['allPlayers'];
+			
+			$myPlayers = getPlayersSignedByCoach();
+			$allPlayers = searchPlayer('default', 'coach');
+			$results = getUserObject($allPlayers, $myPlayers);
+			if(count($allPlayersSigned) != count($results)){
+				//There must be another player added. Update session variable
+				$_SESSION['allPlayers'] = $results;
+			}
+		}
 		$results = $_SESSION['allPlayers'];
 		for($p = 0 ; $p < count($results) ; $p++)
 		{

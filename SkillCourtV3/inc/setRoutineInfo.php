@@ -182,6 +182,7 @@ function assign($currentUser, $routine, $routType, $playerId)
 
 		try {
 			$link->save();
+
 			echo 'true';
 			// If succesful go ahead and push this new player to our session variable
 			($routType == 'default') ? array_push($_SESSION['playersDefault'][$routine->getObjectId()], $userObjectId) : array_push($_SESSION['playersCustom'][$routine->getObjectId()], $userObjectId);

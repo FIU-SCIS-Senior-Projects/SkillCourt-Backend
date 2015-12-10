@@ -209,15 +209,26 @@ function finishRoutine(){
 	{
 		var command = processingInstance.command() ;
 		console.log(command) ;
-		$("#Simulator").fadeOut();
-		$("#WizardOptions").fadeOut();
-		$("#switchWrapper").fadeOut();
-		$("#GetNameDescription").fadeIn(function(){
+		$("#Simulator").fadeOut('slow',function(){
 			var customClass = 'col-lg-6'
 			var defaultClass = 'col-lg-6 col-lg-offset-3';
+			$("#WizardOptions").hide();
+			$("#switchWrapper").hide();
+			//We are going to default. Move the wrapper to the middle. 
 			$('#divWizardWrapper').removeClass(customClass);
-			$('#divWizardWrapper').addClass(defaultClass);	
-		}) ;
+			$('#divWizardWrapper').addClass(defaultClass);
+			$("#GetNameDescription").show();
+		});
+
+		// $("#Simulator").fadeOut();
+		// $("#WizardOptions").fadeOut();
+		// $("#switchWrapper").fadeOut();
+		// $("#GetNameDescription").fadeIn(function(){
+		// 	var customClass = 'col-lg-6'
+		// 	var defaultClass = 'col-lg-6 col-lg-offset-3';
+		// 	$('#divWizardWrapper').removeClass(customClass);
+		// 	$('#divWizardWrapper').addClass(defaultClass);	
+		// }) ;
 		
 		$("#FullFinishRoutine").val(command);
 	}
@@ -279,7 +290,7 @@ $(document).ready(function(){
 			toSend += "&description=" + description ;
 			$.post("./customWizard/createRoutine.php", toSend, function(data,status){
 				//console.log(data) ;
-				window.location.assign('./index.php?show=routinesCoach');
+				window.location.assign('./index.php?show=routinesCoach&controller=routines&action=showRoutines');
 			});
 		}
 	});

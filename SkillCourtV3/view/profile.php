@@ -18,6 +18,12 @@
     		 	$gender = $currentUserIndex->get("gender");
     		 	$phoneNumber = $currentUserIndex->get("phone");
     		 	$email = $currentUserIndex->get("email");
+    		}else{
+    			$first = null;
+				$last = null;
+				$gender = null;
+				$phoneNumber = null;
+				$email = null;
     		}
     		?>
 
@@ -147,8 +153,10 @@
 
 					<div class="tab-content">
 						<div class="tab-pane fade in active" id="personalInfo">
-							<h3 class="whiteHeaders">Hi <?php echo ($isPersComplete) ? $firstName . " " . $lastName : "" ?> </h3>
-							<div class=" alert alert-warning">Your personal information has been completed. If you wish to change it input any new information and click save!</div>
+							<?php if($isPersComplete) : ?>
+								<h3 class="whiteHeaders">Hi <?php echo ($isPersComplete) ? $firstName . " " . $lastName : "" ?> </h3>
+								<div class=" alert alert-warning">Your personal information has been completed. If you wish to change it input any new information and click save!</div>
+							<?php endif; ?>
 							<form class="form" action="javascript:validatePersonalSignUp()" method="post" id="registrationFormPer">
 							    <div class="form-group">
 							        <div class="col-xs-4">
