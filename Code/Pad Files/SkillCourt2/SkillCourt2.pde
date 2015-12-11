@@ -339,9 +339,10 @@ void setUpSerialPort()
 {
   String portName;
   
-  //for(int i = 0; i < Serial.list().length; i++) //not commented
-    //{ //not commented
-      portName = "COM4"; //portName = Serial.list()[i];
+  for(int i = 0; i < Serial.list().length; i++) //not commented
+    { //not commented
+      //portName = "COM4"; 
+      portName = Serial.list()[i];
       
       try
       {
@@ -358,7 +359,7 @@ void setUpSerialPort()
             port.write('A');
           }
           connection = true;
-          //break; //not commented
+          break; //not commented
         }
        
       }
@@ -367,7 +368,7 @@ void setUpSerialPort()
         
         port = null;
       }
-    //} //not commented
+    } //not commented
     
   //if(port == null)
   //{
